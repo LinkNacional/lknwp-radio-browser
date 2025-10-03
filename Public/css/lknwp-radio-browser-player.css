@@ -478,6 +478,7 @@
 .lkp-volume-slider {
     width: 90%;
     background: transparent;
+    outline: none !important;
 }
 
 .lkp-volume-display {

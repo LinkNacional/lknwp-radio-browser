@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Blank WordPress Pot v1.0.0\n"
 "Report-Msgid-Bugs-To: Translator Name <translations@example.com>\n"
-"POT-Creation-Date: 2025-10-03 14:29-0300\n"
+"POT-Creation-Date: 2025-10-03 16:27-0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: Your Team <translations@example.com>\n"
@@ -30,29 +30,33 @@ msgstr ""
 msgid "LKN Radio Browser"
 msgstr "LKN Radio Browser"
 
-#: Admin/Lknwp_Radio_Browser_Admin.php:150
+#: Admin/Lknwp_Radio_Browser_Admin.php:158
 msgid "Fallback: Could not copy"
 msgstr "Fallback: Não foi possível copiar"
 
-#: Admin/Lknwp_Radio_Browser_Admin.php:151
+#: Admin/Lknwp_Radio_Browser_Admin.php:159
 msgid "Button not found or invalid"
 msgstr "Botão não encontrado ou inválido"
 
-#: Admin/Lknwp_Radio_Browser_Admin.php:152
+#: Admin/Lknwp_Radio_Browser_Admin.php:160
 msgid "Copied!"
 msgstr "Copiado!"
 
-#: Admin/Lknwp_Radio_Browser_Admin.php:153
+#: Admin/Lknwp_Radio_Browser_Admin.php:161
 msgid "Click to copy shortcode"
 msgstr "Clique para copiar shortcode"
 
-#: Admin/Lknwp_Radio_Browser_Admin.php:154
+#: Admin/Lknwp_Radio_Browser_Admin.php:162
 msgid "Copy error: "
 msgstr "Erro de cópia: "
 
-#: Admin/Lknwp_Radio_Browser_Admin.php:155
+#: Admin/Lknwp_Radio_Browser_Admin.php:163
 msgid "Fallback: Error copying"
 msgstr "Fallback: Erro ao copiar"
+
+#: Includes/assets/templates/admin-help-page.php:17
+msgid "LKN Radio Browser - How to Use"
+msgstr "LKN Radio Browser - Como Usar"
 
 #: Includes/assets/templates/admin-help-page.php:23
 msgid "🎵 Radio Player Shortcode"
@@ -80,6 +84,10 @@ msgstr "📋 Como funciona:"
 #: Includes/assets/templates/admin-help-page.php:34
 msgid "Create a page (e.g., \"Player\" with slug \"player\")"
 msgstr "Crie uma página (ex: \"Player\" com slug \"player\")"
+
+#: Includes/assets/templates/admin-help-page.php:35
+msgid "Add the shortcode"
+msgstr "Adicionar o shortcode"
 
 #: Includes/assets/templates/admin-help-page.php:36
 msgid "The player will automatically receive URL parameters"
@@ -318,7 +326,7 @@ msgstr ""
 "Nenhuma stream de rádio encontrada. Por favor, selecione uma rádio da lista."
 
 #: Includes/assets/templates/radio-player.php:43
-#: Public/Lknwp_Radio_Browser_Public.php:124
+#: Public/Lknwp_Radio_Browser_Public.php:126
 msgid "Online Radio"
 msgstr "Rádio Online"
 
@@ -346,7 +354,7 @@ msgstr "Carregando..."
 msgid "Volume"
 msgstr "Volume"
 
-#: Public/Lknwp_Radio_Browser_Public.php:122
+#: Public/Lknwp_Radio_Browser_Public.php:124
 msgid ""
 "Unable to play this radio station. Please try again later or choose another "
 "station."
@@ -354,11 +362,11 @@ msgstr ""
 "Não foi possível reproduzir esta estação de rádio. Tente novamente mais "
 "tarde ou escolha outra estação."
 
-#: Public/Lknwp_Radio_Browser_Public.php:123
+#: Public/Lknwp_Radio_Browser_Public.php:125
 msgid "🎵 Listening to {station} - "
 msgstr "🎵 A ouvir {station} - "
 
-#: Public/Lknwp_Radio_Browser_Public.php:128
+#: Public/Lknwp_Radio_Browser_Public.php:130
 msgid ""
 "Warning: This radio uses insecure streaming (HTTP) and cannot be played on "
 "HTTPS pages. Ask the provider to enable HTTPS or access via HTTP."
@@ -366,71 +374,71 @@ msgstr ""
 "Aviso: Esta rádio usa streaming inseguro (HTTP) e não pode ser reproduzida "
 "em páginas HTTPS. Peça ao provedor para habilitar HTTPS ou acesse via HTTP."
 
-#: Public/Lknwp_Radio_Browser_Public.php:129
+#: Public/Lknwp_Radio_Browser_Public.php:131
 msgid "listeners"
 msgstr "ouvintes"
 
-#: Public/Lknwp_Radio_Browser_Public.php:130
+#: Public/Lknwp_Radio_Browser_Public.php:132
 msgid "likes"
 msgstr "likes"
 
-#: Public/Lknwp_Radio_Browser_Public.php:131
+#: Public/Lknwp_Radio_Browser_Public.php:133
 msgid "No song found in JSON"
 msgstr "Nenhuma música encontrada no JSON"
 
-#: Public/Lknwp_Radio_Browser_Public.php:132
+#: Public/Lknwp_Radio_Browser_Public.php:134
 msgid "No song found in HTML"
 msgstr "Nenhuma música encontrada no HTML"
 
-#: Public/Lknwp_Radio_Browser_Public.php:133
+#: Public/Lknwp_Radio_Browser_Public.php:135
 msgid "Response is not JSON"
 msgstr "Resposta não é JSON"
 
-#: Public/Lknwp_Radio_Browser_Public.php:134
+#: Public/Lknwp_Radio_Browser_Public.php:136
 msgid "Detected audio component"
 msgstr "Componente de áudio detectado"
 
-#: Public/Lknwp_Radio_Browser_Public.php:135
+#: Public/Lknwp_Radio_Browser_Public.php:137
 msgid "CORS_BLOCKED: Opaque response, cannot read content"
 msgstr "CORS_BLOCKED: Resposta opaca, não é possível ler o conteúdo"
 
-#: Public/Lknwp_Radio_Browser_Public.php:136
+#: Public/Lknwp_Radio_Browser_Public.php:138
 msgid "NETWORK_ERROR: Status 0, possible network or CORS issue"
 msgstr "NETWORK_ERROR: Status 0, possível problema de rede ou CORS"
 
-#: Public/Lknwp_Radio_Browser_Public.php:137
+#: Public/Lknwp_Radio_Browser_Public.php:139
 msgid "AUDIO_STREAM: Response is an audio stream"
 msgstr "AUDIO_STREAM: Resposta é uma stream de áudio"
 
-#: Public/Lknwp_Radio_Browser_Public.php:138
+#: Public/Lknwp_Radio_Browser_Public.php:140
 msgid "TEXT_TIMEOUT: Text conversion exceeded 5 seconds"
 msgstr "TEXT_TIMEOUT: A conversão de texto excedeu 5 segundos"
 
-#: Public/Lknwp_Radio_Browser_Public.php:139
+#: Public/Lknwp_Radio_Browser_Public.php:141
 msgid "Content-Type is not JSON: "
 msgstr "Content-Type não é JSON: "
 
-#: Public/Lknwp_Radio_Browser_Public.php:148
+#: Public/Lknwp_Radio_Browser_Public.php:150
 msgid "Loading radios..."
 msgstr "Carregando rádios..."
 
-#: Public/Lknwp_Radio_Browser_Public.php:149
+#: Public/Lknwp_Radio_Browser_Public.php:151
 msgid "No radios found."
 msgstr "Nenhuma rádio encontrada."
 
-#: Public/Lknwp_Radio_Browser_Public.php:150
+#: Public/Lknwp_Radio_Browser_Public.php:152
 msgid "Trying alternative servers..."
 msgstr "Tentando servidores alternativos..."
 
-#: Public/Lknwp_Radio_Browser_Public.php:151
+#: Public/Lknwp_Radio_Browser_Public.php:153
 msgid "Reverse active"
 msgstr "Reverter ativo"
 
-#: Public/Lknwp_Radio_Browser_Public.php:152
+#: Public/Lknwp_Radio_Browser_Public.php:154
 msgid "Reverse inactive"
 msgstr "Reverter inativo"
 
-#: Public/Lknwp_Radio_Browser_Public.php:153
+#: Public/Lknwp_Radio_Browser_Public.php:155
 msgid "Error querying API. "
 msgstr "Erro ao consultar API. "
 
@@ -490,9 +498,6 @@ msgstr "Erro ao consultar API. "
 
 #~ msgid "Error fetching radios from all servers."
 #~ msgstr "Erro ao buscar rádios de todos os servidores."
-
-#~ msgid "LKN Radio Browser - How to Use"
-#~ msgstr "LKN Radio Browser - Como Usar"
 
 #~ msgid "Add the shortcode <code>[radio_browser_player]</code>"
 #~ msgstr "Adicione o shortcode <code>[radio_browser_player]</code>"

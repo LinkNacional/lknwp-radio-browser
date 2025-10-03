@@ -254,6 +254,7 @@
     /* azul claro para contraste */
     font-size: 0.92em;
     font-weight: 500;
+    text-align: start !important;
     font-family: 'Roboto', Arial, sans-serif !important;
     width: 100%;
 

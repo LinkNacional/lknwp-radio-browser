@@ -805,7 +805,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         errorMsg = document.createElement("div");
                         errorMsg.id = "lknwp-radio-player-error";
                         errorMsg.className = "lkp-player-error";
-                        errorMsg.innerHTML = lknwpRadioTexts.unableToPlay || "Unable to play this radio station. Please try again later or choose another station.";
+                        errorMsg.innerHTML = lknwpRadioTextsPlayer.unableToPlay || "Unable to play this radio station. Please try again later or choose another station.";
                         playBtn.parentNode.appendChild(errorMsg);
                     }
                 });
@@ -859,8 +859,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
         function setupShareButtons() {
             var currentUrl = window.location.href;
-            var stationName = document.getElementById('lknwp-radio-station-name').textContent || (lknwpRadioTexts.onlineRadio || 'Online Radio');
-            var shareTextTemplate = lknwpRadioTexts.listeningTo || '🎵 Listening to {station} - ';
+            var stationName = document.getElementById('lknwp-radio-station-name').textContent || (lknwpRadioTextsPlayer.onlineRadio || 'Online Radio');
+            var shareTextTemplate = lknwpRadioTextsPlayer.listeningTo || '🎵 Listening to {station} - ';
             var shareText = shareTextTemplate.replace('{station}', stationName);
 
             // Botão Copiar Link
