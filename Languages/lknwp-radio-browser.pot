@@ -11,7 +11,7 @@ msgstr ""
 "<translations@example."
 "com>\n"
 "POT-Creation-Date: "
-"2025-10-03 16:26-0300\n"
+"2025-10-03 16:52-0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Your "
 "Name <you@example.com>\n"
@@ -377,14 +377,6 @@ msgstr ""
 msgid "Order"
 msgstr ""
 
-#: Includes/assets/templates/radio-list.php:121
-msgid "Reverse Active"
-msgstr ""
-
-#: Includes/assets/templates/radio-list.php:121
-msgid "Reverse Inactive"
-msgstr ""
-
 #: Includes/assets/templates/radio-list.php:134
 msgid "Search Radio"
 msgstr ""
@@ -540,13 +532,5 @@ msgid ""
 msgstr ""
 
 #: Public/Lknwp_Radio_Browser_Public.php:153
-msgid "Reverse active"
-msgstr ""
-
-#: Public/Lknwp_Radio_Browser_Public.php:154
-msgid "Reverse inactive"
-msgstr ""
-
-#: Public/Lknwp_Radio_Browser_Public.php:155
 msgid "Error querying API. "
 msgstr ""

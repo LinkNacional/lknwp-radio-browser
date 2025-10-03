@@ -808,6 +808,15 @@ document.addEventListener("DOMContentLoaded", function () {
                         errorMsg.innerHTML = lknwpRadioTextsPlayer.unableToPlay || "Unable to play this radio station. Please try again later or choose another station.";
                         playBtn.parentNode.appendChild(errorMsg);
                     }
+                    // Esconder o componente de compartilhamento
+                    var shareSection = document.querySelector('.lkp-share-section');
+                    if (shareSection) {
+                        shareSection.style.display = 'none';
+                    }
+                    // Simular clique no botão play/pause para garantir atualização do estado e animações
+                    if (playBtn) {
+                        playBtn.click();
+                    }
                 });
                 var imgParent = document.getElementById("lknwp-radio-img-parent");
                 if (imgParent) {
