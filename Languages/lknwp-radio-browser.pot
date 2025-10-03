@@ -11,7 +11,7 @@ msgstr ""
 "<translations@example."
 "com>\n"
 "POT-Creation-Date: "
-"2025-10-03 16:52-0300\n"
+"2025-10-03 16:59-0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Your "
 "Name <you@example.com>\n"
@@ -377,19 +377,29 @@ msgstr ""
 msgid "Order"
 msgstr ""
 
-#: Includes/assets/templates/radio-list.php:134
+#: Includes/assets/templates/radio-list.php:122
+#: Public/Lknwp_Radio_Browser_Public.php:154
+msgid "Descending"
+msgstr ""
+
+#: Includes/assets/templates/radio-list.php:123
+#: Public/Lknwp_Radio_Browser_Public.php:153
+msgid "Ascending"
+msgstr ""
+
+#: Includes/assets/templates/radio-list.php:136
 msgid "Search Radio"
 msgstr ""
 
-#: Includes/assets/templates/radio-list.php:135
+#: Includes/assets/templates/radio-list.php:137
 msgid "Search radio..."
 msgstr ""
 
-#: Includes/assets/templates/radio-list.php:142
+#: Includes/assets/templates/radio-list.php:144
 msgid "Search"
 msgstr ""
 
-#: Includes/assets/templates/radio-list.php:175
+#: Includes/assets/templates/radio-list.php:177
 #: Includes/assets/templates/radio-player.php:40
 msgid "Radio logo"
 msgstr ""
@@ -531,6 +541,6 @@ msgid ""
 "servers..."
 msgstr ""
 
-#: Public/Lknwp_Radio_Browser_Public.php:153
+#: Public/Lknwp_Radio_Browser_Public.php:155
 msgid "Error querying API. "
 msgstr ""

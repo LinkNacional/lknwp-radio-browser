@@ -118,7 +118,9 @@ window.LKNWP_PLAYER_PAGE_SLUG = "<?php echo esc_js($atts['player_page']); ?>";
                 <div class="lrt-radio-field lrt-radio-field--reverse">
                     <label for="lrt_reverse_btn"><?php esc_html_e( 'Order', 'lknwp-radio-browser' ); ?></label>
                     <button type="button" id="lrt_reverse_btn" class="lrt-radio-button lrt-radio-button--reverse">
-                        <?php echo $atts['reverse'] === '1' ? 'DESC' : 'ASC'; ?>
+                        <?php echo $atts['reverse'] === '1' 
+                            ? esc_html__('Descending', 'lknwp-radio-browser') 
+                            : esc_html__('Ascending', 'lknwp-radio-browser'); ?>
                     </button>
                 </div>
                 <?php endif; ?>

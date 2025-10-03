@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Blank WordPress Pot v1.0.0\n"
 "Report-Msgid-Bugs-To: Translator Name <translations@example.com>\n"
-"POT-Creation-Date: 2025-10-03 16:52-0300\n"
+"POT-Creation-Date: 2025-10-03 17:00-0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: Your Team <translations@example.com>\n"
@@ -291,19 +291,29 @@ msgstr "Ordenar"
 msgid "Order"
 msgstr "Ordem"
 
-#: Includes/assets/templates/radio-list.php:134
+#: Includes/assets/templates/radio-list.php:122
+#: Public/Lknwp_Radio_Browser_Public.php:154
+msgid "Descending"
+msgstr "Decrescente"
+
+#: Includes/assets/templates/radio-list.php:123
+#: Public/Lknwp_Radio_Browser_Public.php:153
+msgid "Ascending"
+msgstr "Crescente"
+
+#: Includes/assets/templates/radio-list.php:136
 msgid "Search Radio"
 msgstr "Pesquisar Rádio"
 
-#: Includes/assets/templates/radio-list.php:135
+#: Includes/assets/templates/radio-list.php:137
 msgid "Search radio..."
 msgstr "Pesquisar rádio..."
 
-#: Includes/assets/templates/radio-list.php:142
+#: Includes/assets/templates/radio-list.php:144
 msgid "Search"
 msgstr "Pesquisar"
 
-#: Includes/assets/templates/radio-list.php:175
+#: Includes/assets/templates/radio-list.php:177
 #: Includes/assets/templates/radio-player.php:40
 msgid "Radio logo"
 msgstr "Logotipo da rádio"
@@ -422,7 +432,7 @@ msgstr "Nenhuma rádio encontrada."
 msgid "Trying alternative servers..."
 msgstr "Tentando servidores alternativos..."
 
-#: Public/Lknwp_Radio_Browser_Public.php:153
+#: Public/Lknwp_Radio_Browser_Public.php:155
 msgid "Error querying API. "
 msgstr "Erro ao consultar API. "
 

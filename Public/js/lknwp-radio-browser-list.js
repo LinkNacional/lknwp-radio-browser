@@ -3,7 +3,9 @@ document.addEventListener("DOMContentLoaded", function () {
     var reverseInput = document.getElementById("lrt_reverse");
     reverseBtn.addEventListener("click", function () {
         reverseInput.value = reverseInput.value === "1" ? "0" : "1";
-        reverseBtn.textContent = reverseInput.value === "1" ? 'DESC' : 'ASC';
+        reverseBtn.textContent = reverseInput.value === "1"
+            ? (lknwpRadioTextsList && lknwpRadioTextsList.descending ? lknwpRadioTextsList.descending : 'Descending')
+            : (lknwpRadioTextsList && lknwpRadioTextsList.ascending ? lknwpRadioTextsList.ascending : 'Ascending');
     });
 
     // Função de consulta automática (debounced)

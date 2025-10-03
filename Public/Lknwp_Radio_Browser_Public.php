@@ -150,6 +150,8 @@ class Lknwp_Radio_Browser_Public {
 				'loadingRadios' => __('Loading radios...', 'lknwp-radio-browser'),
 				'noRadiosFound' => __('No radios found.', 'lknwp-radio-browser'),
 				'tryingAlternativeServers' => __('Trying alternative servers...', 'lknwp-radio-browser'),
+				'ascending' => __('Ascending', 'lknwp-radio-browser'),
+				'descending' => __('Descending', 'lknwp-radio-browser'),
 				'apiError' => __('Error querying API. ', 'lknwp-radio-browser')
 			));
 		}
