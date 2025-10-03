@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Blank WordPress Pot v1.0.0\n"
 "Report-Msgid-Bugs-To: Translator Name <translations@example.com>\n"
-"POT-Creation-Date: 2025-10-03 09:52-0300\n"
+"POT-Creation-Date: 2025-10-03 14:29-0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: Your Team <translations@example.com>\n"
@@ -48,66 +48,11 @@ msgstr "Clique para copiar shortcode"
 
 #: Admin/Lknwp_Radio_Browser_Admin.php:154
 msgid "Copy error: "
-msgstr "Erro de cópia:"
+msgstr "Erro de cópia: "
 
 #: Admin/Lknwp_Radio_Browser_Admin.php:155
 msgid "Fallback: Error copying"
 msgstr "Fallback: Erro ao copiar"
-
-#: Includes/Lknwp_Radio_Browser.php:201
-#, php-format
-msgid "Server not reachable: %s:%s"
-msgstr "Servidor não acessível: %s:%s"
-
-#: Includes/Lknwp_Radio_Browser.php:231
-msgid "Unknown error"
-msgstr "Erro desconhecido"
-
-#: Includes/Lknwp_Radio_Browser.php:249
-#, php-format
-msgid "cURL Error: %s"
-msgstr "cURL Erro: %s"
-
-#: Includes/Lknwp_Radio_Browser.php:359
-msgid "Radio Not Found"
-msgstr "Rádio Não Encontrada"
-
-#: Includes/Lknwp_Radio_Browser.php:360
-#, php-format
-msgid "The radio \"%s\" was not found in our database."
-msgstr "A rádio \"%s\" não foi encontrada em nosso banco de dados."
-
-#: Includes/Lknwp_Radio_Browser.php:380
-msgid "No Radio Selected"
-msgstr "Nenhuma Rádio Selecionada"
-
-#: Includes/Lknwp_Radio_Browser.php:381
-msgid "Please select a radio to play."
-msgstr "Por favor, selecione uma rádio para tocar."
-
-#: Includes/Lknwp_Radio_Browser.php:558
-msgid "Most Popular"
-msgstr "Mais Populares"
-
-#: Includes/Lknwp_Radio_Browser.php:559
-msgid "Name"
-msgstr "Nome"
-
-#: Includes/Lknwp_Radio_Browser.php:560
-msgid "Random"
-msgstr "Aleatório"
-
-#: Includes/Lknwp_Radio_Browser.php:561
-msgid "Bitrate"
-msgstr "Bitrate"
-
-#: Includes/Lknwp_Radio_Browser.php:626
-msgid "Error fetching radios from all servers."
-msgstr "Erro ao buscar rádios de todos os servidores."
-
-#: Includes/assets/templates/admin-help-page.php:17
-msgid "LKN Radio Browser - How to Use"
-msgstr "LKN Radio Browser - Como Usar"
 
 #: Includes/assets/templates/admin-help-page.php:23
 msgid "🎵 Radio Player Shortcode"
@@ -135,10 +80,6 @@ msgstr "📋 Como funciona:"
 #: Includes/assets/templates/admin-help-page.php:34
 msgid "Create a page (e.g., \"Player\" with slug \"player\")"
 msgstr "Crie uma página (ex: \"Player\" com slug \"player\")"
-
-#: Includes/assets/templates/admin-help-page.php:35
-msgid "Add the shortcode <code>[radio_browser_player]</code>"
-msgstr "Adicione o shortcode <code>[radio_browser_player]</code>"
 
 #: Includes/assets/templates/admin-help-page.php:36
 msgid "The player will automatically receive URL parameters"
@@ -377,6 +318,7 @@ msgstr ""
 "Nenhuma stream de rádio encontrada. Por favor, selecione uma rádio da lista."
 
 #: Includes/assets/templates/radio-player.php:43
+#: Public/Lknwp_Radio_Browser_Public.php:124
 msgid "Online Radio"
 msgstr "Rádio Online"
 
@@ -406,79 +348,154 @@ msgstr "Volume"
 
 #: Public/Lknwp_Radio_Browser_Public.php:122
 msgid ""
+"Unable to play this radio station. Please try again later or choose another "
+"station."
+msgstr ""
+"Não foi possível reproduzir esta estação de rádio. Tente novamente mais "
+"tarde ou escolha outra estação."
+
+#: Public/Lknwp_Radio_Browser_Public.php:123
+msgid "🎵 Listening to {station} - "
+msgstr "🎵 A ouvir {station} - "
+
+#: Public/Lknwp_Radio_Browser_Public.php:128
+msgid ""
 "Warning: This radio uses insecure streaming (HTTP) and cannot be played on "
 "HTTPS pages. Ask the provider to enable HTTPS or access via HTTP."
 msgstr ""
 "Aviso: Esta rádio usa streaming inseguro (HTTP) e não pode ser reproduzida "
 "em páginas HTTPS. Peça ao provedor para habilitar HTTPS ou acesse via HTTP."
 
-#: Public/Lknwp_Radio_Browser_Public.php:123
+#: Public/Lknwp_Radio_Browser_Public.php:129
 msgid "listeners"
 msgstr "ouvintes"
 
-#: Public/Lknwp_Radio_Browser_Public.php:124
+#: Public/Lknwp_Radio_Browser_Public.php:130
 msgid "likes"
 msgstr "likes"
 
-#: Public/Lknwp_Radio_Browser_Public.php:125
+#: Public/Lknwp_Radio_Browser_Public.php:131
 msgid "No song found in JSON"
 msgstr "Nenhuma música encontrada no JSON"
 
-#: Public/Lknwp_Radio_Browser_Public.php:126
+#: Public/Lknwp_Radio_Browser_Public.php:132
 msgid "No song found in HTML"
 msgstr "Nenhuma música encontrada no HTML"
 
-#: Public/Lknwp_Radio_Browser_Public.php:127
+#: Public/Lknwp_Radio_Browser_Public.php:133
 msgid "Response is not JSON"
 msgstr "Resposta não é JSON"
 
-#: Public/Lknwp_Radio_Browser_Public.php:128
+#: Public/Lknwp_Radio_Browser_Public.php:134
 msgid "Detected audio component"
 msgstr "Componente de áudio detectado"
 
-#: Public/Lknwp_Radio_Browser_Public.php:129
+#: Public/Lknwp_Radio_Browser_Public.php:135
 msgid "CORS_BLOCKED: Opaque response, cannot read content"
 msgstr "CORS_BLOCKED: Resposta opaca, não é possível ler o conteúdo"
 
-#: Public/Lknwp_Radio_Browser_Public.php:130
+#: Public/Lknwp_Radio_Browser_Public.php:136
 msgid "NETWORK_ERROR: Status 0, possible network or CORS issue"
 msgstr "NETWORK_ERROR: Status 0, possível problema de rede ou CORS"
 
-#: Public/Lknwp_Radio_Browser_Public.php:131
+#: Public/Lknwp_Radio_Browser_Public.php:137
 msgid "AUDIO_STREAM: Response is an audio stream"
 msgstr "AUDIO_STREAM: Resposta é uma stream de áudio"
 
-#: Public/Lknwp_Radio_Browser_Public.php:132
+#: Public/Lknwp_Radio_Browser_Public.php:138
 msgid "TEXT_TIMEOUT: Text conversion exceeded 5 seconds"
 msgstr "TEXT_TIMEOUT: A conversão de texto excedeu 5 segundos"
 
-#: Public/Lknwp_Radio_Browser_Public.php:133
+#: Public/Lknwp_Radio_Browser_Public.php:139
 msgid "Content-Type is not JSON: "
-msgstr "Content-Type não é JSON:"
+msgstr "Content-Type não é JSON: "
 
-#: Public/Lknwp_Radio_Browser_Public.php:142
+#: Public/Lknwp_Radio_Browser_Public.php:148
 msgid "Loading radios..."
 msgstr "Carregando rádios..."
 
-#: Public/Lknwp_Radio_Browser_Public.php:143
+#: Public/Lknwp_Radio_Browser_Public.php:149
 msgid "No radios found."
 msgstr "Nenhuma rádio encontrada."
 
-#: Public/Lknwp_Radio_Browser_Public.php:144
+#: Public/Lknwp_Radio_Browser_Public.php:150
 msgid "Trying alternative servers..."
 msgstr "Tentando servidores alternativos..."
 
-#: Public/Lknwp_Radio_Browser_Public.php:145
+#: Public/Lknwp_Radio_Browser_Public.php:151
 msgid "Reverse active"
 msgstr "Reverter ativo"
 
-#: Public/Lknwp_Radio_Browser_Public.php:146
+#: Public/Lknwp_Radio_Browser_Public.php:152
 msgid "Reverse inactive"
 msgstr "Reverter inativo"
 
-#: Public/Lknwp_Radio_Browser_Public.php:147
+#: Public/Lknwp_Radio_Browser_Public.php:153
 msgid "Error querying API. "
 msgstr "Erro ao consultar API. "
+
+#~ msgid "Play"
+#~ msgstr "Play"
+
+#~ msgid "Pause"
+#~ msgstr "Pause"
+
+#, fuzzy
+#~| msgid "Copy link"
+#~ msgid "Copy Link"
+#~ msgstr "Copiar link"
+
+#, fuzzy
+#~| msgid "No Radio Selected"
+#~ msgid "No radio selected"
+#~ msgstr "Nenhuma Rádio Selecionada"
+
+#, fuzzy
+#~| msgid "Loading..."
+#~ msgid "Connecting..."
+#~ msgstr "Carregando..."
+
+#, php-format
+#~ msgid "Server not reachable: %s:%s"
+#~ msgstr "Servidor não acessível: %s:%s"
+
+#~ msgid "Unknown error"
+#~ msgstr "Erro desconhecido"
+
+#, php-format
+#~ msgid "cURL Error: %s"
+#~ msgstr "cURL Erro: %s"
+
+#~ msgid "Radio Not Found"
+#~ msgstr "Rádio Não Encontrada"
+
+#, php-format
+#~ msgid "The radio \"%s\" was not found in our database."
+#~ msgstr "A rádio \"%s\" não foi encontrada em nosso banco de dados."
+
+#~ msgid "Please select a radio to play."
+#~ msgstr "Por favor, selecione uma rádio para tocar."
+
+#~ msgid "Most Popular"
+#~ msgstr "Mais Populares"
+
+#~ msgid "Name"
+#~ msgstr "Nome"
+
+#~ msgid "Random"
+#~ msgstr "Aleatório"
+
+#~ msgid "Bitrate"
+#~ msgstr "Bitrate"
+
+#~ msgid "Error fetching radios from all servers."
+#~ msgstr "Erro ao buscar rádios de todos os servidores."
+
+#~ msgid "LKN Radio Browser - How to Use"
+#~ msgstr "LKN Radio Browser - Como Usar"
+
+#~ msgid "Add the shortcode <code>[radio_browser_player]</code>"
+#~ msgstr "Adicione o shortcode <code>[radio_browser_player]</code>"
 
 #, php-format
 #~ msgid "Debug: original slug \"%s\" converted to \"%s\""

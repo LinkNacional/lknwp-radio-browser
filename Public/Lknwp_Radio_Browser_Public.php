@@ -116,8 +116,14 @@ class Lknwp_Radio_Browser_Public {
 		if (isset($post->post_content) && has_shortcode($post->post_content, 'radio_browser_player')) {
 			wp_enqueue_script('lknwp-radio-player', plugin_dir_url( __FILE__ ) . 'js/lknwp-radio-browser-player.js', array(), $this->version, true);
 			wp_enqueue_script('lknwp-radio-player-song', plugin_dir_url( __FILE__ ) . 'js/lknwp-radio-browser-player-song.js', array(), $this->version, true);
-			
+
 			// Localize player scripts
+			wp_localize_script('lknwp-radio-player', 'lknwpRadioTexts', array(
+				'unableToPlay' => __('Unable to play this radio station. Please try again later or choose another station.', 'lknwp-radio-browser'),
+				'listeningTo' => __('🎵 Listening to {station} - ', 'lknwp-radio-browser'),
+				'onlineRadio' => __('Online Radio', 'lknwp-radio-browser')
+			));	
+
 			wp_localize_script('lknwp-radio-player-song', 'lknwpRadioTexts', array(
 				'warning' => __('Warning: This radio uses insecure streaming (HTTP) and cannot be played on HTTPS pages. Ask the provider to enable HTTPS or access via HTTP.', 'lknwp-radio-browser'),
 				'listeners' => __('listeners', 'lknwp-radio-browser'),
