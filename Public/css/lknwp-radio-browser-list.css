@@ -36,7 +36,7 @@
 /* ===== FORM ROWS ===== */
 .lrt-radio-row {
     display: flex;
-    gap: 18px;
+    gap: 10px;
     flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
@@ -60,8 +60,7 @@
     align-items: flex-start;
 }
 
-.lrt-radio-field--country,
-.lrt-radio-field--limit {
+.lrt-radio-field--country {
     min-width: 90px;
 }
 
