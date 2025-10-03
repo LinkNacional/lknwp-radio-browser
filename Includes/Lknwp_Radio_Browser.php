@@ -180,7 +180,7 @@ class Lknwp_Radio_Browser {
         header('Access-Control-Expose-Headers: Content-Type, Content-Length, Accept-Ranges');
         
         // Lidar com preflight OPTIONS
-        if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+        if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
             http_response_code(200);
             exit;
         }
@@ -191,16 +191,18 @@ class Lknwp_Radio_Browser {
         header('Expires: 0');
         
         // Primeiro testar conectividade básica
-        $parsed_url = parse_url($stream_url);
+        $parsed_url = wp_parse_url($stream_url);
         $host = $parsed_url['host'];
         $port = isset($parsed_url['port']) ? $parsed_url['port'] : 80;
         
         // Teste de conectividade TCP
+        // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fsockopen -- Required for real-time stream connectivity test
         $socket = @fsockopen($host, $port, $errno, $errstr, 10);
         if (!$socket) {
             /* translators: %1$s: server hostname, %2$s: port number */
             return new \WP_Error('connection_error', sprintf( __( 'Server not reachable: %1$s:%2$s', 'lknwp-radio-browser' ), $host, $port ), array('status' => 502));
         }
+        // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fclose -- Required for real-time stream connectivity test
         fclose($socket);
         
         // Configurar contexto com headers mais completos e timeouts menores
@@ -225,31 +227,25 @@ class Lknwp_Radio_Browser {
         ));
 
         // Tentar conectar ao stream
+        // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fopen -- Required for real-time audio stream proxy
         $remote_stream = @fopen($stream_url, 'rb', false, $context);
         
         if (!$remote_stream) {
             $error = error_get_last();
             $error_msg = $error ? $error['message'] : __( 'Unknown error', 'lknwp-radio-browser' );
             
-            // Tentar diagnóstico via cURL como fallback
-            if (function_exists('curl_init')) {
-                $ch = curl_init();
-                curl_setopt($ch, CURLOPT_URL, $stream_url);
-                curl_setopt($ch, CURLOPT_NOBODY, true);
-                curl_setopt($ch, CURLOPT_TIMEOUT, 10);
-                curl_setopt($ch, CURLOPT_USERAGENT, 'LKNWP Radio Browser Proxy/1.0');
-                curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-                curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-                
-                $result = curl_exec($ch);
-                $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-                $curl_error = curl_error($ch);
-                curl_close($ch);
-                
-                if ($curl_error) {
-                    /* translators: %s: cURL error message */
-                    return new \WP_Error('curl_error', sprintf( __( 'cURL Error: %s', 'lknwp-radio-browser' ), $curl_error ), array('status' => 502));
-                }
+            // Tentar diagnóstico via wp_remote_head como fallback
+            $response = wp_remote_head($stream_url, array(
+                'timeout' => 10,
+                'user-agent' => 'LKNWP Radio Browser Proxy/1.0',
+                'redirection' => 3,
+                'sslverify' => false
+            ));
+            
+            if (is_wp_error($response)) {
+                $error_msg = $response->get_error_message();
+                /* translators: %s: error message from remote server */
+                return new \WP_Error('remote_error', sprintf( __( 'Remote Error: %s', 'lknwp-radio-browser' ), $error_msg ), array('status' => 502));
             }
             
             return new \WP_Error('stream_error', "Stream inacessível: {$error_msg}", array('status' => 502));
@@ -274,6 +270,7 @@ class Lknwp_Radio_Browser {
         // Stream direto para o cliente com chunks maiores
         $chunk_size = 16384; // 16KB chunks
         while (!feof($remote_stream)) {
+            // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fread -- Required for real-time audio stream data
             $data = fread($remote_stream, $chunk_size);
             if ($data === false) {
                 break;
@@ -291,6 +288,7 @@ class Lknwp_Radio_Browser {
             }
         }
 
+        // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fclose -- Required for real-time audio stream
         fclose($remote_stream);
         exit;
     }
@@ -364,14 +362,18 @@ class Lknwp_Radio_Browser {
 			}
 		} else {
 			// Fallback: Método antigo com parâmetros (manter compatibilidade)
-			$stream = isset($_GET['lrt_radio']) ? esc_url_raw($_GET['lrt_radio']) : '';
+			// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Public shortcode for radio streams, nonce not applicable
+			$stream = isset($_GET['lrt_radio']) ? esc_url_raw(wp_unslash($_GET['lrt_radio'])) : '';
 			// Força https no início da URL do stream se vier como http
 			if ($stream && strpos($stream, 'http://') === 0) {
 				$stream = 'https://' . substr($stream, 7);
 			}
-			$station_name = isset($_GET['lrt_name']) ? sanitize_text_field($_GET['lrt_name']) : '';
-			$station_img = isset($_GET['lrt_img']) ? esc_url($_GET['lrt_img']) : '';
-			$station_homepage = isset($_GET['lrt_homepage']) ? esc_url($_GET['lrt_homepage']) : '';
+			// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Public shortcode for radio streams, nonce not applicable
+			$station_name = isset($_GET['lrt_name']) ? sanitize_text_field(wp_unslash($_GET['lrt_name'])) : '';
+			// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Public shortcode for radio streams, nonce not applicable
+			$station_img = isset($_GET['lrt_img']) ? esc_url_raw(wp_unslash($_GET['lrt_img'])) : '';
+			// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Public shortcode for radio streams, nonce not applicable
+			$station_homepage = isset($_GET['lrt_homepage']) ? esc_url_raw(wp_unslash($_GET['lrt_homepage'])) : '';
 			
 			// No método antigo não temos dados da estação, então zera as estatísticas
 			$station_clickcount = 0;
@@ -552,18 +554,23 @@ class Lknwp_Radio_Browser {
 	 * - hide_all_filters: Hide entire filter form (yes/no)
 	 */
 	public function radio_browser_list_shortcode($atts) {
-		$countrycode = isset($_GET['lrt_countrycode']) ? sanitize_text_field($_GET['lrt_countrycode']) : (isset($atts['countrycode']) ? $atts['countrycode'] : 'BR');
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Public shortcode for radio list, nonce not applicable
+		$countrycode = isset($_GET['lrt_countrycode']) ? sanitize_text_field(wp_unslash($_GET['lrt_countrycode'])) : (isset($atts['countrycode']) ? $atts['countrycode'] : 'BR');
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Public shortcode for radio list, nonce not applicable
 		$limit = isset($_GET['lrt_limit']) ? intval($_GET['lrt_limit']) : (isset($atts['limit']) ? intval($atts['limit']) : 20);
 		$player_page = isset($atts['player_page']) ? sanitize_title($atts['player_page']) : 'player';
-		$search = isset($_GET['lrt_radio_search']) ? sanitize_text_field($_GET['lrt_radio_search']) : '';
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Public shortcode for radio list, nonce not applicable
+		$search = isset($_GET['lrt_radio_search']) ? sanitize_text_field(wp_unslash($_GET['lrt_radio_search'])) : '';
 		$sort_options = [
 			'clickcount' => __( 'Most Popular', 'lknwp-radio-browser' ),
 			'name' => __( 'Name', 'lknwp-radio-browser' ),
 			'random' => __( 'Random', 'lknwp-radio-browser' ),
 			'bitrate' => __( 'Bitrate', 'lknwp-radio-browser' )
 		];
-		$sort = isset($_GET['lrt_sort']) && isset($sort_options[$_GET['lrt_sort']]) ? $_GET['lrt_sort'] : (isset($atts['sort']) ? $atts['sort'] : 'clickcount');
-		$reverse = isset($_GET['lrt_reverse']) ? $_GET['lrt_reverse'] : '1'; // 1 = reverse active by default
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Public shortcode for radio list, nonce not applicable
+		$sort = isset($_GET['lrt_sort']) && isset($sort_options[sanitize_text_field(wp_unslash($_GET['lrt_sort']))]) ? sanitize_text_field(wp_unslash($_GET['lrt_sort'])) : (isset($atts['sort']) ? $atts['sort'] : 'clickcount');
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Public shortcode for radio list, nonce not applicable
+		$reverse = isset($_GET['lrt_reverse']) ? sanitize_text_field(wp_unslash($_GET['lrt_reverse'])) : '1'; // 1 = reverse active by default
 
 		$atts = shortcode_atts([
 			'countrycode' => $countrycode,
