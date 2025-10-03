@@ -164,8 +164,6 @@ class Lknwp_Radio_Browser {
         $is_valid = filter_var($param, FILTER_VALIDATE_URL) && 
                    (strpos($param, 'http') === 0);
         
-        error_log("LKNWP Radio Proxy: Validando URL '{$param}' - " . ($is_valid ? 'VÁLIDA' : 'INVÁLIDA'));
-        
         return $is_valid;
     }
 
@@ -174,9 +172,6 @@ class Lknwp_Radio_Browser {
      */
     public function proxy_stream($request) {
         $stream_url = $request->get_param('url');
-        
-        // Log para debug
-        error_log('LKNWP Radio Proxy: Tentando conectar a ' . $stream_url);
         
         // Headers CORS permissivos ANTES de qualquer output
         header('Access-Control-Allow-Origin: *');
@@ -203,8 +198,7 @@ class Lknwp_Radio_Browser {
         // Teste de conectividade TCP
         $socket = @fsockopen($host, $port, $errno, $errstr, 10);
         if (!$socket) {
-            error_log("LKNWP Radio Proxy: Falha TCP para {$host}:{$port} - {$errno}: {$errstr}");
-            return new \WP_Error('connection_error', "Servidor não alcançável: {$host}:{$port}", array('status' => 502));
+            return new \WP_Error('connection_error', sprintf( __( 'Server not reachable: %s:%s', 'lknwp-radio-browser' ), $host, $port ), array('status' => 502));
         }
         fclose($socket);
         
@@ -229,15 +223,12 @@ class Lknwp_Radio_Browser {
             )
         ));
 
-        error_log("LKNWP Radio Proxy: Tentando conectar a {$stream_url}");
-
         // Tentar conectar ao stream
         $remote_stream = @fopen($stream_url, 'rb', false, $context);
         
         if (!$remote_stream) {
             $error = error_get_last();
-            $error_msg = $error ? $error['message'] : 'Erro desconhecido';
-            error_log("LKNWP Radio Proxy: Falha na abertura do stream - {$error_msg}");
+            $error_msg = $error ? $error['message'] : __( 'Unknown error', 'lknwp-radio-browser' );
             
             // Tentar diagnóstico via cURL como fallback
             if (function_exists('curl_init')) {
@@ -254,17 +245,13 @@ class Lknwp_Radio_Browser {
                 $curl_error = curl_error($ch);
                 curl_close($ch);
                 
-                error_log("LKNWP Radio Proxy: Teste cURL - HTTP {$http_code}, Erro: {$curl_error}");
-                
                 if ($curl_error) {
-                    return new \WP_Error('curl_error', "Erro cURL: {$curl_error}", array('status' => 502));
+                    return new \WP_Error('curl_error', sprintf( __( 'cURL Error: %s', 'lknwp-radio-browser' ), $curl_error ), array('status' => 502));
                 }
             }
             
             return new \WP_Error('stream_error', "Stream inacessível: {$error_msg}", array('status' => 502));
         }
-
-        error_log('LKNWP Radio Proxy: Conexão bem-sucedida');
 
         // Capturar e replicar headers do stream original
         $stream_meta = stream_get_meta_data($remote_stream);
@@ -273,7 +260,6 @@ class Lknwp_Radio_Browser {
                 // Replicar headers importantes
                 if (preg_match('/^(Content-Type|Content-Length|Accept-Ranges|Icy-)/i', $header)) {
                     header($header);
-                    error_log('LKNWP Radio Proxy: Header replicado - ' . $header);
                 }
             }
         }
@@ -301,13 +287,11 @@ class Lknwp_Radio_Browser {
             
             // Verificar se cliente desconectou
             if (connection_aborted()) {
-                error_log('LKNWP Radio Proxy: Cliente desconectou');
                 break;
             }
         }
 
         fclose($remote_stream);
-        error_log('LKNWP Radio Proxy: Stream finalizado');
         exit;
     }
 
@@ -370,11 +354,11 @@ class Lknwp_Radio_Browser {
 				$station_clickcount = isset($station_data->clickcount) ? intval($station_data->clickcount) : 0;
 				$station_votes = isset($station_data->votes) ? intval($station_data->votes) : 0;
 			} else {
-				// Rádio não encontrada na API - mostrar debug info
+				// Radio not found in API - show debug info
 				return '<div class="lkp-radio-error">
-							<h3>Rádio não encontrada</h3>
-							<p>A rádio "' . esc_html($radio_name_decoded) . '" não foi encontrada em nossa base de dados.</p>
-							<p><small>Debug: slug original "' . esc_html($radio_name) . '" convertido para "' . esc_html($radio_name_decoded) . '"</small></p>
+							<h3>' . __( 'Radio Not Found', 'lknwp-radio-browser' ) . '</h3>
+							<p>' . sprintf( __( 'The radio "%s" was not found in our database.', 'lknwp-radio-browser' ), esc_html($radio_name_decoded) ) . '</p>
+							<p><small>' . sprintf( __( 'Debug: original slug "%s" converted to "%s"', 'lknwp-radio-browser' ), esc_html($radio_name), esc_html($radio_name_decoded) ) . '</small></p>
 						</div>';
 			}
 		} else {
@@ -394,8 +378,8 @@ class Lknwp_Radio_Browser {
 			
 			if (empty($stream)) {
 				return '<div class="lkp-radio-error">
-							<h3>Nenhuma rádio selecionada</h3>
-							<p>Por favor, selecione uma rádio para reproduzir.</p>
+							<h3>' . __( 'No Radio Selected', 'lknwp-radio-browser' ) . '</h3>
+							<p>' . __( 'Please select a radio to play.', 'lknwp-radio-browser' ) . '</p>
 						</div>';
 			}
 		}
@@ -572,13 +556,13 @@ class Lknwp_Radio_Browser {
 		$player_page = isset($atts['player_page']) ? sanitize_title($atts['player_page']) : 'player';
 		$search = isset($_GET['lrt_radio_search']) ? sanitize_text_field($_GET['lrt_radio_search']) : '';
 		$sort_options = [
-			'clickcount' => 'Mais famosos',
-			'name' => 'Nome',
-			'random' => 'Aleatório',
-			'bitrate' => 'Bitrate'
+			'clickcount' => __( 'Most Popular', 'lknwp-radio-browser' ),
+			'name' => __( 'Name', 'lknwp-radio-browser' ),
+			'random' => __( 'Random', 'lknwp-radio-browser' ),
+			'bitrate' => __( 'Bitrate', 'lknwp-radio-browser' )
 		];
 		$sort = isset($_GET['lrt_sort']) && isset($sort_options[$_GET['lrt_sort']]) ? $_GET['lrt_sort'] : (isset($atts['sort']) ? $atts['sort'] : 'clickcount');
-		$reverse = isset($_GET['lrt_reverse']) ? $_GET['lrt_reverse'] : '1'; // 1 = reverso ativo por padrão
+		$reverse = isset($_GET['lrt_reverse']) ? $_GET['lrt_reverse'] : '1'; // 1 = reverse active by default
 
 		$atts = shortcode_atts([
 			'countrycode' => $countrycode,
@@ -640,7 +624,7 @@ class Lknwp_Radio_Browser {
 			}
 		}
 		if (!$stations || !is_array($stations)) {
-			return '<p>Error fetching radios from all servers.</p>';
+			return '<p>' . __( 'Error fetching radios from all servers.', 'lknwp-radio-browser' ) . '</p>';
 		}
 
 		// Prepare variables for template
@@ -769,7 +753,6 @@ class Lknwp_Radio_Browser {
 		));
 		
 		if (is_wp_error($response)) {
-			error_log('LKNWP Radio Browser: Erro na API - ' . $response->get_error_message());
 			return false;
 		}
 		

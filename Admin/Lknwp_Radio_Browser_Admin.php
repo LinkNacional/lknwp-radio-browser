@@ -112,8 +112,8 @@ class Lknwp_Radio_Browser_Admin {
 	 */
 	public function add_admin_menu() {
 		add_menu_page(
-			'LKN Radio Browser',           // Page title
-			'LKN Radio Browser',           // Menu title
+			__( 'LKN Radio Browser', 'lknwp-radio-browser' ),           // Page title
+			__( 'LKN Radio Browser', 'lknwp-radio-browser' ),           // Menu title
 			'manage_options',              // Capability
 			'lknwp-radio-browser',         // Menu slug
 			array($this, 'admin_page'),    // Callback function

@@ -38,6 +38,7 @@ define( 'LKNWP_RADIO_BROWSER_PLUGIN_FILE', __FILE__ );
 define( 'LKNWP_RADIO_BROWSER_PLUGIN_NAME', 'lknwp-radio-browser' );
 define( 'LKNWP_RADIO_BROWSER_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 define( 'LKNWP_RADIO_BROWSER_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
+define( 'LKNWP_RADIO_BROWSER_TEXT_DOMAIN', 'lknwp-radio-browser' );
 
 /**
  * Autoloader using Composer
