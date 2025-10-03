@@ -34,7 +34,7 @@ window.LKNWP_PLAYER_PAGE_SLUG = "<?php echo esc_js($atts['player_page']); ?>";
                 <?php if ($atts['hide_country'] !== 'yes'): ?>
                 <!-- Country Field -->
                 <div class="lrt-radio-field lrt-radio-field--country">
-                    <label for="lrt_countrycode"><?php _e( 'Country', 'lknwp-radio-browser' ); ?></label>
+                    <label for="lrt_countrycode"><?php esc_html_e( 'Country', 'lknwp-radio-browser' ); ?></label>
                     <select id="lrt_countrycode" name="lrt_countrycode" class="lrt-radio-select lrt-radio-select--country">
                         <?php
                         $countries = array(
@@ -83,7 +83,7 @@ window.LKNWP_PLAYER_PAGE_SLUG = "<?php echo esc_js($atts['player_page']); ?>";
                         ?>
                         
                         <?php foreach ($countries as $code => $name): ?>
-                            <option value="<?php echo esc_attr($code); ?>" <?php echo $selected_country === $code ? 'selected' : ''; ?>>
+                            <option value="<?php echo esc_attr($code); ?>" <?php echo $selected_country === $code ? esc_attr('selected') : ''; ?>>
                                 <?php echo esc_html($name); ?>
                             </option>
                         <?php endforeach; ?>
@@ -94,7 +94,7 @@ window.LKNWP_PLAYER_PAGE_SLUG = "<?php echo esc_js($atts['player_page']); ?>";
                 <?php if ($atts['hide_limit'] !== 'yes'): ?>
                 <!-- Limit Field -->
                 <div class="lrt-radio-field lrt-radio-field--limit">
-                    <label for="lrt_limit"><?php _e( 'Limit', 'lknwp-radio-browser' ); ?></label>
+                    <label for="lrt_limit"><?php esc_html_e( 'Limit', 'lknwp-radio-browser' ); ?></label>
                     <input type="number" id="lrt_limit" name="lrt_limit" value="<?php echo esc_attr($atts['limit']); ?>" min="1" max="100" class="lrt-radio-input lrt-radio-input--small">
                 </div>
                 <?php endif; ?>
@@ -102,10 +102,10 @@ window.LKNWP_PLAYER_PAGE_SLUG = "<?php echo esc_js($atts['player_page']); ?>";
                 <?php if ($atts['hide_sort'] !== 'yes'): ?>
                 <!-- Sort Field -->
                 <div class="lrt-radio-field lrt-radio-field--sort">
-                    <label for="lrt_sort"><?php _e( 'Sort', 'lknwp-radio-browser' ); ?></label>
+                    <label for="lrt_sort"><?php esc_html_e( 'Sort', 'lknwp-radio-browser' ); ?></label>
                     <select id="lrt_sort" name="lrt_sort" class="lrt-radio-select">
                         <?php foreach ($sort_options as $key => $label): ?>
-                            <option value="<?php echo esc_attr($key); ?>" <?php echo $atts['sort'] === $key ? 'selected' : ''; ?>>
+                            <option value="<?php echo esc_attr($key); ?>" <?php echo $atts['sort'] === $key ? esc_attr('selected') : ''; ?>>
                                 <?php echo esc_html($label); ?>
                             </option>
                         <?php endforeach; ?>
@@ -116,9 +116,9 @@ window.LKNWP_PLAYER_PAGE_SLUG = "<?php echo esc_js($atts['player_page']); ?>";
                 <?php if ($atts['hide_order'] !== 'yes'): ?>
                 <!-- Reverse Order Button -->
                 <div class="lrt-radio-field lrt-radio-field--reverse">
-                    <label for="lrt_reverse_btn"><?php _e( 'Order', 'lknwp-radio-browser' ); ?></label>
+                    <label for="lrt_reverse_btn"><?php esc_html_e( 'Order', 'lknwp-radio-browser' ); ?></label>
                     <button type="button" id="lrt_reverse_btn" class="lrt-radio-button lrt-radio-button--reverse">
-                        <?php echo $atts['reverse'] === '1' ? __( 'Reverse Active', 'lknwp-radio-browser' ) : __( 'Reverse Inactive', 'lknwp-radio-browser' ); ?>
+                        <?php echo $atts['reverse'] === '1' ? esc_html__( 'Reverse Active', 'lknwp-radio-browser' ) : esc_html__( 'Reverse Inactive', 'lknwp-radio-browser' ); ?>
                     </button>
                 </div>
                 <?php endif; ?>
@@ -131,7 +131,7 @@ window.LKNWP_PLAYER_PAGE_SLUG = "<?php echo esc_js($atts['player_page']); ?>";
                 <?php if ($atts['hide_search'] !== 'yes'): ?>
                 <!-- Search Field -->
                 <div class="lrt-radio-field lrt-radio-field--search">
-                    <label for="lrt_radio_search"><?php _e( 'Search Radio', 'lknwp-radio-browser' ); ?></label>
+                    <label for="lrt_radio_search"><?php esc_html_e( 'Search Radio', 'lknwp-radio-browser' ); ?></label>
                     <input type="text" id="lrt_radio_search" name="lrt_radio_search" value="<?php echo esc_attr($atts['search']); ?>" placeholder="<?php esc_attr_e( 'Search radio...', 'lknwp-radio-browser' ); ?>" class="lrt-radio-input lrt-radio-input--search">
                 </div>
                 <?php endif; ?>
@@ -139,7 +139,7 @@ window.LKNWP_PLAYER_PAGE_SLUG = "<?php echo esc_js($atts['player_page']); ?>";
                 <?php if ($atts['hide_button'] !== 'yes'): ?>
                 <!-- Submit Button -->
                 <div class="lrt-radio-field lrt-radio-field--submit">
-                    <button type="submit" class="lrt-radio-button lrt-radio-button--submit"><?php _e( 'Search', 'lknwp-radio-browser' ); ?></button>
+                    <button type="submit" class="lrt-radio-button lrt-radio-button--submit"><?php esc_html_e( 'Search', 'lknwp-radio-browser' ); ?></button>
                 </div>
                 <?php endif; ?>
                 
@@ -175,7 +175,7 @@ window.LKNWP_PLAYER_PAGE_SLUG = "<?php echo esc_js($atts['player_page']); ?>";
                 <img src="<?php echo esc_url($img); ?>" alt="<?php esc_attr_e( 'Radio logo', 'lknwp-radio-browser' ); ?>" class="lrt-radio-station__logo" onerror="this.onerror=null;this.src='<?php echo esc_url($default_img_url); ?>';">
                 
                 <div class="lrt-radio-station__content">
-                    <span class="lrt-radio-station__name"><?php echo $name; ?></span>
+                    <span class="lrt-radio-station__name"><?php echo esc_html($name); ?></span>
                 </div>
             </a>
         </li>

@@ -17,7 +17,7 @@ if (!defined('ABSPATH')) {
 
 <?php if (!$stream): ?>
     <div class="lkp-warning">
-        <strong><?php _e( 'Warning:', 'lknwp-radio-browser' ); ?></strong> <?php _e( 'No radio stream found. Please select a radio from the list.', 'lknwp-radio-browser' ); ?>
+        <strong><?php esc_html_e( 'Warning:', 'lknwp-radio-browser' ); ?></strong> <?php esc_html_e( 'No radio stream found. Please select a radio from the list.', 'lknwp-radio-browser' ); ?>
     </div>
 <?php else: ?>
 
@@ -40,7 +40,7 @@ if (!defined('ABSPATH')) {
             <img src="<?php echo esc_attr($station_img); ?>" alt="<?php esc_attr_e( 'Radio logo', 'lknwp-radio-browser' ); ?>" class="lkp-station-img" onerror="this.onerror=null;this.src='<?php echo esc_js($default_img_url); ?>';">
         </div>
         <div id="lknwp-radio-station-name" class="lkp-station-name">
-            <?php echo $station_name ? esc_html($station_name) : __( 'Online Radio', 'lknwp-radio-browser' ); ?>
+            <?php echo $station_name ? esc_html($station_name) : esc_html__( 'Online Radio', 'lknwp-radio-browser' ); ?>
         </div>
     </div>
     
@@ -109,14 +109,14 @@ if (!defined('ABSPATH')) {
         <div id="lknwp-radio-album-img" class="lkp-album-img"></div>
         <div class="lkp-song-info">
             <div id="lknwp-radio-artist" class="lkp-artist"></div>
-            <div id="lknwp-radio-current-song" class="lkp-current-song"><?php _e( 'Loading...', 'lknwp-radio-browser' ); ?></div>
+            <div id="lknwp-radio-current-song" class="lkp-current-song"><?php esc_html_e( 'Loading...', 'lknwp-radio-browser' ); ?></div>
             <div id="lknwp-radio-station-stats" class="lkp-station-stats"></div>
         </div>
     </div>
     
     <!-- Volume Control -->
     <div class="lkp-volume-section">
-        <label for="lknwp-radio-volume" class="lkp-volume-label"><?php _e( 'Volume', 'lknwp-radio-browser' ); ?></label>
+        <label for="lknwp-radio-volume" class="lkp-volume-label"><?php esc_html_e( 'Volume', 'lknwp-radio-browser' ); ?></label>
         <div class="lkp-volume-controls">
             <input type="range" id="lknwp-radio-volume" min="0" max="1" step="0.01" value="0.2" class="lkp-volume-slider">
             <span id="lknwp-radio-volume-value" class="lkp-volume-display">20%</span>

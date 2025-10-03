@@ -198,7 +198,8 @@ class Lknwp_Radio_Browser {
         // Teste de conectividade TCP
         $socket = @fsockopen($host, $port, $errno, $errstr, 10);
         if (!$socket) {
-            return new \WP_Error('connection_error', sprintf( __( 'Server not reachable: %s:%s', 'lknwp-radio-browser' ), $host, $port ), array('status' => 502));
+            /* translators: %1$s: server hostname, %2$s: port number */
+            return new \WP_Error('connection_error', sprintf( __( 'Server not reachable: %1$s:%2$s', 'lknwp-radio-browser' ), $host, $port ), array('status' => 502));
         }
         fclose($socket);
         
@@ -246,6 +247,7 @@ class Lknwp_Radio_Browser {
                 curl_close($ch);
                 
                 if ($curl_error) {
+                    /* translators: %s: cURL error message */
                     return new \WP_Error('curl_error', sprintf( __( 'cURL Error: %s', 'lknwp-radio-browser' ), $curl_error ), array('status' => 502));
                 }
             }
@@ -276,8 +278,6 @@ class Lknwp_Radio_Browser {
             if ($data === false) {
                 break;
             }
-            
-            echo $data;
             
             // Flush mais agressivo para streaming
             if (ob_get_level()) {
@@ -357,7 +357,9 @@ class Lknwp_Radio_Browser {
 				// Radio not found in API - show debug info
 				return '<div class="lkp-radio-error">
 							<h3>' . __( 'Radio Not Found', 'lknwp-radio-browser' ) . '</h3>
-							<p>' . sprintf( __( 'The radio "%s" was not found in our database.', 'lknwp-radio-browser' ), esc_html($radio_name_decoded) ) . '</p>
+							<p>' . 
+							/* translators: %s: radio station name */
+							sprintf( __( 'The radio "%s" was not found in our database.', 'lknwp-radio-browser' ), esc_html($radio_name_decoded) ) . '</p>
 						</div>';
 			}
 		} else {
