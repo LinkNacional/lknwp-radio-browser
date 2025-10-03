@@ -682,33 +682,56 @@ class Lknwp_Radio_Browser {
 	public function register_player_rewrite_rules() {
 		$cached_rules = get_option('lknwp_player_rewrite_rules');
 		
+		// Se não há cache, não faz nada no init (será criado no save_post)
 		if ($cached_rules === false) {
-			$cached_rules = $this->get_player_pages_rules();
-			update_option('lknwp_player_rewrite_rules', $cached_rules);
+			return;
 		}
 		
-		foreach ($cached_rules as $rule) {
-			add_rewrite_rule($rule['regex'], $rule['redirect'], 'top');
+		// Só registra se há rules em cache
+		if (is_array($cached_rules) && !empty($cached_rules)) {
+			foreach ($cached_rules as $rule) {
+				add_rewrite_rule($rule['regex'], $rule['redirect'], 'top');
+			}
 		}
 	}
 
 	/**
 	 * Busca páginas com shortcode do player e gera regras de rewrite
+	 * Compatível com Elementor, Divi, e outros page builders
 	 */
 	private function get_player_pages_rules() {
 		global $wpdb;
 		
+		// Busca no post_content (Gutenberg, editor clássico, maioria dos page builders)
 		$player_pages = $wpdb->get_results($wpdb->prepare("
-			SELECT post_name 
+			SELECT DISTINCT post_name 
 			FROM {$wpdb->posts} 
 			WHERE post_type = 'page' 
 			AND post_status = 'publish' 
 			AND post_content LIKE %s
 		", '%[radio_browser_player%'));
 		
+		// Busca também no meta (Elementor e alguns outros page builders)
+		$meta_pages = $wpdb->get_results($wpdb->prepare("
+			SELECT DISTINCT p.post_name 
+			FROM {$wpdb->posts} p
+			INNER JOIN {$wpdb->postmeta} pm ON p.ID = pm.post_id
+			WHERE p.post_type = 'page' 
+			AND p.post_status = 'publish' 
+			AND pm.meta_value LIKE %s
+		", '%[radio_browser_player%'));
+		
+		// Combina resultados e remove duplicatas
+		$all_pages = array_merge($player_pages, $meta_pages);
+		$unique_slugs = array();
+		foreach ($all_pages as $page) {
+			if (!in_array($page->post_name, $unique_slugs)) {
+				$unique_slugs[] = $page->post_name;
+			}
+		}
+		
 		$rules = array();
-		foreach ($player_pages as $page) {
-			$slug = $page->post_name;
+		foreach ($unique_slugs as $slug) {
 			$rules[] = array(
 				'regex' => "^{$slug}/([^/]+)/?$",
 				'redirect' => "index.php?pagename={$slug}&radio_name=\$matches[1]"
@@ -720,12 +743,40 @@ class Lknwp_Radio_Browser {
 
 	/**
 	 * Atualiza rewrite rules quando página com shortcode é salva
+	 * Compatível com Elementor, Divi, e outros page builders
 	 */
 	public function handle_player_page_changes($post_id, $post) {
 		if ($post->post_type !== 'page') return;
 		
+		$has_shortcode = false;
+		
+		// Verifica no post_content (método padrão)
 		if (has_shortcode($post->post_content, 'radio_browser_player')) {
-			delete_option('lknwp_player_rewrite_rules');
+			$has_shortcode = true;
+		}
+		
+		// Verifica também nos metadados (Elementor, Divi, etc.)
+		if (!$has_shortcode) {
+			$meta_values = get_post_meta($post_id);
+			foreach ($meta_values as $meta_value) {
+				if (is_array($meta_value)) {
+					foreach ($meta_value as $value) {
+						if (is_string($value) && strpos($value, '[radio_browser_player') !== false) {
+							$has_shortcode = true;
+							break 2;
+						}
+					}
+				} elseif (is_string($meta_value) && strpos($meta_value, '[radio_browser_player') !== false) {
+					$has_shortcode = true;
+					break;
+				}
+			}
+		}
+		
+		if ($has_shortcode) {
+			// Regenera cache das rules
+			$new_rules = $this->get_player_pages_rules();
+			update_option('lknwp_player_rewrite_rules', $new_rules);
 			flush_rewrite_rules();
 		}
 	}
