@@ -116,10 +116,32 @@ class Lknwp_Radio_Browser_Public {
 		if (isset($post->post_content) && has_shortcode($post->post_content, 'radio_browser_player')) {
 			wp_enqueue_script('lknwp-radio-player', plugin_dir_url( __FILE__ ) . 'js/lknwp-radio-browser-player.js', array(), $this->version, true);
 			wp_enqueue_script('lknwp-radio-player-song', plugin_dir_url( __FILE__ ) . 'js/lknwp-radio-browser-player-song.js', array(), $this->version, true);
+			
+			// Localize player scripts
+			wp_localize_script('lknwp-radio-player-song', 'lknwpRadioTexts', array(
+				'warning' => __('Warning: This radio uses insecure streaming (HTTP) and cannot be played on HTTPS pages. Ask the provider to enable HTTPS or access via HTTP.', 'lknwp-radio-browser'),
+				'listeners' => __('listeners', 'lknwp-radio-browser'),
+				'likes' => __('likes', 'lknwp-radio-browser'),
+				'noSongFoundJson' => __('No song found in JSON', 'lknwp-radio-browser'),
+				'noSongFoundHtml' => __('No song found in HTML', 'lknwp-radio-browser'),
+				'responseNotJson' => __('Response is not JSON', 'lknwp-radio-browser'),
+				'audioComponent' => __('Detected audio component', 'lknwp-radio-browser'),
+				'corsBlocked' => __('CORS_BLOCKED: Opaque response, cannot read content', 'lknwp-radio-browser'),
+				'networkError' => __('NETWORK_ERROR: Status 0, possible network or CORS issue', 'lknwp-radio-browser'),
+				'audioStream' => __('AUDIO_STREAM: Response is an audio stream', 'lknwp-radio-browser'),
+				'textTimeout' => __('TEXT_TIMEOUT: Text conversion exceeded 5 seconds', 'lknwp-radio-browser'),
+				'contentTypeNotJson' => __('Content-Type is not JSON: ', 'lknwp-radio-browser')
+			));
 		}
 
 		if (isset($post->post_content) && has_shortcode($post->post_content, 'radio_browser_list')) {
 			wp_enqueue_script('lknwp-radio-list', plugin_dir_url( __FILE__ ) . 'js/lknwp-radio-browser-list.js', array(), $this->version, true);
+			
+			// Localize list script
+			wp_localize_script('lknwp-radio-list', 'lknwpRadioTexts', array(
+				'loadingRadios' => __('Loading radios...', 'lknwp-radio-browser'),
+				'noRadiosFound' => __('No radios found.', 'lknwp-radio-browser')
+			));
 		}
 	}
 }

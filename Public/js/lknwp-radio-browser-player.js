@@ -127,7 +127,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 // Garantir que está rodando (necessário por política de navegador)
                 if (audioContext.state === 'suspended') {
                     audioContext.resume().then(function () {
-                        console.log('LKNWP Radio: AudioContext ativado após interação do usuário');
+                        console.log('LKNWP Radio: AudioContext activated after user interaction');
                     });
                 }
 

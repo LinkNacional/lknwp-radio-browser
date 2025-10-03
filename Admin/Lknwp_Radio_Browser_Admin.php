@@ -145,6 +145,16 @@ class Lknwp_Radio_Browser_Admin {
 			true
 		);
 		
+		// Localize admin script
+		wp_localize_script($this->plugin_name . '-admin-help', 'lknwpRadioTexts', array(
+			'copyFallbackError' => __('Fallback: Could not copy', 'lknwp-radio-browser'),
+			'buttonNotFound' => __('Button not found or invalid', 'lknwp-radio-browser'),
+			'copied' => __('Copied!', 'lknwp-radio-browser'),
+			'clickToCopy' => __('Click to copy shortcode', 'lknwp-radio-browser'),
+			'copyError' => __('Copy error: ', 'lknwp-radio-browser'),
+			'fallbackCopyError' => __('Fallback: Error copying', 'lknwp-radio-browser')
+		));
+		
 		// Prepare variables for template
 		$plugin_name = $this->plugin_name;
 		$version = $this->version;

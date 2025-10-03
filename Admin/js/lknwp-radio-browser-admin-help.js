@@ -13,7 +13,7 @@
             navigator.clipboard.writeText(text).then(function () {
                 showCopySuccess(button);
             }).catch(function (err) {
-                console.error('Erro ao copiar: ', err);
+                console.error(lknwpRadioTexts ? lknwpRadioTexts.copyError : 'Copy error: ', err);
                 fallbackCopyTextToClipboard(text, button);
             });
         } else {
@@ -42,10 +42,10 @@
             if (successful) {
                 showCopySuccess(button);
             } else {
-                console.error('Fallback: Não foi possível copiar');
+                console.error(lknwpRadioTexts ? lknwpRadioTexts.copyFallbackError : 'Fallback: Could not copy');
             }
         } catch (err) {
-            console.error('Fallback: Erro ao copiar', err);
+            console.error(lknwpRadioTexts ? lknwpRadioTexts.fallbackCopyError : 'Fallback: Error copying', err);
         }
 
         document.body.removeChild(textArea);
@@ -56,7 +56,7 @@
      */
     function showCopySuccess(button) {
         if (!button || !button.textContent) {
-            console.error('Botão não encontrado ou inválido');
+            console.error(lknwpRadioTexts ? lknwpRadioTexts.buttonNotFound : 'Button not found or invalid');
             return;
         }
 
@@ -69,7 +69,7 @@
         }
 
         // Adiciona classe active e muda texto
-        button.textContent = 'Copiado!';
+        button.textContent = lknwpRadioTexts ? lknwpRadioTexts.copied : 'Copied!';
         button.classList.add('active');
 
         // Restaura após 2 segundos
@@ -96,10 +96,10 @@
         });
 
         // Adiciona tooltips aos botões (opcional)
-        $('.lknwp-radio-copy-btn').attr('title', 'Clique para copiar o shortcode');
+        $('.lknwp-radio-copy-btn').attr('title', lknwpRadioTexts ? lknwpRadioTexts.clickToCopy : 'Click to copy shortcode');
 
         // Log para debug
-        console.log('LKN Radio Browser Admin Help Page carregada');
+        console.log('LKN Radio Browser Admin Help Page loaded');
     });
 
 })(jQuery);

@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (window.location.protocol === 'https:' && streamUrl && streamUrl.startsWith('http:')) {
         var warningDiv = document.createElement('div');
         warningDiv.style = 'background:#ffeaea;color:#d00;padding:12px;border-radius:8px;margin-bottom:16px;border:1px solid #d00;text-align:center;font-weight:600;';
-        warningDiv.innerHTML = 'Atenção: Esta rádio utiliza streaming inseguro (HTTP) e não pode ser reproduzida em páginas HTTPS. Solicite ao provedor que habilite HTTPS ou acesse por HTTP.';
+        warningDiv.innerHTML = lknwpRadioTexts ? lknwpRadioTexts.warning : 'Warning: This radio uses insecure streaming (HTTP) and cannot be played on HTTPS pages. Ask the provider to enable HTTPS or access via HTTP.';
         var playerBlock = document.getElementById('lknwp-radio-custom-player');
         if (playerBlock) {
             playerBlock.parentNode.insertBefore(warningDiv, playerBlock);
@@ -74,9 +74,9 @@ document.addEventListener('DOMContentLoaded', function () {
             if (window.LKNWP_STATION_CLICKCOUNT > 0 || window.LKNWP_STATION_VOTES > 0) {
                 var statsText = '';
                 if (window.LKNWP_STATION_CLICKCOUNT > 0) {
-                    statsText = formatNumber(window.LKNWP_STATION_CLICKCOUNT) + ' ouvintes';
+                    statsText = formatNumber(window.LKNWP_STATION_CLICKCOUNT) + ' ' + (lknwpRadioTexts ? lknwpRadioTexts.listeners : 'listeners');
                 } else if (window.LKNWP_STATION_VOTES > 0) {
-                    statsText = formatNumber(window.LKNWP_STATION_VOTES) + ' likes';
+                    statsText = formatNumber(window.LKNWP_STATION_VOTES) + ' ' + (lknwpRadioTexts ? lknwpRadioTexts.likes : 'likes');
                 }
 
                 if (artista && artista.trim()) {
@@ -151,9 +151,9 @@ document.addEventListener('DOMContentLoaded', function () {
                             if (window.LKNWP_STATION_CLICKCOUNT > 0 || window.LKNWP_STATION_VOTES > 0) {
                                 var statsText = '';
                                 if (window.LKNWP_STATION_CLICKCOUNT > 0) {
-                                    statsText = formatNumber(window.LKNWP_STATION_CLICKCOUNT) + ' ouvintes';
+                                    statsText = formatNumber(window.LKNWP_STATION_CLICKCOUNT) + ' ' + (lknwpRadioTexts ? lknwpRadioTexts.listeners : 'listeners');
                                 } else if (window.LKNWP_STATION_VOTES > 0) {
-                                    statsText = formatNumber(window.LKNWP_STATION_VOTES) + ' likes';
+                                    statsText = formatNumber(window.LKNWP_STATION_VOTES) + ' ' + (lknwpRadioTexts ? lknwpRadioTexts.likes : 'likes');
                                 }
                                 artistaFinal = iTunesArtist + ' - ' + statsText;
                             }
@@ -459,7 +459,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     .then(function (response) {
                         var contentType = response.headers.get('content-type') || '';
                         if (!contentType.includes('application/json')) {
-                            throw new Error('Resposta não é JSON');
+                            throw new Error(lknwpRadioTexts ? lknwpRadioTexts.responseNotJson : 'Response is not JSON');
                         }
                         return response.json();
                     })
@@ -526,7 +526,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                         // Verifica se é componente de áudio
                         if (isAudioComponent(result.response, html)) {
-                            throw new Error('Método otimizado falhou - resposta é componente de áudio');
+                            throw new Error(lknwpRadioTexts ? lknwpRadioTexts.audioComponent : 'Optimized method failed - response is audio component');
                         }
                         var musicaHtml = '';
                         var artistaHtml = '';
@@ -679,19 +679,19 @@ document.addEventListener('DOMContentLoaded', function () {
 
                         // Se a resposta é opaque (CORS bloqueado), tenta uma abordagem alternativa
                         if (response.type === 'opaque') {
-                            throw new Error('CORS_BLOCKED: Resposta opaca, não é possível ler o conteúdo');
+                            throw new Error(lknwpRadioTexts ? lknwpRadioTexts.corsBlocked : 'CORS_BLOCKED: Opaque response, cannot read content');
                         }
 
                         // Se status é 0 ou não está ok, também pode ser problema de CORS
                         if (!response.ok && response.status === 0) {
-                            throw new Error('NETWORK_ERROR: Status 0, possível problema de rede ou CORS');
+                            throw new Error(lknwpRadioTexts ? lknwpRadioTexts.networkError : 'NETWORK_ERROR: Status 0, possible network or CORS issue');
                         }
 
                         // Verifica Content-Type para evitar processar streams de áudio
                         var contentType = response.headers.get('content-type') || '';
 
                         if (contentType.includes('audio/') || contentType.includes('application/octet-stream')) {
-                            throw new Error('AUDIO_STREAM: Resposta é um stream de áudio');
+                            throw new Error(lknwpRadioTexts ? lknwpRadioTexts.audioStream : 'AUDIO_STREAM: Response is an audio stream');
                         }
 
                         // Timeout para conversão de texto (evita travamento com streams grandes)
@@ -701,7 +701,7 @@ document.addEventListener('DOMContentLoaded', function () {
                             }),
                             new Promise(function (_, reject) {
                                 setTimeout(function () {
-                                    reject(new Error('TEXT_TIMEOUT: Conversão de texto excedeu 5 segundos'));
+                                    reject(new Error(lknwpRadioTexts ? lknwpRadioTexts.textTimeout : 'TEXT_TIMEOUT: Text conversion exceeded 5 seconds'));
                                 }, 5000);
                             })
                         ]);
@@ -910,11 +910,11 @@ document.addEventListener('DOMContentLoaded', function () {
             var contentType = result.response.headers.get('content-type') || '';
 
             if (!contentType.includes('application/json')) {
-                return { found: false, reason: 'Content-Type não é JSON: ' + contentType };
+                return { found: false, reason: (lknwpRadioTexts ? lknwpRadioTexts.contentTypeNotJson : 'Content-Type is not JSON: ') + contentType };
             }
 
             if (isAudioComponent(result.response, result.text)) {
-                return { found: false, reason: 'Detectado componente de áudio' };
+                return { found: false, reason: lknwpRadioTexts ? lknwpRadioTexts.audioComponent : 'Detected audio component' };
             }
 
             var data = JSON.parse(result.text);
@@ -952,7 +952,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 return { found: true, musica: musica, artista: artista };
             } else {
-                return { found: false, reason: 'Nenhuma música encontrada no JSON' };
+                return { found: false, reason: lknwpRadioTexts ? lknwpRadioTexts.noSongFoundJson : 'No song found in JSON' };
             }
         } catch (e) {
             return { found: false, reason: 'Erro ao parsear JSON: ' + e.message };
@@ -961,7 +961,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function tryParseHtmlData(result) {
         if (isAudioComponent(result.response, result.text)) {
-            return { found: false, reason: 'Detectado componente de áudio' };
+            return { found: false, reason: lknwpRadioTexts ? lknwpRadioTexts.audioComponent : 'Detected audio component' };
         }
 
         var html = result.text;
@@ -1008,7 +1008,7 @@ document.addEventListener('DOMContentLoaded', function () {
             // Verifica se há Current Song no HTML
             var currentSongPattern = /Current Song/gi;
             var songMatches = html.match(currentSongPattern);
-            return { found: false, reason: 'Nenhuma música encontrada no HTML' };
+            return { found: false, reason: lknwpRadioTexts ? lknwpRadioTexts.noSongFoundHtml : 'No song found in HTML' };
         }
     }
 
