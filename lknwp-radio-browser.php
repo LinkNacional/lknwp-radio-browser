@@ -13,9 +13,9 @@
  * @package           Lknwp_Radio_Browser
  *
  * @wordpress-plugin
- * Plugin Name:       Radio Browser for Wordpress
+ * Plugin Name:       Radio Browser for WP
  * Plugin URI:        https://www.linknacional.com.br
- * Description:       WordPress plugin to list online radios and listen to live broadcasts directly on your site, using the Radio Browser API.
+ * Description:       WP plugin to list online radios and listen to live broadcasts directly on your site, using the Radio Browser API.
  * Version:           1.0.0
  * Author:            Link Nacional
  * Author URI:        https://www.linknacional.com.br/
