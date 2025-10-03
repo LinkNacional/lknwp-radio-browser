@@ -1,0 +1,134 @@
+:root {
+    /* Paleta do Logo */
+    --lkn-dark: #121519;
+    --lkn-green: #DAE300;
+
+    /* Paleta Primária */
+    --lkn-primary: #343B45;
+    --lkn-primary-light: #D2D700;
+
+    /* Paleta Secundária */
+    --lkn-blue: #0C71C3;
+    --lkn-red: #E31E17;
+    --lkn-yellow: #91960F;
+    --lkn-secondary-light: #D2D700;
+    --lkn-accent: #FF0D08;
+
+    /* Estados: Sucesso, Aviso, Erro */
+    --lkn-success: #4caf50;
+    --lkn-success-light: #c8e6c9;
+    --lkn-success-dark: #087f23;
+
+    --lkn-warning: #ff9800;
+    --lkn-warning-light: #fff3e0;
+    --lkn-warning-dark: #c66900;
+
+    --lkn-error: #f44336;
+    --lkn-error-light: #ffcdd2;
+    --lkn-error-dark: #ba000d;
+
+    /* Paleta Secundária - Tons de Azul */
+    --lkn-secondary-blue-1: #0C71C3;
+    --lkn-secondary-blue-2: #343b45;
+    --lkn-secondary-blue-3: #031c31;
+    --lkn-secondary-blue-4: #063962;
+    --lkn-secondary-blue-5: #095592;
+    --lkn-secondary-blue-6: #3d8dcf;
+    --lkn-secondary-blue-7: #6daadb;
+    --lkn-secondary-blue-8: #9ec6e7;
+    --lkn-secondary-blue-9: #cee3f3;
+
+    /* Paleta Secundária - Tons de Amarelo/Verde */
+    --lkn-secondary-yellow-1: #91960F;
+    --lkn-secondary-yellow-2: #343b45;
+    --lkn-secondary-yellow-3: #242604;
+    --lkn-secondary-yellow-4: #484b07;
+    --lkn-secondary-yellow-5: #6c710b;
+    --lkn-secondary-yellow-6: #a6ab3e;
+    --lkn-secondary-yellow-7: #bcc06e;
+    --lkn-secondary-yellow-8: #d3d59f;
+    --lkn-secondary-yellow-9: #e9eacf;
+
+    /* Paleta Secundária - Tons de Verde Limão */
+    --lkn-secondary-green-1: #DAE300;
+    --lkn-secondary-green-2: #343b45;
+    --lkn-secondary-green-3: #373900;
+    --lkn-secondary-green-4: #6d7200;
+    --lkn-secondary-green-5: #a3aa00;
+    --lkn-secondary-green-6: #e1e933;
+    --lkn-secondary-green-7: #e9ee66;
+    --lkn-secondary-green-8: #eff499c;
+    --lkn-secondary-green-9: #f8f9cc;
+
+    /* Paleta Secundária - Tons de Vermelho */
+    --lkn-secondary-red-1: #E31E17;
+    --lkn-secondary-red-2: #343b45;
+    --lkn-secondary-red-3: #390a06;
+    --lkn-secondary-red-4: #71140b;
+    --lkn-secondary-red-5: #aa1d10;
+    --lkn-secondary-red-6: #ee7d73;
+    --lkn-secondary-red-7: #f3a9a2;
+    --lkn-secondary-red-8: #f9d4d0;
+    --lkn-secondary-red-9: #e85245;
+
+    /* Paleta Secundária - Tons de Vermelho Acentuado */
+    --lkn-secondary-accent-1: #FF0D08;
+    --lkn-secondary-accent-2: #343b45;
+    --lkn-secondary-accent-3: #400302;
+    --lkn-secondary-accent-4: #800705;
+    --lkn-secondary-accent-5: #bf0a07;
+    --lkn-secondary-accent-6: #ff3d3a;
+    --lkn-secondary-accent-7: #ff6e6b;
+    --lkn-secondary-accent-8: #ff9e9d;
+    --lkn-secondary-accent-9: #ffcfce;
+
+    /* Paleta Secundária de Suporte */
+
+    /* Tons de Azul/Verde Suporte */
+    --lkn-support-blue-1: #669e9e;
+    --lkn-support-blue-2: #204355;
+    --lkn-support-blue-3: #1e3141;
+    --lkn-support-blue-4: #2a646b;
+    --lkn-support-blue-5: #8ab2b1;
+    --lkn-support-blue-6: #abccca;
+    --lkn-support-blue-7: #e1ecf4;
+    --lkn-support-blue-8: #f0f4f7;
+    --lkn-support-blue-9: #538b8c;
+
+    /* Tons de Cinza Suporte */
+    --lkn-support-gray-1: #b5b5b5;
+    --lkn-support-gray-2: #121519;
+    --lkn-support-gray-3: #343b45;
+    --lkn-support-gray-4: #6b6b6b;
+    --lkn-support-gray-5: #8f8f8f;
+    --lkn-support-gray-6: #dfdfdf;
+    --lkn-support-gray-7: #efefef;
+    --lkn-support-gray-8: #f4f4f4;
+    --lkn-support-gray-9: #f7f7f7;
+
+    /* Tons de Amarelo Suporte */
+    --lkn-support-yellow-1: #91960F;
+    --lkn-support-yellow-2: #f4f4e4;
+    --lkn-support-yellow-3: #fcfcf5;
+    --lkn-support-yellow-4: #e9eacf;
+    --lkn-support-yellow-5: #DAE300;
+    --lkn-support-yellow-6: #f7f7df;
+    --lkn-support-yellow-7: #fdfdf6;
+    --lkn-support-yellow-8: #f8f9cc;
+
+    /* Tons de Vermelho Suporte */
+    --lkn-support-red-1: #E31E17;
+    --lkn-support-red-2: #fcf7f5;
+    --lkn-support-red-3: #f8e5e2;
+    --lkn-support-red-4: #f9d4d0;
+
+    /* Cores específicas para Waves do Visualizador */
+
+    /* Categoria: Waves */
+    --lkn-wave-green: #00ff88;
+    --lkn-wave-green-dark: #00cc6a;
+    --lkn-wave-green-darker: #009944;
+    --lkn-wave-yellow: #ffff00;
+    --lkn-wave-red: #ff4444;
+    --lkn-wave-peak-red: #ff4444;
+}

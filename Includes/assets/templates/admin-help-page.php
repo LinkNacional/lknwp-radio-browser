@@ -14,7 +14,7 @@ if (!defined('ABSPATH')) {
 ?>
 
 <div class="wrap">
-    <h1><?php esc_htmlesc_html_e( 'LKN Radio Browser - How to Use', 'lknwp-radio-browser' ); ?></h1>
+    <h1><?php esc_html_e( 'LKN Radio Browser - How to Use', 'lknwp-radio-browser' ); ?></h1>
     
     <div class="lknwp-radio-admin-content">
         
@@ -32,7 +32,7 @@ if (!defined('ABSPATH')) {
                 <h4><?php esc_html_e( '📋 How it works:', 'lknwp-radio-browser' ); ?></h4>
                 <ul>
                     <li><?php esc_html_e( 'Create a page (e.g., "Player" with slug "player")', 'lknwp-radio-browser' ); ?></li>
-                    <li><?php esc_htmlesc_html_e( 'Add the shortcode', 'lknwp-radio-browser' ); ?> <code>[radio_browser_player]</code></li>
+                    <li><?php esc_html_e( 'Add the shortcode', 'lknwp-radio-browser' ); ?> <code>[radio_browser_player]</code></li>
                     <li><?php esc_html_e( 'The player will automatically receive URL parameters', 'lknwp-radio-browser' ); ?></li>
                     <li><?php esc_html_e( 'Works with links from the radio list', 'lknwp-radio-browser' ); ?></li>
                 </ul>

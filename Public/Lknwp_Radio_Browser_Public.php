@@ -77,10 +77,12 @@ class Lknwp_Radio_Browser_Public {
 
 		global $post;
 		if (isset($post->post_content) && has_shortcode($post->post_content, 'radio_browser_list')) {
+			wp_enqueue_style('lknwp-colors', plugin_dir_url(__FILE__) . '../Includes/assets/css/colors.css', array(), $this->version, 'all');
 			wp_enqueue_style('lknwp-radio-list', plugin_dir_url( __FILE__ ) . 'css/lknwp-radio-browser-list.css', array(), $this->version, 'all' );
 		}
 
 		if (isset($post->post_content) && has_shortcode($post->post_content, 'radio_browser_player')) {
+			wp_enqueue_style('lknwp-colors', plugin_dir_url(__FILE__) . '../Includes/assets/css/colors.css', array(), $this->version, 'all');
 			wp_enqueue_style('lknwp-radio-player', plugin_dir_url( __FILE__ ) . 'css/lknwp-radio-browser-player.css', array(), $this->version, 'all' );
 			wp_enqueue_style('lknwp-radio-audio-visualizer', plugin_dir_url( __FILE__ ) . 'css/lknwp-radio-browser-audio-visualizer.css', array(), $this->version, 'all' );
 		}

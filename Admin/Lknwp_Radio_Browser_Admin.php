@@ -129,6 +129,14 @@ class Lknwp_Radio_Browser_Admin {
 	 */
 	public function admin_page() {
 		// Enqueue specific styles and scripts for this page
+
+		wp_enqueue_style(
+			'lknwp-colors', 
+			plugin_dir_url(__FILE__) . '../Includes/assets/css/colors.css', 
+			array(), $this->version, 
+			'all'
+		);
+
 		wp_enqueue_style(
 			$this->plugin_name . '-admin-help', 
 			plugin_dir_url(__FILE__) . 'css/lknwp-radio-browser-admin-help.css', 
