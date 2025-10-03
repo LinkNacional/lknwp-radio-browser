@@ -11,7 +11,7 @@ msgstr ""
 "<translations@example."
 "com>\n"
 "POT-Creation-Date: "
-"2025-10-03 09:21-0300\n"
+"2025-10-03 09:53-0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Your "
 "Name <you@example.com>\n"
@@ -109,40 +109,33 @@ msgid ""
 "found in our database."
 msgstr ""
 
-#: Includes/Lknwp_Radio_Browser.php:361
-#, php-format
-msgid ""
-"Debug: original slug "
-"\"%s\" converted to \"%s\""
-msgstr ""
-
-#: Includes/Lknwp_Radio_Browser.php:381
+#: Includes/Lknwp_Radio_Browser.php:380
 msgid "No Radio Selected"
 msgstr ""
 
-#: Includes/Lknwp_Radio_Browser.php:382
+#: Includes/Lknwp_Radio_Browser.php:381
 msgid ""
 "Please select a radio to "
 "play."
 msgstr ""
 
-#: Includes/Lknwp_Radio_Browser.php:559
+#: Includes/Lknwp_Radio_Browser.php:558
 msgid "Most Popular"
 msgstr ""
 
-#: Includes/Lknwp_Radio_Browser.php:560
+#: Includes/Lknwp_Radio_Browser.php:559
 msgid "Name"
 msgstr ""
 
-#: Includes/Lknwp_Radio_Browser.php:561
+#: Includes/Lknwp_Radio_Browser.php:560
 msgid "Random"
 msgstr ""
 
-#: Includes/Lknwp_Radio_Browser.php:562
+#: Includes/Lknwp_Radio_Browser.php:561
 msgid "Bitrate"
 msgstr ""
 
-#: Includes/Lknwp_Radio_Browser.php:627
+#: Includes/Lknwp_Radio_Browser.php:626
 msgid ""
 "Error fetching radios "
 "from all servers."
@@ -602,5 +595,5 @@ msgid "Reverse inactive"
 msgstr ""
 
 #: Public/Lknwp_Radio_Browser_Public.php:147
-msgid "Error querying API."
+msgid "Error querying API. "
 msgstr ""

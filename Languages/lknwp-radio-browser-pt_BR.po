@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Blank WordPress Pot v1.0.0\n"
 "Report-Msgid-Bugs-To: Translator Name <translations@example.com>\n"
-"POT-Creation-Date: 2025-10-03 09:48-0300\n"
+"POT-Creation-Date: 2025-10-03 09:52-0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: Your Team <translations@example.com>\n"
@@ -477,8 +477,8 @@ msgid "Reverse inactive"
 msgstr "Reverter inativo"
 
 #: Public/Lknwp_Radio_Browser_Public.php:147
-msgid "Error querying API."
-msgstr "Erro ao consultar API."
+msgid "Error querying API. "
+msgstr "Erro ao consultar API. "
 
 #, php-format
 #~ msgid "Debug: original slug \"%s\" converted to \"%s\""

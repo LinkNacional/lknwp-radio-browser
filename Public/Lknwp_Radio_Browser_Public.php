@@ -144,7 +144,7 @@ class Lknwp_Radio_Browser_Public {
 				'tryingAlternativeServers' => __('Trying alternative servers...', 'lknwp-radio-browser'),
 				'reverseActive' => __('Reverse active', 'lknwp-radio-browser'),
 				'reverseInactive' => __('Reverse inactive', 'lknwp-radio-browser'),
-				'apiError' => __('Error querying API.', 'lknwp-radio-browser')
+				'apiError' => __('Error querying API. ', 'lknwp-radio-browser')
 			));
 		}
 	}
