@@ -1,0 +1,25 @@
+{
+    "name": "lkn/lknwp-radio-browser",
+    "description": "Radio Browser plugin for WordPress",
+    "type": "wordpress-plugin",
+    "license": "GPL-2.0+",
+    "authors": [
+        {
+            "name": "Link Nacional",
+            "email": "contato@linknacional.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "Lkn\\LKNWP_Radio_Browser\\Includes\\": "Includes/",
+            "Lkn\\LKNWP_Radio_Browser\\Admin\\": "Admin/",
+            "Lkn\\LKNWP_Radio_Browser\\Public\\": "Public/"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    }
+}

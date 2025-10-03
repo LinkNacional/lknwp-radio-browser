@@ -1,0 +1,419 @@
+/* ===== FONTE ROBOTO ===== */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700&display=swap');
+
+/* ===== MAIN WRAPPER ===== */
+.lrt-radio-wrap {
+    background: #181a20;
+    border-radius: 20px;
+    box-shadow: 0 2px 12px rgba(44, 62, 80, 0.10);
+    padding: 0 0 18px 0;
+    font-family: 'Roboto', Arial, sans-serif !important;
+}
+
+/* ===== NAVIGATION ===== */
+.lrt-radio-nav {
+    font-family: 'Roboto', Arial, sans-serif !important;
+    background: none;
+    border-radius: 16px;
+    padding: 18px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+}
+
+/* ===== FORM ===== */
+.lrt-radio-form {
+    background: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    width: 100%;
+}
+
+/* ===== FORM ROWS ===== */
+.lrt-radio-row {
+    display: flex;
+    gap: 18px;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.lrt-radio-row--first {
+    margin-bottom: 12px;
+}
+
+.lrt-radio-row--second {
+    gap: 12px;
+    align-items: flex-end;
+    justify-content: center;
+}
+
+/* ===== FORM FIELDS ===== */
+.lrt-radio-field {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.lrt-radio-field--country,
+.lrt-radio-field--limit {
+    min-width: 90px;
+}
+
+.lrt-radio-field--sort,
+.lrt-radio-field--reverse,
+.lrt-radio-field--submit {
+    min-width: 120px;
+}
+
+.lrt-radio-field--search {
+    min-width: 180px;
+    flex: 1;
+}
+
+/* ===== LABELS ===== */
+.lrt-radio-field label {
+    color: #e0e6f0;
+    font-weight: 500;
+    margin-bottom: 4px;
+    font-size: 15px;
+    font-family: 'Roboto', Arial, sans-serif !important;
+}
+
+/* ===== INPUTS, SELECTS, BUTTONS BASE ===== */
+.lrt-radio-input,
+.lrt-radio-select,
+.lrt-radio-button {
+    height: 35px;
+    outline: none;
+    box-shadow: none;
+    border-radius: 8px;
+    border: 1px solid #3a4756;
+    background: #1b3a62;
+    color: #e0e6f0;
+    font-size: 15px;
+    padding: 7px 12px;
+    transition: border 0.2s, background 0.2s;
+    box-sizing: border-box;
+    font-family: 'Roboto', Arial, sans-serif !important;
+}
+
+/* Controle específico para selects - COM IMPORTANT */
+.lrt-radio-select {
+    /* Remover aparência padrão */
+    -webkit-appearance: none !important;
+    -moz-appearance: none !important;
+    appearance: none !important;
+
+    /* Padding para setinha customizada */
+    padding-right: 30px !important;
+
+    /* Background com setinha SVG - TUDO COM IMPORTANT */
+    background-color: #1b3a62 !important;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23e0e6f0' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6,9 12,15 18,9'%3e%3c/polyline%3e%3c/svg%3e") !important;
+    background-repeat: no-repeat !important;
+    background-position: right 8px center !important;
+    background-size: 14px 14px !important;
+
+    /* Texto e cursor */
+    text-align: left !important;
+    cursor: pointer !important;
+}
+
+.lrt-radio-input:focus,
+.lrt-radio-select:focus,
+.lrt-radio-button:focus {
+    border: 1.5px solid #25487c;
+    background: #232b36;
+}
+
+/* Focus do select mantém comportamento padrão */
+
+/* ===== SPECIFIC INPUT STYLES ===== */
+.lrt-radio-input--small {
+    width: 70px;
+}
+
+.lrt-radio-input--search {
+    width: 100%;
+    min-width: 160px;
+    box-sizing: border-box;
+}
+
+/* ===== BUTTONS ===== */
+.lrt-radio-button {
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.lrt-radio-button--reverse {
+    padding: 7px 16px;
+}
+
+.lrt-radio-button--submit {
+    width: 100%;
+    padding: 7px 18px;
+    background: #e0e6f0 !important;
+    color: #232b36 !important;
+    border: none;
+    border-radius: 10px;
+    font-weight: 600;
+    box-shadow: 0 2px 8px rgba(44, 62, 80, 0.10);
+    transition: background 0.2s;
+}
+
+.lrt-radio-button--submit:hover {
+    background: #fff !important;
+    color: #1b3a62 !important;
+    border: 1.5px solid #25487c !important;
+}
+
+/* ===== RADIO STATIONS LIST ===== */
+.lrt-radio-list {
+    background: none;
+    border-radius: 18px;
+    gap: 18px 18px;
+    list-style: none;
+    padding: 18px 18px 0 18px;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+/* ===== RADIO STATION ITEM ===== */
+.lrt-radio-station {
+    background: #232b36;
+    border-radius: 14px;
+    box-shadow: 0 2px 8px rgba(44, 62, 80, 0.10);
+    transition: all 0.2s;
+    overflow: hidden;
+}
+
+.lrt-radio-station:hover {
+    background: #1b3a62;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(44, 62, 80, 0.20);
+}
+
+/* ===== RADIO STATION LINK ===== */
+.lrt-radio-station__link {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 18px 16px;
+    text-decoration: none;
+    color: inherit;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.lrt-radio-station__link:hover {
+    color: #fff;
+}
+
+.lrt-radio-station__link:active {
+    transform: scale(0.98);
+}
+
+/* ===== RADIO STATION LOGO ===== */
+.lrt-radio-station__logo {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #3a4756;
+    box-shadow: 0 1px 4px rgba(44, 62, 80, 0.10);
+    background: #181a20;
+    margin-right: 8px;
+}
+
+/* ===== RADIO STATION CONTENT ===== */
+.lrt-radio-station__content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    flex: 1;
+    text-align: center;
+}
+
+.lrt-radio-station__name {
+    color: #e0e6f0;
+    font-size: 0.92em;
+    font-weight: 500;
+    font-family: 'Roboto', Arial, sans-serif !important;
+    width: 100%;
+
+    /* Truncamento de texto com ... */
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.3;
+    max-height: calc(1.3em * 3);
+    word-break: break-word;
+}
+
+/* ===== LEGACY COMPATIBILITY ===== */
+.lrt-radio-list li:last-child {
+    border-bottom: none;
+}
+
+.lrt-radio-list span {
+    color: #e0e6f0;
+    font-size: 1.08em;
+    font-weight: 500;
+    font-family: 'Roboto', Arial, sans-serif !important;
+}
+
+
+
+/* ===== LEGACY FORM STYLES ===== */
+.lrt-radio-field input,
+.lrt-radio-field select,
+.lrt-radio-field button {
+    outline: none;
+    box-shadow: none;
+    border-radius: 8px;
+    border: 1px solid #3a4756;
+    background: #1b3a62;
+    color: #e0e6f0;
+    font-size: 15px;
+    transition: border 0.2s, background 0.2s;
+}
+
+.lrt-radio-field input:focus,
+.lrt-radio-field select:focus,
+.lrt-radio-field button:focus {
+    border: 1.5px solid #25487c;
+    background: #232b36;
+}
+
+.lrt-radio-form button[type="submit"] {
+    background: #e0e6f0 !important;
+    color: #232b36 !important;
+    font-weight: 600;
+    box-shadow: 0 2px 8px rgba(44, 62, 80, 0.10);
+}
+
+.lrt-radio-form button[type="submit"]:hover {
+    background: #fff !important;
+    color: #1b3a62 !important;
+    border: 1.5px solid #25487c !important;
+}
+
+/* ===== NUMBER INPUT STYLES ===== */
+.lrt-radio-field input[type="number"]::-webkit-inner-spin-button,
+.lrt-radio-field input[type="number"]::-webkit-outer-spin-button,
+.lrt-radio-input[type="number"]::-webkit-inner-spin-button,
+.lrt-radio-input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.lrt-radio-field input[type="number"],
+.lrt-radio-input[type="number"] {
+    -moz-appearance: textfield;
+    appearance: textfield;
+}
+
+
+
+
+
+/* ===== ERROR MESSAGES ===== */
+.lrt-radio-error {
+    background: #ffeaea;
+    padding: 12px;
+    border-radius: 6px;
+    color: #d00;
+    text-align: center;
+    list-style: none;
+}
+
+/* ===== SELECT DE PAÍS ESPECÍFICO ===== */
+.lrt-radio-select--country {
+    min-width: 140px;
+    font-size: 14px;
+    /* Padding normal - deixar navegador gerenciar setinha */
+    padding: 7px 12px;
+}
+
+/* Melhorar o texto no select */
+.lrt-radio-select--country {
+    /* Altura de linha para centralizar verticalmente */
+    line-height: 1.3;
+}
+
+/* Estilo das opções */
+.lrt-radio-select--country option {
+    padding: 8px 12px;
+    background: #1b3a62;
+    color: #e0e6f0;
+    line-height: 1.4;
+}
+
+
+
+/* Responsive para select de país */
+@media (max-width: 768px) {
+    .lrt-radio-select--country {
+        min-width: 120px;
+        font-size: 13px;
+        padding: 6px 10px;
+    }
+}
+
+/* ===== LOADING STATE ===== */
+.lrt-radio-loading {
+    background: #232b36;
+    border-radius: 14px;
+    box-shadow: 0 2px 8px rgba(44, 62, 80, 0.10);
+    padding: 32px 18px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    grid-column: 1 / -1;
+    text-align: center;
+    color: #e0e6f0;
+    font-family: 'Roboto', Arial, sans-serif !important;
+    font-weight: 500;
+}
+
+.lrt-loading-spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid rgba(224, 230, 240, 0.2);
+    border-top: 3px solid #4a90e2;
+    border-radius: 50%;
+    animation: lrt-spin 1s linear infinite;
+}
+
+@keyframes lrt-spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.lrt-radio-loading span {
+    font-size: 0.95em;
+    color: #e0e6f0;
+    opacity: 0.9;
+}
