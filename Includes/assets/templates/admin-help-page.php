@@ -67,6 +67,7 @@ if (!defined('ABSPATH')) {
                         <td>Número de rádios a exibir</td>
                         <td><code>20</code></td>
                     </tr>
+
                     <tr>
                         <td><code>sort</code></td>
                         <td>Ordenação (clickcount, name, random, bitrate)</td>
@@ -158,8 +159,16 @@ if (!defined('ABSPATH')) {
             <div class="lknwp-radio-example">
                 <h4>Configuração fixa (rádios dos EUA, 10 estações, sem filtros):</h4>
                 <div class="lknwp-radio-code-block">
-                    <code>[radio_browser_list player_page="player" countrycode="US" limit="10" sort="clickcount" hide_all_filters="yes"]</code>
-                    <button class="lknwp-radio-copy-btn" onclick="copyToClipboard('[radio_browser_list player_page=&quot;player&quot; countrycode=&quot;US&quot; limit=&quot;10&quot; sort=&quot;clickcount&quot; hide_all_filters=&quot;yes&quot;]')">Copiar</button>
+                    <code>[radio_browser_list player_page="player" countrycode="US" limit="10" hide_all_filters="yes"]</code>
+                    <button class="lknwp-radio-copy-btn" onclick="copyToClipboard('[radio_browser_list player_page=&quot;player&quot; countrycode=&quot;US&quot; limit=&quot;10&quot; hide_all_filters=&quot;yes&quot;]')">Copiar</button>
+                </div>
+            </div>
+
+            <div class="lknwp-radio-example">
+                <h4>Lista ordenada por nome (alfabética):</h4>
+                <div class="lknwp-radio-code-block">
+                    <code>[radio_browser_list player_page="player" sort="name"]</code>
+                    <button class="lknwp-radio-copy-btn" onclick="copyToClipboard('[radio_browser_list player_page=&quot;player&quot; sort=&quot;name&quot;]')">Copiar</button>
                 </div>
             </div>
         </div>

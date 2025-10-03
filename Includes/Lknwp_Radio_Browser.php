@@ -555,7 +555,7 @@ class Lknwp_Radio_Browser {
 	 * - player_page: Page slug for the radio player
 	 * - countrycode: Country code filter (default: BR)
 	 * - limit: Number of stations to show (default: 20)
-	 * - sort: Sort order (clickcount, name, random, bitrate)
+	 * - sort: Sort order (clickcount, name, random, bitrate) - default: clickcount
 	 * - reverse: Sort direction (1 or 0)
 	 * - search: Search term
 	 * - hide_country: Hide country field (yes/no)
@@ -577,14 +577,14 @@ class Lknwp_Radio_Browser {
 			'random' => 'Aleatório',
 			'bitrate' => 'Bitrate'
 		];
-		$sort = isset($_GET['lrt_sort']) && isset($sort_options[$_GET['lrt_sort']]) ? $_GET['lrt_sort'] : 'clickcount';
+		$sort = isset($_GET['lrt_sort']) && isset($sort_options[$_GET['lrt_sort']]) ? $_GET['lrt_sort'] : (isset($atts['sort']) ? $atts['sort'] : 'clickcount');
 		$reverse = isset($_GET['lrt_reverse']) ? $_GET['lrt_reverse'] : '1'; // 1 = reverso ativo por padrão
 
 		$atts = shortcode_atts([
 			'countrycode' => $countrycode,
 			'limit' => $limit,
 			'player_page' => $player_page,
-			'sort' => $sort,
+			'sort' => $sort, // Padrão clickcount, mas permite outras opções
 			'reverse' => $reverse,
 			'search' => $search,
 			'hide_country' => 'no',
