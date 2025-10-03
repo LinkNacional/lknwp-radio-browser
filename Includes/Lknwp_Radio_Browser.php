@@ -358,7 +358,6 @@ class Lknwp_Radio_Browser {
 				return '<div class="lkp-radio-error">
 							<h3>' . __( 'Radio Not Found', 'lknwp-radio-browser' ) . '</h3>
 							<p>' . sprintf( __( 'The radio "%s" was not found in our database.', 'lknwp-radio-browser' ), esc_html($radio_name_decoded) ) . '</p>
-							<p><small>' . sprintf( __( 'Debug: original slug "%s" converted to "%s"', 'lknwp-radio-browser' ), esc_html($radio_name), esc_html($radio_name_decoded) ) . '</small></p>
 						</div>';
 			}
 		} else {

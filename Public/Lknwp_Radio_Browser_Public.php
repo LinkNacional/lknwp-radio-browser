@@ -140,7 +140,11 @@ class Lknwp_Radio_Browser_Public {
 			// Localize list script
 			wp_localize_script('lknwp-radio-list', 'lknwpRadioTexts', array(
 				'loadingRadios' => __('Loading radios...', 'lknwp-radio-browser'),
-				'noRadiosFound' => __('No radios found.', 'lknwp-radio-browser')
+				'noRadiosFound' => __('No radios found.', 'lknwp-radio-browser'),
+				'tryingAlternativeServers' => __('Trying alternative servers...', 'lknwp-radio-browser'),
+				'reverseActive' => __('Reverse active', 'lknwp-radio-browser'),
+				'reverseInactive' => __('Reverse inactive', 'lknwp-radio-browser'),
+				'apiError' => __('Error querying API.', 'lknwp-radio-browser')
 			));
 		}
 	}

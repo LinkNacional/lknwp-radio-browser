@@ -13,7 +13,7 @@
             navigator.clipboard.writeText(text).then(function () {
                 showCopySuccess(button);
             }).catch(function (err) {
-                console.error(lknwpRadioTexts ? lknwpRadioTexts.copyError : 'Copy error: ', err);
+                
                 fallbackCopyTextToClipboard(text, button);
             });
         } else {
@@ -42,10 +42,10 @@
             if (successful) {
                 showCopySuccess(button);
             } else {
-                console.error(lknwpRadioTexts ? lknwpRadioTexts.copyFallbackError : 'Fallback: Could not copy');
+                
             }
         } catch (err) {
-            console.error(lknwpRadioTexts ? lknwpRadioTexts.fallbackCopyError : 'Fallback: Error copying', err);
+            
         }
 
         document.body.removeChild(textArea);
@@ -56,7 +56,7 @@
      */
     function showCopySuccess(button) {
         if (!button || !button.textContent) {
-            console.error(lknwpRadioTexts ? lknwpRadioTexts.buttonNotFound : 'Button not found or invalid');
+            
             return;
         }
 
@@ -99,7 +99,7 @@
         $('.lknwp-radio-copy-btn').attr('title', lknwpRadioTexts ? lknwpRadioTexts.clickToCopy : 'Click to copy shortcode');
 
         // Log para debug
-        console.log('LKN Radio Browser Admin Help Page loaded');
+        
     });
 
 })(jQuery);
