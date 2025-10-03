@@ -1,114 +1,180 @@
-=== Plugin Name ===
-Contributors: (this should be a list of wordpress.org userid's)
-Donate link: https://www.linknacional.com.br/wordpress//
-Tags: comments, spam
-Requires at least: 3.0.1
-Tested up to: 3.4
-Stable tag: 4.3
+=== Radio Browser for WP ===
+Contributors: linknacional
+Tags: radio, streaming, audio, player, music
+Requires at least: 5.0
+Tested up to: 6.8
+Stable tag: 1.0.0
+Requires PHP: 7.4
 License: GPLv2 or later
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
+Donate link: https://paraquemdoar.org/doar/
 
-Here is a short description of the plugin.  This should be no more than 150 characters.  No markup here.
+Display and play online radio stations from Radio-Browser.info with a beautiful player and customizable radio list.
 
 == Description ==
 
-This is the long description.  No limit, and you can use Markdown (as well as in the following sections).
+Integrate thousands of **online radio stations** into your WordPress website with the **Radio Browser for WP** plugin. 
 
-For backwards compatibility, if this section is missing, the full length of the short description will be used, and
-Markdown parsed.
+This powerful plugin connects to the [Radio-Browser.info](https://www.radio-browser.info/) database, providing access to over 30,000 radio stations worldwide with a beautiful, responsive radio player and customizable station lists.
 
-A few notes about the sections above:
+Perfect for music blogs, radio websites, entertainment portals, or any site that wants to offer streaming audio content to visitors.
 
-*   "Contributors" is a comma separated list of wp.org/wp-plugins.org usernames
-*   "Tags" is a comma separated list of tags that apply to the plugin
-*   "Requires at least" is the lowest version that the plugin will work on
-*   "Tested up to" is the highest version that you've *successfully used to test the plugin*. Note that it might work on
-higher versions... this is just the highest one you've verified.
-*   Stable tag should indicate the Subversion "tag" of the latest stable version, or "trunk," if you use `/trunk/` for
-stable.
+== Features ==
 
-    Note that the `readme.txt` of the stable tag is the one that is considered the defining one for the plugin, so
-if the `/trunk/readme.txt` file says that the stable tag is `4.3`, then it is `/tags/4.3/readme.txt` that'll be used
-for displaying information about the plugin.  In this situation, the only thing considered from the trunk `readme.txt`
-is the stable tag pointer.  Thus, if you develop in trunk, you can update the trunk `readme.txt` to reflect changes in
-your in-development version, without having that information incorrectly disclosed about the current stable version
-that lacks those changes -- as long as the trunk's `readme.txt` points to the correct stable tag.
-
-    If no stable tag is provided, it is assumed that trunk is stable, but you should specify "trunk" if that's where
-you put the stable version, in order to eliminate any doubt.
-
-== Installation ==
-
-This section describes how to install the plugin and get it working.
-
-e.g.
-
-1. Upload `lknwp-radio-browser.php` to the `/wp-content/plugins/` directory
-1. Activate the plugin through the 'Plugins' menu in WordPress
-1. Place `<?php do_action('plugin_name_hook'); ?>` in your templates
-
-== Frequently Asked Questions ==
-
-= A question that someone might have =
-
-An answer to that question.
-
-= What about foo bar? =
-
-Answer to foo bar dilemma.
+* **Global Radio Database:** Access to 30,000+ radio stations from Radio-Browser.info
+* **Beautiful Audio Player:** Modern, responsive HTML5 audio player with volume controls
+* **Customizable Radio Lists:** Display radio stations with filtering and sorting options
+* **Smart Search Functionality:** Find stations by name, country, or genre
+* **SEO-Friendly URLs:** Clean, readable URLs for individual radio stations
+* **Responsive Design:** Works perfectly on desktop, tablet, and mobile devices
+* **Easy Integration:** Simple shortcodes to embed radio lists and players anywhere
+* **Audio Streaming Proxy:** Built-in proxy for smooth audio streaming with CORS support
+* **Country Filtering:** Filter stations by country with support for all nations
+* **Multiple Sort Options:** Sort by popularity, name, bitrate, or random order
+* **Station Information:** Display station logos, descriptions, and statistics
+* **Click Tracking:** Integration with Radio-Browser.info's click statistics
 
 == Screenshots ==
 
-1. This screen shot description corresponds to screenshot-1.(png|jpg|jpeg|gif). Note that the screenshot is taken from
-the /assets directory or the directory that contains the stable readme.txt (tags or trunk). Screenshots in the /assets
-directory take precedence. For example, `/assets/screenshot-1.png` would win over `/tags/4.3/screenshot-1.png`
-(or jpg, jpeg, gif).
-2. This is the second screen shot
+1. Radio player displaying a selected station with controls and information
+2. Radio station list with country filter and search functionality
+3. Admin configuration panel for managing plugin settings
+4. Mobile responsive radio player interface
+5. Radio list with different sorting and filtering options applied
+
+== Minimum Requirements ==
+
+For this plugin to work correctly, you will need:
+
+* WordPress version 5.0 or later
+* PHP version 7.4 or later
+* An active internet connection for streaming radio content
+* Modern web browser with HTML5 audio support
+
+== Installation ==
+
+There are two ways to install the Radio Browser for WP plugin:
+
+= From your WordPress Dashboard (Recommended) =
+
+1. In your WordPress admin panel, navigate to **Plugins > Add New**
+2. Use the search bar to find "Radio Browser for WP"
+3. Locate the plugin in the search results and click the **Install Now** button
+4. Once the installation is complete, click the **Activate** button
+
+= Manual Upload via .zip File =
+
+1. Download the plugin's `.zip` file from the official WordPress.org plugin page
+2. In your WordPress admin panel, navigate to **Plugins > Add New**
+3. At the top of the page, click the **Upload Plugin** button
+4. Click **Choose File** and select the `.zip` file you downloaded in step 1
+5. Click **Install Now**
+6. After the installation is complete, click the **Activate Plugin** button
+
+After activation, you can start using the shortcodes immediately. No additional configuration is required.
+
+== Usage ==
+
+Using the Radio Browser plugin is straightforward with two simple shortcodes:
+
+= Radio Station List =
+
+Display a list of radio stations with filtering options:
+
+`[radio_browser_list]`
+
+**Available Parameters:**
+
+* `player_page` - The page slug where your radio player is located (default: "player")
+* `countrycode` - Filter stations by country code (default: "BR" for Brazil)
+* `limit` - Number of stations to display (default: 20)
+* `sort` - Sort order: "clickcount", "name", "random", "bitrate" (default: "clickcount")
+* `search` - Pre-filter stations by search term
+* `hide_country` - Hide country filter (yes/no)
+* `hide_limit` - Hide limit field (yes/no)
+* `hide_sort` - Hide sort options (yes/no)
+* `hide_search` - Hide search field (yes/no)
+* `hide_all_filters` - Hide entire filter form (yes/no)
+
+**Example:**
+`[radio_browser_list player_page="radio-player" countrycode="US" limit="50"]`
+
+= Radio Player =
+
+Display the audio player on a dedicated page:
+
+`[radio_browser_player]`
+
+This shortcode automatically detects the radio station from the URL and displays the appropriate player with controls and station information.
+
+= Setting Up Your Radio Website =
+
+1. Create a **Radio List Page:** Add a new page and insert the `[radio_browser_list]` shortcode
+2. Create a **Player Page:** Add another page with the `[radio_browser_player]` shortcode
+3. Configure the list shortcode to point to your player page using the `player_page` parameter
+4. Publish both pages and start enjoying streaming radio!
+
+== Enjoying the Plugin? ==
+
+If you find the **Radio Browser for WP** plugin useful, please consider leaving a 5-star review on WordPress.org.
+
+Your feedback is invaluable to us. It not only helps other website owners discover the plugin but also motivates us to continue developing and improving it. A positive review is the best way to show your support for our work.
+
+[**Leave your review here!**](https://wordpress.org/support/plugin/lknwp-radio-browser/reviews/#new-post)
+
+Thank you for being a part of our community!
+
+== Frequently Asked Questions ==
+
+= How many radio stations are available? =
+
+The plugin connects to Radio-Browser.info, which contains over 30,000 radio stations from around the world. The database is constantly growing as new stations are added by the community.
+
+= Do I need any API keys or accounts? =
+
+No! The plugin works out of the box without requiring any API keys, accounts, or additional configuration. Simply install, activate, and start using the shortcodes.
+
+= Can I customize the appearance of the radio player and lists? =
+
+Yes, the plugin includes CSS classes that you can style with your theme's custom CSS. The player and lists are designed to be responsive and integrate well with most WordPress themes.
+
+= Does the plugin work on mobile devices? =
+
+Absolutely! The radio player and station lists are fully responsive and work perfectly on desktop, tablet, and mobile devices with modern browsers that support HTML5 audio.
+
+= Are there any bandwidth costs for streaming? =
+
+The audio streams come directly from the radio stations' servers, so there are no bandwidth costs for your website. The plugin acts as a directory and player interface.
+
+= Can I filter stations by genre or language? =
+
+Currently, the plugin supports filtering by country and searching by station name. More advanced filtering options may be added in future versions based on user feedback.
+
+= Is the plugin compatible with caching plugins? =
+
+Yes, the plugin is designed to work with popular caching plugins. The radio streaming functionality bypasses cache for real-time audio delivery.
+
+= What if a radio station stops working? =
+
+Radio stations in the Radio-Browser.info database are maintained by the community. If a station stops working, it's usually updated or removed from the database automatically. You can also report issues to the Radio-Browser.info project.
+
+== Support ==
+
+If you need help or have questions, please post them in the [support forum](https://wordpress.org/support/plugin/lknwp-radio-browser/) for the plugin on WordPress.org. We will be happy to assist you there.
 
 == Changelog ==
 
-= 1.0 =
-* A change since the previous version.
-* Another change.
-
-= 0.5 =
-* List versions from most recent at top to oldest at bottom.
+= 1.0.0 = *2025/10/03*
+* Initial plugin release
+* Radio station list with country filtering and search
+* HTML5 audio player with volume controls
+* Integration with Radio-Browser.info database
+* SEO-friendly URLs for individual stations
+* Responsive design for all devices
+* Audio streaming proxy with CORS support
+* Support for 30,000+ radio stations worldwide
 
 == Upgrade Notice ==
 
-= 1.0 =
-Upgrade notices describe the reason a user should upgrade.  No more than 300 characters.
-
-= 0.5 =
-This version fixes a security related bug.  Upgrade immediately.
-
-== Arbitrary section ==
-
-You may provide arbitrary sections, in the same format as the ones above.  This may be of use for extremely complicated
-plugins where more information needs to be conveyed that doesn't fit into the categories of "description" or
-"installation."  Arbitrary sections will be shown below the built-in sections outlined above.
-
-== A brief Markdown Example ==
-
-Ordered list:
-
-1. Some feature
-1. Another feature
-1. Something else about the plugin
-
-Unordered list:
-
-* something
-* something else
-* third thing
-
-Here's a link to [WordPress](http://wordpress.org/ "Your favorite software") and one to [Markdown's Syntax Documentation][markdown syntax].
-Titles are optional, naturally.
-
-[markdown syntax]: http://daringfireball.net/projects/markdown/syntax
-            "Markdown is what the parser uses to process much of the readme file"
-
-Markdown uses email style notation for blockquotes and I've been told:
-> Asterisks for *emphasis*. Double it up  for **strong**.
-
-`<?php code(); // goes in backticks ?>`
+= 1.0.0 =
+Initial release of Radio Browser for WP. Install to start streaming radio stations on your website.

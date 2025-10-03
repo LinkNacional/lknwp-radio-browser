@@ -139,177 +139,11 @@ class Lknwp_Radio_Browser {
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'add_admin_menu' );
-		$this->loader->add_action( 'rest_api_init', $this, 'register_proxy_endpoint' );
 
 	}
 
-	public function register_proxy_endpoint() {
-        register_rest_route('lknwp-radio/v1', '/proxy-stream', array(
-            'methods' => 'GET',
-            'callback' => array($this, 'proxy_stream'),
-            'permission_callback' => '__return_true',
-            'args' => array(
-                'url' => array(
-                    'required' => true,
-                    'validate_callback' => array($this, 'validate_stream_url')
-                )
-            )
-        ));
-    }
 
-    /**
-     * Valida URL do stream
-     */
-    public function validate_stream_url($param) {
-        $is_valid = filter_var($param, FILTER_VALIDATE_URL) && 
-                   (strpos($param, 'http') === 0);
-        
-        error_log("LKNWP Radio Proxy: Validando URL '{$param}' - " . ($is_valid ? 'VÁLIDA' : 'INVÁLIDA'));
-        
-        return $is_valid;
-    }
 
-    /**
-     * Faz proxy do stream com headers CORS corretos
-     */
-    public function proxy_stream($request) {
-        $stream_url = $request->get_param('url');
-        
-        // Log para debug
-        error_log('LKNWP Radio Proxy: Tentando conectar a ' . $stream_url);
-        
-        // Headers CORS permissivos ANTES de qualquer output
-        header('Access-Control-Allow-Origin: *');
-        header('Access-Control-Allow-Methods: GET, HEAD, OPTIONS');
-        header('Access-Control-Allow-Headers: Content-Type, Range, Accept');
-        header('Access-Control-Expose-Headers: Content-Type, Content-Length, Accept-Ranges');
-        
-        // Lidar com preflight OPTIONS
-        if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
-            http_response_code(200);
-            exit;
-        }
-        
-        // Headers de cache para streams
-        header('Cache-Control: no-cache, no-store, must-revalidate');
-        header('Pragma: no-cache');
-        header('Expires: 0');
-        
-        // Primeiro testar conectividade básica
-        $parsed_url = parse_url($stream_url);
-        $host = $parsed_url['host'];
-        $port = isset($parsed_url['port']) ? $parsed_url['port'] : 80;
-        
-        // Teste de conectividade TCP
-        $socket = @fsockopen($host, $port, $errno, $errstr, 10);
-        if (!$socket) {
-            error_log("LKNWP Radio Proxy: Falha TCP para {$host}:{$port} - {$errno}: {$errstr}");
-            return new \WP_Error('connection_error', "Servidor não alcançável: {$host}:{$port}", array('status' => 502));
-        }
-        fclose($socket);
-        
-        // Configurar contexto com headers mais completos e timeouts menores
-        $context = stream_context_create(array(
-            'http' => array(
-                'method' => 'GET',
-                'timeout' => 15, // Timeout menor
-                'user_agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
-                'header' => array(
-                    'Accept: audio/mpeg, audio/*, */*',
-                    'Connection: close', // Evitar keep-alive que pode dar problema
-                    'Range: bytes=0-' // Suporte a range requests
-                ),
-                'ignore_errors' => true,
-                'follow_location' => true,
-                'max_redirects' => 3
-            ),
-            'ssl' => array(
-                'verify_peer' => false,
-                'verify_peer_name' => false
-            )
-        ));
-
-        error_log("LKNWP Radio Proxy: Tentando conectar a {$stream_url}");
-
-        // Tentar conectar ao stream
-        $remote_stream = @fopen($stream_url, 'rb', false, $context);
-        
-        if (!$remote_stream) {
-            $error = error_get_last();
-            $error_msg = $error ? $error['message'] : 'Erro desconhecido';
-            error_log("LKNWP Radio Proxy: Falha na abertura do stream - {$error_msg}");
-            
-            // Tentar diagnóstico via cURL como fallback
-            if (function_exists('curl_init')) {
-                $ch = curl_init();
-                curl_setopt($ch, CURLOPT_URL, $stream_url);
-                curl_setopt($ch, CURLOPT_NOBODY, true);
-                curl_setopt($ch, CURLOPT_TIMEOUT, 10);
-                curl_setopt($ch, CURLOPT_USERAGENT, 'LKNWP Radio Browser Proxy/1.0');
-                curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-                curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-                
-                $result = curl_exec($ch);
-                $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-                $curl_error = curl_error($ch);
-                curl_close($ch);
-                
-                error_log("LKNWP Radio Proxy: Teste cURL - HTTP {$http_code}, Erro: {$curl_error}");
-                
-                if ($curl_error) {
-                    return new \WP_Error('curl_error', "Erro cURL: {$curl_error}", array('status' => 502));
-                }
-            }
-            
-            return new \WP_Error('stream_error', "Stream inacessível: {$error_msg}", array('status' => 502));
-        }
-
-        error_log('LKNWP Radio Proxy: Conexão bem-sucedida');
-
-        // Capturar e replicar headers do stream original
-        $stream_meta = stream_get_meta_data($remote_stream);
-        if (isset($stream_meta['wrapper_data'])) {
-            foreach ($stream_meta['wrapper_data'] as $header) {
-                // Replicar headers importantes
-                if (preg_match('/^(Content-Type|Content-Length|Accept-Ranges|Icy-)/i', $header)) {
-                    header($header);
-                    error_log('LKNWP Radio Proxy: Header replicado - ' . $header);
-                }
-            }
-        }
-        
-        // Se não tiver Content-Type, assumir audio/mpeg
-        if (!headers_sent()) {
-            header('Content-Type: audio/mpeg');
-        }
-
-        // Stream direto para o cliente com chunks maiores
-        $chunk_size = 16384; // 16KB chunks
-        while (!feof($remote_stream)) {
-            $data = fread($remote_stream, $chunk_size);
-            if ($data === false) {
-                break;
-            }
-            
-            echo $data;
-            
-            // Flush mais agressivo para streaming
-            if (ob_get_level()) {
-                ob_flush();
-            }
-            flush();
-            
-            // Verificar se cliente desconectou
-            if (connection_aborted()) {
-                error_log('LKNWP Radio Proxy: Cliente desconectou');
-                break;
-            }
-        }
-
-        fclose($remote_stream);
-        error_log('LKNWP Radio Proxy: Stream finalizado');
-        exit;
-    }
 
 	/**
 	 * Register all of the hooks related to the public-facing functionality
@@ -379,14 +213,18 @@ class Lknwp_Radio_Browser {
 			}
 		} else {
 			// Fallback: Método antigo com parâmetros (manter compatibilidade)
-			$stream = isset($_GET['lrt_radio']) ? esc_url_raw($_GET['lrt_radio']) : '';
+			// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Public shortcode for radio streams, nonce not applicable
+			$stream = isset($_GET['lrt_radio']) ? esc_url_raw(wp_unslash($_GET['lrt_radio'])) : '';
 			// Força https no início da URL do stream se vier como http
 			if ($stream && strpos($stream, 'http://') === 0) {
 				$stream = 'https://' . substr($stream, 7);
 			}
-			$station_name = isset($_GET['lrt_name']) ? sanitize_text_field($_GET['lrt_name']) : '';
-			$station_img = isset($_GET['lrt_img']) ? esc_url($_GET['lrt_img']) : '';
-			$station_homepage = isset($_GET['lrt_homepage']) ? esc_url($_GET['lrt_homepage']) : '';
+			// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Public shortcode for radio streams, nonce not applicable
+			$station_name = isset($_GET['lrt_name']) ? sanitize_text_field(wp_unslash($_GET['lrt_name'])) : '';
+			// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Public shortcode for radio streams, nonce not applicable
+			$station_img = isset($_GET['lrt_img']) ? esc_url_raw(wp_unslash($_GET['lrt_img'])) : '';
+			// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Public shortcode for radio streams, nonce not applicable
+			$station_homepage = isset($_GET['lrt_homepage']) ? esc_url_raw(wp_unslash($_GET['lrt_homepage'])) : '';
 			
 			// No método antigo não temos dados da estação, então zera as estatísticas
 			$station_clickcount = 0;
@@ -555,7 +393,7 @@ class Lknwp_Radio_Browser {
 	 * - player_page: Page slug for the radio player
 	 * - countrycode: Country code filter (default: BR)
 	 * - limit: Number of stations to show (default: 20)
-	 * - sort: Sort order (clickcount, name, random, bitrate)
+	 * - sort: Sort order (clickcount, name, random, bitrate) - default: clickcount
 	 * - reverse: Sort direction (1 or 0)
 	 * - search: Search term
 	 * - hide_country: Hide country field (yes/no)
@@ -567,24 +405,29 @@ class Lknwp_Radio_Browser {
 	 * - hide_all_filters: Hide entire filter form (yes/no)
 	 */
 	public function radio_browser_list_shortcode($atts) {
-		$countrycode = isset($_GET['lrt_countrycode']) ? sanitize_text_field($_GET['lrt_countrycode']) : (isset($atts['countrycode']) ? $atts['countrycode'] : 'BR');
-		$limit = isset($_GET['lrt_limit']) ? intval($_GET['lrt_limit']) : (isset($atts['limit']) ? intval($atts['limit']) : 20);
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Public shortcode for radio list, nonce not applicable
+		$countrycode = isset($_GET['lrt_countrycode']) ? sanitize_text_field(wp_unslash($_GET['lrt_countrycode'])) : (isset($atts['countrycode']) ? $atts['countrycode'] : 'BR');
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Public shortcode for radio list, nonce not applicable
+		$limit = isset($_GET['lrt_limit']) ? intval(wp_unslash($_GET['lrt_limit'])) : (isset($atts['limit']) ? intval($atts['limit']) : 20);
 		$player_page = isset($atts['player_page']) ? sanitize_title($atts['player_page']) : 'player';
-		$search = isset($_GET['lrt_radio_search']) ? sanitize_text_field($_GET['lrt_radio_search']) : '';
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Public shortcode for radio list, nonce not applicable
+		$search = isset($_GET['lrt_radio_search']) ? sanitize_text_field(wp_unslash($_GET['lrt_radio_search'])) : '';
 		$sort_options = [
 			'clickcount' => 'Mais famosos',
 			'name' => 'Nome',
 			'random' => 'Aleatório',
 			'bitrate' => 'Bitrate'
 		];
-		$sort = isset($_GET['lrt_sort']) && isset($sort_options[$_GET['lrt_sort']]) ? $_GET['lrt_sort'] : 'clickcount';
-		$reverse = isset($_GET['lrt_reverse']) ? $_GET['lrt_reverse'] : '1'; // 1 = reverso ativo por padrão
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Public shortcode for radio list, nonce not applicable
+		$sort = isset($_GET['lrt_sort']) && isset($sort_options[sanitize_text_field(wp_unslash($_GET['lrt_sort']))]) ? sanitize_text_field(wp_unslash($_GET['lrt_sort'])) : 'clickcount';
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Public shortcode for radio list, nonce not applicable  
+		$reverse = isset($_GET['lrt_reverse']) ? sanitize_text_field(wp_unslash($_GET['lrt_reverse'])) : '1'; // 1 = reverso ativo por padrão
 
 		$atts = shortcode_atts([
 			'countrycode' => $countrycode,
 			'limit' => $limit,
 			'player_page' => $player_page,
-			'sort' => $sort,
+			'sort' => $sort, // Padrão clickcount, mas permite outras opções
 			'reverse' => $reverse,
 			'search' => $search,
 			'hide_country' => 'no',
@@ -769,7 +612,6 @@ class Lknwp_Radio_Browser {
 		));
 		
 		if (is_wp_error($response)) {
-			error_log('LKNWP Radio Browser: Erro na API - ' . $response->get_error_message());
 			return false;
 		}
 		

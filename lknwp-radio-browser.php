@@ -13,16 +13,16 @@
  * @package           Lknwp_Radio_Browser
  *
  * @wordpress-plugin
- * Plugin Name:       Radio Browser for Wordpress
+ * Plugin Name:       Radio Browser for WP
  * Plugin URI:        https://www.linknacional.com.br
- * Description:       WordPress plugin to list online radios and listen to live broadcasts directly on your site, using the Radio Browser API.
+ * Description:       WP plugin to list online radios and listen to live broadcasts directly on your site, using the Radio Browser API.
  * Version:           1.0.0
  * Author:            Link Nacional
  * Author URI:        https://www.linknacional.com.br/
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
  * Text Domain:       lknwp-radio-browser
- * Domain Path:       /languages
+ * Domain Path:       /Languages
  */
 
 // If this file is called directly, abort.
@@ -38,6 +38,7 @@ define( 'LKNWP_RADIO_BROWSER_PLUGIN_FILE', __FILE__ );
 define( 'LKNWP_RADIO_BROWSER_PLUGIN_NAME', 'lknwp-radio-browser' );
 define( 'LKNWP_RADIO_BROWSER_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 define( 'LKNWP_RADIO_BROWSER_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
+define( 'LKNWP_RADIO_BROWSER_TEXT_DOMAIN', 'lknwp-radio-browser' );
 
 /**
  * Autoloader using Composer

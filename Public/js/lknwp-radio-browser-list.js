@@ -3,7 +3,9 @@ document.addEventListener("DOMContentLoaded", function () {
     var reverseInput = document.getElementById("lrt_reverse");
     reverseBtn.addEventListener("click", function () {
         reverseInput.value = reverseInput.value === "1" ? "0" : "1";
-        reverseBtn.textContent = reverseInput.value === "1" ? "Reverso ativo" : "Reverso inativo";
+        reverseBtn.textContent = reverseInput.value === "1"
+            ? (lknwpRadioTextsList && lknwpRadioTextsList.descending ? lknwpRadioTextsList.descending : 'Descending')
+            : (lknwpRadioTextsList && lknwpRadioTextsList.ascending ? lknwpRadioTextsList.ascending : 'Ascending');
     });
 
     // Função de consulta automática (debounced)
@@ -44,18 +46,18 @@ document.addEventListener("DOMContentLoaded", function () {
             }
 
             // Mostrar loading
-            radioList.innerHTML = '<li class="lrt-radio-loading"><div class="lrt-loading-spinner"></div><span>Carregando rádios...</span></li>';
+            radioList.innerHTML = '<li class="lrt-radio-loading"><div class="lrt-loading-spinner"></div><span>' + (lknwpRadioTextsList ? lknwpRadioTextsList.loadingRadios : 'Loading radios...') + '</span></li>';
             if (searchInput) searchInput.disabled = true;
 
             fetch(api_url, {
-                headers: { "User-Agent": "lknwp-radio-browser/1.0" }
+                headers: { 'User-Agent': 'lknwp-radio-browser/1.0' }
             })
                 .then(function (response) { return response.json(); })
                 .then(function (stations) {
-                    console.log(stations)
+
                     if (searchInput) searchInput.disabled = false;
                     if (!Array.isArray(stations) || stations.length === 0) {
-                        radioList.innerHTML = "<li class=\"lrt-radio-error\">Nenhuma rádio encontrada.</li>";
+                        radioList.innerHTML = '<li class="lrt-radio-error">' + (lknwpRadioTextsList ? lknwpRadioTextsList.noRadiosFound : 'No radios found.') + '</li>';
                         return;
                     }
                     radioList.innerHTML = "";
@@ -107,7 +109,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 })
                 .catch(function (error) {
                     // Mostrar loading para tentativa de fallback
-                    radioList.innerHTML = '<li class="lrt-radio-loading"><div class="lrt-loading-spinner"></div><span>Tentando servidores alternativos...</span></li>';
+                    radioList.innerHTML = '<li class="lrt-radio-loading"><div class="lrt-loading-spinner"></div><span>' + (lknwpRadioTextsList ? lknwpRadioTextsList.tryingAlternativeServers : 'Trying alternative servers...') + '</span></li>';
 
                     (async function () {
                         var servers = [
@@ -121,13 +123,13 @@ document.addEventListener("DOMContentLoaded", function () {
                             let nextApiUrl = api_url.replace(/https:\/\/[^/]+/, servers[i]);
                             try {
                                 let response = await fetch(nextApiUrl, {
-                                    headers: { "User-Agent": "lknwp-radio-browser/1.0" }
+                                    headers: { 'User-Agent': 'lknwp-radio-browser/1.0' }
                                 });
                                 if (!response.ok) continue;
                                 let stations = await response.json();
                                 if (searchInput) searchInput.disabled = false;
                                 if (!Array.isArray(stations) || stations.length === 0) {
-                                    radioList.innerHTML = "<li class=\"lrt-radio-error\">Nenhuma rádio encontrada.</li>";
+                                    radioList.innerHTML = '<li class="lrt-radio-error">' + (lknwpRadioTextsList ? lknwpRadioTextsList.noRadiosFound : 'No radios found.') + '</li>';
                                     return;
                                 }
                                 radioList.innerHTML = "";
@@ -184,7 +186,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         }
                         if (!found) {
                             if (searchInput) searchInput.disabled = false;
-                            radioList.innerHTML = "<li class=\"lrt-radio-error\">Erro ao consultar API.</li>";
+                            radioList.innerHTML = '<li class="lrt-radio-error">' + (lknwpRadioTextsList ? lknwpRadioTextsList.apiError : 'Error querying API.') + '</li>';
                         }
                     })();
                 });

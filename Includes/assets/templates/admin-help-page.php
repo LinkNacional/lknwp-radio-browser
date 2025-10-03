@@ -14,114 +14,115 @@ if (!defined('ABSPATH')) {
 ?>
 
 <div class="wrap">
-    <h1>LKN Radio Browser - Como Usar</h1>
+    <h1><?php esc_html_e( 'LKN Radio Browser - How to Use', 'lknwp-radio-browser' ); ?></h1>
     
     <div class="lknwp-radio-admin-content">
         
         <!-- Radio Player Shortcode -->
         <div class="lknwp-radio-shortcode-section">
-            <h2>🎵 Shortcode do Player de Rádio</h2>
-            <p>Use este shortcode para exibir o player de rádio em uma página específica:</p>
+            <h2><?php esc_html_e( '🎵 Radio Player Shortcode', 'lknwp-radio-browser' ); ?></h2>
+            <p><?php esc_html_e( 'Use this shortcode to display the radio player on a specific page:', 'lknwp-radio-browser' ); ?></p>
             
             <div class="lknwp-radio-code-block">
                 <code>[radio_browser_player]</code>
-                <button class="lknwp-radio-copy-btn" onclick="copyToClipboard('[radio_browser_player]', this)">Copiar</button>
+                <button class="lknwp-radio-copy-btn" onclick="copyToClipboard('[radio_browser_player]', this)"><?php esc_html_e( 'Copy', 'lknwp-radio-browser' ); ?></button>
             </div>
             
             <div class="lknwp-radio-info">
-                <h4>📋 Como funciona:</h4>
+                <h4><?php esc_html_e( '📋 How it works:', 'lknwp-radio-browser' ); ?></h4>
                 <ul>
-                    <li>Crie uma página (ex: "Player" com slug "player")</li>
-                    <li>Adicione o shortcode <code>[radio_browser_player]</code></li>
-                    <li>O player receberá automaticamente os parâmetros da URL</li>
-                    <li>Funciona com links vindos da lista de rádios</li>
+                    <li><?php esc_html_e( 'Create a page (e.g., "Player" with slug "player")', 'lknwp-radio-browser' ); ?></li>
+                    <li><?php esc_html_e( 'Add the shortcode', 'lknwp-radio-browser' ); ?> <code>[radio_browser_player]</code></li>
+                    <li><?php esc_html_e( 'The player will automatically receive URL parameters', 'lknwp-radio-browser' ); ?></li>
+                    <li><?php esc_html_e( 'Works with links from the radio list', 'lknwp-radio-browser' ); ?></li>
                 </ul>
             </div>
         </div>
 
         <!-- Radio List Shortcode -->
         <div class="lknwp-radio-shortcode-section">
-            <h2>📻 Shortcode da Lista de Rádios</h2>
-            <p>Use este shortcode para exibir uma lista de rádios com filtros:</p>
+            <h2><?php esc_html_e( '📻 Radio List Shortcode', 'lknwp-radio-browser' ); ?></h2>
+            <p><?php esc_html_e( 'Use this shortcode to display a list of radios with filters:', 'lknwp-radio-browser' ); ?></p>
             
             <div class="lknwp-radio-code-block">
                 <code>[radio_browser_list player_page="player"]</code>
-                <button class="lknwp-radio-copy-btn" onclick="copyToClipboard('[radio_browser_list player_page=&quot;player&quot;]', this)">Copiar</button>
+                <button class="lknwp-radio-copy-btn" onclick="copyToClipboard('[radio_browser_list player_page=&quot;player&quot;]', this)"><?php esc_html_e( 'Copy', 'lknwp-radio-browser' ); ?></button>
             </div>
 
             <div class="lknwp-radio-info">
-                <h4>⚙️ Parâmetros Básicos:</h4>
+                <h4><?php esc_html_e( '⚙️ Basic Parameters:', 'lknwp-radio-browser' ); ?></h4>
                 <table class="lknwp-radio-params-table">
                     <tr>
                         <td><code>player_page</code></td>
-                        <td>Slug da página do player (obrigatório)</td>
+                        <td><?php esc_html_e( 'Player page slug (required)', 'lknwp-radio-browser' ); ?></td>
                         <td><code>"player"</code></td>
                     </tr>
                     <tr>
                         <td><code>countrycode</code></td>
-                        <td>Código do país (BR, US, FR, etc.)</td>
+                        <td><?php esc_html_e( 'Country code (BR, US, FR, etc.)', 'lknwp-radio-browser' ); ?></td>
                         <td><code>"BR"</code></td>
                     </tr>
                     <tr>
                         <td><code>limit</code></td>
-                        <td>Número de rádios a exibir</td>
+                        <td><?php esc_html_e( 'Number of radios to display', 'lknwp-radio-browser' ); ?></td>
                         <td><code>20</code></td>
                     </tr>
+
                     <tr>
                         <td><code>sort</code></td>
-                        <td>Ordenação (clickcount, name, random, bitrate)</td>
+                        <td><?php esc_html_e( 'Sort order (clickcount, name, random, bitrate)', 'lknwp-radio-browser' ); ?></td>
                         <td><code>"clickcount"</code></td>
                     </tr>
                     <tr>
                         <td><code>reverse</code></td>
-                        <td>Ordem reversa (1 ou 0)</td>
+                        <td><?php esc_html_e( 'Reverse order (1 or 0)', 'lknwp-radio-browser' ); ?></td>
                         <td><code>"1"</code></td>
                     </tr>
                     <tr>
                         <td><code>search</code></td>
-                        <td>Termo de busca</td>
+                        <td><?php esc_html_e( 'Search term', 'lknwp-radio-browser' ); ?></td>
                         <td><code>""</code></td>
                     </tr>
                 </table>
             </div>
 
             <div class="lknwp-radio-info">
-                <h4>🎛️ Parâmetros para Esconder Filtros:</h4>
+                <h4><?php esc_html_e( '🎛️ Parameters to Hide Filters:', 'lknwp-radio-browser' ); ?></h4>
                 <table class="lknwp-radio-params-table">
                     <tr>
                         <td><code>hide_country</code></td>
-                        <td>Esconder campo País</td>
-                        <td><code>"yes"</code> ou <code>"no"</code></td>
+                        <td><?php esc_html_e( 'Hide Country field', 'lknwp-radio-browser' ); ?></td>
+                        <td><code>"yes"</code> <?php esc_html_e( 'or', 'lknwp-radio-browser' ); ?> <code>"no"</code></td>
                     </tr>
                     <tr>
                         <td><code>hide_limit</code></td>
-                        <td>Esconder campo Limite</td>
-                        <td><code>"yes"</code> ou <code>"no"</code></td>
+                        <td><?php esc_html_e( 'Hide Limit field', 'lknwp-radio-browser' ); ?></td>
+                        <td><code>"yes"</code> <?php esc_html_e( 'or', 'lknwp-radio-browser' ); ?> <code>"no"</code></td>
                     </tr>
                     <tr>
                         <td><code>hide_sort</code></td>
-                        <td>Esconder campo Ordenar</td>
-                        <td><code>"yes"</code> ou <code>"no"</code></td>
+                        <td><?php esc_html_e( 'Hide Sort field', 'lknwp-radio-browser' ); ?></td>
+                        <td><code>"yes"</code> <?php esc_html_e( 'or', 'lknwp-radio-browser' ); ?> <code>"no"</code></td>
                     </tr>
                     <tr>
                         <td><code>hide_order</code></td>
-                        <td>Esconder botão Ordem</td>
-                        <td><code>"yes"</code> ou <code>"no"</code></td>
+                        <td><?php esc_html_e( 'Hide Order button', 'lknwp-radio-browser' ); ?></td>
+                        <td><code>"yes"</code> <?php esc_html_e( 'or', 'lknwp-radio-browser' ); ?> <code>"no"</code></td>
                     </tr>
                     <tr>
                         <td><code>hide_search</code></td>
-                        <td>Esconder campo Buscar</td>
-                        <td><code>"yes"</code> ou <code>"no"</code></td>
+                        <td><?php esc_html_e( 'Hide Search field', 'lknwp-radio-browser' ); ?></td>
+                        <td><code>"yes"</code> <?php esc_html_e( 'or', 'lknwp-radio-browser' ); ?> <code>"no"</code></td>
                     </tr>
                     <tr>
                         <td><code>hide_button</code></td>
-                        <td>Esconder botão Buscar</td>
-                        <td><code>"yes"</code> ou <code>"no"</code></td>
+                        <td><?php esc_html_e( 'Hide Search button', 'lknwp-radio-browser' ); ?></td>
+                        <td><code>"yes"</code> <?php esc_html_e( 'or', 'lknwp-radio-browser' ); ?> <code>"no"</code></td>
                     </tr>
                     <tr>
                         <td><code>hide_all_filters</code></td>
-                        <td>Esconder todos os filtros</td>
-                        <td><code>"yes"</code> ou <code>"no"</code></td>
+                        <td><?php esc_html_e( 'Hide all filters', 'lknwp-radio-browser' ); ?></td>
+                        <td><code>"yes"</code> <?php esc_html_e( 'or', 'lknwp-radio-browser' ); ?> <code>"no"</code></td>
                     </tr>
                 </table>
             </div>
@@ -129,66 +130,74 @@ if (!defined('ABSPATH')) {
 
         <!-- Examples Section -->
         <div class="lknwp-radio-shortcode-section">
-            <h2>💡 Exemplos de Uso</h2>
+            <h2><?php esc_html_e( '💡 Usage Examples', 'lknwp-radio-browser' ); ?></h2>
             
             <div class="lknwp-radio-example">
-                <h4>Lista completa com filtros (padrão):</h4>
+                <h4><?php esc_html_e( 'Complete list with filters (default):', 'lknwp-radio-browser' ); ?></h4>
                 <div class="lknwp-radio-code-block">
                     <code>[radio_browser_list player_page="player"]</code>
-                    <button class="lknwp-radio-copy-btn" onclick="copyToClipboard('[radio_browser_list player_page=&quot;player&quot;]')">Copiar</button>
+                    <button class="lknwp-radio-copy-btn" onclick="copyToClipboard('[radio_browser_list player_page=&quot;player&quot;]')"><?php esc_html_e( 'Copy', 'lknwp-radio-browser' ); ?></button>
                 </div>
             </div>
 
             <div class="lknwp-radio-example">
-                <h4>Lista limpa sem filtros:</h4>
+                <h4><?php esc_html_e( 'Clean list without filters:', 'lknwp-radio-browser' ); ?></h4>
                 <div class="lknwp-radio-code-block">
                     <code>[radio_browser_list player_page="player" hide_all_filters="yes"]</code>
-                    <button class="lknwp-radio-copy-btn" onclick="copyToClipboard('[radio_browser_list player_page=&quot;player&quot; hide_all_filters=&quot;yes&quot;]')">Copiar</button>
+                    <button class="lknwp-radio-copy-btn" onclick="copyToClipboard('[radio_browser_list player_page=&quot;player&quot; hide_all_filters=&quot;yes&quot;]')"><?php esc_html_e( 'Copy', 'lknwp-radio-browser' ); ?></button>
                 </div>
             </div>
 
             <div class="lknwp-radio-example">
-                <h4>Apenas busca por texto:</h4>
+                <h4><?php esc_html_e( 'Text search only:', 'lknwp-radio-browser' ); ?></h4>
                 <div class="lknwp-radio-code-block">
                     <code>[radio_browser_list player_page="player" hide_country="yes" hide_limit="yes" hide_sort="yes" hide_order="yes"]</code>
-                    <button class="lknwp-radio-copy-btn" onclick="copyToClipboard('[radio_browser_list player_page=&quot;player&quot; hide_country=&quot;yes&quot; hide_limit=&quot;yes&quot; hide_sort=&quot;yes&quot; hide_order=&quot;yes&quot;]')">Copiar</button>
+                    <button class="lknwp-radio-copy-btn" onclick="copyToClipboard('[radio_browser_list player_page=&quot;player&quot; hide_country=&quot;yes&quot; hide_limit=&quot;yes&quot; hide_sort=&quot;yes&quot; hide_order=&quot;yes&quot;]')"><?php esc_html_e( 'Copy', 'lknwp-radio-browser' ); ?></button>
                 </div>
             </div>
 
             <div class="lknwp-radio-example">
-                <h4>Configuração fixa (rádios dos EUA, 10 estações, sem filtros):</h4>
+                <h4><?php esc_html_e( 'Fixed configuration (US radios, 10 stations, no filters):', 'lknwp-radio-browser' ); ?></h4>
                 <div class="lknwp-radio-code-block">
-                    <code>[radio_browser_list player_page="player" countrycode="US" limit="10" sort="clickcount" hide_all_filters="yes"]</code>
-                    <button class="lknwp-radio-copy-btn" onclick="copyToClipboard('[radio_browser_list player_page=&quot;player&quot; countrycode=&quot;US&quot; limit=&quot;10&quot; sort=&quot;clickcount&quot; hide_all_filters=&quot;yes&quot;]')">Copiar</button>
+                    <code>[radio_browser_list player_page="player" countrycode="US" limit="10" hide_all_filters="yes"]</code>
+                    <button class="lknwp-radio-copy-btn" onclick="copyToClipboard('[radio_browser_list player_page=&quot;player&quot; countrycode=&quot;US&quot; limit=&quot;10&quot; hide_all_filters=&quot;yes&quot;]')"><?php esc_html_e( 'Copy', 'lknwp-radio-browser' ); ?></button>
+                </div>
+            </div>
+
+            <div class="lknwp-radio-example">
+                <h4><?php esc_html_e( 'List sorted by name (alphabetical):', 'lknwp-radio-browser' ); ?></h4>
+                <div class="lknwp-radio-code-block">
+                    <code>[radio_browser_list player_page="player" sort="name"]</code>
+                    <button class="lknwp-radio-copy-btn" onclick="copyToClipboard('[radio_browser_list player_page=&quot;player&quot; sort=&quot;name&quot;]')"><?php esc_html_e( 'Copy', 'lknwp-radio-browser' ); ?></button>
                 </div>
             </div>
         </div>
 
         <!-- Setup Instructions -->
         <div class="lknwp-radio-shortcode-section">
-            <h2>🚀 Como Configurar</h2>
+            <h2><?php esc_html_e( '🚀 How to Configure', 'lknwp-radio-browser' ); ?></h2>
             <div class="lknwp-radio-info">
-                <h4>1. Criar as páginas:</h4>
+                <h4><?php esc_html_e( '1. Create the pages:', 'lknwp-radio-browser' ); ?></h4>
                 <ol>
-                    <li>Vá em <strong>Páginas > Adicionar Nova</strong></li>
-                    <li>Crie uma página chamada "Rádios" com slug "radios"</li>
-                    <li>Adicione o shortcode: <code>[radio_browser_list player_page="player"]</code></li>
-                    <li>Crie outra página chamada "Player" com slug "player"</li>
-                    <li>Adicione o shortcode: <code>[radio_browser_player]</code></li>
+                    <li><?php esc_html_e( 'Go to <strong>Pages > Add New</strong>', 'lknwp-radio-browser' ); ?></li>
+                    <li><?php esc_html_e( 'Create a page called "Radios" with slug "radios"', 'lknwp-radio-browser' ); ?></li>
+                    <li><?php esc_html_e( 'Add the shortcode: <code>[radio_browser_list player_page="player"]</code>', 'lknwp-radio-browser' ); ?></li>
+                    <li><?php esc_html_e( 'Create another page called "Player" with slug "player"', 'lknwp-radio-browser' ); ?></li>
+                    <li><?php esc_html_e( 'Add the shortcode: <code>[radio_browser_player]</code>', 'lknwp-radio-browser' ); ?></li>
                 </ol>
 
-                <h4>2. Adicionar ao menu:</h4>
+                <h4><?php esc_html_e( '2. Add to menu:', 'lknwp-radio-browser' ); ?></h4>
                 <ol>
-                    <li>Vá em <strong>Aparência > Menus</strong></li>
-                    <li>Adicione a página "Rádios" ao menu</li>
-                    <li>A página "Player" não precisa estar no menu (é acessada automaticamente)</li>
+                    <li><?php esc_html_e( 'Go to <strong>Appearance > Menus</strong>', 'lknwp-radio-browser' ); ?></li>
+                    <li><?php esc_html_e( 'Add the "Radios" page to the menu', 'lknwp-radio-browser' ); ?></li>
+                    <li><?php esc_html_e( 'The "Player" page does not need to be in the menu (it is accessed automatically)', 'lknwp-radio-browser' ); ?></li>
                 </ol>
 
-                <h4>3. Personalizar (opcional):</h4>
+                <h4><?php esc_html_e( '3. Customize (optional):', 'lknwp-radio-browser' ); ?></h4>
                 <ul>
-                    <li>Use os parâmetros <code>hide_*</code> para esconder filtros desnecessários</li>
-                    <li>Configure valores padrão com <code>countrycode</code>, <code>limit</code>, etc.</li>
-                    <li>Personalize os estilos via CSS do tema</li>
+                    <li><?php esc_html_e( 'Use the <code>hide_*</code> parameters to hide unnecessary filters', 'lknwp-radio-browser' ); ?></li>
+                    <li><?php esc_html_e( 'Configure default values with <code>countrycode</code>, <code>limit</code>, etc.', 'lknwp-radio-browser' ); ?></li>
+                    <li><?php esc_html_e( 'Customize styles via theme CSS', 'lknwp-radio-browser' ); ?></li>
                 </ul>
             </div>
         </div>

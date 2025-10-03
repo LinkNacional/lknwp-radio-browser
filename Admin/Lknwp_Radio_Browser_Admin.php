@@ -112,8 +112,8 @@ class Lknwp_Radio_Browser_Admin {
 	 */
 	public function add_admin_menu() {
 		add_menu_page(
-			'LKN Radio Browser',           // Page title
-			'LKN Radio Browser',           // Menu title
+			__( 'LKN Radio Browser', 'lknwp-radio-browser' ),           // Page title
+			__( 'LKN Radio Browser', 'lknwp-radio-browser' ),           // Menu title
 			'manage_options',              // Capability
 			'lknwp-radio-browser',         // Menu slug
 			array($this, 'admin_page'),    // Callback function
@@ -129,6 +129,14 @@ class Lknwp_Radio_Browser_Admin {
 	 */
 	public function admin_page() {
 		// Enqueue specific styles and scripts for this page
+
+		wp_enqueue_style(
+			'lknwp-colors', 
+			plugin_dir_url(__FILE__) . '../Includes/assets/css/colors.css', 
+			array(), $this->version, 
+			'all'
+		);
+
 		wp_enqueue_style(
 			$this->plugin_name . '-admin-help', 
 			plugin_dir_url(__FILE__) . 'css/lknwp-radio-browser-admin-help.css', 
@@ -144,6 +152,16 @@ class Lknwp_Radio_Browser_Admin {
 			$this->version, 
 			true
 		);
+		
+		// Localize admin script
+		wp_localize_script($this->plugin_name . '-admin-help', 'lknwpRadioTexts', array(
+			'copyFallbackError' => __('Fallback: Could not copy', 'lknwp-radio-browser'),
+			'buttonNotFound' => __('Button not found or invalid', 'lknwp-radio-browser'),
+			'copied' => __('Copied!', 'lknwp-radio-browser'),
+			'clickToCopy' => __('Click to copy shortcode', 'lknwp-radio-browser'),
+			'copyError' => __('Copy error: ', 'lknwp-radio-browser'),
+			'fallbackCopyError' => __('Fallback: Error copying', 'lknwp-radio-browser')
+		));
 		
 		// Prepare variables for template
 		$plugin_name = $this->plugin_name;

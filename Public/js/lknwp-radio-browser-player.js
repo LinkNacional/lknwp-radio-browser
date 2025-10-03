@@ -5,13 +5,11 @@ document.addEventListener("DOMContentLoaded", function () {
             performance.getEntriesByType("navigation")[0].type === "reload");
 
     if (isPageReload) {
-        console.log('LKNWP Radio: Reload detectado, aguardando limpeza...');
         // Pequeno delay para garantir limpeza completa
         setTimeout(function () {
             initializePlayer();
         }, 300);
     } else {
-        console.log('LKNWP Radio: Primeira carga, inicializando imediatamente');
         initializePlayer();
     }
 
@@ -58,43 +56,201 @@ document.addEventListener("DOMContentLoaded", function () {
         window.lknwpRadioPerformanceMode = false;
 
         /**
-         * Cria elemento de áudio proxy para captura de dados
+         * Recarrega stream usando acesso direto com cache busting
+         */
+        function reloadProxyWithNextChunk() {
+            if (!proxyElement) return;
+
+            // Para stream direto, simplesmente recarregamos com timestamp novo
+            var timestamp = Date.now();
+            var newStreamUrl = streamUrl + (streamUrl.includes('?') ? '&' : '?') + '_t=' + timestamp;
+
+            // Criar elemento buffer para transição suave
+            var bufferElement = document.createElement('audio');
+            bufferElement.volume = 0.01;
+            bufferElement.preload = 'auto';
+
+            // Tratamento de erro para fallback
+            bufferElement.addEventListener('error', function (e) {
+                // Fallback: recarregar elemento atual
+                setTimeout(function () {
+                    if (proxyElement) {
+                        proxyElement.src = newStreamUrl;
+                        proxyElement.load();
+                        if (isPlaying) {
+                            proxyElement.play().catch(function () { });
+                        }
+                    }
+                }, 500);
+            });
+
+            // Configurar stream direto no buffer
+            bufferElement.src = newStreamUrl;
+
+            // Quando buffer estiver pronto, fazer transição suave
+            bufferElement.addEventListener('canplay', function () {
+                // Trocar elementos - buffer vira principal
+                var oldElement = proxyElement;
+                proxyElement = bufferElement;
+
+                // Conectar novo elemento ao analyser
+                if (source && audioContext) {
+                    try {
+                        source.disconnect();
+                        source = audioContext.createMediaElementSource(proxyElement);
+                        source.connect(analyser);
+                        analyser.connect(audioContext.destination);
+                    } catch (e) {
+                        // Erro silencioso no analyser
+                    }
+                }
+
+                // Reproduzir novo chunk se necessário
+                if (isPlaying) {
+                    proxyElement.play().catch(function (e) {
+                        // Erro silencioso na reprodução
+                    });
+                }
+
+                // Reset das flags após transição bem-sucedida
+                reloadInProgress = false;
+
+                // Limpar elemento antigo após pequeno delay
+                setTimeout(function () {
+                    if (oldElement.parentNode) {
+                        oldElement.parentNode.removeChild(oldElement);
+                    }
+                }, 1000);
+            });
+
+            // Adicionar buffer ao DOM
+            bufferElement.style.display = 'none';
+            document.body.appendChild(bufferElement);
+            return proxyElement;
+        }
+
+        /**
+         * Configura acesso direto ao stream usando várias estratégias
+         */
+        function setupDirectStreamAccess() {
+            // Estratégia 1: Teste direto simples
+            testDirectAccess();
+        }
+
+        /**
+         * Teste 1: Acesso direto simples
+         */
+        function testDirectAccess() {
+            proxyElement.crossOrigin = 'anonymous';
+            proxyElement.src = streamUrl;
+
+            proxyElement.addEventListener('error', function (e) {
+                tryWithoutCORS();
+            });
+        }
+
+        /**
+         * Teste 2: Sem crossOrigin (pode funcionar para captura básica)
+         */
+        function tryWithoutCORS() {
+            proxyElement.removeAttribute('crossOrigin');
+            proxyElement.src = streamUrl + '?t=' + Date.now(); // Cache bust
+
+            proxyElement.addEventListener('error', function (e) {
+                tryFetchBlob();
+            });
+        }
+
+        /**
+         * Teste 3: Fetch + Blob (para chunks menores)
+         */
+        function tryFetchBlob() {
+            fetch(streamUrl, {
+                method: 'GET',
+                mode: 'no-cors', // Tenta contornar CORS
+                headers: {
+                    'Range': 'bytes=0-262143'
+                }
+            })
+                .then(response => {
+                    if (response.ok || response.type === 'opaque') {
+                        return response.blob();
+                    }
+                    throw new Error('Fetch failed');
+                })
+                .then(blob => {
+                    const audioUrl = URL.createObjectURL(blob);
+                    proxyElement.src = audioUrl;
+
+                    // Limpar URL após uso
+                    proxyElement.addEventListener('loadend', function () {
+                        URL.revokeObjectURL(audioUrl);
+                    });
+                })
+                .catch(error => {
+                    tryMediaSource();
+                });
+        }
+
+        /**
+         * Teste 4: Media Source Extensions (mais avançado)
+         */
+        function tryMediaSource() {
+            if (!window.MediaSource) {
+                useFallback();
+                return;
+            }
+
+            const mediaSource = new MediaSource();
+            proxyElement.src = URL.createObjectURL(mediaSource);
+
+            mediaSource.addEventListener('sourceopen', function () {
+                try {
+                    const sourceBuffer = mediaSource.addSourceBuffer('audio/mpeg');
+
+                    // Tentar fetch com no-cors para alimentar o buffer
+                    fetch(streamUrl, {
+                        method: 'GET',
+                        mode: 'no-cors',
+                        headers: { 'Range': 'bytes=0-262143' }
+                    })
+                        .then(response => response.arrayBuffer())
+                        .then(data => {
+                            sourceBuffer.appendBuffer(data);
+                        })
+                        .catch(error => {
+                            useFallback();
+                        });
+                } catch (e) {
+                    useFallback();
+                }
+            });
+        }
+
+        /**
+         * Fallback: Usar stream direto mesmo com limitações
+         */
+        function useFallback() {
+            // Remove crossOrigin para máxima compatibilidade
+            proxyElement.removeAttribute('crossOrigin');
+            proxyElement.src = streamUrl;
+        }
+
+        /**
+         * Cria elemento de áudio usando JavaScript direto (sem proxy REST)
          */
         function createProxyAudioElement() {
             if (proxyElement) return proxyElement;
 
             proxyElement = document.createElement('audio');
-            proxyElement.crossOrigin = 'anonymous';
-            proxyElement.volume = 0.01; // Volume muito baixo, mas não zero para permitir captura
-            proxyElement.preload = 'auto'; // Mudança: forçar carregamento
+            proxyElement.volume = 0.01;
+            proxyElement.preload = 'auto';
             proxyElement.controls = false;
 
-            // URL do proxy para contornar CORS
-            var proxyUrl = '/wp-json/lknwp-radio/v1/proxy-stream?url=' + encodeURIComponent(streamUrl);
-            proxyElement.src = proxyUrl;
+            // Tentar várias abordagens para contornar CORS
+            setupDirectStreamAccess();
 
-            console.log('LKNWP Radio: Elemento proxy criado com URL:', proxyUrl);
-
-            // Adicionar listeners para debug
-            proxyElement.addEventListener('loadstart', function () {
-                console.log('LKNWP Radio: Proxy iniciou carregamento');
-            });
-
-            proxyElement.addEventListener('loadedmetadata', function () {
-                console.log('LKNWP Radio: Proxy carregou metadados');
-            });
-
-            proxyElement.addEventListener('canplay', function () {
-                console.log('LKNWP Radio: Proxy pode reproduzir');
-            });
-
-            proxyElement.addEventListener('error', function (e) {
-                console.error('LKNWP Radio: Erro no proxy:', e);
-            });
-
-            // Adicionar ao DOM para garantir funcionamento
-            proxyElement.style.display = 'none';
-            document.body.appendChild(proxyElement);
+            return proxyElement;
 
             return proxyElement;
         }
@@ -106,9 +262,7 @@ document.addEventListener("DOMContentLoaded", function () {
             if (audioContext && audioContext.state !== 'closed') {
                 // Se já existe, apenas garante que está rodando
                 if (audioContext.state === 'suspended') {
-                    audioContext.resume().then(function () {
-                        console.log('LKNWP Radio: AudioContext resumido');
-                    });
+                    audioContext.resume();
                 }
                 return true;
             }
@@ -122,17 +276,12 @@ document.addEventListener("DOMContentLoaded", function () {
                 var bufferLength = analyser.frequencyBinCount;
                 dataArray = new Uint8Array(bufferLength);
 
-                console.log('LKNWP Radio: AudioContext inicializado, state:', audioContext.state, 'bufferLength:', bufferLength);
-
                 // Garantir que está rodando (necessário por política de navegador)
                 if (audioContext.state === 'suspended') {
-                    audioContext.resume().then(function () {
-                        console.log('LKNWP Radio: AudioContext ativado após interação do usuário');
-                    });
+                    audioContext.resume();
                 }
 
             } catch (error) {
-                console.warn('LKNWP Radio: Erro ao criar AudioContext:', error);
                 return false;
             }
 
@@ -147,7 +296,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
             // Se já existe conexão, não precisa recriar
             if (source) {
-                console.log('LKNWP Radio: Áudio já conectado ao analyser');
                 return true;
             }
 
@@ -158,11 +306,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 // CRÍTICO: Conectar o analyser ao destination para permitir reprodução
                 // analyser.connect(audioContext.destination);
 
-                console.log('LKNWP Radio: Áudio conectado ao analyser');
                 return true;
 
             } catch (error) {
-                console.error('LKNWP Radio: Erro ao conectar áudio:', error);
                 return false;
             }
         }
@@ -173,37 +319,19 @@ document.addEventListener("DOMContentLoaded", function () {
         function captureFromProxyElement() {
             // Proteção extra contra estados inconsistentes após reload
             if (!proxyElement || !audioContext || !analyser || audioContext.state === 'closed') {
-                if (debugCount < 3) {
-                    console.log('LKNWP Radio: Elementos não disponíveis - proxy:', !!proxyElement,
-                        'context:', !!audioContext, 'context.state:', audioContext ? audioContext.state : 'N/A',
-                        'analyser:', !!analyser);
-                    debugCount++;
-                }
                 return null;
             }
 
             if (audioContext.state !== 'running') {
-                if (debugCount < 3) {
-                    console.log('LKNWP Radio: AudioContext não está running:', audioContext.state);
-                    debugCount++;
-                }
                 return null;
             }
 
             // Verificar se o proxy está realmente reproduzindo
             if (proxyElement.paused) {
-                if (debugCount < 3) {
-                    console.log('LKNWP Radio: Proxy está pausado');
-                    debugCount++;
-                }
                 return null;
             }
 
             if (proxyElement.readyState < 3) {
-                if (debugCount < 3) {
-                    console.log('LKNWP Radio: Proxy readyState insuficiente:', proxyElement.readyState);
-                    debugCount++;
-                }
                 return null;
             }
 
@@ -224,12 +352,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 var avgAmplitude = sum / dataArray.length;
 
-                // Log ocasional para debug
-                if (Math.random() < 0.02) { // 2% das vezes
-                    console.log('LKNWP Radio: Análise de dados - avg:', avgAmplitude.toFixed(2),
-                        'max:', maxValue, 'nonZero:', nonZeroValues, 'total:', dataArray.length);
-                }
-
                 // Critério mais generoso para detectar áudio
                 if (avgAmplitude > 0.1 || maxValue > 5 || nonZeroValues > 1) {
                     return dataArray;
@@ -237,14 +359,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 return null;
             } catch (error) {
-                console.warn('LKNWP Radio: Erro na captura de dados:', error);
                 return null;
             }
         }    /**
      * Limpa timeouts e recursos - versão robusta para reloads
      */
         function cleanupResources() {
-            console.log('LKNWP Radio: Iniciando limpeza robusta de recursos...');
 
             // Limpar todos os timeouts
             timeoutIds.forEach(function (id) {
@@ -269,15 +389,11 @@ document.addEventListener("DOMContentLoaded", function () {
                     analyser = null;
                 }
                 if (audioContext && audioContext.state !== 'closed') {
-                    audioContext.close().then(function () {
-                        console.log('LKNWP Radio: AudioContext fechado com sucesso');
-                    }).catch(function (error) {
-                        console.log('LKNWP Radio: Erro ao fechar AudioContext:', error);
-                    });
+                    audioContext.close();
                     audioContext = null;
                 }
             } catch (error) {
-                console.log('LKNWP Radio: Erro durante limpeza de Web Audio:', error);
+                // Erro durante limpeza - ignorar silenciosamente
             }
 
             // Reset flags incluindo retry
@@ -286,7 +402,7 @@ document.addEventListener("DOMContentLoaded", function () {
             stopRetrying = true; // Parar todos os retries ativos
             currentAnimationFunction = null; // Limpar referência da animação
 
-            console.log('LKNWP Radio: Limpeza robusta concluída');
+            // Limpeza robusta concluída
         }
 
         /**
@@ -298,7 +414,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
             // Evitar chamadas múltiplas
             if (isVisualizerActive || isInitialized) {
-                console.log('LKNWP Radio: Visualizador já ativo, ignorando chamada');
                 return;
             }
 
@@ -312,7 +427,7 @@ document.addEventListener("DOMContentLoaded", function () {
             isVisualizerActive = true;
             isInitialized = true;
 
-            console.log('LKNWP Radio: Iniciando visualizador...');
+            // Iniciando visualizador
 
             // Inicializar captura de áudio real
             if (initializeAudioContext()) {
@@ -321,16 +436,10 @@ document.addEventListener("DOMContentLoaded", function () {
                 // Aguardar AudioContext estar realmente ativo
                 var checkContextReady = function () {
                     if (audioContext && audioContext.state === 'running') {
-                        console.log('LKNWP Radio: AudioContext está rodando, conectando áudio...');
-
                         if (connectAudioToAnalyser()) {
                             // Aguardar o proxy carregar antes de reproduzir
                             var proxyCanPlay = function () {
-                                console.log('LKNWP Radio: Proxy carregado, iniciando reprodução para captura');
-
                                 proxyElement.play().then(function () {
-                                    console.log('LKNWP Radio: Proxy reproduzindo, iniciando visualizador real');
-
                                     // Aguardar mais tempo para o áudio se estabilizar
                                     var timeoutId = setTimeout(function () {
                                         createRealVisualizer();
@@ -338,8 +447,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                     timeoutIds.push(timeoutId);
 
                                 }).catch(function (error) {
-                                    console.error('LKNWP Radio: ERRO CRÍTICO - Proxy falhou:', error);
-                                    console.log('LKNWP Radio: Sistema de retry automático irá tentar reconectar...');
+                                    // Proxy falhou - sistema de retry irá tentar reconectar silenciosamente
                                 });
                             };
 
@@ -362,24 +470,20 @@ document.addEventListener("DOMContentLoaded", function () {
                             function attemptReconnect() {
                                 // Parar se foi solicitado globalmente
                                 if (stopRetrying) {
-                                    console.log('LKNWP Radio: Retry cancelado por solicitação global');
                                     return;
                                 }
 
                                 // Evitar tentativas simultâneas
                                 if (isRetrying) {
-                                    console.log('LKNWP Radio: Retry já em andamento, ignorando...');
                                     return;
                                 } retryAttempts++;
 
                                 // Verificar se realmente precisa de retry
                                 if (proxyElement && !proxyElement.paused && proxyElement.readyState >= 3) {
-                                    console.log('LKNWP Radio: Proxy carregou com sucesso, cancelando retry');
                                     return;
                                 }
 
                                 if (!proxyElement || (proxyElement.paused || proxyElement.readyState < 3)) {
-                                    console.warn('LKNWP Radio: Tentativa', retryAttempts, 'de', maxRetries, '- Tentando reconectar proxy...');
 
                                     if (retryAttempts <= maxRetries && proxyElement) {
                                         isRetrying = true;
@@ -394,13 +498,13 @@ document.addEventListener("DOMContentLoaded", function () {
                                                     proxyElement.addEventListener('canplay', function () {
                                                         if (proxyElement && proxyElement.paused) {
                                                             proxyElement.play().catch(function (error) {
-                                                                console.log('LKNWP Radio: Play após load falhou:', error.name);
+                                                                // Play falhou silenciosamente
                                                             });
                                                         }
                                                     }, { once: true });
                                                 }
                                             } catch (error) {
-                                                console.log('LKNWP Radio: Erro durante retry seguro:', error.name);
+                                                // Erro durante retry - ignorar silenciosamente
                                             }
 
                                             isRetrying = false;
@@ -410,10 +514,10 @@ document.addEventListener("DOMContentLoaded", function () {
                                         var retryTimeoutId = setTimeout(attemptReconnect, 4000);
                                         timeoutIds.push(retryTimeoutId);
                                     } else {
-                                        console.log('LKNWP Radio: Máximo de tentativas atingido, aguardando nova ação do usuário');
+                                        // Máximo de tentativas atingido - aguardando nova ação do usuário
                                     }
                                 } else {
-                                    console.log('LKNWP Radio: Reconnect bem-sucedido na tentativa', retryAttempts);
+                                    // Reconnect bem-sucedido
                                 }
                             }
 
@@ -421,20 +525,17 @@ document.addEventListener("DOMContentLoaded", function () {
                             // Só se o player principal estiver tocando (evita retry quando usuário pausou)
                             var initialRetryId = setTimeout(function () {
                                 if (isPlaying && proxyElement && (proxyElement.paused || proxyElement.readyState < 3)) {
-                                    console.log('LKNWP Radio: Iniciando sistema de retry (player ativo)');
                                     attemptReconnect();
                                 } else {
-                                    console.log('LKNWP Radio: Retry cancelado - player pausado ou proxy OK');
+                                    // Retry cancelado - player pausado ou proxy OK
                                 }
                             }, 8000);
                             timeoutIds.push(initialRetryId);
 
                         } else {
-                            console.error('LKNWP Radio: ERRO - Não foi possível conectar analyser');
-                            console.log('LKNWP Radio: Sistema tentará reconectar automaticamente...');
+                            // Erro - não foi possível conectar analyser
                         }
                     } else {
-                        console.log('LKNWP Radio: Aguardando AudioContext ativar...');
                         var contextTimeoutId = setTimeout(checkContextReady, 100);
                         timeoutIds.push(contextTimeoutId);
                     }
@@ -443,8 +544,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 checkContextReady();
 
             } else {
-                console.error('LKNWP Radio: ERRO - AudioContext não disponível');
-                console.log('LKNWP Radio: Navegador não suporta Web Audio API ou está bloqueado');
+                // AudioContext não disponível - navegador não suporta Web Audio API
             }
         }
 
@@ -455,7 +555,7 @@ document.addEventListener("DOMContentLoaded", function () {
             var visualizerContainer = document.getElementById('lknwp-radio-audio-visualizer');
             if (!visualizerContainer) return;
 
-            console.log('LKNWP Radio: Ocultando visualizador e parando retry automático');
+            // Ocultando visualizador e parando retry automático
 
             visualizerContainer.classList.remove('lkp-audio-visualizer--active');
             isVisualizerActive = false;
@@ -474,7 +574,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 proxyElement = null;
             }
 
-            console.log('LKNWP Radio: Visualizador parado e recursos limpos');
+            // Visualizador parado e recursos limpos
         }
 
         /**
@@ -592,15 +692,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                     // Log ocasional simplificado
                     if (frameSkipCounter % 600 === 0) {
-                        var sum = Array.from(frequencies).reduce((a, b) => a + b, 0);
-                        var avgAmplitude = sum / frequencies.length;
-                        var fps = window.lknwpRadioPerformanceMode ? '20fps (performance mode)' : '30fps (normal)';
-                        console.log('LKNWP Radio: Onda simétrica - amplitude média:', avgAmplitude.toFixed(2), fps);
-
-                        if (performance.memory) {
-                            var memMB = Math.round(performance.memory.usedJSHeapSize / 1048576);
-                            console.log('LKNWP Radio: Memória JS:', memMB, 'MB');
-                        }
+                        // Onda simétrica desenhada com sucesso
                     }
 
                 } else {
@@ -608,18 +700,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
                     // Se não conseguir dados por muito tempo, tentar reconectar
                     if (noDataCount > maxNoDataAttempts) {
-                        console.warn('LKNWP Radio: Sem dados por muito tempo, tentando reconectar...');
-                        console.log('LKNWP Radio: Proxy status - paused:', proxyElement ? proxyElement.paused : 'N/A',
-                            'readyState:', proxyElement ? proxyElement.readyState : 'N/A');
 
                         // Tentar reconectar proxy somente se o player principal estiver tocando
                         if (isPlaying && proxyElement && proxyElement.paused) {
-                            console.log('LKNWP Radio: Tentando reativar proxy pausado...');
+                            // Tentando reativar proxy pausado
                             proxyElement.play().catch(function (error) {
-                                console.log('LKNWP Radio: Reativação do proxy falhou:', error.name);
+                                // Reativação do proxy falhou
                             });
                         } else if (!isPlaying) {
-                            console.log('LKNWP Radio: Player pausado, não tentando reconectar proxy');
+                            // Player pausado - não tentando reconectar proxy
                         }
 
                         noDataCount = Math.floor(maxNoDataAttempts * 0.7); // Reset parcial para evitar loop
@@ -643,7 +732,7 @@ document.addEventListener("DOMContentLoaded", function () {
             currentAnimationFunction = animateWithRealData;
 
             // Iniciar animação com dados reais
-            console.log('LKNWP Radio: Iniciando visualizador com dados reais');
+            // Iniciando visualizador com dados reais
             visualizerInterval = requestAnimationFrame(animateWithRealData);
         }
 
@@ -660,10 +749,10 @@ document.addEventListener("DOMContentLoaded", function () {
             // Reiniciar animação se temos as estruturas
             var topBarsContainer = document.querySelector('#lknwp-radio-visualizer-top .lkp-visualizer-bars');
             if (topBarsContainer && topBarsContainer.children.length > 0 && currentAnimationFunction) {
-                console.log('LKNWP Radio: Reativando animação existente');
+                // Reativando animação existente
                 visualizerInterval = requestAnimationFrame(currentAnimationFunction);
             } else {
-                console.log('LKNWP Radio: Estrutura não existe, recriando...');
+                // Estrutura não existe - recriando
                 createRealVisualizer();
             }
         }
@@ -716,8 +805,17 @@ document.addEventListener("DOMContentLoaded", function () {
                         errorMsg = document.createElement("div");
                         errorMsg.id = "lknwp-radio-player-error";
                         errorMsg.className = "lkp-player-error";
-                        errorMsg.innerHTML = "Não foi possível reproduzir esta rádio. Tente novamente mais tarde ou escolha outra estação.";
+                        errorMsg.innerHTML = lknwpRadioTextsPlayer.unableToPlay || "Unable to play this radio station. Please try again later or choose another station.";
                         playBtn.parentNode.appendChild(errorMsg);
+                    }
+                    // Esconder o componente de compartilhamento
+                    var shareSection = document.querySelector('.lkp-share-section');
+                    if (shareSection) {
+                        shareSection.style.display = 'none';
+                    }
+                    // Simular clique no botão play/pause para garantir atualização do estado e animações
+                    if (playBtn) {
+                        playBtn.click();
                     }
                 });
                 var imgParent = document.getElementById("lknwp-radio-img-parent");
@@ -743,17 +841,13 @@ document.addEventListener("DOMContentLoaded", function () {
         }
         var volumeTimeout;
         function showVolumeValue() {
-            console.log('LKNWP Volume: Mostrando tooltip');
             volumeValue.classList.remove("lkp-volume-display--hidden");
             volumeValue.classList.add("lkp-volume-display--visible");
-            console.log('LKNWP Volume: Classes após mostrar:', volumeValue.classList.toString());
 
             clearTimeout(volumeTimeout);
             volumeTimeout = setTimeout(function () {
-                console.log('LKNWP Volume: Escondendo tooltip após 20 segundos');
                 volumeValue.classList.remove("lkp-volume-display--visible");
                 volumeValue.classList.add("lkp-volume-display--hidden");
-                console.log('LKNWP Volume: Classes após esconder:', volumeValue.classList.toString());
             }, 2000);
         }
         volumeSlider.addEventListener("input", function () {
@@ -774,22 +868,21 @@ document.addEventListener("DOMContentLoaded", function () {
 
         function setupShareButtons() {
             var currentUrl = window.location.href;
-            var stationName = document.getElementById('lknwp-radio-station-name').textContent || 'Rádio Online';
-            var shareText = `🎵 Escutando ${stationName} - `;
+            var stationName = document.getElementById('lknwp-radio-station-name').textContent || (lknwpRadioTextsPlayer.onlineRadio || 'Online Radio');
+            var shareTextTemplate = lknwpRadioTextsPlayer.listeningTo || '🎵 Listening to {station} - ';
+            var shareText = shareTextTemplate.replace('{station}', stationName);
 
             // Botão Copiar Link
             var copyBtn = document.getElementById('lknwp-share-copy');
             if (copyBtn) {
                 copyBtn.addEventListener('click', function () {
                     navigator.clipboard.writeText(currentUrl).then(function () {
-                        console.log('LKNWP Radio: URL copiada para a área de transferência');
                         // Feedback visual
                         copyBtn.style.background = 'rgba(76, 175, 80, 0.3)';
                         setTimeout(function () {
                             copyBtn.style.background = '';
                         }, 1000);
                     }).catch(function (err) {
-                        console.error('LKNWP Radio: Erro ao copiar URL:', err);
                     });
                 });
             }
@@ -820,20 +913,14 @@ document.addEventListener("DOMContentLoaded", function () {
                 twitterBtn.target = '_blank';
                 twitterBtn.rel = 'noopener noreferrer';
             }
-
-            console.log('LKNWP Radio: Botões de compartilhamento configurados');
         }
 
         // ===== VISUALIZER EVENT LISTENERS =====
 
         player.addEventListener('playing', function () {
-            console.log('LKNWP Radio: Player começou a tocar, reativando visualizador...');
-
             setTimeout(function () {
                 // Se já temos proxy e conexões, apenas reativar
                 if (proxyElement && audioContext && analyser) {
-                    console.log('LKNWP Radio: RESUME RÁPIDO - Reativando conexões existentes');
-
                     // Reativar retry se necessário
                     stopRetrying = false;
 
@@ -845,7 +932,6 @@ document.addEventListener("DOMContentLoaded", function () {
                     // Reativar proxy
                     if (proxyElement.paused) {
                         proxyElement.play().catch(function (error) {
-                            console.log('LKNWP Radio: Erro ao reativar proxy:', error.name);
                         });
                     }
 
@@ -853,15 +939,12 @@ document.addEventListener("DOMContentLoaded", function () {
                     resumeVisualizer();
                 } else {
                     // Se não temos conexões, criar do zero
-                    console.log('LKNWP Radio: Criando novo visualizador');
                     showVisualizer();
                 }
             }, 300); // Reduzido de 800ms para 300ms
         });
 
         player.addEventListener('pause', function () {
-            console.log('LKNWP Radio: Player pausado, mantendo conexões para resume rápido...');
-
             // Ocultar visualização mas manter estruturas
             var visualizerContainer = document.getElementById('lknwp-radio-audio-visualizer');
             if (visualizerContainer) {
@@ -894,8 +977,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // Limpeza automática quando o usuário sai da página
         window.addEventListener('beforeunload', function () {
-            console.log('LKNWP Radio: Limpeza completa antes de sair...');
-
             // Parar player principal
             if (player && !player.paused) {
                 player.pause();
@@ -935,8 +1016,6 @@ document.addEventListener("DOMContentLoaded", function () {
         // Limpeza quando a página perde foco (optional - pode ajudar em alguns casos)
         document.addEventListener('visibilitychange', function () {
             if (document.hidden && isPlaying) {
-                console.log('LKNWP Radio: Página oculta, reduzindo atividade...');
-                // Não para completamente, mas pode ser útil para debugging
             }
         });
 

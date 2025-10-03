@@ -28,7 +28,7 @@
 .lkp-visualizer-bar {
     width: 4px;
     min-height: 3px;
-    background: linear-gradient(to top, #00ff88, #00cc6a, #009944);
+    background: linear-gradient(to top, var(--lkn-wave-green), var(--lkn-wave-green-dark), var(--lkn-wave-green-darker));
     border-radius: 2px;
     transition: height 0.1s ease-out;
     animation: lkp-pulse 2s ease-in-out infinite alternate;
@@ -56,23 +56,23 @@
 
 /* Estados de intensidade das barras */
 .lkp-visualizer-bar--low {
-    background: linear-gradient(to top, #00ff88, #00cc6a);
-    box-shadow: 0 0 8px rgba(0, 255, 136, 0.3);
+    background: linear-gradient(to top, var(--lkn-wave-green), var(--lkn-wave-green-dark));
+    box-shadow: 0 0 8px var(--lkn-wave-green, rgba(0, 255, 136, 0.3));
 }
 
 .lkp-visualizer-bar--medium {
-    background: linear-gradient(to top, #00ff88, #00cc6a, #009944);
-    box-shadow: 0 0 12px rgba(0, 255, 136, 0.4);
+    background: linear-gradient(to top, var(--lkn-wave-green), var(--lkn-wave-green-dark), var(--lkn-wave-green-darker));
+    box-shadow: 0 0 12px var(--lkn-wave-green, rgba(0, 255, 136, 0.4));
 }
 
 .lkp-visualizer-bar--high {
-    background: linear-gradient(to top, #ffff00, #00ff88, #00cc6a, #009944);
-    box-shadow: 0 0 16px rgba(255, 255, 0, 0.4);
+    background: linear-gradient(to top, var(--lkn-wave-yellow), var(--lkn-wave-green), var(--lkn-wave-green-dark), var(--lkn-wave-green-darker));
+    box-shadow: 0 0 16px var(--lkn-wave-yellow, rgba(255, 255, 0, 0.4));
 }
 
 .lkp-visualizer-bar--peak {
-    background: linear-gradient(to top, #ff4444, #ffff00, #00ff88, #00cc6a);
-    box-shadow: 0 0 20px rgba(255, 68, 68, 0.5);
+    background: linear-gradient(to top, var(--lkn-wave-peak-red), var(--lkn-wave-yellow), var(--lkn-wave-green), var(--lkn-wave-green-dark));
+    box-shadow: 0 0 20px var(--lkn-wave-peak-red, rgba(255, 68, 68, 0.5));
     animation: lkp-peak-glow 0.5s ease-in-out;
 }
 
