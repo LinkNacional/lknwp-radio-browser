@@ -37,45 +37,45 @@ window.LKNWP_PLAYER_PAGE_SLUG = "<?php echo esc_js($atts['player_page']); ?>";
                     <label for="lrt_countrycode"><?php esc_html_e( 'Country', 'lknwp-radio-browser' ); ?></label>
                     <select id="lrt_countrycode" name="lrt_countrycode" class="lrt-radio-select lrt-radio-select--country">
                         <?php
-                        $countries = array(
-                            'BR' => '🇧🇷 BR',
-                            'US' => '🇺🇸 US',
-                            'AR' => '🇦🇷 AR',
-                            'CA' => '🇨🇦 CA',
-                            'GB' => '🇬🇧 GB',
-                            'FR' => '🇫🇷 FR',
-                            'DE' => '🇩🇪 DE',
-                            'ES' => '🇪🇸 ES',
-                            'IT' => '🇮🇹 IT',
-                            'PT' => '🇵🇹 PT',
-                            'MX' => '🇲🇽 MX',
-                            'CL' => '🇨🇱 CL',
-                            'CO' => '🇨🇴 CO',
-                            'PE' => '🇵🇪 PE',
-                            'UY' => '🇺🇾 UY',
-                            'PY' => '🇵🇾 PY',
-                            'BO' => '🇧🇴 BO',
-                            'EC' => '🇪🇨 EC',
-                            'VE' => '🇻🇪 VE',
-                            'AU' => '🇦🇺 AU',
-                            'JP' => '🇯🇵 JP',
-                            'KR' => '🇰🇷 KR',
-                            'CN' => '🇨🇳 CN',
-                            'IN' => '🇮🇳 IN',
-                            'RU' => '🇷🇺 RU',
-                            'NL' => '🇳🇱 NL',
-                            'BE' => '🇧🇪 BE',
-                            'CH' => '🇨🇭 CH',
-                            'AT' => '🇦🇹 AT',
-                            'SE' => '🇸🇪 SE',
-                            'NO' => '🇳🇴 NO',
-                            'DK' => '🇩🇰 DK',
-                            'FI' => '🇫🇮 FI'
+                        // Cria o array com 'All Countries' na primeira posição
+                        $countries = array_merge(
+                            array('' => '🌍 ' . __( 'All Countries', 'lknwp-radio-browser' )),
+                            array(
+                                'BR' => '🇧🇷 BR',
+                                'US' => '🇺🇸 US',
+                                'AR' => '🇦🇷 AR',
+                                'CA' => '🇨🇦 CA',
+                                'GB' => '🇬🇧 GB',
+                                'FR' => '🇫🇷 FR',
+                                'DE' => '🇩🇪 DE',
+                                'ES' => '🇪🇸 ES',
+                                'IT' => '🇮🇹 IT',
+                                'PT' => '🇵🇹 PT',
+                                'MX' => '🇲🇽 MX',
+                                'CL' => '🇨🇱 CL',
+                                'CO' => '🇨🇴 CO',
+                                'PE' => '🇵🇪 PE',
+                                'UY' => '🇺🇾 UY',
+                                'PY' => '🇵🇾 PY',
+                                'BO' => '🇧🇴 BO',
+                                'EC' => '🇪🇨 EC',
+                                'VE' => '🇻🇪 VE',
+                                'AU' => '🇦🇺 AU',
+                                'JP' => '🇯🇵 JP',
+                                'KR' => '🇰🇷 KR',
+                                'CN' => '🇨🇳 CN',
+                                'IN' => '🇮🇳 IN',
+                                'RU' => '🇷🇺 RU',
+                                'NL' => '🇳🇱 NL',
+                                'BE' => '🇧🇪 BE',
+                                'CH' => '🇨🇭 CH',
+                                'AT' => '🇦🇹 AT',
+                                'SE' => '🇸🇪 SE',
+                                'NO' => '🇳🇴 NO',
+                                'DK' => '🇩🇰 DK',
+                                'FI' => '🇫🇮 FI'
+                            )
                         );
-                        
-                        // Add translated "All Countries" option
-                        $countries[''] = '🌍 ' . __( 'All Countries', 'lknwp-radio-browser' );
-                        
                         $selected_country = $atts['countrycode'];
                         if (empty($selected_country)) {
                             $selected_country = 'BR'; // Padrão Brasil

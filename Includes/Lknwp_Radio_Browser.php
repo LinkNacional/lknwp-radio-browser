@@ -413,14 +413,14 @@ class Lknwp_Radio_Browser {
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Public shortcode for radio list, nonce not applicable
 		$search = isset($_GET['lrt_radio_search']) ? sanitize_text_field(wp_unslash($_GET['lrt_radio_search'])) : '';
 		$sort_options = [
-			'clickcount' => 'Mais famosos',
-			'name' => 'Nome',
-			'random' => 'Aleatório',
-			'bitrate' => 'Bitrate'
+			'clickcount' => __('Most popular', 'lknwp-radio-browser'),
+			'name' => __('Name', 'lknwp-radio-browser'),
+			'random' => __('Random', 'lknwp-radio-browser'),
+			'bitrate' => __('Bitrate', 'lknwp-radio-browser')
 		];
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Public shortcode for radio list, nonce not applicable
-	$sort = isset($_GET['lrt_sort']) && isset($sort_options[sanitize_text_field(wp_unslash($_GET['lrt_sort']))]) ? sanitize_text_field(wp_unslash($_GET['lrt_sort'])) : 'clickcount';
-	$genre = isset($_GET['lrt_genre']) ? sanitize_text_field(wp_unslash($_GET['lrt_genre'])) : 'all';
+		$sort = isset($_GET['lrt_sort']) && isset($sort_options[sanitize_text_field(wp_unslash($_GET['lrt_sort']))]) ? sanitize_text_field(wp_unslash($_GET['lrt_sort'])) : 'clickcount';
+		$genre = isset($_GET['lrt_genre']) ? sanitize_text_field(wp_unslash($_GET['lrt_genre'])) : 'all';
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Public shortcode for radio list, nonce not applicable  
 		$reverse = isset($_GET['lrt_reverse']) ? sanitize_text_field(wp_unslash($_GET['lrt_reverse'])) : '1'; // 1 = reverso ativo por padrão
 
