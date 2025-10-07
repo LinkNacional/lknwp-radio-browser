@@ -3,10 +3,10 @@
 
 /* ===== MAIN WRAPPER ===== */
 .lrt-radio-wrap {
-    background: var(--lkn-secondary-blue-3) !important;
+    background: var(--lkn-secondary-blue-3);
     /* obsidian/azul escuro */
     border-radius: 20px;
-    box-shadow: 0 2px 12px rgba(44, 62, 80, 0.10) !important;
+    box-shadow: 0 2px 12px rgba(44, 62, 80, 0.10);
     padding: 0 0 18px 0;
     font-family: 'Roboto', Arial, sans-serif !important;
 }
@@ -78,7 +78,7 @@
 
 /* ===== LABELS ===== */
 .lrt-radio-field label {
-    color: var(--lkn-support-gray-7) !important;
+    color: var(--lkn-support-gray-7);
     font-weight: 500;
     margin-bottom: 4px;
     font-size: 15px;
@@ -93,9 +93,9 @@
     outline: none;
     box-shadow: none;
     border-radius: 8px;
-    border: 1px solid var(--lkn-secondary-blue-2) !important;
-    background: var(--lkn-secondary-blue-4) !important;
-    color: var(--lkn-support-gray-7) !important;
+    border: 1px solid var(--lkn-secondary-blue-2);
+    background: var(--lkn-secondary-blue-4);
+    color: var(--lkn-support-gray-7);
     font-size: 15px;
     padding: 7px 12px;
     transition: border 0.2s, background 0.2s;
@@ -128,8 +128,8 @@
 .lrt-radio-input:focus,
 .lrt-radio-select:focus,
 .lrt-radio-button:focus {
-    border: 1.5px solid var(--lkn-secondary-blue-5) !important;
-    background: var(--lkn-support-gray-3) !important;
+    border: 1.5px solid var(--lkn-secondary-blue-5);
+    background: var(--lkn-support-gray-3);
 }
 
 /* Focus do select mantém comportamento padrão */
@@ -192,15 +192,15 @@
     box-shadow: 0 2px 8px rgba(44, 62, 80, 0.10);
     transition: all 0.2s;
     overflow: hidden;
-    border: 1px solid var(--lkn-secondary-blue-2) !important;
+    border: 1px solid var(--lkn-secondary-blue-2);
 }
 
 .lrt-radio-station:hover {
-    background: var(--lkn-secondary-blue-5) !important;
+    background: var(--lkn-secondary-blue-5);
     /* azul escuro mais vibrante */
     transform: translateY(-2px);
     box-shadow: 0 4px 16px rgba(44, 62, 80, 0.20);
-    border: 1.5px solid var(--lkn-secondary-blue-6) !important;
+    border: 1.5px solid var(--lkn-secondary-blue-6);
 }
 
 /* ===== RADIO STATION LINK ===== */
@@ -219,7 +219,7 @@
 }
 
 .lrt-radio-station__link:hover {
-    color: var(--lkn-support-gray-7) !important;
+    color: var(--lkn-support-gray-7);
 }
 
 .lrt-radio-station__link:active {
@@ -232,9 +232,9 @@
     height: 48px;
     border-radius: 50%;
     object-fit: cover;
-    border: 2px solid var(--lkn-secondary-blue-2) !important;
-    box-shadow: 0 1px 4px rgba(44, 62, 80, 0.10) !important;
-    background: var(--lkn-primary) !important;
+    border: 2px solid var(--lkn-secondary-blue-2);
+    box-shadow: 0 1px 4px rgba(44, 62, 80, 0.10);
+    background: var(--lkn-primary);
     margin-right: 8px;
 }
 
@@ -250,7 +250,7 @@
 }
 
 .lrt-radio-station__name {
-    color: var(--lkn-secondary-blue-8) !important;
+    color: var(--lkn-secondary-blue-8);
     /* azul claro para contraste */
     font-size: 0.92em;
     font-weight: 500;
@@ -276,7 +276,7 @@
 }
 
 .lrt-radio-list span {
-    color: var(--lkn-support-gray-7) !important;
+    color: var(--lkn-support-gray-7);
     font-size: 1.08em;
     font-weight: 500;
     font-family: 'Roboto', Arial, sans-serif !important;
@@ -291,9 +291,9 @@
     outline: none;
     box-shadow: none;
     border-radius: 8px;
-    border: 1px solid var(--lkn-secondary-blue-2) !important;
-    background: var(--lkn-secondary-blue-4) !important;
-    color: var(--lkn-support-gray-7) !important;
+    border: 1px solid var(--lkn-secondary-blue-2);
+    background: var(--lkn-secondary-blue-4);
+    color: var(--lkn-support-gray-7);
     font-size: 15px;
     transition: border 0.2s, background 0.2s;
 }
@@ -301,15 +301,15 @@
 .lrt-radio-field input:focus,
 .lrt-radio-field select:focus,
 .lrt-radio-field button:focus {
-    border: 1.5px solid var(--lkn-secondary-blue-5) !important;
-    background: var(--lkn-support-gray-3) !important;
+    border: 1.5px solid var(--lkn-secondary-blue-5);
+    background: var(--lkn-support-gray-3);
 }
 
 .lrt-radio-form button[type="submit"] {
     background: var(--lkn-support-gray-7) !important;
     color: var(--lkn-support-gray-3) !important;
     font-weight: 600;
-    box-shadow: 0 2px 8px rgba(44, 62, 80, 0.10) !important;
+    box-shadow: 0 2px 8px rgba(44, 62, 80, 0.10);
 }
 
 .lrt-radio-form button[type="submit"]:hover {
@@ -339,10 +339,10 @@
 
 /* ===== ERROR MESSAGES ===== */
 .lrt-radio-error {
-    background: var(--lkn-support-red-2) !important;
+    background: var(--lkn-support-red-2);
     padding: 12px;
     border-radius: 6px;
-    color: var(--lkn-secondary-red-1) !important;
+    color: var(--lkn-secondary-red-1);
     text-align: center;
     list-style: none;
 }
@@ -364,12 +364,135 @@
 /* Estilo das opções */
 .lrt-radio-select--country option {
     padding: 8px 12px;
-    background: var(--lkn-secondary-blue-4) !important;
-    color: var(--lkn-support-gray-7) !important;
+    background: var(--lkn-secondary-blue-4);
+    color: var(--lkn-support-gray-7);
     line-height: 1.4;
 }
 
+/* ===== SELECT2 CUSTOM OVERRIDES ===== */
 
+#lrt_genre {
+    min-width: 240px !important;
+    max-width: 280px !important;
+    width: 100% !important;
+}
+
+.select2-container--default .select2-selection--single {
+    min-width: 240px !important;
+    max-width: 280px !important;
+    width: 100% !important;
+    height: 35px !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+    background: var(--lkn-secondary-blue-4) !important;
+    color: var(--lkn-support-gray-7) !important;
+    border: 1px solid var(--lkn-secondary-blue-2) !important;
+    border-radius: 8px !important;
+    font-size: 16px !important;
+    font-family: 'Roboto', Arial, sans-serif !important;
+}
+
+.select2-container {
+    min-width: 240px !important;
+    max-width: 280px !important;
+    width: 100% !important;
+}
+
+.select2-dropdown {
+    min-width: 240px !important;
+    max-width: 280px !important;
+    width: 100% !important;
+    border-radius: 8px !important;
+    overflow: hidden !important;
+    background: var(--lkn-secondary-blue-4) !important;
+    color: var(--lkn-support-gray-7) !important;
+}
+
+.select2-selection__rendered {
+    display: flex !important;
+    align-items: center !important;
+    height: 100% !important;
+    padding: 0px .5em !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+    color: var(--lkn-support-gray-7) !important;
+    font-size: 16px !important;
+    font-family: 'Roboto', Arial, sans-serif !important;
+}
+
+/* Fix Select2 clear 'x' button */
+.select2-container--default .select2-selection--single .select2-selection__clear {
+    color: var(--lkn-support-gray-7) !important;
+    font-size: 18px !important;
+    position: absolute !important;
+    right: 16px !important;
+    top: 50% !important;
+    margin-right: 10px !important;
+    transform: translateY(-50%);
+    background: none !important;
+    border: none !important;
+    cursor: pointer !important;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+    height: 32px !important;
+    width: 32px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    z-index: 2;
+}
+
+.lrt-hide-select2-clear .select2-selection__clear {
+    display: none !important;
+    position: absolute !important;
+    top: 50% !important;
+    right: 16px !important;
+    width: 0 !important;
+    height: 0 !important;
+    pointer-events: none !important;
+    visibility: hidden !important;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__clear:hover {
+    opacity: 1;
+    color: var(--lkn-secondary-blue-5) !important;
+}
+
+.select2-selection__arrow {
+    top: 0px !important;
+}
+
+.select2-container .select2-selection--single .select2-selection__arrow b {
+    border: none !important;
+    display: block !important;
+    background: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZTBkZWYwIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PHBvbHlsaW5lIHBvaW50cz0iNiA5IDEyIDE1IDE4IDkiPjwvcG9seWxpbmU+PC9zdmc+") no-repeat center center !important;
+    background-size: 16px 16px !important;
+    width: 16px !important;
+    height: 16px !important;
+    margin: 0 !important;
+    position: absolute !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    pointer-events: none !important;
+}
+
+.select2-search__field {
+    font-size: 16px !important;
+    height: 35px !important;
+    font-family: 'Roboto', Arial, sans-serif !important;
+}
+
+.select2-results__option--selected {
+    background-color: var(--lkn-primary) !important;
+}
+
+.select2-results__option {
+    font-family: 'Roboto', Arial, sans-serif !important;
+    font-size: 16px !important;
+}
 
 /* Responsive para select de país */
 @media (max-width: 768px) {
@@ -382,9 +505,9 @@
 
 /* ===== LOADING STATE ===== */
 .lrt-radio-loading {
-    background: var(--lkn-support-gray-3) !important;
+    background: var(--lkn-support-gray-3);
     border-radius: 14px;
-    box-shadow: 0 2px 8px rgba(44, 62, 80, 0.10) !important;
+    box-shadow: 0 2px 8px rgba(44, 62, 80, 0.10);
     padding: 32px 18px;
     display: flex;
     flex-direction: column;
@@ -393,7 +516,7 @@
     gap: 16px;
     grid-column: 1 / -1;
     text-align: center;
-    color: var(--lkn-support-gray-7) !important;
+    color: var(--lkn-support-gray-7);
     font-family: 'Roboto', Arial, sans-serif !important;
     font-weight: 500;
 }
@@ -401,8 +524,8 @@
 .lrt-loading-spinner {
     width: 40px;
     height: 40px;
-    border: 3px solid rgba(224, 230, 240, 0.2) !important;
-    border-top: 3px solid var(--lkn-secondary-blue-6) !important;
+    border: 3px solid rgba(224, 230, 240, 0.2);
+    border-top: 3px solid var(--lkn-secondary-blue-6);
     border-radius: 50%;
     animation: lrt-spin 1s linear infinite;
 }
@@ -419,6 +542,6 @@
 
 .lrt-radio-loading span {
     font-size: 0.95em;
-    color: var(--lkn-support-gray-7) !important;
+    color: var(--lkn-support-gray-7);
     opacity: 0.9;
 }

@@ -79,6 +79,7 @@ class Lknwp_Radio_Browser_Public {
 		if (isset($post->post_content) && has_shortcode($post->post_content, 'radio_browser_list')) {
 			wp_enqueue_style('lknwp-colors', plugin_dir_url(__FILE__) . '../Includes/assets/css/colors.css', array(), $this->version, 'all');
 			wp_enqueue_style('lknwp-radio-list', plugin_dir_url( __FILE__ ) . 'css/lknwp-radio-browser-list.css', array(), $this->version, 'all' );
+			wp_enqueue_style( 'lknwp-radio-select2', 'https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css', array(), '4.1.0' );
 		}
 
 		if (isset($post->post_content) && has_shortcode($post->post_content, 'radio_browser_player')) {
@@ -143,7 +144,8 @@ class Lknwp_Radio_Browser_Public {
 		}
 
 		if (isset($post->post_content) && has_shortcode($post->post_content, 'radio_browser_list')) {
-			wp_enqueue_script('lknwp-radio-list', plugin_dir_url( __FILE__ ) . 'js/lknwp-radio-browser-list.js', array(), $this->version, true);
+			wp_enqueue_script( 'lknwp-radio-select2', 'https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js', array('jquery'), '4.1.0', true );
+			wp_enqueue_script('lknwp-radio-list', plugin_dir_url( __FILE__ ) . 'js/lknwp-radio-browser-list.js', array('jquery', 'lknwp-radio-select2'), $this->version, true);
 			
 			// Localize list script
 			wp_localize_script('lknwp-radio-list', 'lknwpRadioTextsList', array(
@@ -152,7 +154,8 @@ class Lknwp_Radio_Browser_Public {
 				'tryingAlternativeServers' => __('Trying alternative servers...', 'lknwp-radio-browser'),
 				'ascending' => __('Ascending', 'lknwp-radio-browser'),
 				'descending' => __('Descending', 'lknwp-radio-browser'),
-				'apiError' => __('Error querying API. ', 'lknwp-radio-browser')
+				'apiError' => __('Error querying API. ', 'lknwp-radio-browser'),
+				'placeholder' => __('Select genre', 'lknwp-radio-browser')
 			));
 		}
 	}

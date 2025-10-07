@@ -419,7 +419,8 @@ class Lknwp_Radio_Browser {
 			'bitrate' => 'Bitrate'
 		];
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Public shortcode for radio list, nonce not applicable
-		$sort = isset($_GET['lrt_sort']) && isset($sort_options[sanitize_text_field(wp_unslash($_GET['lrt_sort']))]) ? sanitize_text_field(wp_unslash($_GET['lrt_sort'])) : 'clickcount';
+	$sort = isset($_GET['lrt_sort']) && isset($sort_options[sanitize_text_field(wp_unslash($_GET['lrt_sort']))]) ? sanitize_text_field(wp_unslash($_GET['lrt_sort'])) : 'clickcount';
+	$genre = isset($_GET['lrt_genre']) ? sanitize_text_field(wp_unslash($_GET['lrt_genre'])) : 'all';
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Public shortcode for radio list, nonce not applicable  
 		$reverse = isset($_GET['lrt_reverse']) ? sanitize_text_field(wp_unslash($_GET['lrt_reverse'])) : '1'; // 1 = reverso ativo por padrão
 
@@ -430,6 +431,7 @@ class Lknwp_Radio_Browser {
 			'sort' => $sort, // Padrão clickcount, mas permite outras opções
 			'reverse' => $reverse,
 			'search' => $search,
+			'genre' => $genre,
 			'hide_country' => 'no',
 			'hide_limit' => 'no',
 			'hide_sort' => 'no',
@@ -448,26 +450,23 @@ class Lknwp_Radio_Browser {
 		shuffle($servers);
 		$stations = null;
 		foreach ($servers as $base_url) {
-			// Se tem busca, usa o endpoint de busca por nome, senão usa por país
-			if (!empty($atts['search'])) {
-				$api_url = $base_url . '/json/stations/byname/' . urlencode($atts['search']) . '?order=' . $atts['sort'];
-				// Adiciona filtro de país se especificado
-				if (!empty($atts['countrycode']) && $atts['countrycode'] !== 'ALL') {
-					$api_url .= '&countrycode=' . urlencode($atts['countrycode']);
-				}
+			// Monta a URL de busca unificada
+			$api_url = $base_url . '/json/stations/search?';
+			$params = array();
+			$params[] = 'name=' . urlencode($atts['search']);
+			$params[] = 'countrycode=' . urlencode($atts['countrycode']);
+			$params[] = 'order=' . urlencode($atts['sort']);
+			$params[] = 'limit=' . ($atts['limit'] * 2);
+			$params[] = 'hidebroken=true';
+			$params[] = ($atts['reverse'] === '1') ? 'reverse=true' : 'reverse=false';
+			// Sempre inclui tagList, mesmo vazio ou 'all'
+			if (empty($atts['genre']) || $atts['genre'] === 'all') {
+				$params[] = 'tagList=';
 			} else {
-				$api_url = $base_url . '/json/stations/bycountrycodeexact/' . urlencode($atts['countrycode']) . '?order=' . $atts['sort'];
+				$params[] = 'tagList=' . urlencode($atts['genre']);
 			}
-			
-			if ($atts['reverse'] === '1') {
-				$api_url .= '&reverse=true';
-			} else {
-				$api_url .= '&reverse=false';
-			}
-			
-			// Adiciona limite à URL da API
-			$api_url .= '&limit=' . ($atts['limit'] * 2); // Pega mais para compensar possíveis filtros
-			
+			$api_url .= implode('&', $params);
+
 			$args = [
 				'headers' => [
 					'User-Agent' => 'lknwp-radio-browser/1.0'

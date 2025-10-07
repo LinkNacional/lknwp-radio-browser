@@ -1,206 +1,184 @@
-document.addEventListener("DOMContentLoaded", function () {
-    var reverseBtn = document.getElementById("lrt_reverse_btn");
-    var reverseInput = document.getElementById("lrt_reverse");
-    reverseBtn.addEventListener("click", function () {
-        reverseInput.value = reverseInput.value === "1" ? "0" : "1";
-        reverseBtn.textContent = reverseInput.value === "1"
-            ? (lknwpRadioTextsList && lknwpRadioTextsList.descending ? lknwpRadioTextsList.descending : 'Descending')
-            : (lknwpRadioTextsList && lknwpRadioTextsList.ascending ? lknwpRadioTextsList.ascending : 'Ascending');
-    });
+(function ($) {
 
-    // Função de consulta automática (debounced)
-    function autoQueryRadios() {
-        clearTimeout(autoQueryRadios.timeout);
-        autoQueryRadios.timeout = setTimeout(function () {
-            var searchInput = document.getElementById("lrt_radio_search");
-            var query = searchInput ? searchInput.value.trim() : "";
-            var countrycode = document.getElementById("lrt_countrycode").value;
-            var limit = document.getElementById("lrt_limit").value || 20;
-            var sort = document.getElementById("lrt_sort").value || "clickcount";
-            var reverse = document.getElementById("lrt_reverse").value || "1";
-            var radioList = document.querySelector(".lrt-radio-list");
-            if (!radioList) return;
-            var servers = [
-                "https://de2.api.radio-browser.info",
-                "https://fi1.api.radio-browser.info",
-                "https://fr1.api.radio-browser.info",
-                "https://nl1.api.radio-browser.info"
-            ];
-            var base_url = servers[Math.floor(Math.random() * servers.length)];
-            var api_url;
-            if (!query) {
-                api_url = base_url + "/json/stations/bycountrycodeexact/" + encodeURIComponent(countrycode) + "?order=" + encodeURIComponent(sort);
+    $(document).ready(function () {
+        var $reverseBtn = $('#lrt_reverse_btn');
+        var $reverseInput = $('#lrt_reverse');
+        $reverseBtn.on('click', function () {
+            var val = $reverseInput.val() === "1" ? "0" : "1";
+            $reverseInput.val(val);
+            $reverseBtn.text(
+                val === "1"
+                    ? (window.lknwpRadioTextsList && window.lknwpRadioTextsList.descending ? window.lknwpRadioTextsList.descending : 'Descending')
+                    : (window.lknwpRadioTextsList && window.lknwpRadioTextsList.ascending ? window.lknwpRadioTextsList.ascending : 'Ascending')
+            );
+        });
+
+        // Função de consulta automática (debounced)
+        function autoQueryRadios() {
+            clearTimeout(autoQueryRadios.timeout);
+            autoQueryRadios.timeout = setTimeout(function () {
+                var $searchInput = $('#lrt_radio_search');
+                var query = $searchInput.length ? $searchInput.val().trim() : "";
+                var countrycode = $('#lrt_countrycode').val();
+                var limit = $('#lrt_limit').val() || 20;
+                var sort = $('#lrt_sort').val() || "clickcount";
+                var reverse = $('#lrt_reverse').val() || "1";
+                var genre = $('#lrt_genre').val() || "";
+
+                var $radioList = $('.lrt-radio-list');
+                if (!$radioList.length) return;
+                var servers = [
+                    "https://de2.api.radio-browser.info",
+                    "https://fi1.api.radio-browser.info",
+                    "https://fr1.api.radio-browser.info",
+                    "https://nl1.api.radio-browser.info"
+                ];
+                var base_url = servers[Math.floor(Math.random() * servers.length)];
+                // Sempre usa /search, incluindo todos os parâmetros
+                var api_url = base_url + "/json/stations/search?name=" + encodeURIComponent(query) + "&countrycode=" + encodeURIComponent(countrycode) + "&order=" + encodeURIComponent(sort) + "&limit=" + encodeURIComponent(limit) + "&hidebroken=true";
                 if (reverse === "1") {
-                    api_url += "&orderDirection=desc";
-                } else {
-                    api_url += "&orderDirection=asc";
+                    api_url += "&reverse=true";
                 }
-                api_url += "&limit=" + encodeURIComponent(limit);
-            } else {
-                api_url = base_url + "/json/stations/search?name=" + encodeURIComponent(query) + "&countrycode=" + encodeURIComponent(countrycode) + "&order=" + encodeURIComponent(sort) + "&limit=" + encodeURIComponent(limit);
-                if (reverse === "1") {
-                    api_url += "&orderDirection=desc";
+                // Sempre inclui tagList, mesmo vazio ou 'all'
+                if (!genre || genre === 'all') {
+                    api_url += "&tagList=";
                 } else {
-                    api_url += "&orderDirection=asc";
+                    api_url += "&tagList=" + encodeURIComponent(genre);
                 }
-            }
+                console.log(api_url);
 
-            // Mostrar loading
-            radioList.innerHTML = '<li class="lrt-radio-loading"><div class="lrt-loading-spinner"></div><span>' + (lknwpRadioTextsList ? lknwpRadioTextsList.loadingRadios : 'Loading radios...') + '</span></li>';
-            if (searchInput) searchInput.disabled = true;
+                // Mostrar loading
+                $radioList.html('<li class="lrt-radio-loading"><div class="lrt-loading-spinner"></div><span>' + (window.lknwpRadioTextsList ? window.lknwpRadioTextsList.loadingRadios : 'Loading radios...') + '</span></li>');
+                if ($searchInput.length) $searchInput.prop('disabled', true);
 
-            fetch(api_url, {
-                headers: { 'User-Agent': 'lknwp-radio-browser/1.0' }
-            })
-                .then(function (response) { return response.json(); })
-                .then(function (stations) {
-
-                    if (searchInput) searchInput.disabled = false;
-                    if (!Array.isArray(stations) || stations.length === 0) {
-                        radioList.innerHTML = '<li class="lrt-radio-error">' + (lknwpRadioTextsList ? lknwpRadioTextsList.noRadiosFound : 'No radios found.') + '</li>';
-                        return;
-                    }
-                    radioList.innerHTML = "";
-                    stations.forEach(function (station) {
-                        var name = station.name ? station.name : "";
-                        var stream = station.url_resolved ? station.url_resolved : "";
-                        var img = station.favicon ? station.favicon : "";
-                        var default_img_url = window.LKNWP_RADIO_BROWSER_PLUGIN_URL + "Includes/assets/images/default-radio.png";
-                        if (!img) img = default_img_url;
-                        var player_page = window.LKNWP_PLAYER_PAGE_SLUG || "player";
-                        // Gerar URL amigável - deixa o navegador formatar
-                        var radio_name_clean = name.replace(/[\/\?#&]/g, ''); // Remove apenas caracteres problemáticos
-                        var radio_name_encoded = radio_name_clean.replace(/ /g, '%20');
-                        var player_url = window.location.origin + "/" + player_page + "/" + radio_name_encoded + "/";
-
-                        var li = document.createElement("li");
-                        li.className = "lrt-radio-station";
-
-                        var link = document.createElement("a");
-                        link.className = "lrt-radio-station__link";
-                        link.href = player_url;
-                        link.setAttribute("data-player-link", "1");
-                        link.target = "_blank";
-
-                        var imgEl = document.createElement("img");
-                        imgEl.className = "lrt-radio-station__logo";
-                        imgEl.src = img;
-                        imgEl.alt = "Logo";
-                        imgEl.onerror = function () {
-                            this.onerror = null;
-                            if (!this.src.endsWith(default_img_url)) {
-                                this.src = default_img_url;
-                            }
-                        };
-
-                        var div = document.createElement("div");
-                        div.className = "lrt-radio-station__content";
-
-                        var span = document.createElement("span");
-                        span.className = "lrt-radio-station__name";
-                        span.textContent = name;
-
-                        div.appendChild(span);
-                        link.appendChild(imgEl);
-                        link.appendChild(div);
-                        li.appendChild(link);
-                        radioList.appendChild(li);
-                    });
+                fetch(api_url, {
+                    headers: { 'User-Agent': 'lknwp-radio-browser/1.0' }
                 })
-                .catch(function (error) {
-                    // Mostrar loading para tentativa de fallback
-                    radioList.innerHTML = '<li class="lrt-radio-loading"><div class="lrt-loading-spinner"></div><span>' + (lknwpRadioTextsList ? lknwpRadioTextsList.tryingAlternativeServers : 'Trying alternative servers...') + '</span></li>';
+                    .then(function (response) { return response.json(); })
+                    .then(function (stations) {
+                        if ($searchInput.length) $searchInput.prop('disabled', false);
+                        if (!Array.isArray(stations) || stations.length === 0) {
+                            $radioList.html('<li class="lrt-radio-error">' + (window.lknwpRadioTextsList ? window.lknwpRadioTextsList.noRadiosFound : 'No radios found.') + '</li>');
+                            return;
+                        }
+                        $radioList.html("");
+                        stations.forEach(function (station) {
+                            var name = station.name ? station.name : "";
+                            var stream = station.url_resolved ? station.url_resolved : "";
+                            var img = station.favicon ? station.favicon : "";
+                            var default_img_url = window.LKNWP_RADIO_BROWSER_PLUGIN_URL + "Includes/assets/images/default-radio.png";
+                            if (!img) img = default_img_url;
+                            var player_page = window.LKNWP_PLAYER_PAGE_SLUG || "player";
+                            var radio_name_clean = name.replace(/[\/\?#&]/g, '');
+                            var radio_name_encoded = radio_name_clean.replace(/ /g, '%20');
+                            var player_url = window.location.origin + "/" + player_page + "/" + radio_name_encoded + "/";
 
-                    (async function () {
+                            var $li = $('<li>').addClass('lrt-radio-station');
+                            var $link = $('<a>').addClass('lrt-radio-station__link').attr({
+                                href: player_url,
+                                'data-player-link': '1',
+                                target: '_blank'
+                            });
+                            var $imgEl = $('<img>').addClass('lrt-radio-station__logo').attr({
+                                src: img,
+                                alt: 'Logo'
+                            }).on('error', function () {
+                                if (!$(this).attr('src').endsWith(default_img_url)) {
+                                    $(this).attr('src', default_img_url);
+                                }
+                            });
+                            var $div = $('<div>').addClass('lrt-radio-station__content');
+                            var $span = $('<span>').addClass('lrt-radio-station__name').text(name);
+                            $div.append($span);
+                            $link.append($imgEl).append($div);
+                            $li.append($link);
+                            $radioList.append($li);
+                        });
+                    })
+                    .catch(function (error) {
+                        $radioList.html('<li class="lrt-radio-loading"><div class="lrt-loading-spinner"></div><span>' + (window.lknwpRadioTextsList ? window.lknwpRadioTextsList.tryingAlternativeServers : 'Trying alternative servers...') + '</span></li>');
                         var servers = [
                             "https://de2.api.radio-browser.info",
                             "https://fi1.api.radio-browser.info",
                             "https://fr1.api.radio-browser.info",
                             "https://nl1.api.radio-browser.info"
                         ];
-                        let found = false;
-                        for (let i = 0; i < servers.length; i++) {
-                            let nextApiUrl = api_url.replace(/https:\/\/[^/]+/, servers[i]);
-                            try {
-                                let response = await fetch(nextApiUrl, {
-                                    headers: { 'User-Agent': 'lknwp-radio-browser/1.0' }
-                                });
-                                if (!response.ok) continue;
-                                let stations = await response.json();
-                                if (searchInput) searchInput.disabled = false;
-                                if (!Array.isArray(stations) || stations.length === 0) {
-                                    radioList.innerHTML = '<li class="lrt-radio-error">' + (lknwpRadioTextsList ? lknwpRadioTextsList.noRadiosFound : 'No radios found.') + '</li>';
-                                    return;
+                        var found = false;
+                        (async function () {
+                            for (var i = 0; i < servers.length; i++) {
+                                var nextApiUrl = api_url.replace(/https:\/\/[^/]+/, servers[i]);
+                                try {
+                                    var response = await fetch(nextApiUrl, {
+                                        headers: { 'User-Agent': 'lknwp-radio-browser/1.0' }
+                                    });
+                                    if (!response.ok) continue;
+                                    var stations = await response.json();
+                                    if ($searchInput.length) $searchInput.prop('disabled', false);
+                                    if (!Array.isArray(stations) || stations.length === 0) {
+                                        $radioList.html('<li class="lrt-radio-error">' + (window.lknwpRadioTextsList ? window.lknwpRadioTextsList.noRadiosFound : 'No radios found.') + '</li>');
+                                        return;
+                                    }
+                                    $radioList.html("");
+                                    stations.forEach(function (station) {
+                                        var name = station.name ? station.name : "";
+                                        var stream = station.url_resolved ? station.url_resolved : "";
+                                        var img = station.favicon ? station.favicon : "";
+                                        var default_img_url = window.LKNWP_RADIO_BROWSER_PLUGIN_URL + "Includes/assets/images/default-radio.png";
+                                        if (!img) img = default_img_url;
+                                        var player_page = window.LKNWP_PLAYER_PAGE_SLUG || "player";
+                                        var radio_name_clean = name.replace(/[\/\?#&]/g, '');
+                                        var radio_name_encoded = radio_name_clean.replace(/ /g, '%20');
+                                        var player_url = window.location.origin + "/" + player_page + "/" + radio_name_encoded + "/";
+
+                                        var $li = $('<li>').addClass('lrt-radio-station');
+                                        var $link = $('<a>').addClass('lrt-radio-station__link').attr({
+                                            href: player_url,
+                                            'data-player-link': '1',
+                                            target: '_blank'
+                                        });
+                                        var $imgEl = $('<img>').addClass('lrt-radio-station__logo').attr({
+                                            src: img,
+                                            alt: 'Logo'
+                                        }).on('error', function () {
+                                            if (!$(this).attr('src').endsWith(default_img_url)) {
+                                                $(this).attr('src', default_img_url);
+                                            }
+                                        });
+                                        var $div = $('<div>').addClass('lrt-radio-station__content');
+                                        var $span = $('<span>').addClass('lrt-radio-station__name').text(name);
+                                        $div.append($span);
+                                        $link.append($imgEl).append($div);
+                                        $li.append($link);
+                                        $radioList.append($li);
+                                    });
+                                    found = true;
+                                    break;
+                                } catch (e) {
+                                    // continua para o próximo servidor
                                 }
-                                radioList.innerHTML = "";
-                                stations.forEach(function (station) {
-                                    var name = station.name ? station.name : "";
-                                    var stream = station.url_resolved ? station.url_resolved : "";
-                                    var img = station.favicon ? station.favicon : "";
-                                    var default_img_url = window.LKNWP_RADIO_BROWSER_PLUGIN_URL + "Includes/assets/images/default-radio.png";
-                                    if (!img) img = default_img_url;
-                                    var player_page = window.LKNWP_PLAYER_PAGE_SLUG || "player";
-                                    // Gerar URL amigável - deixa o navegador formatar
-                                    var radio_name_clean = name.replace(/[\/\?#&]/g, ''); // Remove apenas caracteres problemáticos
-                                    var radio_name_encoded = radio_name_clean.replace(/ /g, '%20');
-                                    var player_url = window.location.origin + "/" + player_page + "/" + radio_name_encoded + "/";
-
-                                    var li = document.createElement("li");
-                                    li.className = "lrt-radio-station";
-
-                                    var link = document.createElement("a");
-                                    link.className = "lrt-radio-station__link";
-                                    link.href = player_url;
-                                    link.setAttribute("data-player-link", "1");
-                                    link.target = "_blank";
-
-                                    var imgEl = document.createElement("img");
-                                    imgEl.className = "lrt-radio-station__logo";
-                                    imgEl.src = img;
-                                    imgEl.alt = "Logo";
-                                    imgEl.onerror = function () {
-                                        this.onerror = null;
-                                        if (!this.src.endsWith(default_img_url)) {
-                                            this.src = default_img_url;
-                                        }
-                                    };
-
-                                    var div = document.createElement("div");
-                                    div.className = "lrt-radio-station__content";
-
-                                    var span = document.createElement("span");
-                                    span.className = "lrt-radio-station__name";
-                                    span.textContent = name;
-
-                                    div.appendChild(span);
-                                    link.appendChild(imgEl);
-                                    link.appendChild(div);
-                                    li.appendChild(link);
-                                    radioList.appendChild(li);
-                                });
-                                found = true;
-                                break;
-                            } catch (e) {
-                                // continua para o próximo servidor
                             }
-                        }
-                        if (!found) {
-                            if (searchInput) searchInput.disabled = false;
-                            radioList.innerHTML = '<li class="lrt-radio-error">' + (lknwpRadioTextsList ? lknwpRadioTextsList.apiError : 'Error querying API.') + '</li>';
-                        }
-                    })();
-                });
-        }, 2000);
-    }
-    // Eventos para todos os campos
-    var searchInput = document.getElementById("lrt_radio_search");
-    var countryInput = document.getElementById("lrt_countrycode");
-    var limitInput = document.getElementById("lrt_limit");
-    var sortSelect = document.getElementById("lrt_sort");
-    var reverseBtn = document.getElementById("lrt_reverse_btn");
-    if (searchInput) searchInput.addEventListener("input", autoQueryRadios);
-    if (countryInput) countryInput.addEventListener("input", autoQueryRadios);
-    if (limitInput) limitInput.addEventListener("input", autoQueryRadios);
-    if (sortSelect) sortSelect.addEventListener("change", autoQueryRadios);
-    if (reverseBtn) reverseBtn.addEventListener("click", autoQueryRadios);
-});
+                            if (!found) {
+                                if ($searchInput.length) $searchInput.prop('disabled', false);
+                                $radioList.html('<li class="lrt-radio-error">' + (window.lknwpRadioTextsList ? window.lknwpRadioTextsList.apiError : 'Error querying API.') + '</li>');
+                            }
+                        })();
+                    });
+            }, 2000);
+        }
+        // Eventos para todos os campos
+        $('#lrt_radio_search').on('input', autoQueryRadios);
+        $('#lrt_countrycode').on('input', autoQueryRadios);
+        $('#lrt_limit').on('input', autoQueryRadios);
+        $('#lrt_sort').on('change', autoQueryRadios);
+        $('#lrt_reverse_btn').on('click', autoQueryRadios);
+        $('#lrt_genre').on('change', autoQueryRadios);
+
+        // Inicializa Select2
+        $('#lrt_genre').select2({
+            placeholder: window.lknwpRadioTextsList,
+            allowClear: false,
+            width: 'resolve'
+        });
+    });
+
+})(jQuery);

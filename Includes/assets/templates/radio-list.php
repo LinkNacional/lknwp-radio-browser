@@ -26,7 +26,7 @@ window.LKNWP_PLAYER_PAGE_SLUG = "<?php echo esc_js($atts['player_page']); ?>";
     <?php if ($atts['hide_all_filters'] !== 'yes'): ?>
     <!-- Navigation Form -->
     <nav class="lrt-radio-nav" id="lknwp-radio-list-nav">
-        <form method="get" class="lrt-radio-form">
+    <form method="get" class="lrt-radio-form" action="#lknwp-radio-list">
             
             <!-- First Row: Country, Limit, Sort, Order -->
             <div class="lrt-radio-row lrt-radio-row--first">
@@ -98,6 +98,34 @@ window.LKNWP_PLAYER_PAGE_SLUG = "<?php echo esc_js($atts['player_page']); ?>";
                     <input type="number" id="lrt_limit" name="lrt_limit" value="<?php echo esc_attr($atts['limit']); ?>" min="1" max="100" class="lrt-radio-input lrt-radio-input--small">
                 </div>
                 <?php endif; ?>
+
+                <!-- Genre Field -->
+                <div class="lrt-radio-field lrt-radio-field--genre">
+                    <label for="lrt_genre"><?php esc_html_e( 'Genre', 'lknwp-radio-browser' ); ?></label>
+                    <select id="lrt_genre" name="lrt_genre" class="lrt-radio-select lrt-radio-select--genre">
+                        <option value="all" selected><?php esc_html_e( 'All Genres', 'lknwp-radio-browser' ); ?></option>
+                        <?php
+                        // Fetch genres/tags from Radio-Browser API
+                        $tags = get_transient('lknwp_radio_tags');
+                        if ($tags === false) {
+                            $response = wp_remote_get('https://de2.api.radio-browser.info/json/tags', array('timeout' => 10));
+                            if (!is_wp_error($response)) {
+                                $body = wp_remote_retrieve_body($response);
+                                $tags = json_decode($body);
+                                set_transient('lknwp_radio_tags', $tags, 12 * HOUR_IN_SECONDS);
+                            }
+                        }
+                        if (is_array($tags)) {
+                            foreach ($tags as $tag) {
+                                if (!empty($tag->name)) {
+                                    $selected = (isset($_GET['lrt_genre']) && $_GET['lrt_genre'] === $tag->name) ? 'selected' : '';
+                                    echo '<option value="' . esc_attr($tag->name) . '" ' . $selected . '>' . esc_html($tag->name) . '</option>';
+                                }
+                            }
+                        }
+                        ?>
+                    </select>
+                </div>
                 
                 <?php if ($atts['hide_sort'] !== 'yes'): ?>
                 <!-- Sort Field -->
