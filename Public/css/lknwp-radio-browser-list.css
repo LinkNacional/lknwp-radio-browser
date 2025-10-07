@@ -37,10 +37,11 @@
 /* ===== FORM ROWS ===== */
 .lrt-radio-row {
     display: flex;
-    gap: 10px;
+    row-gap: 10px;
+    column-gap: 30px;
     flex-wrap: wrap;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-start;
     width: 100%;
 }
 
@@ -51,7 +52,8 @@
 .lrt-radio-row--second {
     gap: 12px;
     align-items: flex-end;
-    justify-content: center;
+    justify-content: flex-start;
+    max-width: 600px;
 }
 
 /* ===== FORM FIELDS ===== */
