@@ -1,4 +1,10 @@
+// Arquivo base para o webpack, qualquer mudança necessário executar o webpack para aplica-la.
+
+import 'select2/dist/js/select2.min.js';
+import 'select2/dist/css/select2.min.css';
+
 (function ($) {
+
 
     $(document).ready(function () {
         var $reverseBtn = $('#lrt_reverse_btn');
