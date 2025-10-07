@@ -17,6 +17,40 @@ if (!defined('ABSPATH')) {
     <h1><?php esc_html_e( 'LKN Radio Browser - How to Use', 'lknwp-radio-browser' ); ?></h1>
     
     <div class="lknwp-radio-admin-content">
+
+        <!-- Setup Instructions -->
+        <div class="lknwp-radio-shortcode-section">
+            <h2><?php esc_html_e( '🚀 Plugin Structure & Setup', 'lknwp-radio-browser' ); ?></h2>
+            <div class="lknwp-radio-info">
+                <h3><?php esc_html_e( 'This plugin is divided into two main shortcodes:', 'lknwp-radio-browser' ); ?></h3>
+                <p><?php esc_html_e( 'Radio Player Shortcode: Displays the radio player.', 'lknwp-radio-browser' ); ?></p>
+                <p><?php esc_html_e( 'Radio List Shortcode: Displays a list of radios.', 'lknwp-radio-browser' ); ?></p>
+
+                <h4><?php esc_html_e( 'Step 1: Create the Player Page', 'lknwp-radio-browser' ); ?></h4>
+                <ol>
+                    <li><?php esc_html_e( 'Go to Pages > Add New.', 'lknwp-radio-browser' ); ?></li>
+                    <li><?php esc_html_e( 'Create a page for the radio player.', 'lknwp-radio-browser' ); ?></li>
+                    <li><?php esc_html_e( 'Add the shortcode for the player (see below for usage).', 'lknwp-radio-browser' ); ?></li>
+                    <li><?php esc_html_e( 'Save the page.', 'lknwp-radio-browser' ); ?></li>
+                </ol>
+                <!-- Examples for the radio list page, shown after instructions -->
+                <h4><?php esc_html_e( 'Step 2: Create the List Page', 'lknwp-radio-browser' ); ?></h4>
+                <ol>
+                    <li><?php esc_html_e( 'Go to Pages > Add New.', 'lknwp-radio-browser' ); ?></li>
+                    <li><?php esc_html_e( 'Create a page to list the radios.', 'lknwp-radio-browser' ); ?></li>
+                    <li><?php esc_html_e( 'Add the radio list shortcode: [radio_browser_list player_page="player-page"] (replace "player-page" with the actual slug of your player page).', 'lknwp-radio-browser' ); ?></li>
+                    <div class="lknwp-radio-example">
+                        <span><?php esc_html_e( 'Example:', 'lknwp-radio-browser' ); ?></span>
+                        <span>https://www.url.com/radio-list/<strong>player-page</strong></span>
+                    </div>
+                    <div class="lknwp-radio-example">
+                        <span><?php esc_html_e( 'Another Example:', 'lknwp-radio-browser' ); ?></span>
+                        <span>https://www.url.com/adjacent-page/radio-list/<strong>player-page</strong></span>
+                    </div>
+                    <li><?php esc_html_e( 'Save the page.', 'lknwp-radio-browser' ); ?></li>
+                </ol>
+            </div>
+        </div>
         
         <!-- Radio Player Shortcode -->
         <div class="lknwp-radio-shortcode-section">
@@ -170,35 +204,6 @@ if (!defined('ABSPATH')) {
                     <code>[radio_browser_list player_page="player" sort="name"]</code>
                     <button class="lknwp-radio-copy-btn" onclick="copyToClipboard('[radio_browser_list player_page=&quot;player&quot; sort=&quot;name&quot;]')"><?php esc_html_e( 'Copy', 'lknwp-radio-browser' ); ?></button>
                 </div>
-            </div>
-        </div>
-
-        <!-- Setup Instructions -->
-        <div class="lknwp-radio-shortcode-section">
-            <h2><?php esc_html_e( '🚀 How to Configure', 'lknwp-radio-browser' ); ?></h2>
-            <div class="lknwp-radio-info">
-                <h4><?php esc_html_e( '1. Create the pages:', 'lknwp-radio-browser' ); ?></h4>
-                <ol>
-                    <li><?php esc_html_e( 'Go to <strong>Pages > Add New</strong>', 'lknwp-radio-browser' ); ?></li>
-                    <li><?php esc_html_e( 'Create a page called "Radios" with slug "radios"', 'lknwp-radio-browser' ); ?></li>
-                    <li><?php esc_html_e( 'Add the shortcode: <code>[radio_browser_list player_page="player"]</code>', 'lknwp-radio-browser' ); ?></li>
-                    <li><?php esc_html_e( 'Create another page called "Player" with slug "player"', 'lknwp-radio-browser' ); ?></li>
-                    <li><?php esc_html_e( 'Add the shortcode: <code>[radio_browser_player]</code>', 'lknwp-radio-browser' ); ?></li>
-                </ol>
-
-                <h4><?php esc_html_e( '2. Add to menu:', 'lknwp-radio-browser' ); ?></h4>
-                <ol>
-                    <li><?php esc_html_e( 'Go to <strong>Appearance > Menus</strong>', 'lknwp-radio-browser' ); ?></li>
-                    <li><?php esc_html_e( 'Add the "Radios" page to the menu', 'lknwp-radio-browser' ); ?></li>
-                    <li><?php esc_html_e( 'The "Player" page does not need to be in the menu (it is accessed automatically)', 'lknwp-radio-browser' ); ?></li>
-                </ol>
-
-                <h4><?php esc_html_e( '3. Customize (optional):', 'lknwp-radio-browser' ); ?></h4>
-                <ul>
-                    <li><?php esc_html_e( 'Use the <code>hide_*</code> parameters to hide unnecessary filters', 'lknwp-radio-browser' ); ?></li>
-                    <li><?php esc_html_e( 'Configure default values with <code>countrycode</code>, <code>limit</code>, etc.', 'lknwp-radio-browser' ); ?></li>
-                    <li><?php esc_html_e( 'Customize styles via theme CSS', 'lknwp-radio-browser' ); ?></li>
-                </ul>
             </div>
         </div>
     </div>

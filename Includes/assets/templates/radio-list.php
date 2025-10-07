@@ -21,11 +21,11 @@ window.LKNWP_RADIO_BROWSER_PLUGIN_URL = "<?php echo esc_js($plugin_url); ?>";
 window.LKNWP_PLAYER_PAGE_SLUG = "<?php echo esc_js($atts['player_page']); ?>";
 </script>
 
-<div class="lrt-radio-wrap">
+<div class="lrt-radio-wrap" id="lknwp-radio-list">
     
     <?php if ($atts['hide_all_filters'] !== 'yes'): ?>
     <!-- Navigation Form -->
-    <nav class="lrt-radio-nav">
+    <nav class="lrt-radio-nav" id="lknwp-radio-list-nav">
         <form method="get" class="lrt-radio-form">
             
             <!-- First Row: Country, Limit, Sort, Order -->
@@ -154,7 +154,7 @@ window.LKNWP_PLAYER_PAGE_SLUG = "<?php echo esc_js($atts['player_page']); ?>";
     <?php endif; ?>
 
     <!-- Radio Stations List -->
-    <ul class="lrt-radio-list">
+    <ul class="lrt-radio-list" id="lknwp-radio-list-components">
         
         <?php
         $count = 0;

@@ -3,10 +3,10 @@
 
 /* ===== MAIN WRAPPER ===== */
 .lrt-radio-wrap {
-    background: var(--lkn-secondary-blue-3);
+    background: var(--lkn-secondary-blue-3) !important;
     /* obsidian/azul escuro */
     border-radius: 20px;
-    box-shadow: 0 2px 12px rgba(44, 62, 80, 0.10);
+    box-shadow: 0 2px 12px rgba(44, 62, 80, 0.10) !important;
     padding: 0 0 18px 0;
     font-family: 'Roboto', Arial, sans-serif !important;
 }
@@ -78,7 +78,7 @@
 
 /* ===== LABELS ===== */
 .lrt-radio-field label {
-    color: var(--lkn-support-gray-7);
+    color: var(--lkn-support-gray-7) !important;
     font-weight: 500;
     margin-bottom: 4px;
     font-size: 15px;
@@ -93,9 +93,9 @@
     outline: none;
     box-shadow: none;
     border-radius: 8px;
-    border: 1px solid var(--lkn-secondary-blue-2);
-    background: var(--lkn-secondary-blue-4);
-    color: var(--lkn-support-gray-7);
+    border: 1px solid var(--lkn-secondary-blue-2) !important;
+    background: var(--lkn-secondary-blue-4) !important;
+    color: var(--lkn-support-gray-7) !important;
     font-size: 15px;
     padding: 7px 12px;
     transition: border 0.2s, background 0.2s;
@@ -128,8 +128,8 @@
 .lrt-radio-input:focus,
 .lrt-radio-select:focus,
 .lrt-radio-button:focus {
-    border: 1.5px solid var(--lkn-secondary-blue-5);
-    background: var(--lkn-support-gray-3);
+    border: 1.5px solid var(--lkn-secondary-blue-5) !important;
+    background: var(--lkn-support-gray-3) !important;
 }
 
 /* Focus do select mantém comportamento padrão */
@@ -192,15 +192,15 @@
     box-shadow: 0 2px 8px rgba(44, 62, 80, 0.10);
     transition: all 0.2s;
     overflow: hidden;
-    border: 1px solid var(--lkn-secondary-blue-2);
+    border: 1px solid var(--lkn-secondary-blue-2) !important;
 }
 
 .lrt-radio-station:hover {
-    background: var(--lkn-secondary-blue-5);
+    background: var(--lkn-secondary-blue-5) !important;
     /* azul escuro mais vibrante */
     transform: translateY(-2px);
     box-shadow: 0 4px 16px rgba(44, 62, 80, 0.20);
-    border: 1.5px solid var(--lkn-secondary-blue-6);
+    border: 1.5px solid var(--lkn-secondary-blue-6) !important;
 }
 
 /* ===== RADIO STATION LINK ===== */
@@ -219,7 +219,7 @@
 }
 
 .lrt-radio-station__link:hover {
-    color: var(--lkn-support-gray-7);
+    color: var(--lkn-support-gray-7) !important;
 }
 
 .lrt-radio-station__link:active {
@@ -232,9 +232,9 @@
     height: 48px;
     border-radius: 50%;
     object-fit: cover;
-    border: 2px solid var(--lkn-secondary-blue-2);
-    box-shadow: 0 1px 4px rgba(44, 62, 80, 0.10);
-    background: var(--lkn-primary);
+    border: 2px solid var(--lkn-secondary-blue-2) !important;
+    box-shadow: 0 1px 4px rgba(44, 62, 80, 0.10) !important;
+    background: var(--lkn-primary) !important;
     margin-right: 8px;
 }
 
@@ -250,7 +250,7 @@
 }
 
 .lrt-radio-station__name {
-    color: var(--lkn-secondary-blue-8);
+    color: var(--lkn-secondary-blue-8) !important;
     /* azul claro para contraste */
     font-size: 0.92em;
     font-weight: 500;
@@ -276,7 +276,7 @@
 }
 
 .lrt-radio-list span {
-    color: var(--lkn-support-gray-7);
+    color: var(--lkn-support-gray-7) !important;
     font-size: 1.08em;
     font-weight: 500;
     font-family: 'Roboto', Arial, sans-serif !important;
@@ -291,9 +291,9 @@
     outline: none;
     box-shadow: none;
     border-radius: 8px;
-    border: 1px solid var(--lkn-secondary-blue-2);
-    background: var(--lkn-secondary-blue-4);
-    color: var(--lkn-support-gray-7);
+    border: 1px solid var(--lkn-secondary-blue-2) !important;
+    background: var(--lkn-secondary-blue-4) !important;
+    color: var(--lkn-support-gray-7) !important;
     font-size: 15px;
     transition: border 0.2s, background 0.2s;
 }
@@ -301,15 +301,15 @@
 .lrt-radio-field input:focus,
 .lrt-radio-field select:focus,
 .lrt-radio-field button:focus {
-    border: 1.5px solid var(--lkn-secondary-blue-5);
-    background: var(--lkn-support-gray-3);
+    border: 1.5px solid var(--lkn-secondary-blue-5) !important;
+    background: var(--lkn-support-gray-3) !important;
 }
 
 .lrt-radio-form button[type="submit"] {
     background: var(--lkn-support-gray-7) !important;
     color: var(--lkn-support-gray-3) !important;
     font-weight: 600;
-    box-shadow: 0 2px 8px rgba(44, 62, 80, 0.10);
+    box-shadow: 0 2px 8px rgba(44, 62, 80, 0.10) !important;
 }
 
 .lrt-radio-form button[type="submit"]:hover {
@@ -339,10 +339,10 @@
 
 /* ===== ERROR MESSAGES ===== */
 .lrt-radio-error {
-    background: var(--lkn-support-red-2);
+    background: var(--lkn-support-red-2) !important;
     padding: 12px;
     border-radius: 6px;
-    color: var(--lkn-secondary-red-1);
+    color: var(--lkn-secondary-red-1) !important;
     text-align: center;
     list-style: none;
 }
@@ -364,8 +364,8 @@
 /* Estilo das opções */
 .lrt-radio-select--country option {
     padding: 8px 12px;
-    background: var(--lkn-secondary-blue-4);
-    color: var(--lkn-support-gray-7);
+    background: var(--lkn-secondary-blue-4) !important;
+    color: var(--lkn-support-gray-7) !important;
     line-height: 1.4;
 }
 
@@ -382,9 +382,9 @@
 
 /* ===== LOADING STATE ===== */
 .lrt-radio-loading {
-    background: var(--lkn-support-gray-3);
+    background: var(--lkn-support-gray-3) !important;
     border-radius: 14px;
-    box-shadow: 0 2px 8px rgba(44, 62, 80, 0.10);
+    box-shadow: 0 2px 8px rgba(44, 62, 80, 0.10) !important;
     padding: 32px 18px;
     display: flex;
     flex-direction: column;
@@ -393,7 +393,7 @@
     gap: 16px;
     grid-column: 1 / -1;
     text-align: center;
-    color: var(--lkn-support-gray-7);
+    color: var(--lkn-support-gray-7) !important;
     font-family: 'Roboto', Arial, sans-serif !important;
     font-weight: 500;
 }
@@ -401,8 +401,8 @@
 .lrt-loading-spinner {
     width: 40px;
     height: 40px;
-    border: 3px solid rgba(224, 230, 240, 0.2);
-    border-top: 3px solid var(--lkn-secondary-blue-6);
+    border: 3px solid rgba(224, 230, 240, 0.2) !important;
+    border-top: 3px solid var(--lkn-secondary-blue-6) !important;
     border-radius: 50%;
     animation: lrt-spin 1s linear infinite;
 }
@@ -419,6 +419,6 @@
 
 .lrt-radio-loading span {
     font-size: 0.95em;
-    color: var(--lkn-support-gray-7);
+    color: var(--lkn-support-gray-7) !important;
     opacity: 0.9;
 }
