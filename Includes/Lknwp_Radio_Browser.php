@@ -481,9 +481,6 @@ class Lknwp_Radio_Browser {
 				}
 			}
 		}
-		if (!$stations || !is_array($stations)) {
-			return '<p>Error fetching radios from all servers.</p>';
-		}
 
 		// Prepare variables for template
 		$plugin_url = defined('LKNWP_RADIO_BROWSER_PLUGIN_URL') ? LKNWP_RADIO_BROWSER_PLUGIN_URL : '';

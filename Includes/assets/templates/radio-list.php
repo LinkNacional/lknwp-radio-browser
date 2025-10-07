@@ -183,34 +183,30 @@ window.LKNWP_PLAYER_PAGE_SLUG = "<?php echo esc_js($atts['player_page']); ?>";
 
     <!-- Radio Stations List -->
     <ul class="lrt-radio-list" id="lknwp-radio-list-components">
-        
-        <?php
-        $count = 0;
-        foreach ($stations as $station):
-            if ($count >= $atts['limit']) break;
-            
-            $name = esc_html($station->name);
-            $img = !empty($station->favicon) ? esc_url($station->favicon) : $default_img_url;
-            
-            // Gerar URL amigável - deixa o navegador formatar
-            $radio_name_clean = str_replace(['/', '?', '#', '&'], '', $station->name);
-            $radio_name_encoded = str_replace(' ', '%20', $radio_name_clean);
-            $player_url = home_url('/' . $atts['player_page'] . '/' . $radio_name_encoded . '/');
-            
-            $count++;
-        ?>
-        
-        <li class="lrt-radio-station">
-            <a href="<?php echo esc_url($player_url); ?>" data-player-link="1" target="_blank" class="lrt-radio-station__link">
-                <img src="<?php echo esc_url($img); ?>" alt="<?php esc_attr_e( 'Radio logo', 'lknwp-radio-browser' ); ?>" class="lrt-radio-station__logo" onerror="this.onerror=null;this.src='<?php echo esc_url($default_img_url); ?>';">
-                
-                <div class="lrt-radio-station__content">
-                    <span class="lrt-radio-station__name"><?php echo esc_html($name); ?></span>
-                </div>
-            </a>
-        </li>
-        
-        <?php endforeach; ?>
-        
+        <?php if (!$stations || !is_array($stations) || count($stations) === 0): ?>
+            <li class="lrt-radio-error"><?php _e('No radios found.', 'lknwp-radio-browser'); ?></li>
+        <?php else: ?>
+            <?php
+            $count = 0;
+            foreach ($stations as $station) {
+                if ($count >= $atts['limit']) break;
+                $name = esc_html($station->name);
+                $img = !empty($station->favicon) ? esc_url($station->favicon) : $default_img_url;
+                $radio_name_clean = str_replace(['/', '?', '#', '&'], '', $station->name);
+                $radio_name_encoded = str_replace(' ', '%20', $radio_name_clean);
+                $player_url = home_url('/' . $atts['player_page'] . '/' . $radio_name_encoded . '/');
+                $count++;
+            ?>
+                <li class="lrt-radio-station">
+                    <a href="<?php echo esc_url($player_url); ?>" data-player-link="1" target="_blank" class="lrt-radio-station__link">
+                        <img src="<?php echo esc_url($img); ?>" alt="<?php esc_attr_e( 'Radio logo', 'lknwp-radio-browser' ); ?>" class="lrt-radio-station__logo" onerror="this.onerror=null;this.src='<?php echo esc_url($default_img_url); ?>';">
+                        <div class="lrt-radio-station__content">
+                            <span class="lrt-radio-station__name"><?php echo esc_html($name); ?></span>
+                        </div>
+                    </a>
+                </li>
+            <?php
+            }
+        endif; ?>
     </ul>
 </div>

@@ -7,6 +7,17 @@ import 'select2/dist/css/select2.min.css';
 
 
     $(document).ready(function () {
+        // Anula o envio do formulário ao pressionar Enter
+        $('.lrt-radio-form').on('keydown', function (e) {
+            // Se Enter for pressionado em um input ou select
+            if (e.key === 'Enter') {
+                // Opcional: permite submit se for um textarea
+                if (e.target.tagName !== 'TEXTAREA') {
+                    e.preventDefault();
+                    return false;
+                }
+            }
+        });
         var $reverseBtn = $('#lrt_reverse_btn');
         var $reverseInput = $('#lrt_reverse');
         $reverseBtn.on('click', function () {
