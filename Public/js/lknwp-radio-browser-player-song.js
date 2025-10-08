@@ -1,4 +1,15 @@
 document.addEventListener('DOMContentLoaded', function () {
+    // Lê os campos hidden do template
+    var clickcount = 0;
+    var votes = 0;
+    var $clickcount = document.getElementById('lknwp_station_clickcount');
+    var $votes = document.getElementById('lknwp_station_votes');
+    if ($clickcount) {
+        clickcount = parseInt($clickcount.value, 10) || 0;
+    }
+    if ($votes) {
+        votes = parseInt($votes.value, 10) || 0;
+    }
     var player = document.getElementById('lknwp-radio-player');
     var streamUrl = player.getAttribute('src');
     var lastSong = '';
@@ -71,12 +82,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
             // Montar nome do artista com estatísticas da rádio
             var artistaComStats = artista;
-            if (window.LKNWP_STATION_CLICKCOUNT > 0 || window.LKNWP_STATION_VOTES > 0) {
+            if (clickcount > 0 || votes > 0) {
                 var statsText = '';
-                if (window.LKNWP_STATION_CLICKCOUNT > 0) {
-                    statsText = formatNumber(window.LKNWP_STATION_CLICKCOUNT) + ' ' + (lknwpRadioTextsSong ? lknwpRadioTextsSong.listeners : 'listeners');
-                } else if (window.LKNWP_STATION_VOTES > 0) {
-                    statsText = formatNumber(window.LKNWP_STATION_VOTES) + ' ' + (lknwpRadioTextsSong ? lknwpRadioTextsSong.likes : 'likes');
+                if (clickcount > 0) {
+                    statsText = formatNumber(clickcount) + ' ' + (lknwpRadioTextsSong ? lknwpRadioTextsSong.listeners : 'listeners');
+                } else if (votes > 0) {
+                    statsText = formatNumber(votes) + ' ' + (lknwpRadioTextsSong ? lknwpRadioTextsSong.likes : 'likes');
                 }
 
                 if (artista && artista.trim()) {
@@ -148,12 +159,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
                             // Reconstrói com artista do iTunes + estatísticas
                             var artistaFinal = iTunesArtist;
-                            if (window.LKNWP_STATION_CLICKCOUNT > 0 || window.LKNWP_STATION_VOTES > 0) {
+                            if (clickcount > 0 || votes > 0) {
                                 var statsText = '';
-                                if (window.LKNWP_STATION_CLICKCOUNT > 0) {
-                                    statsText = formatNumber(window.LKNWP_STATION_CLICKCOUNT) + ' ' + (lknwpRadioTextsSong ? lknwpRadioTextsSong.listeners : 'listeners');
-                                } else if (window.LKNWP_STATION_VOTES > 0) {
-                                    statsText = formatNumber(window.LKNWP_STATION_VOTES) + ' ' + (lknwpRadioTextsSong ? lknwpRadioTextsSong.likes : 'likes');
+                                if (clickcount > 0) {
+                                    statsText = formatNumber(clickcount) + ' ' + (lknwpRadioTextsSong ? lknwpRadioTextsSong.listeners : 'listeners');
+                                } else if (votes > 0) {
+                                    statsText = formatNumber(votes) + ' ' + (lknwpRadioTextsSong ? lknwpRadioTextsSong.likes : 'likes');
                                 }
                                 artistaFinal = iTunesArtist + ' - ' + statsText;
                             }

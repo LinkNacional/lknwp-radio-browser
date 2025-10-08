@@ -486,7 +486,17 @@ class Lknwp_Radio_Browser {
 		$plugin_url = defined('LKNWP_RADIO_BROWSER_PLUGIN_URL') ? LKNWP_RADIO_BROWSER_PLUGIN_URL : '';
 		$default_img_url = defined('LKNWP_RADIO_BROWSER_PLUGIN_URL') ? LKNWP_RADIO_BROWSER_PLUGIN_URL . 'Includes/assets/images/default-radio.png' : './Includes/assets/images/default-radio.png';
 		
-		// Load template
+		// Corrige a URL base do player para suportar páginas ascendentes/nested
+		$player_base_url = false;
+		if (!empty($atts['player_page'])) {
+			$player_base_url = self::lknwp_find_page_by_slug($atts['player_page']);
+		}
+
+		if (!$player_base_url) {
+			$player_base_url = home_url('/' . $atts['player_page'] . '/');
+		}
+
+		// Load template, passando $player_base_url
 		ob_start();
 		include plugin_dir_path(__FILE__) . 'assets/templates/radio-list.php';
 		return ob_get_clean();
@@ -546,6 +556,7 @@ class Lknwp_Radio_Browser {
 		foreach ($cached_rules as $rule) {
 			add_rewrite_rule($rule['regex'], $rule['redirect'], 'top');
 		}
+		flush_rewrite_rules(); // Garante que as regras sejam aplicadas imediatamente
 	}
 
 	/**
@@ -555,22 +566,29 @@ class Lknwp_Radio_Browser {
 		global $wpdb;
 		
 		$player_pages = $wpdb->get_results($wpdb->prepare("
-			SELECT post_name 
+			SELECT post_name, post_parent
 			FROM {$wpdb->posts} 
 			WHERE post_type = 'page' 
 			AND post_status = 'publish' 
 			AND post_content LIKE %s
 		", '%[radio_browser_player%'));
-		
+
 		$rules = array();
 		foreach ($player_pages as $page) {
-			$slug = $page->post_name;
+			if (!empty($page->post_parent)) {
+				$parent_obj = get_post($page->post_parent);
+				$full_uri = ($parent_obj && $parent_obj->post_name)
+					? $parent_obj->post_name . '/' . $page->post_name
+					: $page->post_name;
+			} else {
+				$full_uri = $page->post_name;
+			}
 			$rules[] = array(
-				'regex' => "^{$slug}/([^/]+)/?$",
-				'redirect' => "index.php?pagename={$slug}&radio_name=\$matches[1]"
+				'regex' => "^{$full_uri}/([^/]+)/?$",
+				'redirect' => "index.php?pagename={$full_uri}&radio_name=\$matches[1]"
 			);
 		}
-		
+
 		return $rules;
 	}
 
@@ -617,5 +635,16 @@ class Lknwp_Radio_Browser {
 		// Sempre retorna o primeiro resultado (mesmo com múltiplas opções)
 		return !empty($stations) && is_array($stations) ? $stations[0] : false;
 	}
+
+	public static function lknwp_find_page_by_slug($slug) {
+        global $wpdb;
+        $query = $wpdb->prepare(
+            "SELECT ID FROM {$wpdb->posts} WHERE post_type = 'page' AND post_status = 'publish' AND (post_name = %s OR post_name LIKE %s)",
+            $slug,
+            '%/' . $wpdb->esc_like($slug)
+        );
+        $result = $wpdb->get_var($query);
+        return $result ? get_permalink($result) : false;
+    }
 
 }

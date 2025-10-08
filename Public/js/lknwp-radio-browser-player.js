@@ -52,7 +52,7 @@ document.addEventListener("DOMContentLoaded", function () {
         // ===== VISUALIZER COM ÁUDIO REAL =====
 
         // Performance monitoring
-        var performanceMode = false; // Pode ser ativado via console: lknwpRadioPerformanceMode = true
+        var performanceMode = false;
         window.lknwpRadioPerformanceMode = false;
 
         /**

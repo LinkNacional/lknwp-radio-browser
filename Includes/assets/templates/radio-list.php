@@ -16,11 +16,6 @@ if (!defined('ABSPATH')) {
 }
 ?>
 
-<script>
-window.LKNWP_RADIO_BROWSER_PLUGIN_URL = "<?php echo esc_js($plugin_url); ?>";
-window.LKNWP_PLAYER_PAGE_SLUG = "<?php echo esc_js($atts['player_page']); ?>";
-</script>
-
 <div class="lrt-radio-wrap" id="lknwp-radio-list">
     
     <?php if ($atts['hide_all_filters'] !== 'yes'): ?>
@@ -177,6 +172,7 @@ window.LKNWP_PLAYER_PAGE_SLUG = "<?php echo esc_js($atts['player_page']); ?>";
             
             <!-- Hidden Fields -->
             <input type="hidden" id="lrt_reverse" name="lrt_reverse" value="<?php echo esc_attr($atts['reverse']); ?>">
+            <input type="hidden" id="lrt_player_base_url" name="lrt_player_base_url" value="<?php echo esc_attr(base64_encode($player_base_url)); ?>">
         </form>
     </nav>
     <?php endif; ?>
@@ -194,7 +190,7 @@ window.LKNWP_PLAYER_PAGE_SLUG = "<?php echo esc_js($atts['player_page']); ?>";
                 $img = !empty($station->favicon) ? esc_url($station->favicon) : $default_img_url;
                 $radio_name_clean = str_replace(['/', '?', '#', '&'], '', $station->name);
                 $radio_name_encoded = str_replace(' ', '%20', $radio_name_clean);
-                $player_url = home_url('/' . $atts['player_page'] . '/' . $radio_name_encoded . '/');
+                $player_url = trailingslashit($player_base_url) . $radio_name_encoded . '/';
                 $count++;
             ?>
                 <li class="lrt-radio-station">

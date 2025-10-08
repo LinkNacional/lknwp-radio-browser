@@ -21,18 +21,14 @@ if (!defined('ABSPATH')) {
     </div>
 <?php else: ?>
 
-<script>
-    // Global variables for the simple visualizer
-    window.LKNWP_RADIO_BROWSER_PLUGIN_URL = '<?php echo defined('LKNWP_RADIO_BROWSER_PLUGIN_URL') ? esc_js(LKNWP_RADIO_BROWSER_PLUGIN_URL) : ''; ?>';
-    window.LKNWP_RADIO_HOMEPAGE = '<?php echo !empty($station_homepage) ? esc_js($station_homepage) : ''; ?>';
-    
-    // Station data for display along with music
-    window.LKNWP_STATION_CLICKCOUNT = <?php echo isset($station_clickcount) ? intval($station_clickcount) : 0; ?>;
-    window.LKNWP_STATION_VOTES = <?php echo isset($station_votes) ? intval($station_votes) : 0; ?>;
-</script>
 
 <div class="lkp-player-wrapper">
     <div id="lknwp-radio-custom-player" class="lkp-player-container">
+        <!-- Hidden fields for JS: plugin URL, homepage, clickcount, votes -->
+        <input type="hidden" id="lknwp_radio_browser_plugin_url" value="<?php echo esc_attr(base64_encode(defined('LKNWP_RADIO_BROWSER_PLUGIN_URL') ? LKNWP_RADIO_BROWSER_PLUGIN_URL : '')); ?>">
+        <input type="hidden" id="lknwp_radio_homepage" value="<?php echo esc_attr(base64_encode(!empty($station_homepage) ? $station_homepage : '')); ?>">
+        <input type="hidden" id="lknwp_station_clickcount" value="<?php echo isset($station_clickcount) ? intval($station_clickcount) : 0; ?>">
+        <input type="hidden" id="lknwp_station_votes" value="<?php echo isset($station_votes) ? intval($station_votes) : 0; ?>">
         
         <!-- Header: Station Image + Name -->
         <div id="lknwp-radio-header" class="lkp-header">
