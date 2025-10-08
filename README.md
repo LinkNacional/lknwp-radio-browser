@@ -114,6 +114,15 @@ Perfect for music blogs, radio sites, entertainment portals, or any site that wa
 ---
 
 
+
+## 🧩 External Libraries
+
+### Select2
+
+This plugin uses [Select2](https://select2.org/) as an external JavaScript library to enhance the search and selection experience for radio stations. Select2 provides a modern, responsive, and feature-rich dropdown with search, filtering, and accessibility support, making it easier for users to find and select stations from large lists.
+
+---
+
 ## 📖 Documentation & Support
 
 - [Plugin Documentation](https://wordpress.org/plugins/lknwp-radio-browser/)
