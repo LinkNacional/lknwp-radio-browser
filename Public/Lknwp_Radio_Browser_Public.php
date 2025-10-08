@@ -143,16 +143,21 @@ class Lknwp_Radio_Browser_Public {
 		}
 
 		if (isset($post->post_content) && has_shortcode($post->post_content, 'radio_browser_list')) {
-			wp_enqueue_script('lknwp-radio-list', plugin_dir_url( __FILE__ ) . 'js/lknwp-radio-browser-list.js', array(), $this->version, true);
+			wp_enqueue_script('lknwp-radio-list', plugin_dir_url( __FILE__ ) . 'jsCompiled/lknwp-radio-browser-list.COMPILED.js', array('jquery'), $this->version, true);
 			
 			// Localize list script
+			$default_img_url = defined('LKNWP_RADIO_BROWSER_PLUGIN_URL') ? LKNWP_RADIO_BROWSER_PLUGIN_URL . 'Includes/assets/images/default-radio.png' : './Includes/assets/images/default-radio.png';
+
+			// Busca a base do player igual ao template
 			wp_localize_script('lknwp-radio-list', 'lknwpRadioTextsList', array(
 				'loadingRadios' => __('Loading radios...', 'lknwp-radio-browser'),
 				'noRadiosFound' => __('No radios found.', 'lknwp-radio-browser'),
 				'tryingAlternativeServers' => __('Trying alternative servers...', 'lknwp-radio-browser'),
 				'ascending' => __('Ascending', 'lknwp-radio-browser'),
 				'descending' => __('Descending', 'lknwp-radio-browser'),
-				'apiError' => __('Error querying API. ', 'lknwp-radio-browser')
+				'apiError' => __('Error querying API. ', 'lknwp-radio-browser'),
+				'placeholder' => __('Select genre', 'lknwp-radio-browser'),
+				'defaultImgUrl' => $default_img_url,
 			));
 		}
 	}

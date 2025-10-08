@@ -51,6 +51,10 @@ For this plugin to work correctly, you will need:
 * An active internet connection for streaming radio content
 * Modern web browser with HTML5 audio support
 
+== External Libraries ==
+
+* This plugin uses the [Select2](https://select2.org/) JavaScript library to enhance the search and selection experience for radio stations. Select2 provides a modern, responsive dropdown with search, filtering, and accessibility features, making it easier for users to find and select stations from large lists.
+
 == Installation ==
 
 There are two ways to install the Radio Browser for WP plugin:

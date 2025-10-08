@@ -136,7 +136,7 @@ class Lknwp_Radio_Browser {
 
 		$plugin_admin = new Lknwp_Radio_Browser_Admin( $this->get_plugin_name(), $this->get_version() );
 
-		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
+		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles', 200 );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'add_admin_menu' );
 
@@ -413,13 +413,14 @@ class Lknwp_Radio_Browser {
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Public shortcode for radio list, nonce not applicable
 		$search = isset($_GET['lrt_radio_search']) ? sanitize_text_field(wp_unslash($_GET['lrt_radio_search'])) : '';
 		$sort_options = [
-			'clickcount' => 'Mais famosos',
-			'name' => 'Nome',
-			'random' => 'Aleatório',
-			'bitrate' => 'Bitrate'
+			'clickcount' => __('Most popular', 'lknwp-radio-browser'),
+			'name' => __('Name', 'lknwp-radio-browser'),
+			'random' => __('Random', 'lknwp-radio-browser'),
+			'bitrate' => __('Bitrate', 'lknwp-radio-browser')
 		];
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Public shortcode for radio list, nonce not applicable
 		$sort = isset($_GET['lrt_sort']) && isset($sort_options[sanitize_text_field(wp_unslash($_GET['lrt_sort']))]) ? sanitize_text_field(wp_unslash($_GET['lrt_sort'])) : 'clickcount';
+		$genre = isset($_GET['lrt_genre']) ? sanitize_text_field(wp_unslash($_GET['lrt_genre'])) : 'all';
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Public shortcode for radio list, nonce not applicable  
 		$reverse = isset($_GET['lrt_reverse']) ? sanitize_text_field(wp_unslash($_GET['lrt_reverse'])) : '1'; // 1 = reverso ativo por padrão
 
@@ -430,6 +431,7 @@ class Lknwp_Radio_Browser {
 			'sort' => $sort, // Padrão clickcount, mas permite outras opções
 			'reverse' => $reverse,
 			'search' => $search,
+			'genre' => $genre,
 			'hide_country' => 'no',
 			'hide_limit' => 'no',
 			'hide_sort' => 'no',
@@ -448,26 +450,23 @@ class Lknwp_Radio_Browser {
 		shuffle($servers);
 		$stations = null;
 		foreach ($servers as $base_url) {
-			// Se tem busca, usa o endpoint de busca por nome, senão usa por país
-			if (!empty($atts['search'])) {
-				$api_url = $base_url . '/json/stations/byname/' . urlencode($atts['search']) . '?order=' . $atts['sort'];
-				// Adiciona filtro de país se especificado
-				if (!empty($atts['countrycode']) && $atts['countrycode'] !== 'ALL') {
-					$api_url .= '&countrycode=' . urlencode($atts['countrycode']);
-				}
+			// Monta a URL de busca unificada
+			$api_url = $base_url . '/json/stations/search?';
+			$params = array();
+			$params[] = 'name=' . urlencode($atts['search']);
+			$params[] = 'countrycode=' . urlencode($atts['countrycode']);
+			$params[] = 'order=' . urlencode($atts['sort']);
+			$params[] = 'limit=' . ($atts['limit'] * 2);
+			$params[] = 'hidebroken=true';
+			$params[] = ($atts['reverse'] === '1') ? 'reverse=true' : 'reverse=false';
+			// Sempre inclui tagList, mesmo vazio ou 'all'
+			if (empty($atts['genre']) || $atts['genre'] === 'all') {
+				$params[] = 'tagList=';
 			} else {
-				$api_url = $base_url . '/json/stations/bycountrycodeexact/' . urlencode($atts['countrycode']) . '?order=' . $atts['sort'];
+				$params[] = 'tagList=' . urlencode($atts['genre']);
 			}
-			
-			if ($atts['reverse'] === '1') {
-				$api_url .= '&reverse=true';
-			} else {
-				$api_url .= '&reverse=false';
-			}
-			
-			// Adiciona limite à URL da API
-			$api_url .= '&limit=' . ($atts['limit'] * 2); // Pega mais para compensar possíveis filtros
-			
+			$api_url .= implode('&', $params);
+
 			$args = [
 				'headers' => [
 					'User-Agent' => 'lknwp-radio-browser/1.0'
@@ -482,15 +481,22 @@ class Lknwp_Radio_Browser {
 				}
 			}
 		}
-		if (!$stations || !is_array($stations)) {
-			return '<p>Error fetching radios from all servers.</p>';
-		}
 
 		// Prepare variables for template
 		$plugin_url = defined('LKNWP_RADIO_BROWSER_PLUGIN_URL') ? LKNWP_RADIO_BROWSER_PLUGIN_URL : '';
 		$default_img_url = defined('LKNWP_RADIO_BROWSER_PLUGIN_URL') ? LKNWP_RADIO_BROWSER_PLUGIN_URL . 'Includes/assets/images/default-radio.png' : './Includes/assets/images/default-radio.png';
 		
-		// Load template
+		// Corrige a URL base do player para suportar páginas ascendentes/nested
+		$player_base_url = false;
+		if (!empty($atts['player_page'])) {
+			$player_base_url = self::lknwp_find_page_by_slug($atts['player_page']);
+		}
+
+		if (!$player_base_url) {
+			$player_base_url = home_url('/' . $atts['player_page'] . '/');
+		}
+
+		// Load template, passando $player_base_url
 		ob_start();
 		include plugin_dir_path(__FILE__) . 'assets/templates/radio-list.php';
 		return ob_get_clean();
@@ -550,6 +556,7 @@ class Lknwp_Radio_Browser {
 		foreach ($cached_rules as $rule) {
 			add_rewrite_rule($rule['regex'], $rule['redirect'], 'top');
 		}
+		flush_rewrite_rules(); // Garante que as regras sejam aplicadas imediatamente
 	}
 
 	/**
@@ -559,22 +566,29 @@ class Lknwp_Radio_Browser {
 		global $wpdb;
 		
 		$player_pages = $wpdb->get_results($wpdb->prepare("
-			SELECT post_name 
+			SELECT post_name, post_parent
 			FROM {$wpdb->posts} 
 			WHERE post_type = 'page' 
 			AND post_status = 'publish' 
 			AND post_content LIKE %s
 		", '%[radio_browser_player%'));
-		
+
 		$rules = array();
 		foreach ($player_pages as $page) {
-			$slug = $page->post_name;
+			if (!empty($page->post_parent)) {
+				$parent_obj = get_post($page->post_parent);
+				$full_uri = ($parent_obj && $parent_obj->post_name)
+					? $parent_obj->post_name . '/' . $page->post_name
+					: $page->post_name;
+			} else {
+				$full_uri = $page->post_name;
+			}
 			$rules[] = array(
-				'regex' => "^{$slug}/([^/]+)/?$",
-				'redirect' => "index.php?pagename={$slug}&radio_name=\$matches[1]"
+				'regex' => "^{$full_uri}/([^/]+)/?$",
+				'redirect' => "index.php?pagename={$full_uri}&radio_name=\$matches[1]"
 			);
 		}
-		
+
 		return $rules;
 	}
 
@@ -621,5 +635,16 @@ class Lknwp_Radio_Browser {
 		// Sempre retorna o primeiro resultado (mesmo com múltiplas opções)
 		return !empty($stations) && is_array($stations) ? $stations[0] : false;
 	}
+
+	public static function lknwp_find_page_by_slug($slug) {
+        global $wpdb;
+        $query = $wpdb->prepare(
+            "SELECT ID FROM {$wpdb->posts} WHERE post_type = 'page' AND post_status = 'publish' AND (post_name = %s OR post_name LIKE %s)",
+            $slug,
+            '%/' . $wpdb->esc_like($slug)
+        );
+        $result = $wpdb->get_var($query);
+        return $result ? get_permalink($result) : false;
+    }
 
 }

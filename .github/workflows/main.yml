@@ -18,6 +18,10 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
+    # Instala dependências JS
+    - name: Run npm install
+      run: npm install
+
     # Run composer install and generate vendor
     - name: Run composer install
       uses: php-actions/composer@v6
@@ -33,7 +37,8 @@ jobs:
       run: |
         mkdir -p dist
         mkdir -p build/${{ env.PLUGIN_NAME }}
-        mv ./Admin ./Includes ./Public ./Languages *.php *.txt composer.json ./build/${{ env.PLUGIN_NAME }}
+        mv ./Admin ./Includes ./Public ./Languages *.php *.txt composer.json package.json webpack.config.js ./build/${{ env.PLUGIN_NAME }}
+        cp -r ./node_modules ./build/${{ env.PLUGIN_NAME }}/node_modules
         find ./build -type f -exec chmod 0644 {} +
         find ./build -type d -exec chmod 0755 {} +
     
@@ -50,7 +55,7 @@ jobs:
         path: '.'
         directory: 'build'
         filename: '${{ env.PLUGIN_NAME }}.zip'
-        exclusions: '*.git* /*node_modules/* .editorconfig'
+        exclusions: '*.git* .editorconfig'
 
     - name: Move .zip to custom location
       run: |

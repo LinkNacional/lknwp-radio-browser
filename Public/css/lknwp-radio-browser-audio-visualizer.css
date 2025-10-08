@@ -5,11 +5,8 @@
     justify-content: center;
     margin: 0px;
     padding: 15px;
-    background: rgba(255, 255, 255, 0.05);
     border-radius: 12px;
     backdrop-filter: blur(8px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 
 .lkp-audio-visualizer--active {
@@ -28,7 +25,7 @@
 .lkp-visualizer-bar {
     width: 4px;
     min-height: 3px;
-    background: linear-gradient(to top, var(--lkn-wave-green), var(--lkn-wave-green-dark), var(--lkn-wave-green-darker));
+    background: linear-gradient(to top, var(--lkn-wave-green), var(--lkn-wave-green-dark), var(--lkn-wave-green-darker)) !important;
     border-radius: 2px;
     transition: height 0.1s ease-out;
     animation: lkp-pulse 2s ease-in-out infinite alternate;
@@ -56,23 +53,23 @@
 
 /* Estados de intensidade das barras */
 .lkp-visualizer-bar--low {
-    background: linear-gradient(to top, var(--lkn-wave-green), var(--lkn-wave-green-dark));
-    box-shadow: 0 0 8px var(--lkn-wave-green, rgba(0, 255, 136, 0.3));
+    background: linear-gradient(to top, var(--lkn-wave-green), var(--lkn-wave-green-dark)) !important;
+    box-shadow: 0 0 8px var(--lkn-wave-green, rgba(0, 255, 136, 0.3)) !important;
 }
 
 .lkp-visualizer-bar--medium {
-    background: linear-gradient(to top, var(--lkn-wave-green), var(--lkn-wave-green-dark), var(--lkn-wave-green-darker));
-    box-shadow: 0 0 12px var(--lkn-wave-green, rgba(0, 255, 136, 0.4));
+    background: linear-gradient(to top, var(--lkn-wave-green), var(--lkn-wave-green-dark), var(--lkn-wave-green-darker)) !important;
+    box-shadow: 0 0 12px var(--lkn-wave-green, rgba(0, 255, 136, 0.4)) !important;
 }
 
 .lkp-visualizer-bar--high {
-    background: linear-gradient(to top, var(--lkn-wave-yellow), var(--lkn-wave-green), var(--lkn-wave-green-dark), var(--lkn-wave-green-darker));
-    box-shadow: 0 0 16px var(--lkn-wave-yellow, rgba(255, 255, 0, 0.4));
+    background: linear-gradient(to top, var(--lkn-wave-yellow), var(--lkn-wave-green), var(--lkn-wave-green-dark), var(--lkn-wave-green-darker)) !important;
+    box-shadow: 0 0 16px var(--lkn-wave-yellow, rgba(255, 255, 0, 0.4)) !important;
 }
 
 .lkp-visualizer-bar--peak {
-    background: linear-gradient(to top, var(--lkn-wave-peak-red), var(--lkn-wave-yellow), var(--lkn-wave-green), var(--lkn-wave-green-dark));
-    box-shadow: 0 0 20px var(--lkn-wave-peak-red, rgba(255, 68, 68, 0.5));
+    background: linear-gradient(to top, var(--lkn-wave-peak-red), var(--lkn-wave-yellow), var(--lkn-wave-green), var(--lkn-wave-green-dark)) !important;
+    box-shadow: 0 0 20px var(--lkn-wave-peak-red, rgba(255, 68, 68, 0.5)) !important;
     animation: lkp-peak-glow 0.5s ease-in-out;
 }
 

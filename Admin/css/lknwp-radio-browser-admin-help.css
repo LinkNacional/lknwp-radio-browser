@@ -46,13 +46,13 @@
     background: transparent;
     padding: 0;
     font-size: 14px;
-    color: var(--lkn-secondary-red-1);
+    color: var(--lkn-secondary-red-1) !important;
     font-weight: 600;
 }
 
 .lknwp-radio-copy-btn {
-    background: var(--lkn-blue);
-    color: var(--lkn-support-gray-7);
+    background: var(--lkn-blue) !important;
+    color: var(--lkn-support-gray-7) !important;
     border: none;
     border-radius: 4px;
     padding: 8px 12px;
@@ -63,11 +63,11 @@
 }
 
 .lknwp-radio-copy-btn:hover {
-    background: var(--lkn-secondary-blue-4);
+    background: var(--lkn-secondary-blue-4) !important;
 }
 
 .lknwp-radio-copy-btn:active {
-    background: var(--lkn-secondary-blue-2);
+    background: var(--lkn-secondary-blue-2) !important;
 }
 
 .lknwp-radio-copy-btn.active {
@@ -77,8 +77,8 @@
 }
 
 .lknwp-radio-info {
-    background: var(--lkn-support-blue-7);
-    border: 1px solid var(--lkn-support-gray-6);
+    background: var(--lkn-support-blue-7) !important;
+    border: 1px solid var(--lkn-support-gray-6) !important;
     border-radius: 4px;
     padding: 15px;
     margin: 15px 0;
@@ -87,7 +87,7 @@
 .lknwp-radio-info h4 {
     margin-top: 0;
     margin-bottom: 10px;
-    color: var(--lkn-support-gray-2);
+    color: var(--lkn-support-gray-2) !important;
 }
 
 .lknwp-radio-info ul,
@@ -108,12 +108,12 @@
 
 .lknwp-radio-params-table td {
     padding: 8px 12px;
-    border: 1px solid var(--lkn-support-gray-6);
+    border: 1px solid var(--lkn-support-gray-6) !important;
     vertical-align: top;
 }
 
 .lknwp-radio-params-table td:first-child {
-    background: var(--lkn-support-gray-8);
+    background: var(--lkn-support-gray-8) !important;
     font-family: Consolas, Monaco, monospace;
     font-weight: 600;
     color: var(--lkn-secondary-red-1);
@@ -125,7 +125,7 @@
 }
 
 .lknwp-radio-params-table td:last-child {
-    background: var(--lkn-support-gray-9);
+    background: var(--lkn-support-gray-9) !important;
     font-family: Consolas, Monaco, monospace;
     color: var(--lkn-blue);
     width: 120px;
@@ -134,14 +134,14 @@
 .lknwp-radio-example {
     margin: 20px 0;
     padding: 15px;
-    border-left: 4px solid var(--lkn-blue);
-    background: var(--lkn-support-gray-7);
+    border-left: 4px solid var(--lkn-blue) !important;
+    background: var(--lkn-support-gray-7) !important;
 }
 
 .lknwp-radio-example h4 {
     margin-top: 0;
     margin-bottom: 10px;
-    color: var(--lkn-support-gray-2);
+    color: var(--lkn-support-gray-2) !important;
 }
 
 /* Responsive */

@@ -1,0 +1,33 @@
+{
+  "name": "lknwp-radio-browser",
+  "version": "1.0.0",
+  "description": "Plugin WordPress para listar e tocar rádios online usando a API Radio-Browser.",
+  "main": "Public/jsCompiled/lknwp-radio-browser-list.COMPILED.js",
+  "scripts": {
+    "build": "webpack --config webpack.config.js",
+    "watch": "webpack --config webpack.config.js --watch"
+  },
+  "author": "Link Nacional <contato@linknacional.com>",
+  "license": "GPL-2.0-or-later",
+  "keywords": [
+    "wordpress",
+    "plugin",
+    "radio",
+    "radio-browser",
+    "select2"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/LinkNacional/lknwp-radio-browser.git"
+  },
+  "dependencies": {
+    "jquery": "^3.7.1",
+    "select2": "^4.1.0-rc.0"
+  },
+  "devDependencies": {
+    "css-loader": "^6.11.0",
+    "style-loader": "^3.3.4",
+    "webpack": "^5.88.2",
+    "webpack-cli": "^6.0.1"
+  }
+}

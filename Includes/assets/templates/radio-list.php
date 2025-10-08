@@ -16,17 +16,12 @@ if (!defined('ABSPATH')) {
 }
 ?>
 
-<script>
-window.LKNWP_RADIO_BROWSER_PLUGIN_URL = "<?php echo esc_js($plugin_url); ?>";
-window.LKNWP_PLAYER_PAGE_SLUG = "<?php echo esc_js($atts['player_page']); ?>";
-</script>
-
-<div class="lrt-radio-wrap">
+<div class="lrt-radio-wrap" id="lknwp-radio-list">
     
     <?php if ($atts['hide_all_filters'] !== 'yes'): ?>
     <!-- Navigation Form -->
-    <nav class="lrt-radio-nav">
-        <form method="get" class="lrt-radio-form">
+    <nav class="lrt-radio-nav" id="lknwp-radio-list-nav">
+    <form method="get" class="lrt-radio-form" action="#lknwp-radio-list">
             
             <!-- First Row: Country, Limit, Sort, Order -->
             <div class="lrt-radio-row lrt-radio-row--first">
@@ -37,45 +32,45 @@ window.LKNWP_PLAYER_PAGE_SLUG = "<?php echo esc_js($atts['player_page']); ?>";
                     <label for="lrt_countrycode"><?php esc_html_e( 'Country', 'lknwp-radio-browser' ); ?></label>
                     <select id="lrt_countrycode" name="lrt_countrycode" class="lrt-radio-select lrt-radio-select--country">
                         <?php
-                        $countries = array(
-                            'BR' => '🇧🇷 BR',
-                            'US' => '🇺🇸 US',
-                            'AR' => '🇦🇷 AR',
-                            'CA' => '🇨🇦 CA',
-                            'GB' => '🇬🇧 GB',
-                            'FR' => '🇫🇷 FR',
-                            'DE' => '🇩🇪 DE',
-                            'ES' => '🇪🇸 ES',
-                            'IT' => '🇮🇹 IT',
-                            'PT' => '🇵🇹 PT',
-                            'MX' => '🇲🇽 MX',
-                            'CL' => '🇨🇱 CL',
-                            'CO' => '🇨🇴 CO',
-                            'PE' => '🇵🇪 PE',
-                            'UY' => '🇺🇾 UY',
-                            'PY' => '🇵🇾 PY',
-                            'BO' => '🇧🇴 BO',
-                            'EC' => '🇪🇨 EC',
-                            'VE' => '🇻🇪 VE',
-                            'AU' => '🇦🇺 AU',
-                            'JP' => '🇯🇵 JP',
-                            'KR' => '🇰🇷 KR',
-                            'CN' => '🇨🇳 CN',
-                            'IN' => '🇮🇳 IN',
-                            'RU' => '🇷🇺 RU',
-                            'NL' => '🇳🇱 NL',
-                            'BE' => '🇧🇪 BE',
-                            'CH' => '🇨🇭 CH',
-                            'AT' => '🇦🇹 AT',
-                            'SE' => '🇸🇪 SE',
-                            'NO' => '🇳🇴 NO',
-                            'DK' => '🇩🇰 DK',
-                            'FI' => '🇫🇮 FI'
+                        // Cria o array com 'All Countries' na primeira posição
+                        $countries = array_merge(
+                            array('' => '🌍 ' . __( 'All Countries', 'lknwp-radio-browser' )),
+                            array(
+                                'BR' => '🇧🇷 BR',
+                                'US' => '🇺🇸 US',
+                                'AR' => '🇦🇷 AR',
+                                'CA' => '🇨🇦 CA',
+                                'GB' => '🇬🇧 GB',
+                                'FR' => '🇫🇷 FR',
+                                'DE' => '🇩🇪 DE',
+                                'ES' => '🇪🇸 ES',
+                                'IT' => '🇮🇹 IT',
+                                'PT' => '🇵🇹 PT',
+                                'MX' => '🇲🇽 MX',
+                                'CL' => '🇨🇱 CL',
+                                'CO' => '🇨🇴 CO',
+                                'PE' => '🇵🇪 PE',
+                                'UY' => '🇺🇾 UY',
+                                'PY' => '🇵🇾 PY',
+                                'BO' => '🇧🇴 BO',
+                                'EC' => '🇪🇨 EC',
+                                'VE' => '🇻🇪 VE',
+                                'AU' => '🇦🇺 AU',
+                                'JP' => '🇯🇵 JP',
+                                'KR' => '🇰🇷 KR',
+                                'CN' => '🇨🇳 CN',
+                                'IN' => '🇮🇳 IN',
+                                'RU' => '🇷🇺 RU',
+                                'NL' => '🇳🇱 NL',
+                                'BE' => '🇧🇪 BE',
+                                'CH' => '🇨🇭 CH',
+                                'AT' => '🇦🇹 AT',
+                                'SE' => '🇸🇪 SE',
+                                'NO' => '🇳🇴 NO',
+                                'DK' => '🇩🇰 DK',
+                                'FI' => '🇫🇮 FI'
+                            )
                         );
-                        
-                        // Add translated "All Countries" option
-                        $countries[''] = '🌍 ' . __( 'All Countries', 'lknwp-radio-browser' );
-                        
                         $selected_country = $atts['countrycode'];
                         if (empty($selected_country)) {
                             $selected_country = 'BR'; // Padrão Brasil
@@ -98,6 +93,34 @@ window.LKNWP_PLAYER_PAGE_SLUG = "<?php echo esc_js($atts['player_page']); ?>";
                     <input type="number" id="lrt_limit" name="lrt_limit" value="<?php echo esc_attr($atts['limit']); ?>" min="1" max="100" class="lrt-radio-input lrt-radio-input--small">
                 </div>
                 <?php endif; ?>
+
+                <!-- Genre Field -->
+                <div class="lrt-radio-field lrt-radio-field--genre">
+                    <label for="lrt_genre"><?php esc_html_e( 'Genre', 'lknwp-radio-browser' ); ?></label>
+                    <select id="lrt_genre" name="lrt_genre" class="lrt-radio-select lrt-radio-select--genre">
+                        <option value="all" selected><?php esc_html_e( 'All Genres', 'lknwp-radio-browser' ); ?></option>
+                        <?php
+                        // Fetch genres/tags from Radio-Browser API
+                        $tags = get_transient('lknwp_radio_tags');
+                        if ($tags === false) {
+                            $response = wp_remote_get('https://de2.api.radio-browser.info/json/tags', array('timeout' => 10));
+                            if (!is_wp_error($response)) {
+                                $body = wp_remote_retrieve_body($response);
+                                $tags = json_decode($body);
+                                set_transient('lknwp_radio_tags', $tags, 12 * HOUR_IN_SECONDS);
+                            }
+                        }
+                        if (is_array($tags)) {
+                            foreach ($tags as $tag) {
+                                if (!empty($tag->name)) {
+                                    $selected = (isset($_GET['lrt_genre']) && $_GET['lrt_genre'] === $tag->name) ? 'selected' : '';
+                                    echo '<option value="' . esc_attr($tag->name) . '" ' . $selected . '>' . esc_html($tag->name) . '</option>';
+                                }
+                            }
+                        }
+                        ?>
+                    </select>
+                </div>
                 
                 <?php if ($atts['hide_sort'] !== 'yes'): ?>
                 <!-- Sort Field -->
@@ -149,40 +172,37 @@ window.LKNWP_PLAYER_PAGE_SLUG = "<?php echo esc_js($atts['player_page']); ?>";
             
             <!-- Hidden Fields -->
             <input type="hidden" id="lrt_reverse" name="lrt_reverse" value="<?php echo esc_attr($atts['reverse']); ?>">
+            <input type="hidden" id="lrt_player_base_url" name="lrt_player_base_url" value="<?php echo esc_attr(base64_encode($player_base_url)); ?>">
         </form>
     </nav>
     <?php endif; ?>
 
     <!-- Radio Stations List -->
-    <ul class="lrt-radio-list">
-        
-        <?php
-        $count = 0;
-        foreach ($stations as $station):
-            if ($count >= $atts['limit']) break;
-            
-            $name = esc_html($station->name);
-            $img = !empty($station->favicon) ? esc_url($station->favicon) : $default_img_url;
-            
-            // Gerar URL amigável - deixa o navegador formatar
-            $radio_name_clean = str_replace(['/', '?', '#', '&'], '', $station->name);
-            $radio_name_encoded = str_replace(' ', '%20', $radio_name_clean);
-            $player_url = home_url('/' . $atts['player_page'] . '/' . $radio_name_encoded . '/');
-            
-            $count++;
-        ?>
-        
-        <li class="lrt-radio-station">
-            <a href="<?php echo esc_url($player_url); ?>" data-player-link="1" target="_blank" class="lrt-radio-station__link">
-                <img src="<?php echo esc_url($img); ?>" alt="<?php esc_attr_e( 'Radio logo', 'lknwp-radio-browser' ); ?>" class="lrt-radio-station__logo" onerror="this.onerror=null;this.src='<?php echo esc_url($default_img_url); ?>';">
-                
-                <div class="lrt-radio-station__content">
-                    <span class="lrt-radio-station__name"><?php echo esc_html($name); ?></span>
-                </div>
-            </a>
-        </li>
-        
-        <?php endforeach; ?>
-        
+    <ul class="lrt-radio-list" id="lknwp-radio-list-components">
+        <?php if (!$stations || !is_array($stations) || count($stations) === 0): ?>
+            <li class="lrt-radio-error"><?php _e('No radios found.', 'lknwp-radio-browser'); ?></li>
+        <?php else: ?>
+            <?php
+            $count = 0;
+            foreach ($stations as $station) {
+                if ($count >= $atts['limit']) break;
+                $name = esc_html($station->name);
+                $img = !empty($station->favicon) ? esc_url($station->favicon) : $default_img_url;
+                $radio_name_clean = str_replace(['/', '?', '#', '&'], '', $station->name);
+                $radio_name_encoded = str_replace(' ', '%20', $radio_name_clean);
+                $player_url = trailingslashit($player_base_url) . $radio_name_encoded . '/';
+                $count++;
+            ?>
+                <li class="lrt-radio-station">
+                    <a href="<?php echo esc_url($player_url); ?>" data-player-link="1" target="_blank" class="lrt-radio-station__link">
+                        <img src="<?php echo esc_url($img); ?>" alt="<?php esc_attr_e( 'Radio logo', 'lknwp-radio-browser' ); ?>" class="lrt-radio-station__logo" onerror="this.onerror=null;this.src='<?php echo esc_url($default_img_url); ?>';">
+                        <div class="lrt-radio-station__content">
+                            <span class="lrt-radio-station__name"><?php echo esc_html($name); ?></span>
+                        </div>
+                    </a>
+                </li>
+            <?php
+            }
+        endif; ?>
     </ul>
 </div>
