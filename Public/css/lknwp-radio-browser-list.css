@@ -3,7 +3,7 @@
 
 /* ===== MAIN WRAPPER ===== */
 .lrt-radio-wrap {
-    background: var(--lkn-secondary-blue-3) !important;
+    background-color: var(--lkn-secondary-blue-3) !important;
     /* obsidian/azul escuro */
     border-radius: 20px;
     box-shadow: 0 2px 12px rgba(44, 62, 80, 0.10) !important;
@@ -14,7 +14,7 @@
 /* ===== NAVIGATION ===== */
 .lrt-radio-nav {
     font-family: 'Roboto', Arial, sans-serif !important;
-    background: none;
+    background-color: none;
     border-radius: 16px;
     padding: 18px 24px;
     display: flex;
@@ -27,7 +27,7 @@
 
 /* ===== FORM ===== */
 .lrt-radio-form {
-    background: none;
+    background-color: none;
     display: flex;
     flex-direction: column;
     gap: 0;
@@ -96,7 +96,7 @@
     box-shadow: none;
     border-radius: 8px;
     border: 1px solid var(--lkn-secondary-blue-2) !important;
-    background: var(--lkn-secondary-blue-4) !important;
+    background-color: var(--lkn-secondary-blue-4) !important;
     color: var(--lkn-support-gray-7) !important;
     font-size: 15px;
     padding: 7px 12px !important;
@@ -106,7 +106,7 @@
 }
 
 /* Controle específico para selects - COM IMPORTANT */
-.lrt-radio-select {
+select.lrt-radio-select {
     /* Remover aparência padrão */
     -webkit-appearance: none !important;
     -moz-appearance: none !important;
@@ -131,7 +131,7 @@
 .lrt-radio-select:focus,
 .lrt-radio-button:focus {
     border: 1.5px solid var(--lkn-secondary-blue-5) !important;
-    background: var(--lkn-support-gray-3) !important;
+    background-color: var(--lkn-support-gray-3) !important;
 }
 
 /* Focus do select mantém comportamento padrão */
@@ -160,7 +160,7 @@
 .lrt-radio-button--submit {
     width: 100%;
     padding: 7px 18px;
-    background: var(--lkn-support-gray-7) !important;
+    background-color: var(--lkn-support-gray-7) !important;
     color: var(--lkn-support-gray-2) !important;
     border: none;
     border-radius: 10px;
@@ -170,7 +170,7 @@
 }
 
 .lrt-radio-button--submit:hover {
-    background: var(--lkn-support-gray-8) !important;
+    background-color: var(--lkn-support-gray-8) !important;
     color: var(--lkn-secondary-blue-4) !important;
     border: 1.5px solid var(--lkn-secondary-blue-5) !important;
 }
@@ -188,7 +188,7 @@
 
 /* ===== RADIO STATION ITEM ===== */
 .lrt-radio-station {
-    background: var(--lkn-primary) !important;
+    background-color: var(--lkn-primary) !important;
     /* obsidian/azul escuro */
     border-radius: 14px;
     box-shadow: 0 2px 8px rgba(44, 62, 80, 0.10) !important;
@@ -198,7 +198,7 @@
 }
 
 .lrt-radio-station:hover {
-    background: var(--lkn-secondary-blue-5) !important;
+    background-color: var(--lkn-secondary-blue-5) !important;
     /* azul escuro mais vibrante */
     transform: translateY(-2px);
     box-shadow: 0 4px 16px rgba(44, 62, 80, 0.20) !important;
@@ -236,7 +236,7 @@
     object-fit: cover;
     border: 2px solid var(--lkn-secondary-blue-2) !important;
     box-shadow: 0 1px 4px rgba(44, 62, 80, 0.10) !important;
-    background: var(--lkn-primary) !important;
+    background-color: var(--lkn-primary) !important;
     margin-right: 8px;
 }
 
@@ -294,7 +294,7 @@
     box-shadow: none;
     border-radius: 8px;
     border: 1px solid var(--lkn-secondary-blue-2) !important;
-    background: var(--lkn-secondary-blue-4) !important;
+    background-color: var(--lkn-secondary-blue-4) !important;
     color: var(--lkn-support-gray-7) !important;
     font-size: 15px;
     transition: border 0.2s, background 0.2s;
@@ -304,18 +304,18 @@
 .lrt-radio-field select:focus,
 .lrt-radio-field button:focus {
     border: 1.5px solid var(--lkn-secondary-blue-5) !important;
-    background: var(--lkn-support-gray-3) !important;
+    background-color: var(--lkn-support-gray-3) !important;
 }
 
 .lrt-radio-form button[type="submit"] {
-    background: var(--lkn-support-gray-7) !important;
+    background-color: var(--lkn-support-gray-7) !important;
     color: var(--lkn-support-gray-3) !important;
     font-weight: 600;
     box-shadow: 0 2px 8px rgba(44, 62, 80, 0.10);
 }
 
 .lrt-radio-form button[type="submit"]:hover {
-    background: var(--lkn-support-gray-8) !important;
+    background-color: var(--lkn-support-gray-8) !important;
     color: var(--lkn-support-gray-3) !important;
     border: 1.5px solid var(--lkn-secondary-blue-5) !important;
 }
@@ -330,7 +330,7 @@
 
 /* ===== ERROR MESSAGES ===== */
 .lrt-radio-error {
-    background: var(--lkn-support-red-2) !important;
+    background-color: var(--lkn-support-red-2) !important;
     padding: 12px;
     border-radius: 6px;
     color: var(--lkn-secondary-red-1) !important;
@@ -355,7 +355,7 @@
 /* Estilo das opções */
 .lrt-radio-select--country option {
     padding: 8px 12px;
-    background: var(--lkn-secondary-blue-4) !important;
+    background-color: var(--lkn-secondary-blue-4) !important;
     color: var(--lkn-support-gray-7) !important;
     line-height: 1.4;
 }
@@ -376,7 +376,7 @@
     overflow: hidden !important;
     text-overflow: ellipsis !important;
     white-space: nowrap !important;
-    background: var(--lkn-secondary-blue-4) !important;
+    background-color: var(--lkn-secondary-blue-4) !important;
     color: var(--lkn-support-gray-7) !important;
     border: 1px solid var(--lkn-secondary-blue-2) !important;
     border-radius: 8px !important;
@@ -396,7 +396,7 @@
     width: 100% !important;
     border-radius: 8px !important;
     overflow: hidden !important;
-    background: var(--lkn-secondary-blue-4) !important;
+    background-color: var(--lkn-secondary-blue-4) !important;
     color: var(--lkn-support-gray-7) !important;
 }
 
@@ -422,7 +422,7 @@
     top: 50% !important;
     margin-right: 10px !important;
     transform: translateY(-50%);
-    background: none !important;
+    background-color: none !important;
     border: none !important;
     cursor: pointer !important;
     opacity: 0.7;
@@ -497,7 +497,7 @@
 
 /* ===== LOADING STATE ===== */
 .lrt-radio-loading {
-    background: var(--lkn-support-gray-3) !important;
+    background-color: var(--lkn-support-gray-3) !important;
     border-radius: 14px;
     box-shadow: 0 2px 8px rgba(44, 62, 80, 0.10) !important;
     padding: 32px 18px;
