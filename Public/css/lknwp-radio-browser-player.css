@@ -89,10 +89,6 @@
     transition: left 0.1s;
 }
 
-#lknwp-radio-volume {
-    accent-color: var(--lkn-support-gray-4) !important;
-}
-
 #lknwp-radio-volume::-webkit-slider-thumb {
     width: 32px;
     height: 32px;
@@ -132,11 +128,17 @@
 }
 
 #lknwp-radio-volume {
+    -webkit-appearance: auto !important;
     accent-color: var(--lkn-support-gray-4) !important;
+    cursor: grab !important;
 }
 
 #lknwp-radio-volume:hover {
     accent-color: var(--lkn-support-gray-4) !important;
+}
+
+#lknwp-radio-volume:active {
+    cursor: grabbing !important;
 }
 
 /* ===== PLAYER CONTAINER ===== */
@@ -168,7 +170,7 @@
 .lkp-share-section {
     position: absolute;
     top: 50%;
-    right: 40px;
+    right: 8%;
     /* Posicionado à direita do botão de play */
     transform: translateY(-50%);
     display: flex;
@@ -226,7 +228,7 @@
     }
 
     .lkp-share-section {
-        right: 20px;
+        right: 4%;
     }
 }
 
