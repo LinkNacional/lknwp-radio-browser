@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Blank WordPress Pot v1.0.0\n"
 "Report-Msgid-Bugs-To: Translator Name <translations@example.com>\n"
-"POT-Creation-Date: 2025-10-03 17:00-0300\n"
+"POT-Creation-Date: 2025-10-08 11:08-0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: Your Team <translations@example.com>\n"
@@ -54,267 +54,287 @@ msgstr "Erro de cópia: "
 msgid "Fallback: Error copying"
 msgstr "Fallback: Erro ao copiar"
 
+#: Includes/Lknwp_Radio_Browser.php:416
+msgid "Most popular"
+msgstr "Mais populares"
+
+#: Includes/Lknwp_Radio_Browser.php:417
+msgid "Name"
+msgstr "Nome"
+
+#: Includes/Lknwp_Radio_Browser.php:418
+msgid "Random"
+msgstr "Aleatório"
+
+#: Includes/Lknwp_Radio_Browser.php:419
+msgid "Bitrate"
+msgstr "Bitrate"
+
 #: Includes/assets/templates/admin-help-page.php:17
 msgid "LKN Radio Browser - How to Use"
 msgstr "LKN Radio Browser - Como Usar"
 
 #: Includes/assets/templates/admin-help-page.php:23
+msgid "🚀 Plugin Structure & Setup"
+msgstr "🚀 Estrutura & Configuração do Plugin"
+
+#: Includes/assets/templates/admin-help-page.php:25
+msgid "This plugin is divided into two main shortcodes:"
+msgstr "Este plugin está dividido em dois principais shortcodes:"
+
+#: Includes/assets/templates/admin-help-page.php:26
+msgid "Radio Player Shortcode: Displays the radio player."
+msgstr "Shortcode do Reprodutor de Rádio: Exibe o reprodutor de rádio."
+
+#: Includes/assets/templates/admin-help-page.php:27
+msgid "Radio List Shortcode: Displays a list of radios."
+msgstr "Shortcode da Lista de Rádios: Exibe uma lista de rádios."
+
+#: Includes/assets/templates/admin-help-page.php:29
+msgid "Step 1: Create the Player Page"
+msgstr "Passo 1: Crie a Página do Reprodutor"
+
+#: Includes/assets/templates/admin-help-page.php:31
+#: Includes/assets/templates/admin-help-page.php:39
+msgid "Go to Pages > Add New."
+msgstr "Vá para Páginas > Adicionar Nova."
+
+#: Includes/assets/templates/admin-help-page.php:32
+msgid "Create a page for the radio player."
+msgstr "Crie uma página para o reprodutor de rádio."
+
+#: Includes/assets/templates/admin-help-page.php:33
+msgid "Add the shortcode for the player (see below for usage)."
+msgstr "Adicione o shortcode para o reprodutor (veja o uso abaixo)."
+
+#: Includes/assets/templates/admin-help-page.php:34
+#: Includes/assets/templates/admin-help-page.php:50
+msgid "Save the page."
+msgstr "Salve a página."
+
+#: Includes/assets/templates/admin-help-page.php:37
+msgid "Step 2: Create the List Page"
+msgstr "Passo 2: Crie a Página da Lista"
+
+#: Includes/assets/templates/admin-help-page.php:40
+msgid "Create a page to list the radios."
+msgstr "Crie uma página para listar as rádios."
+
+#: Includes/assets/templates/admin-help-page.php:41
+msgid ""
+"Add the radio list shortcode: [radio_browser_list player_page=\"player-"
+"page\"] (replace \"player-page\" with the actual slug of your player page)."
+msgstr ""
+"Adicione o shortcode da lista de rádios: [radio_browser_list "
+"player_page=\"player-page\"] (substitua \"player-page\" pelo slug real da "
+"sua página do reprodutor)."
+
+#: Includes/assets/templates/admin-help-page.php:43
+msgid "Example:"
+msgstr "Exemplo:"
+
+#: Includes/assets/templates/admin-help-page.php:47
+msgid "Another Example:"
+msgstr "Outro Exemplo:"
+
+#: Includes/assets/templates/admin-help-page.php:57
 msgid "🎵 Radio Player Shortcode"
 msgstr "🎵 Shortcode do Player de Rádio"
 
-#: Includes/assets/templates/admin-help-page.php:24
+#: Includes/assets/templates/admin-help-page.php:58
 msgid "Use this shortcode to display the radio player on a specific page:"
 msgstr ""
 "Use este shortcode para exibir o player de rádio em uma página específica:"
 
-#: Includes/assets/templates/admin-help-page.php:28
-#: Includes/assets/templates/admin-help-page.php:49
-#: Includes/assets/templates/admin-help-page.php:139
-#: Includes/assets/templates/admin-help-page.php:147
-#: Includes/assets/templates/admin-help-page.php:155
-#: Includes/assets/templates/admin-help-page.php:163
-#: Includes/assets/templates/admin-help-page.php:171
+#: Includes/assets/templates/admin-help-page.php:62
+#: Includes/assets/templates/admin-help-page.php:83
+#: Includes/assets/templates/admin-help-page.php:173
+#: Includes/assets/templates/admin-help-page.php:181
+#: Includes/assets/templates/admin-help-page.php:189
+#: Includes/assets/templates/admin-help-page.php:197
+#: Includes/assets/templates/admin-help-page.php:205
 msgid "Copy"
 msgstr "Copiar"
 
-#: Includes/assets/templates/admin-help-page.php:32
+#: Includes/assets/templates/admin-help-page.php:66
 msgid "📋 How it works:"
 msgstr "📋 Como funciona:"
 
-#: Includes/assets/templates/admin-help-page.php:34
+#: Includes/assets/templates/admin-help-page.php:68
 msgid "Create a page (e.g., \"Player\" with slug \"player\")"
 msgstr "Crie uma página (ex: \"Player\" com slug \"player\")"
 
-#: Includes/assets/templates/admin-help-page.php:35
+#: Includes/assets/templates/admin-help-page.php:69
 msgid "Add the shortcode"
 msgstr "Adicionar o shortcode"
 
-#: Includes/assets/templates/admin-help-page.php:36
+#: Includes/assets/templates/admin-help-page.php:70
 msgid "The player will automatically receive URL parameters"
 msgstr "O player irá automaticamente receber parâmetros de URL"
 
-#: Includes/assets/templates/admin-help-page.php:37
+#: Includes/assets/templates/admin-help-page.php:71
 msgid "Works with links from the radio list"
 msgstr "Funciona com links da lista de rádio"
 
-#: Includes/assets/templates/admin-help-page.php:44
+#: Includes/assets/templates/admin-help-page.php:78
 msgid "📻 Radio List Shortcode"
 msgstr "📻 Shortcode da Lista de Rádios"
 
-#: Includes/assets/templates/admin-help-page.php:45
+#: Includes/assets/templates/admin-help-page.php:79
 msgid "Use this shortcode to display a list of radios with filters:"
 msgstr "Use este shortcode para exibir uma lista de rádios com filtros:"
 
-#: Includes/assets/templates/admin-help-page.php:53
+#: Includes/assets/templates/admin-help-page.php:87
 msgid "⚙️ Basic Parameters:"
 msgstr "⚙️ Parâmetros Básicos:"
 
-#: Includes/assets/templates/admin-help-page.php:57
+#: Includes/assets/templates/admin-help-page.php:91
 msgid "Player page slug (required)"
 msgstr "Player page slug (obrigatório)"
 
-#: Includes/assets/templates/admin-help-page.php:62
+#: Includes/assets/templates/admin-help-page.php:96
 msgid "Country code (BR, US, FR, etc.)"
 msgstr "Código do país (BR, US, FR, etc.)"
 
-#: Includes/assets/templates/admin-help-page.php:67
+#: Includes/assets/templates/admin-help-page.php:101
 msgid "Number of radios to display"
 msgstr "Número de rádios para exibir"
 
-#: Includes/assets/templates/admin-help-page.php:73
+#: Includes/assets/templates/admin-help-page.php:107
 msgid "Sort order (clickcount, name, random, bitrate)"
 msgstr "Ordem de classificação (clickcount, name, random, bitrate)"
 
-#: Includes/assets/templates/admin-help-page.php:78
+#: Includes/assets/templates/admin-help-page.php:112
 msgid "Reverse order (1 or 0)"
 msgstr "Ordem inversa (1 ou 0)"
 
-#: Includes/assets/templates/admin-help-page.php:83
+#: Includes/assets/templates/admin-help-page.php:117
 msgid "Search term"
 msgstr "Termo de pesquisa"
 
-#: Includes/assets/templates/admin-help-page.php:90
+#: Includes/assets/templates/admin-help-page.php:124
 msgid "🎛️ Parameters to Hide Filters:"
 msgstr "🎛️ Parâmetros para Ocultar Filtros:"
 
-#: Includes/assets/templates/admin-help-page.php:94
+#: Includes/assets/templates/admin-help-page.php:128
 msgid "Hide Country field"
 msgstr "Ocultar Campo País"
 
-#: Includes/assets/templates/admin-help-page.php:95
-#: Includes/assets/templates/admin-help-page.php:100
-#: Includes/assets/templates/admin-help-page.php:105
-#: Includes/assets/templates/admin-help-page.php:110
-#: Includes/assets/templates/admin-help-page.php:115
-#: Includes/assets/templates/admin-help-page.php:120
-#: Includes/assets/templates/admin-help-page.php:125
+#: Includes/assets/templates/admin-help-page.php:129
+#: Includes/assets/templates/admin-help-page.php:134
+#: Includes/assets/templates/admin-help-page.php:139
+#: Includes/assets/templates/admin-help-page.php:144
+#: Includes/assets/templates/admin-help-page.php:149
+#: Includes/assets/templates/admin-help-page.php:154
+#: Includes/assets/templates/admin-help-page.php:159
 msgid "or"
 msgstr "ou"
 
-#: Includes/assets/templates/admin-help-page.php:99
+#: Includes/assets/templates/admin-help-page.php:133
 msgid "Hide Limit field"
 msgstr "Ocultar Campo Limite"
 
-#: Includes/assets/templates/admin-help-page.php:104
+#: Includes/assets/templates/admin-help-page.php:138
 msgid "Hide Sort field"
 msgstr "Ocultar Campo Ordenar"
 
-#: Includes/assets/templates/admin-help-page.php:109
+#: Includes/assets/templates/admin-help-page.php:143
 msgid "Hide Order button"
 msgstr "Ocultar botão Ordem"
 
-#: Includes/assets/templates/admin-help-page.php:114
+#: Includes/assets/templates/admin-help-page.php:148
 msgid "Hide Search field"
 msgstr "Ocultar Campo Pesquisar"
 
-#: Includes/assets/templates/admin-help-page.php:119
+#: Includes/assets/templates/admin-help-page.php:153
 msgid "Hide Search button"
 msgstr "Ocultar botão Pesquisar"
 
-#: Includes/assets/templates/admin-help-page.php:124
+#: Includes/assets/templates/admin-help-page.php:158
 msgid "Hide all filters"
 msgstr "Ocultar todos os filtros"
 
-#: Includes/assets/templates/admin-help-page.php:133
+#: Includes/assets/templates/admin-help-page.php:167
 msgid "💡 Usage Examples"
 msgstr "💡 Exemplos de Uso"
 
-#: Includes/assets/templates/admin-help-page.php:136
+#: Includes/assets/templates/admin-help-page.php:170
 msgid "Complete list with filters (default):"
 msgstr "Lista completa com filtros (padrão):"
 
-#: Includes/assets/templates/admin-help-page.php:144
+#: Includes/assets/templates/admin-help-page.php:178
 msgid "Clean list without filters:"
 msgstr "Lista limpa sem filtros:"
 
-#: Includes/assets/templates/admin-help-page.php:152
+#: Includes/assets/templates/admin-help-page.php:186
 msgid "Text search only:"
 msgstr "Apenas pesquisa de texto:"
 
-#: Includes/assets/templates/admin-help-page.php:160
+#: Includes/assets/templates/admin-help-page.php:194
 msgid "Fixed configuration (US radios, 10 stations, no filters):"
 msgstr "Configuração fixa (rádios US, 10 estações, sem filtros):"
 
-#: Includes/assets/templates/admin-help-page.php:168
+#: Includes/assets/templates/admin-help-page.php:202
 msgid "List sorted by name (alphabetical):"
 msgstr "Lista ordenada por nome (alfabética):"
 
-#: Includes/assets/templates/admin-help-page.php:178
-msgid "🚀 How to Configure"
-msgstr "🚀 Como Configurar"
-
-#: Includes/assets/templates/admin-help-page.php:180
-msgid "1. Create the pages:"
-msgstr "1. Crie as páginas:"
-
-#: Includes/assets/templates/admin-help-page.php:182
-msgid "Go to <strong>Pages > Add New</strong>"
-msgstr "Vá para <strong>Páginas > Adicionar Nova</strong>"
-
-#: Includes/assets/templates/admin-help-page.php:183
-msgid "Create a page called \"Radios\" with slug \"radios\""
-msgstr "Crie uma página chamada \"Rádios\" com slug \"radios\""
-
-#: Includes/assets/templates/admin-help-page.php:184
-msgid ""
-"Add the shortcode: <code>[radio_browser_list player_page=\"player\"]</code>"
-msgstr ""
-"Adicione o shortcode: <code>[radio_browser_list player_page=\"player\"]</"
-"code>"
-
-#: Includes/assets/templates/admin-help-page.php:185
-msgid "Create another page called \"Player\" with slug \"player\""
-msgstr "Crie outra página chamada \"Player\" com slug \"player\""
-
-#: Includes/assets/templates/admin-help-page.php:186
-msgid "Add the shortcode: <code>[radio_browser_player]</code>"
-msgstr "Adicione o shortcode: <code>[radio_browser_player]</code>"
-
-#: Includes/assets/templates/admin-help-page.php:189
-msgid "2. Add to menu:"
-msgstr "2. Adicione ao menu:"
-
-#: Includes/assets/templates/admin-help-page.php:191
-msgid "Go to <strong>Appearance > Menus</strong>"
-msgstr "Vá para <strong>Aparência > Menus</strong>"
-
-#: Includes/assets/templates/admin-help-page.php:192
-msgid "Add the \"Radios\" page to the menu"
-msgstr "Adicione a página \"Rádios\" ao menu"
-
-#: Includes/assets/templates/admin-help-page.php:193
-msgid ""
-"The \"Player\" page does not need to be in the menu (it is accessed "
-"automatically)"
-msgstr ""
-"A página \"Player\" não precisa estar no menu (ela é acessada "
-"automaticamente)"
-
-#: Includes/assets/templates/admin-help-page.php:196
-msgid "3. Customize (optional):"
-msgstr "3. Personalizar (opcional):"
-
-#: Includes/assets/templates/admin-help-page.php:198
-msgid "Use the <code>hide_*</code> parameters to hide unnecessary filters"
-msgstr ""
-"Use os parâmetros <code>hide_*</code> para ocultar filtros desnecessários"
-
-#: Includes/assets/templates/admin-help-page.php:199
-msgid ""
-"Configure default values with <code>countrycode</code>, <code>limit</code>, "
-"etc."
-msgstr ""
-"Configure valores padrão com <code>countrycode</code>, <code>limit</code>, "
-"etc."
-
-#: Includes/assets/templates/admin-help-page.php:200
-msgid "Customize styles via theme CSS"
-msgstr "Personalize estilos via CSS do tema"
-
-#: Includes/assets/templates/radio-list.php:37
+#: Includes/assets/templates/radio-list.php:32
 msgid "Country"
 msgstr "País"
 
-#: Includes/assets/templates/radio-list.php:77
+#: Includes/assets/templates/radio-list.php:37
 msgid "All Countries"
 msgstr "Todos os Países"
 
-#: Includes/assets/templates/radio-list.php:97
+#: Includes/assets/templates/radio-list.php:92
 msgid "Limit"
 msgstr "Limite"
 
-#: Includes/assets/templates/radio-list.php:105
+#: Includes/assets/templates/radio-list.php:99
+msgid "Genre"
+msgstr "Gênero"
+
+#: Includes/assets/templates/radio-list.php:101
+msgid "All Genres"
+msgstr "Todos os Gêneros"
+
+#: Includes/assets/templates/radio-list.php:128
 msgid "Sort"
 msgstr "Ordenar"
 
-#: Includes/assets/templates/radio-list.php:119
+#: Includes/assets/templates/radio-list.php:142
 msgid "Order"
 msgstr "Ordem"
 
-#: Includes/assets/templates/radio-list.php:122
-#: Public/Lknwp_Radio_Browser_Public.php:154
+#: Includes/assets/templates/radio-list.php:145
+#: Public/Lknwp_Radio_Browser_Public.php:157
 msgid "Descending"
 msgstr "Decrescente"
 
-#: Includes/assets/templates/radio-list.php:123
-#: Public/Lknwp_Radio_Browser_Public.php:153
+#: Includes/assets/templates/radio-list.php:146
+#: Public/Lknwp_Radio_Browser_Public.php:156
 msgid "Ascending"
 msgstr "Crescente"
 
-#: Includes/assets/templates/radio-list.php:136
+#: Includes/assets/templates/radio-list.php:159
 msgid "Search Radio"
 msgstr "Pesquisar Rádio"
 
-#: Includes/assets/templates/radio-list.php:137
+#: Includes/assets/templates/radio-list.php:160
 msgid "Search radio..."
 msgstr "Pesquisar rádio..."
 
-#: Includes/assets/templates/radio-list.php:144
+#: Includes/assets/templates/radio-list.php:167
 msgid "Search"
 msgstr "Pesquisar"
 
-#: Includes/assets/templates/radio-list.php:177
-#: Includes/assets/templates/radio-player.php:40
+#: Includes/assets/templates/radio-list.php:183
+#: Public/Lknwp_Radio_Browser_Public.php:154
+msgid "No radios found."
+msgstr "Nenhuma rádio encontrada."
+
+#: Includes/assets/templates/radio-list.php:198
+#: Includes/assets/templates/radio-player.php:36
 msgid "Radio logo"
 msgstr "Logotipo da rádio"
 
@@ -327,32 +347,32 @@ msgid "No radio stream found. Please select a radio from the list."
 msgstr ""
 "Nenhuma stream de rádio encontrada. Por favor, selecione uma rádio da lista."
 
-#: Includes/assets/templates/radio-player.php:43
+#: Includes/assets/templates/radio-player.php:39
 #: Public/Lknwp_Radio_Browser_Public.php:126
 msgid "Online Radio"
 msgstr "Rádio Online"
 
-#: Includes/assets/templates/radio-player.php:74
+#: Includes/assets/templates/radio-player.php:70
 msgid "Copy link"
 msgstr "Copiar link"
 
-#: Includes/assets/templates/radio-player.php:81
+#: Includes/assets/templates/radio-player.php:77
 msgid "Share on Instagram"
 msgstr "Compartilhar no Instagram"
 
-#: Includes/assets/templates/radio-player.php:90
+#: Includes/assets/templates/radio-player.php:86
 msgid "Share on WhatsApp"
 msgstr "Compartilhar no WhatsApp"
 
-#: Includes/assets/templates/radio-player.php:97
+#: Includes/assets/templates/radio-player.php:93
 msgid "Share on Twitter"
 msgstr "Compartilhar no Twitter"
 
-#: Includes/assets/templates/radio-player.php:112
+#: Includes/assets/templates/radio-player.php:108
 msgid "Loading..."
 msgstr "Carregando..."
 
-#: Includes/assets/templates/radio-player.php:119
+#: Includes/assets/templates/radio-player.php:115
 msgid "Volume"
 msgstr "Volume"
 
@@ -420,21 +440,70 @@ msgstr "TEXT_TIMEOUT: A conversão de texto excedeu 5 segundos"
 msgid "Content-Type is not JSON: "
 msgstr "Content-Type não é JSON: "
 
-#: Public/Lknwp_Radio_Browser_Public.php:150
+#: Public/Lknwp_Radio_Browser_Public.php:153
 msgid "Loading radios..."
 msgstr "Carregando rádios..."
 
-#: Public/Lknwp_Radio_Browser_Public.php:151
-msgid "No radios found."
-msgstr "Nenhuma rádio encontrada."
-
-#: Public/Lknwp_Radio_Browser_Public.php:152
+#: Public/Lknwp_Radio_Browser_Public.php:155
 msgid "Trying alternative servers..."
 msgstr "Tentando servidores alternativos..."
 
-#: Public/Lknwp_Radio_Browser_Public.php:155
+#: Public/Lknwp_Radio_Browser_Public.php:158
 msgid "Error querying API. "
 msgstr "Erro ao consultar API. "
+
+#: Public/Lknwp_Radio_Browser_Public.php:159
+msgid "Select genre"
+msgstr "Selecione o Gênero"
+
+#~ msgid "🚀 How to Configure"
+#~ msgstr "🚀 Como Configurar"
+
+#~ msgid ""
+#~ "Add the shortcode: <code>[radio_browser_list player_page=\"player\"]</"
+#~ "code>"
+#~ msgstr ""
+#~ "Adicione o shortcode: <code>[radio_browser_list player_page=\"player\"]</"
+#~ "code>"
+
+#~ msgid "Create another page called \"Player\" with slug \"player\""
+#~ msgstr "Crie outra página chamada \"Player\" com slug \"player\""
+
+#~ msgid "Add the shortcode: <code>[radio_browser_player]</code>"
+#~ msgstr "Adicione o shortcode: <code>[radio_browser_player]</code>"
+
+#~ msgid "2. Add to menu:"
+#~ msgstr "2. Adicione ao menu:"
+
+#~ msgid "Go to <strong>Appearance > Menus</strong>"
+#~ msgstr "Vá para <strong>Aparência > Menus</strong>"
+
+#~ msgid "Add the \"Radios\" page to the menu"
+#~ msgstr "Adicione a página \"Rádios\" ao menu"
+
+#~ msgid ""
+#~ "The \"Player\" page does not need to be in the menu (it is accessed "
+#~ "automatically)"
+#~ msgstr ""
+#~ "A página \"Player\" não precisa estar no menu (ela é acessada "
+#~ "automaticamente)"
+
+#~ msgid "3. Customize (optional):"
+#~ msgstr "3. Personalizar (opcional):"
+
+#~ msgid "Use the <code>hide_*</code> parameters to hide unnecessary filters"
+#~ msgstr ""
+#~ "Use os parâmetros <code>hide_*</code> para ocultar filtros desnecessários"
+
+#~ msgid ""
+#~ "Configure default values with <code>countrycode</code>, <code>limit</"
+#~ "code>, etc."
+#~ msgstr ""
+#~ "Configure valores padrão com <code>countrycode</code>, <code>limit</"
+#~ "code>, etc."
+
+#~ msgid "Customize styles via theme CSS"
+#~ msgstr "Personalize estilos via CSS do tema"
 
 #~ msgid "Reverse Active"
 #~ msgstr "Reverter Ativo"
@@ -489,18 +558,6 @@ msgstr "Erro ao consultar API. "
 
 #~ msgid "Please select a radio to play."
 #~ msgstr "Por favor, selecione uma rádio para tocar."
-
-#~ msgid "Most Popular"
-#~ msgstr "Mais Populares"
-
-#~ msgid "Name"
-#~ msgstr "Nome"
-
-#~ msgid "Random"
-#~ msgstr "Aleatório"
-
-#~ msgid "Bitrate"
-#~ msgstr "Bitrate"
 
 #~ msgid "Error fetching radios from all servers."
 #~ msgstr "Erro ao buscar rádios de todos os servidores."
