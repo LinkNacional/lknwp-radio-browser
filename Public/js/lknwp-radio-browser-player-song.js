@@ -113,8 +113,9 @@ document.addEventListener('DOMContentLoaded', function () {
             // Buscar arte do álbum (passando artista original, não com stats)
             fetchAlbumArt(musica, artista, artistaComStats);
 
-            // Restaurar a classe quando encontrar informações
-            if (songBlockDiv && !songBlockDiv.classList.contains('lkp-current-song-block')) {
+            // Ajusta classes do bloco: mostra ao encontrar música
+            if (songBlockDiv) {
+                songBlockDiv.classList.remove('lkp-current-song-block-hidden');
                 songBlockDiv.classList.add('lkp-current-song-block');
             }
         } else {
@@ -123,6 +124,11 @@ document.addEventListener('DOMContentLoaded', function () {
             // Ocultar estatísticas quando não há música
             if (statsDiv) {
                 statsDiv.style.display = 'none';
+            }
+            // Ajusta classes do bloco: esconde ao não encontrar música
+            if (songBlockDiv) {
+                songBlockDiv.classList.remove('lkp-current-song-block');
+                songBlockDiv.classList.add('lkp-current-song-block-hidden');
             }
         }
     }
