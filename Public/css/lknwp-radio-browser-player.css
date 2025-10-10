@@ -420,7 +420,7 @@
 }
 
 .lkp-artist {
-    font-size: 18px;
+    font-size: small !important;
     color: var(--lkn-support-gray-7) !important;
     margin-bottom: 3px;
     font-weight: 700;
@@ -428,7 +428,7 @@
 }
 
 .lkp-current-song {
-    font-size: 18px;
+    font-size: small !important;
     color: var(--lkn-support-gray-8) !important;
     font-family: 'Roboto', Arial, sans-serif !important;
 }
@@ -454,7 +454,7 @@
 
 .lkp-volume-label {
     text-align: start;
-    font-size: 18px;
+    font-size: small !important;
     color: var(--lkn-support-gray-7) !important;
     margin-bottom: 6px;
     display: block;

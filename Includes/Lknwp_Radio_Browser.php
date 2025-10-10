@@ -436,6 +436,7 @@ class Lknwp_Radio_Browser {
 			'hide_limit' => 'no',
 			'hide_sort' => 'no',
 			'hide_order' => 'no',
+			'hide_genre' => 'no',
 			'hide_search' => 'no',
 			'hide_button' => 'no',
 			'hide_all_filters' => 'no'

@@ -49,14 +49,14 @@
     margin-bottom: 12px;
 }
 
-.lrt-radio-row--second {
-    gap: 12px;
+/* ===== FORM FIELDS ===== */
+.lrt-radio-search-container {
+    display: flex;
+    gap: 15px;
+    width: 100%;
     align-items: flex-end;
-    justify-content: flex-start;
-    max-width: 600px;
 }
 
-/* ===== FORM FIELDS ===== */
 .lrt-radio-field {
     display: flex;
     flex-direction: column;
@@ -71,6 +71,7 @@
 .lrt-radio-field--reverse,
 .lrt-radio-field--submit {
     min-width: 120px;
+    justify-content: flex-end;
 }
 
 .lrt-radio-field--search {
