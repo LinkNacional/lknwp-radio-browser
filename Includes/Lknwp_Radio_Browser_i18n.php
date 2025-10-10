@@ -28,7 +28,6 @@ namespace Lkn\LKNWP_Radio_Browser\Includes;
  */
 class Lknwp_Radio_Browser_i18n {
 
-
 	/**
 	 * Load the plugin text domain for translation.
 	 *
@@ -43,7 +42,6 @@ class Lknwp_Radio_Browser_i18n {
 		);
 
 	}
-
 
 
 }

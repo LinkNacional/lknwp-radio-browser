@@ -52,6 +52,7 @@
 /* ===== FORM FIELDS ===== */
 .lrt-radio-search-container {
     display: flex;
+    flex-wrap: wrap;
     gap: 15px;
     width: 100%;
     align-items: flex-end;
