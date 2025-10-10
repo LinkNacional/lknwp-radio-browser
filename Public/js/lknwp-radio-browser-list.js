@@ -55,17 +55,17 @@ import 'select2/dist/css/select2.min.css';
                     "https://nl1.api.radio-browser.info"
                 ];
                 var base_url = servers[Math.floor(Math.random() * servers.length)];
-                // Sempre usa /search, incluindo todos os parâmetros
-                var api_url = base_url + "/json/stations/search?name=" + encodeURIComponent(query) + "&countrycode=" + encodeURIComponent(countrycode) + "&order=" + encodeURIComponent(sort) + "&limit=" + encodeURIComponent(limit) + "&hidebroken=true";
-                if (reverse === "1") {
-                    api_url += "&reverse=true";
-                }
-                // Sempre inclui tagList, mesmo vazio ou 'all'
-                if (!genre || genre === 'all') {
-                    api_url += "&tagList=";
-                } else {
-                    api_url += "&tagList=" + encodeURIComponent(genre);
-                }
+                // Monta os parâmetros, removendo os que estão vazios
+                var params = [];
+                if (query) params.push("name=" + encodeURIComponent(query));
+                if (countrycode && countrycode !== 'all') params.push("countrycode=" + encodeURIComponent(countrycode));
+                if (sort) params.push("order=" + encodeURIComponent(sort));
+                if (limit) params.push("limit=" + encodeURIComponent(limit));
+                params.push("hidebroken=true");
+                if (reverse === "1") params.push("reverse=true");
+                if (genre && genre !== 'all') params.push("tagList=" + encodeURIComponent(genre));
+
+                var api_url = base_url + "/json/stations/search" + (params.length ? ("?" + params.join("&")) : "");
 
                 // Mostrar loading
                 $radioList.html('<li class="lrt-radio-loading"><div class="lrt-loading-spinner"></div><span>' + (window.lknwpRadioTextsList ? window.lknwpRadioTextsList.loadingRadios : 'Loading radios...') + '</span></li>');

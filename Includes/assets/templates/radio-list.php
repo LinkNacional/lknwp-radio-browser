@@ -34,7 +34,7 @@ if (!defined('ABSPATH')) {
                         <?php
                         // Cria o array com 'All Countries' na primeira posição
                         $countries = array_merge(
-                            array('' => '🌍 ' . __( 'All Countries', 'lknwp-radio-browser' )),
+                            array('all' => '🌍 ' . __( 'All Countries', 'lknwp-radio-browser' )),
                             array(
                                 'BR' => '🇧🇷 BR',
                                 'US' => '🇺🇸 US',

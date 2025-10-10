@@ -451,19 +451,26 @@ class Lknwp_Radio_Browser {
 		shuffle($servers);
 		$stations = null;
 		foreach ($servers as $base_url) {
-			// Monta a URL de busca unificada
+			// Monta a URL de busca unificada, removendo parâmetros vazios
 			$api_url = $base_url . '/json/stations/search?';
 			$params = array();
-			$params[] = 'name=' . urlencode($atts['search']);
-			$params[] = 'countrycode=' . urlencode($atts['countrycode']);
-			$params[] = 'order=' . urlencode($atts['sort']);
-			$params[] = 'limit=' . ($atts['limit'] * 2);
+			if (!empty($atts['search'])) {
+				$params[] = 'name=' . urlencode($atts['search']);
+			}
+			if (!empty($atts['countrycode']) && $atts['countrycode'] !== 'all') {
+				$params[] = 'countrycode=' . urlencode($atts['countrycode']);
+			}
+			if (!empty($atts['sort'])) {
+				$params[] = 'order=' . urlencode($atts['sort']);
+			}
+			if (!empty($atts['limit'])) {
+				$params[] = 'limit=' . ($atts['limit'] * 2);
+			}
 			$params[] = 'hidebroken=true';
-			$params[] = ($atts['reverse'] === '1') ? 'reverse=true' : 'reverse=false';
-			// Sempre inclui tagList, mesmo vazio ou 'all'
-			if (empty($atts['genre']) || $atts['genre'] === 'all') {
-				$params[] = 'tagList=';
-			} else {
+			if ($atts['reverse'] === '1') {
+				$params[] = 'reverse=true';
+			}
+			if (!empty($atts['genre']) && $atts['genre'] !== 'all') {
 				$params[] = 'tagList=' . urlencode($atts['genre']);
 			}
 			$api_url .= implode('&', $params);
