@@ -194,7 +194,7 @@ import 'select2/dist/css/select2.min.css';
         // Inicializa Select2
         $('#lrt_genre').select2({
             placeholder: window.lknwpRadioTextsList,
-            allowClear: false,
+            allowClear: true,
             width: 'resolve'
         });
     });

@@ -453,6 +453,12 @@ select.lrt-radio-select {
     color: var(--lkn-secondary-blue-5) !important;
 }
 
+.select2-selection__clear span {
+    display: inline !important;
+    font-size: 18px !important;
+    vertical-align: middle !important;
+}
+
 .select2-selection__arrow {
     top: 0px !important;
     height: 100% !important;

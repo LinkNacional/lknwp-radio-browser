@@ -225,8 +225,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 headers: {
                     'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,application/json,*/*;q=0.8',
                     'Accept-Language': 'pt-BR,pt;q=0.9,en;q=0.8',
-                    'Accept-Encoding': 'gzip, deflate',
-                    'User-Agent': 'Mozilla/5.0 (compatible; RadioPlayer/1.0)'
+                    'Accept-Encoding': 'gzip, deflate'
+                    // 'User-Agent' removido para evitar CORS issues
                 }
             };
 
@@ -857,8 +857,8 @@ document.addEventListener('DOMContentLoaded', function () {
                         method: 'GET',
                         mode: 'cors',
                         headers: {
-                            'Accept': 'text/html,application/json,*/*',
-                            'User-Agent': 'Mozilla/5.0 (compatible; RadioPlayer/1.0)'
+                            'Accept': 'text/html,application/json,*/*'
+                            // 'User-Agent' removido para evitar CORS issues
                         }
                     })
                         .then(function (response) {
