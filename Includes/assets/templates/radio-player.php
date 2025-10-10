@@ -101,11 +101,11 @@ if (!defined('ABSPATH')) {
    
     
     <!-- Current Song Block -->
-    <div id="lknwp-radio-current-song-block" class="lkp-current-song-block">
+    <div id="lknwp-radio-current-song-block" class="lkp-current-song-block-hidden">
         <div id="lknwp-radio-album-img" class="lkp-album-img"></div>
         <div class="lkp-song-info">
             <div id="lknwp-radio-artist" class="lkp-artist"></div>
-            <div id="lknwp-radio-current-song" class="lkp-current-song"><?php esc_html_e( 'Loading...', 'lknwp-radio-browser' ); ?></div>
+            <div id="lknwp-radio-current-song" class="lkp-current-song"></div>
             <div id="lknwp-radio-station-stats" class="lkp-station-stats"></div>
         </div>
     </div>

@@ -76,6 +76,7 @@
 
 .lrt-radio-field--search {
     min-width: 180px;
+    max-width: 750px;
     flex: 1;
 }
 

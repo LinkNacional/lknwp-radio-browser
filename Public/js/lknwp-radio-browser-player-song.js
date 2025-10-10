@@ -1,4 +1,9 @@
 document.addEventListener('DOMContentLoaded', function () {
+    // Recebe a URL padrão do álbum via objeto localizado
+    var defaultAlbumUrl = '';
+    if (window.lknwpRadioTextsSong && window.lknwpRadioTextsSong.defaultAlbumUrl) {
+        defaultAlbumUrl = window.lknwpRadioTextsSong.defaultAlbumUrl;
+    }
     // Lê os campos hidden do template
     var clickcount = 0;
     var votes = 0;
@@ -143,47 +148,57 @@ document.addEventListener('DOMContentLoaded', function () {
             fetch('https://itunes.apple.com/search?term=' + encodeURIComponent(artista + ' ' + musica) + '&entity=song&limit=1')
                 .then(function (r) { return r.json(); })
                 .then(function (data) {
-                    if (data.results && data.results[0]) {
-                        if (data.results[0].artworkUrl100) {
-                            var imgUrl = data.results[0].artworkUrl100.replace(/100x100bb.jpg$/, '600x600bb.jpg');
-                            albumDiv.innerHTML = '<img src="' + imgUrl + '" alt="Album" style="width:100%;height:100%;object-fit:cover;border-radius:12px;">';
+                    if (data.results && data.results[0] && data.results[0].artworkUrl100) {
+                        var imgUrl = data.results[0].artworkUrl100.replace(/100x100bb.jpg$/, '600x600bb.jpg');
+                        albumDiv.innerHTML = '<img src="' + imgUrl + '" alt="Album" style="width:100%;height:100%;object-fit:cover;border-radius:12px;">';
+                        albumDiv.style.display = 'block';
+                    } else {
+                        // Não encontrou arte do álbum, exibe imagem padrão
+                        if (defaultAlbumUrl) {
+                            albumDiv.innerHTML = '<img src="' + defaultAlbumUrl + '" alt="Album" style="width:100%;height:100%;object-fit:cover;border-radius:12px;">';
                             albumDiv.style.display = 'block';
                         } else {
                             albumDiv.innerHTML = '';
                             albumDiv.style.display = 'none';
                         }
+                    }
 
-                        // Se encontrou dados do iTunes, usa o nome oficial + estatísticas
-                        if (data.results[0].artistName) {
-                            var iTunesArtist = data.results[0].artistName;
-
-                            // Reconstrói com artista do iTunes + estatísticas
-                            var artistaFinal = iTunesArtist;
-                            if (clickcount > 0 || votes > 0) {
-                                var statsText = '';
-                                if (clickcount > 0) {
-                                    statsText = formatNumber(clickcount) + ' ' + (lknwpRadioTextsSong ? lknwpRadioTextsSong.listeners : 'listeners');
-                                } else if (votes > 0) {
-                                    statsText = formatNumber(votes) + ' ' + (lknwpRadioTextsSong ? lknwpRadioTextsSong.likes : 'likes');
-                                }
-                                artistaFinal = iTunesArtist + ' - ' + statsText;
+                    // Se encontrou dados do iTunes, usa o nome oficial + estatísticas
+                    if (data.results && data.results[0] && data.results[0].artistName) {
+                        var iTunesArtist = data.results[0].artistName;
+                        var artistaFinal = iTunesArtist;
+                        if (clickcount > 0 || votes > 0) {
+                            var statsText = '';
+                            if (clickcount > 0) {
+                                statsText = formatNumber(clickcount) + ' ' + (lknwpRadioTextsSong ? lknwpRadioTextsSong.listeners : 'listeners');
+                            } else if (votes > 0) {
+                                statsText = formatNumber(votes) + ' ' + (lknwpRadioTextsSong ? lknwpRadioTextsSong.likes : 'likes');
                             }
-
-                            artistDiv.textContent = artistaFinal;
+                            artistaFinal = iTunesArtist + ' - ' + statsText;
                         }
-                        // Se não encontrou artista no iTunes, mantém o que já estava (artistaComStats)
+                        artistDiv.textContent = artistaFinal;
+                    }
+                    // Se não encontrou artista no iTunes, mantém o que já estava (artistaComStats)
+                })
+                .catch(function () {
+                    // Erro na busca, exibe imagem padrão
+                    if (defaultAlbumUrl) {
+                        albumDiv.innerHTML = '<img src="' + defaultAlbumUrl + '" alt="Album" style="width:100%;height:100%;object-fit:cover;border-radius:12px;">';
+                        albumDiv.style.display = 'block';
                     } else {
                         albumDiv.innerHTML = '';
                         albumDiv.style.display = 'none';
                     }
-                })
-                .catch(function () {
-                    albumDiv.innerHTML = '';
-                    albumDiv.style.display = 'none';
                 });
         } else {
-            albumDiv.innerHTML = '';
-            albumDiv.style.display = 'none';
+            // Sem música, exibe imagem padrão
+            if (defaultAlbumUrl) {
+                albumDiv.innerHTML = '<img src="' + defaultAlbumUrl + '" alt="Album" style="width:100%;height:100%;object-fit:cover;border-radius:12px;">';
+                albumDiv.style.display = 'block';
+            } else {
+                albumDiv.innerHTML = '';
+                albumDiv.style.display = 'none';
+            }
         }
     } function fetchWithTimeout(url, timeoutMs) {
         return new Promise(function (resolve, reject) {

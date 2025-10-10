@@ -401,6 +401,10 @@
     width: 100%;
 }
 
+.lkp-current-song-block-hidden {
+    display: none !important;
+}
+
 .lkp-album-img {
     width: 70px;
     height: 70px;
