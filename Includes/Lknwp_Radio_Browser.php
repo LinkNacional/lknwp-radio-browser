@@ -174,6 +174,14 @@ class Lknwp_Radio_Browser {
 	 * Shortcode to display the radio player
 	 */
 	public function radio_browser_player_shortcode() {
+		// Altera o título da página para o nome da rádio, se disponível
+		$radio_name = get_query_var('radio_name');
+		if ($radio_name) {
+			$radio_name_decoded = str_replace('%20', ' ', urldecode($radio_name));
+			add_filter('pre_get_document_title', function($title) use ($radio_name_decoded) {
+				return esc_html($radio_name_decoded);
+			});
+		}
 		$radio_name = get_query_var('radio_name');
 		$default_img_url = defined('LKNWP_RADIO_BROWSER_PLUGIN_URL') ? LKNWP_RADIO_BROWSER_PLUGIN_URL . 'Includes/assets/images/default-radio.png' : './Includes/assets/images/default-radio.png';
 		
