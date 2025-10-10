@@ -185,7 +185,7 @@ class Lknwp_Radio_Browser {
 				if (isset($title['site'])) unset($title['site']);
 				if (isset($title['tagline'])) unset($title['tagline']);
 				return $title;
-			});
+			}, 999);
 			$station_data = $this->fetch_station_by_name_smart($radio_name_decoded);
 			
 			if ($station_data) {
