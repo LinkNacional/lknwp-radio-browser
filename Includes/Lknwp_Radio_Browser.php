@@ -92,7 +92,6 @@ class Lknwp_Radio_Browser {
 	 * Include the following files that make up the plugin:
 	 *
 	 * - Lknwp_Radio_Browser_Loader. Orchestrates the hooks of the plugin.
-	 * - Lknwp_Radio_Browser_i18n. Defines internationalization functionality.
 	 * - Lknwp_Radio_Browser_Admin. Defines all hooks for the admin area.
 	 * - Lknwp_Radio_Browser_Public. Defines all hooks for the public side of the site.
 	 *
@@ -111,18 +110,12 @@ class Lknwp_Radio_Browser {
 	/**
 	 * Define the locale for this plugin for internationalization.
 	 *
-	 * Uses the Lknwp_Radio_Browser_i18n class in order to set the domain and to register the hook
 	 * with WordPress.
 	 *
 	 * @since    1.0.0
 	 * @access   private
 	 */
 	private function set_locale() {
-
-		$plugin_i18n = new Lknwp_Radio_Browser_i18n();
-
-		$this->loader->add_action( 'plugins_loaded', $plugin_i18n, 'load_plugin_textdomain' );
-
 	}
 
 	/**
@@ -187,6 +180,9 @@ class Lknwp_Radio_Browser {
 		if ($radio_name) {
 			// URL amigável: decodifica o nome da rádio da URL
 			$radio_name_decoded = str_replace('%20', ' ', urldecode($radio_name));
+			add_filter('pre_get_document_title', function($title) use ($radio_name_decoded) {
+				return esc_html($radio_name_decoded);
+			});
 			$station_data = $this->fetch_station_by_name_smart($radio_name_decoded);
 			
 			if ($station_data) {
