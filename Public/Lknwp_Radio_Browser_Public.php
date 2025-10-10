@@ -1,6 +1,6 @@
 <?php
 
-namespace Lkn\LKNWP_Radio_Browser\Public;
+namespace Lkn\LKNWP_Radio_Browser\PublicView;
 
 /**
  * The public-facing functionality of the plugin.

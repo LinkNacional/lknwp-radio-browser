@@ -50,7 +50,7 @@ if ( file_exists( plugin_dir_path( __FILE__ ) . 'vendor/autoload.php' ) ) {
 	spl_autoload_register( function ( $class ) {
 		$namespaces = [
 			'Lkn\\LKNWP_Radio_Browser\\Admin\\' => plugin_dir_path( __FILE__ ) . 'Admin/',
-			'Lkn\\LKNWP_Radio_Browser\\Public\\' => plugin_dir_path( __FILE__ ) . 'Public/',
+			'Lkn\\LKNWP_Radio_Browser\\PublicView\\' => plugin_dir_path( __FILE__ ) . 'Public/',
 			'Lkn\\LKNWP_Radio_Browser\\Includes\\' => plugin_dir_path( __FILE__ ) . 'Includes/'
 		];
 		foreach ($namespaces as $prefix => $base_dir) {
