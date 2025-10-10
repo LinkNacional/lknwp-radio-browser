@@ -92,7 +92,6 @@ class Lknwp_Radio_Browser {
 	 * Include the following files that make up the plugin:
 	 *
 	 * - Lknwp_Radio_Browser_Loader. Orchestrates the hooks of the plugin.
-	 * - Lknwp_Radio_Browser_i18n. Defines internationalization functionality.
 	 * - Lknwp_Radio_Browser_Admin. Defines all hooks for the admin area.
 	 * - Lknwp_Radio_Browser_Public. Defines all hooks for the public side of the site.
 	 *
@@ -111,7 +110,6 @@ class Lknwp_Radio_Browser {
 	/**
 	 * Define the locale for this plugin for internationalization.
 	 *
-	 * Uses the Lknwp_Radio_Browser_i18n class in order to set the domain and to register the hook
 	 * with WordPress.
 	 *
 	 * @since    1.0.0
