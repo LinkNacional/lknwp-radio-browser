@@ -1,4 +1,9 @@
 document.addEventListener('DOMContentLoaded', function () {
+    // Recebe a URL padrão do álbum via objeto localizado
+    var defaultAlbumUrl = '';
+    if (window.lknwpRadioTextsSong && window.lknwpRadioTextsSong.defaultAlbumUrl) {
+        defaultAlbumUrl = window.lknwpRadioTextsSong.defaultAlbumUrl;
+    }
     // Lê os campos hidden do template
     var clickcount = 0;
     var votes = 0;
@@ -108,8 +113,9 @@ document.addEventListener('DOMContentLoaded', function () {
             // Buscar arte do álbum (passando artista original, não com stats)
             fetchAlbumArt(musica, artista, artistaComStats);
 
-            // Restaurar a classe quando encontrar informações
-            if (songBlockDiv && !songBlockDiv.classList.contains('lkp-current-song-block')) {
+            // Ajusta classes do bloco: mostra ao encontrar música
+            if (songBlockDiv) {
+                songBlockDiv.classList.remove('lkp-current-song-block-hidden');
                 songBlockDiv.classList.add('lkp-current-song-block');
             }
         } else {
@@ -118,6 +124,11 @@ document.addEventListener('DOMContentLoaded', function () {
             // Ocultar estatísticas quando não há música
             if (statsDiv) {
                 statsDiv.style.display = 'none';
+            }
+            // Ajusta classes do bloco: esconde ao não encontrar música
+            if (songBlockDiv) {
+                songBlockDiv.classList.remove('lkp-current-song-block');
+                songBlockDiv.classList.add('lkp-current-song-block-hidden');
             }
         }
     }
@@ -143,47 +154,57 @@ document.addEventListener('DOMContentLoaded', function () {
             fetch('https://itunes.apple.com/search?term=' + encodeURIComponent(artista + ' ' + musica) + '&entity=song&limit=1')
                 .then(function (r) { return r.json(); })
                 .then(function (data) {
-                    if (data.results && data.results[0]) {
-                        if (data.results[0].artworkUrl100) {
-                            var imgUrl = data.results[0].artworkUrl100.replace(/100x100bb.jpg$/, '600x600bb.jpg');
-                            albumDiv.innerHTML = '<img src="' + imgUrl + '" alt="Album" style="width:100%;height:100%;object-fit:cover;border-radius:12px;">';
+                    if (data.results && data.results[0] && data.results[0].artworkUrl100) {
+                        var imgUrl = data.results[0].artworkUrl100.replace(/100x100bb.jpg$/, '600x600bb.jpg');
+                        albumDiv.innerHTML = '<img src="' + imgUrl + '" alt="Album" style="width:100%;height:100%;object-fit:cover;border-radius:12px;">';
+                        albumDiv.style.display = 'block';
+                    } else {
+                        // Não encontrou arte do álbum, exibe imagem padrão
+                        if (defaultAlbumUrl) {
+                            albumDiv.innerHTML = '<img src="' + defaultAlbumUrl + '" alt="Album" style="width:100%;height:100%;object-fit:cover;border-radius:12px;">';
                             albumDiv.style.display = 'block';
                         } else {
                             albumDiv.innerHTML = '';
                             albumDiv.style.display = 'none';
                         }
+                    }
 
-                        // Se encontrou dados do iTunes, usa o nome oficial + estatísticas
-                        if (data.results[0].artistName) {
-                            var iTunesArtist = data.results[0].artistName;
-
-                            // Reconstrói com artista do iTunes + estatísticas
-                            var artistaFinal = iTunesArtist;
-                            if (clickcount > 0 || votes > 0) {
-                                var statsText = '';
-                                if (clickcount > 0) {
-                                    statsText = formatNumber(clickcount) + ' ' + (lknwpRadioTextsSong ? lknwpRadioTextsSong.listeners : 'listeners');
-                                } else if (votes > 0) {
-                                    statsText = formatNumber(votes) + ' ' + (lknwpRadioTextsSong ? lknwpRadioTextsSong.likes : 'likes');
-                                }
-                                artistaFinal = iTunesArtist + ' - ' + statsText;
+                    // Se encontrou dados do iTunes, usa o nome oficial + estatísticas
+                    if (data.results && data.results[0] && data.results[0].artistName) {
+                        var iTunesArtist = data.results[0].artistName;
+                        var artistaFinal = iTunesArtist;
+                        if (clickcount > 0 || votes > 0) {
+                            var statsText = '';
+                            if (clickcount > 0) {
+                                statsText = formatNumber(clickcount) + ' ' + (lknwpRadioTextsSong ? lknwpRadioTextsSong.listeners : 'listeners');
+                            } else if (votes > 0) {
+                                statsText = formatNumber(votes) + ' ' + (lknwpRadioTextsSong ? lknwpRadioTextsSong.likes : 'likes');
                             }
-
-                            artistDiv.textContent = artistaFinal;
+                            artistaFinal = iTunesArtist + ' - ' + statsText;
                         }
-                        // Se não encontrou artista no iTunes, mantém o que já estava (artistaComStats)
+                        artistDiv.textContent = artistaFinal;
+                    }
+                    // Se não encontrou artista no iTunes, mantém o que já estava (artistaComStats)
+                })
+                .catch(function () {
+                    // Erro na busca, exibe imagem padrão
+                    if (defaultAlbumUrl) {
+                        albumDiv.innerHTML = '<img src="' + defaultAlbumUrl + '" alt="Album" style="width:100%;height:100%;object-fit:cover;border-radius:12px;">';
+                        albumDiv.style.display = 'block';
                     } else {
                         albumDiv.innerHTML = '';
                         albumDiv.style.display = 'none';
                     }
-                })
-                .catch(function () {
-                    albumDiv.innerHTML = '';
-                    albumDiv.style.display = 'none';
                 });
         } else {
-            albumDiv.innerHTML = '';
-            albumDiv.style.display = 'none';
+            // Sem música, exibe imagem padrão
+            if (defaultAlbumUrl) {
+                albumDiv.innerHTML = '<img src="' + defaultAlbumUrl + '" alt="Album" style="width:100%;height:100%;object-fit:cover;border-radius:12px;">';
+                albumDiv.style.display = 'block';
+            } else {
+                albumDiv.innerHTML = '';
+                albumDiv.style.display = 'none';
+            }
         }
     } function fetchWithTimeout(url, timeoutMs) {
         return new Promise(function (resolve, reject) {
@@ -204,8 +225,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 headers: {
                     'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,application/json,*/*;q=0.8',
                     'Accept-Language': 'pt-BR,pt;q=0.9,en;q=0.8',
-                    'Accept-Encoding': 'gzip, deflate',
-                    'User-Agent': 'Mozilla/5.0 (compatible; RadioPlayer/1.0)'
+                    'Accept-Encoding': 'gzip, deflate'
+                    // 'User-Agent' removido para evitar CORS issues
                 }
             };
 
@@ -836,8 +857,8 @@ document.addEventListener('DOMContentLoaded', function () {
                         method: 'GET',
                         mode: 'cors',
                         headers: {
-                            'Accept': 'text/html,application/json,*/*',
-                            'User-Agent': 'Mozilla/5.0 (compatible; RadioPlayer/1.0)'
+                            'Accept': 'text/html,application/json,*/*'
+                            // 'User-Agent' removido para evitar CORS issues
                         }
                     })
                         .then(function (response) {

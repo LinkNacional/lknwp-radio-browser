@@ -126,6 +126,8 @@ class Lknwp_Radio_Browser_Public {
 				'onlineRadio' => __('Online Radio', 'lknwp-radio-browser')
 			));	
 
+			$default_album_url = defined('LKNWP_RADIO_BROWSER_PLUGIN_URL') ? LKNWP_RADIO_BROWSER_PLUGIN_URL . 'Includes/assets/images/default-radio-album.gif' : './Includes/assets/images/default-radio-album.gif';
+
 			wp_localize_script('lknwp-radio-player-song', 'lknwpRadioTextsSong', array(
 				'warning' => __('Warning: This radio uses insecure streaming (HTTP) and cannot be played on HTTPS pages. Ask the provider to enable HTTPS or access via HTTP.', 'lknwp-radio-browser'),
 				'listeners' => __('listeners', 'lknwp-radio-browser'),
@@ -138,7 +140,8 @@ class Lknwp_Radio_Browser_Public {
 				'networkError' => __('NETWORK_ERROR: Status 0, possible network or CORS issue', 'lknwp-radio-browser'),
 				'audioStream' => __('AUDIO_STREAM: Response is an audio stream', 'lknwp-radio-browser'),
 				'textTimeout' => __('TEXT_TIMEOUT: Text conversion exceeded 5 seconds', 'lknwp-radio-browser'),
-				'contentTypeNotJson' => __('Content-Type is not JSON: ', 'lknwp-radio-browser')
+				'contentTypeNotJson' => __('Content-Type is not JSON: ', 'lknwp-radio-browser'),
+				'defaultAlbumUrl' => $default_album_url
 			));
 		}
 
@@ -157,7 +160,7 @@ class Lknwp_Radio_Browser_Public {
 				'descending' => __('Descending', 'lknwp-radio-browser'),
 				'apiError' => __('Error querying API. ', 'lknwp-radio-browser'),
 				'placeholder' => __('Select genre', 'lknwp-radio-browser'),
-				'defaultImgUrl' => $default_img_url,
+				'defaultImgUrl' => $default_img_url
 			));
 		}
 	}

@@ -158,6 +158,11 @@ if (!defined('ABSPATH')) {
                         <td><?php esc_html_e( 'Hide all filters', 'lknwp-radio-browser' ); ?></td>
                         <td><code>"yes"</code> <?php esc_html_e( 'or', 'lknwp-radio-browser' ); ?> <code>"no"</code></td>
                     </tr>
+                    <tr>
+                        <td><code>hide_genre</code></td>
+                        <td><?php esc_html_e( 'Hide Genre field in filter and genre component in the list', 'lknwp-radio-browser' ); ?></td>
+                        <td><code>"yes"</code> <?php esc_html_e( 'or', 'lknwp-radio-browser' ); ?> <code>"no"</code></td>
+                    </tr>
                 </table>
             </div>
         </div>

@@ -387,7 +387,7 @@ class Lknwp_Radio_Browser {
 
 	/**
 	 * Shortcode to list radios with a link to the player page
-	 * Usage: [radio_browser_list player_page="player" hide_country="yes" hide_limit="yes" hide_sort="yes" hide_order="yes" hide_search="yes" hide_button="yes" hide_all_filters="yes"]
+	 * Usage: [radio_browser_list player_page="player" hide_country="yes" hide_limit="yes" hide_sort="yes" hide_order="yes" hide_search="yes" hide_button="yes" hide_all_filters="yes" hide_genre="yes"]
 	 * 
 	 * Parameters:
 	 * - player_page: Page slug for the radio player
@@ -400,6 +400,7 @@ class Lknwp_Radio_Browser {
 	 * - hide_limit: Hide limit field (yes/no)
 	 * - hide_sort: Hide sort field (yes/no)
 	 * - hide_order: Hide order button (yes/no)
+	 * - hide_genre: Hide genre field/component in the filter and list (yes/no)
 	 * - hide_search: Hide search field (yes/no)
 	 * - hide_button: Hide submit button (yes/no)
 	 * - hide_all_filters: Hide entire filter form (yes/no)
@@ -436,6 +437,7 @@ class Lknwp_Radio_Browser {
 			'hide_limit' => 'no',
 			'hide_sort' => 'no',
 			'hide_order' => 'no',
+			'hide_genre' => 'no',
 			'hide_search' => 'no',
 			'hide_button' => 'no',
 			'hide_all_filters' => 'no'
@@ -450,19 +452,26 @@ class Lknwp_Radio_Browser {
 		shuffle($servers);
 		$stations = null;
 		foreach ($servers as $base_url) {
-			// Monta a URL de busca unificada
+			// Monta a URL de busca unificada, removendo parâmetros vazios
 			$api_url = $base_url . '/json/stations/search?';
 			$params = array();
-			$params[] = 'name=' . urlencode($atts['search']);
-			$params[] = 'countrycode=' . urlencode($atts['countrycode']);
-			$params[] = 'order=' . urlencode($atts['sort']);
-			$params[] = 'limit=' . ($atts['limit'] * 2);
+			if (!empty($atts['search'])) {
+				$params[] = 'name=' . urlencode($atts['search']);
+			}
+			if (!empty($atts['countrycode']) && $atts['countrycode'] !== 'all') {
+				$params[] = 'countrycode=' . urlencode($atts['countrycode']);
+			}
+			if (!empty($atts['sort'])) {
+				$params[] = 'order=' . urlencode($atts['sort']);
+			}
+			if (!empty($atts['limit'])) {
+				$params[] = 'limit=' . ($atts['limit'] * 2);
+			}
 			$params[] = 'hidebroken=true';
-			$params[] = ($atts['reverse'] === '1') ? 'reverse=true' : 'reverse=false';
-			// Sempre inclui tagList, mesmo vazio ou 'all'
-			if (empty($atts['genre']) || $atts['genre'] === 'all') {
-				$params[] = 'tagList=';
-			} else {
+			if ($atts['reverse'] === '1') {
+				$params[] = 'reverse=true';
+			}
+			if (!empty($atts['genre']) && $atts['genre'] !== 'all') {
 				$params[] = 'tagList=' . urlencode($atts['genre']);
 			}
 			$api_url .= implode('&', $params);
@@ -638,12 +647,13 @@ class Lknwp_Radio_Browser {
 
 	public static function lknwp_find_page_by_slug($slug) {
         global $wpdb;
-        $query = $wpdb->prepare(
-            "SELECT ID FROM {$wpdb->posts} WHERE post_type = 'page' AND post_status = 'publish' AND (post_name = %s OR post_name LIKE %s)",
-            $slug,
-            '%/' . $wpdb->esc_like($slug)
-        );
-        $result = $wpdb->get_var($query);
+        $result = $wpdb->get_var(
+			$wpdb->prepare(
+				"SELECT ID FROM {$wpdb->posts} WHERE post_type = 'page' AND post_status = 'publish' AND (post_name = %s OR post_name LIKE %s)",
+				$slug,
+				'%/' . $wpdb->esc_like($slug)
+			)
+		);
         return $result ? get_permalink($result) : false;
     }
 
