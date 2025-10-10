@@ -141,7 +141,7 @@ if (!defined('ABSPATH')) {
                             foreach ($tags as $tag) {
                                 if (!empty($tag->name)) {
                                     $selected = (isset($_GET['lrt_genre']) && $_GET['lrt_genre'] === $tag->name) ? 'selected' : '';
-                                    echo '<option value="' . esc_attr($tag->name) . '" ' . esc_attr($selected) . '>' . esc_html($tag->name) . '</option>';
+                                    echo '<option value="' . esc_attr($tag->name) . '" ' . esc_attr($selected) . '>' . esc_html($tag->name) . ' (' . esc_html($tag->stationcount) . ')</option>';
                                 }
                             }
                         }
