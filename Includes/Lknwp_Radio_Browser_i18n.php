@@ -35,12 +35,6 @@ class Lknwp_Radio_Browser_i18n {
 	 */
 	public function load_plugin_textdomain() {
 
-		load_plugin_textdomain(
-			'lknwp-radio-browser',
-			false,
-			dirname( dirname( plugin_basename( __FILE__ ) ) ) . '/Languages/'
-		);
-
 	}
 
 
