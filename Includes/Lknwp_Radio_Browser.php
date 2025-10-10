@@ -180,8 +180,11 @@ class Lknwp_Radio_Browser {
 		if ($radio_name) {
 			// URL amigável: decodifica o nome da rádio da URL
 			$radio_name_decoded = str_replace('%20', ' ', urldecode($radio_name));
-			add_filter('pre_get_document_title', function($title) use ($radio_name_decoded) {
-				return esc_html($radio_name_decoded);
+			add_filter('document_title_parts', function($title) use ($radio_name_decoded) {
+				$title['title'] = esc_html($radio_name_decoded);
+				if (isset($title['site'])) unset($title['site']);
+				if (isset($title['tagline'])) unset($title['tagline']);
+				return $title;
 			});
 			$station_data = $this->fetch_station_by_name_smart($radio_name_decoded);
 			
