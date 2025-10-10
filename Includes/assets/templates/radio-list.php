@@ -141,7 +141,7 @@ if (!defined('ABSPATH')) {
                             foreach ($tags as $tag) {
                                 if (!empty($tag->name)) {
                                     $selected = (isset($_GET['lrt_genre']) && $_GET['lrt_genre'] === $tag->name) ? 'selected' : '';
-                                    echo '<option value="' . esc_attr($tag->name) . '" ' . $selected . '>' . esc_html($tag->name) . '</option>';
+                                    echo '<option value="' . esc_attr($tag->name) . '" ' . esc_attr($selected) . '>' . esc_html($tag->name) . '</option>';
                                 }
                             }
                         }
@@ -179,7 +179,7 @@ if (!defined('ABSPATH')) {
     <!-- Radio Stations List -->
     <ul class="lrt-radio-list" id="lknwp-radio-list-components">
         <?php if (!$stations || !is_array($stations) || count($stations) === 0): ?>
-            <li class="lrt-radio-error"><?php _e('No radios found.', 'lknwp-radio-browser'); ?></li>
+            <li class="lrt-radio-error"><?php esc_html_e('No radios found.', 'lknwp-radio-browser'); ?></li>
         <?php else: ?>
             <?php
             $count = 0;

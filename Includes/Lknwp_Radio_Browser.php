@@ -387,7 +387,7 @@ class Lknwp_Radio_Browser {
 
 	/**
 	 * Shortcode to list radios with a link to the player page
-	 * Usage: [radio_browser_list player_page="player" hide_country="yes" hide_limit="yes" hide_sort="yes" hide_order="yes" hide_search="yes" hide_button="yes" hide_all_filters="yes"]
+	 * Usage: [radio_browser_list player_page="player" hide_country="yes" hide_limit="yes" hide_sort="yes" hide_order="yes" hide_search="yes" hide_button="yes" hide_all_filters="yes" hide_genre="yes"]
 	 * 
 	 * Parameters:
 	 * - player_page: Page slug for the radio player
@@ -400,6 +400,7 @@ class Lknwp_Radio_Browser {
 	 * - hide_limit: Hide limit field (yes/no)
 	 * - hide_sort: Hide sort field (yes/no)
 	 * - hide_order: Hide order button (yes/no)
+	 * - hide_genre: Hide genre field/component in the filter and list (yes/no)
 	 * - hide_search: Hide search field (yes/no)
 	 * - hide_button: Hide submit button (yes/no)
 	 * - hide_all_filters: Hide entire filter form (yes/no)
@@ -646,12 +647,13 @@ class Lknwp_Radio_Browser {
 
 	public static function lknwp_find_page_by_slug($slug) {
         global $wpdb;
-        $query = $wpdb->prepare(
-            "SELECT ID FROM {$wpdb->posts} WHERE post_type = 'page' AND post_status = 'publish' AND (post_name = %s OR post_name LIKE %s)",
-            $slug,
-            '%/' . $wpdb->esc_like($slug)
-        );
-        $result = $wpdb->get_var($query);
+        $result = $wpdb->get_var(
+			$wpdb->prepare(
+				"SELECT ID FROM {$wpdb->posts} WHERE post_type = 'page' AND post_status = 'publish' AND (post_name = %s OR post_name LIKE %s)",
+				$slug,
+				'%/' . $wpdb->esc_like($slug)
+			)
+		);
         return $result ? get_permalink($result) : false;
     }
 
