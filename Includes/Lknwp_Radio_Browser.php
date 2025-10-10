@@ -3,7 +3,7 @@
 namespace Lkn\LKNWP_Radio_Browser\Includes;
 
 use Lkn\LKNWP_Radio_Browser\Admin\Lknwp_Radio_Browser_Admin;
-use Lkn\LKNWP_Radio_Browser\Public\Lknwp_Radio_Browser_Public;
+use Lkn\LKNWP_Radio_Browser\PublicView\Lknwp_Radio_Browser_Public;
 
 /**
  * The file that defines the core plugin class
