@@ -1,4 +1,4 @@
-=== Radio Browser for WP ===
+=== Radio Browser Stations ===
 Contributors: linknacional
 Tags: radio, streaming, audio, player, music
 Requires at least: 5.0
@@ -13,7 +13,8 @@ Display and play online radio stations from Radio-Browser.info with a beautiful 
 
 == Description ==
 
-Integrate thousands of **online radio stations** into your WordPress website with the **Radio Browser for WP** plugin. 
+Integrate thousands of **online radio stations** into your WordPress website with the **Radio Browser Stations** plugin. 
+
 == Disclaimer ==
 This plugin is an independent project developed by LinkNacional. It is **not affiliated, endorsed, or sponsored** by Radio-Browser.info, WordPress, or Select2.
 
@@ -80,12 +81,12 @@ For this plugin to work correctly, you will need:
 
 == Installation ==
 
-There are two ways to install the Radio Browser for WP plugin:
+There are two ways to install the Radio Browser Stations plugin:
 
 = From your WordPress Dashboard (Recommended) =
 
 1. In your WordPress admin panel, navigate to **Plugins > Add New**
-2. Use the search bar to find "Radio Browser for WP"
+2. Use the search bar to find "Radio Browser Stations"
 3. Locate the plugin in the search results and click the **Install Now** button
 4. Once the installation is complete, click the **Activate** button
 
@@ -143,7 +144,7 @@ This shortcode automatically detects the radio station from the URL and displays
 
 == Enjoying the Plugin? ==
 
-If you find the **Radio Browser for WP** plugin useful, please consider leaving a 5-star review on WordPress.org.
+If you find the **Radio Browser Stations** plugin useful, please consider leaving a 5-star review on WordPress.org.
 
 Your feedback is invaluable to us. It not only helps other website owners discover the plugin but also motivates us to continue developing and improving it. A positive review is the best way to show your support for our work.
 
@@ -204,4 +205,4 @@ If you need help or have questions, please post them in the [support forum](http
 == Upgrade Notice ==
 
 = 1.0.0 =
-Initial release of Radio Browser for WP. Install to start streaming radio stations on your website.
+Initial release of Radio Browser Stations. Install to start streaming radio stations on your website.
