@@ -405,12 +405,17 @@ class Lknwp_Radio_Browser {
 	 * - hide_all_filters: Hide entire filter form (yes/no)
 	 */
 	public function radio_browser_list_shortcode($atts) {
-		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Public shortcode for radio list, nonce not applicable
+		// Verifica o nonce do formulário
+		if (isset($_GET['lknwp_radio_list_nonce'])) {
+			$nonce = sanitize_text_field(wp_unslash($_GET['lknwp_radio_list_nonce']));
+			if (!wp_verify_nonce($nonce, 'lknwp_radio_list_action')) {
+				return '<div class="lrt-radio-error">' . esc_html__('Security check failed. Please reload the page.', 'lknwp-radio-browser') . '</div>';
+			}
+		}
+
 		$countrycode = isset($_GET['lrt_countrycode']) ? sanitize_text_field(wp_unslash($_GET['lrt_countrycode'])) : (isset($atts['countrycode']) ? $atts['countrycode'] : 'BR');
-		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Public shortcode for radio list, nonce not applicable
 		$limit = isset($_GET['lrt_limit']) ? intval(wp_unslash($_GET['lrt_limit'])) : (isset($atts['limit']) ? intval($atts['limit']) : 20);
 		$player_page = isset($atts['player_page']) ? sanitize_title($atts['player_page']) : 'player';
-		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Public shortcode for radio list, nonce not applicable
 		$search = isset($_GET['lrt_radio_search']) ? sanitize_text_field(wp_unslash($_GET['lrt_radio_search'])) : '';
 		$sort_options = [
 			'clickcount' => __('Most popular', 'lknwp-radio-browser'),
@@ -418,10 +423,8 @@ class Lknwp_Radio_Browser {
 			'random' => __('Random', 'lknwp-radio-browser'),
 			'bitrate' => __('Bitrate', 'lknwp-radio-browser')
 		];
-		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Public shortcode for radio list, nonce not applicable
 		$sort = isset($_GET['lrt_sort']) && isset($sort_options[sanitize_text_field(wp_unslash($_GET['lrt_sort']))]) ? sanitize_text_field(wp_unslash($_GET['lrt_sort'])) : 'clickcount';
 		$genre = isset($_GET['lrt_genre']) ? sanitize_text_field(wp_unslash($_GET['lrt_genre'])) : 'all';
-		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Public shortcode for radio list, nonce not applicable  
 		$reverse = isset($_GET['lrt_reverse']) ? sanitize_text_field(wp_unslash($_GET['lrt_reverse'])) : '1'; // 1 = reverso ativo por padrão
 
 		$atts = shortcode_atts([

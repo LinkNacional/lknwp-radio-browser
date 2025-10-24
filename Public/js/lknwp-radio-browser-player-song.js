@@ -833,7 +833,6 @@ document.addEventListener('DOMContentLoaded', function () {
             function tryWithCorsProxy(originalUrl, method) {
                 // Lista de proxies CORS públicos
                 var corsProxies = [
-                    'https://cors-anywhere.herokuapp.com/',
                     'https://api.allorigins.win/raw?url=',
                     'https://corsproxy.io/?'
                 ];
