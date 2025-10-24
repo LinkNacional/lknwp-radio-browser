@@ -1,4 +1,4 @@
-# 📻 Radio Browser for WordPress
+# 📻 Radio Browser Stations
 
 [![WordPress Plugin](https://img.shields.io/wordpress/plugin/v/lknwp-radio-browser.svg?style=flat-square)](https://wordpress.org/plugins/lknwp-radio-browser/)
 [![Downloads](https://img.shields.io/wordpress/plugin/dt/lknwp-radio-browser.svg?style=flat-square)](https://wordpress.org/plugins/lknwp-radio-browser/)
@@ -17,7 +17,6 @@ Integrate thousands of online radio stations into your WordPress site with a res
 
 ---
 
-
 ## ✨ Features
 
 - 🌍 **30,000+ Stations:** Access the Radio-Browser.info database with stations from all over the world
@@ -35,10 +34,9 @@ Integrate thousands of online radio stations into your WordPress site with a res
 
 ---
 
-
 ## 📝 Description
 
-**Radio Browser for WordPress** is a complete [WordPress](https://www.linknacional.com.br/wordpress/) plugin to integrate thousands of online radio stations into your site. It connects directly to the [Radio-Browser.info](https://www.radio-browser.info/) database, offering access to over 30,000 radio stations worldwide.
+**Radio Browser Stations** is a complete [WordPress](https://www.linknacional.com.br/wordpress/) plugin to integrate thousands of online radio stations into your site. It connects directly to the [Radio-Browser.info](https://www.radio-browser.info/) database, offering access to over 30,000 radio stations worldwide.
 
 Perfect for music blogs, radio sites, entertainment portals, or any site that wants to offer audio streaming content to visitors. With a responsive design and modern HTML5 player, your users will have an exceptional experience on any device.
 
@@ -80,7 +78,6 @@ Perfect for music blogs, radio sites, entertainment portals, or any site that wa
 
 ---
 
-
 ## 📦 Installation
 
 1. Download the plugin or install directly from the WordPress repository.
@@ -90,7 +87,6 @@ Perfect for music blogs, radio sites, entertainment portals, or any site that wa
 5. Start using the shortcodes immediately - no additional setup required!
 
 ---
-
 
 ## 🎯 Use Cases
 

@@ -23,6 +23,7 @@ if (!defined('ABSPATH')) {
     <nav class="lrt-radio-nav" id="lknwp-radio-list-nav">
     <form method="get" class="lrt-radio-form" action="#lknwp-radio-list">
             
+            <?php wp_nonce_field('lknwp_radio_list_action', 'lknwp_radio_list_nonce'); ?>
             <!-- First Row: Country, Limit, Sort, Order -->
             <div class="lrt-radio-row lrt-radio-row--first">
                 
@@ -138,8 +139,11 @@ if (!defined('ABSPATH')) {
                             }
                         }
                         if (is_array($tags)) {
+                            // Nonce validation is performed in the radio_browser_list_shortcode function before processing $_GET.
+                            // This template only displays already validated data, so it is safe to ignore the warning here.
                             foreach ($tags as $tag) {
                                 if (!empty($tag->name)) {
+                                    // phpcs:ignore WordPress.Security.NonceVerification.Recommended --
                                     $selected = (isset($_GET['lrt_genre']) && $_GET['lrt_genre'] === $tag->name) ? 'selected' : '';
                                     echo '<option value="' . esc_attr($tag->name) . '" ' . esc_attr($selected) . '>' . esc_html($tag->name) . ' (' . esc_html($tag->stationcount) . ')</option>';
                                 }

@@ -1,4 +1,4 @@
-=== Radio Browser for WP ===
+=== Radio Browser Stations ===
 Contributors: linknacional
 Tags: radio, streaming, audio, player, music
 Requires at least: 5.0
@@ -13,7 +13,31 @@ Display and play online radio stations from Radio-Browser.info with a beautiful 
 
 == Description ==
 
-Integrate thousands of **online radio stations** into your WordPress website with the **Radio Browser for WP** plugin. 
+Integrate thousands of **online radio stations** into your WordPress website with the **Radio Browser Stations** plugin. 
+
+== Disclaimer ==
+This plugin is an independent project developed by LinkNacional. It is **not affiliated, endorsed, or sponsored** by Radio-Browser.info, WordPress, or Select2.
+
+* Radio-Browser.info is a free, public API and database of radio stations. This plugin uses their API to fetch station data and stream audio, but there is no official relationship or partnership.
+* Select2 is an open-source JavaScript library used to enhance dropdowns and search fields. This plugin includes Select2 locally and does not load it from external servers.
+* WordPress is a registered trademark of the WordPress Foundation. This plugin is designed for WordPress but is not officially associated with the project.
+
+All trademarks, service marks, and project names mentioned are the property of their respective owners. Usage in this plugin is solely for integration purposes and does not imply any affiliation.
+
+== External Service Documentation ==
+This plugin uses the public API from [Radio-Browser.info](https://www.radio-browser.info/) to fetch radio station data and stream audio. No user data is collected, stored, or transmitted by this plugin. The API is free to use and does not require registration or API keys.
+
+**What is sent/received:**
+- The plugin sends requests to Radio-Browser.info to retrieve station lists and streaming URLs.
+- No personal or sensitive user data is sent to Radio-Browser.info.
+- Audio streams are played directly from the radio station servers via the URLs provided by the API.
+
+**Terms and Privacy:**
+- [Radio-Browser.info Terms of Service](https://www.radio-browser.info/)
+- [Radio-Browser.info Privacy Policy](https://www.radio-browser.info/privacy)
+
+**No user tracking:**
+This plugin does not track users or collect analytics data. Its sole purpose is to display and play radio stations using public data from Radio-Browser.info.
 
 This powerful plugin connects to the [Radio-Browser.info](https://www.radio-browser.info/) database, providing access to over 30,000 radio stations worldwide with a beautiful, responsive radio player and customizable station lists.
 
@@ -57,12 +81,12 @@ For this plugin to work correctly, you will need:
 
 == Installation ==
 
-There are two ways to install the Radio Browser for WP plugin:
+There are two ways to install the Radio Browser Stations plugin:
 
 = From your WordPress Dashboard (Recommended) =
 
 1. In your WordPress admin panel, navigate to **Plugins > Add New**
-2. Use the search bar to find "Radio Browser for WP"
+2. Use the search bar to find "Radio Browser Stations"
 3. Locate the plugin in the search results and click the **Install Now** button
 4. Once the installation is complete, click the **Activate** button
 
@@ -120,7 +144,7 @@ This shortcode automatically detects the radio station from the URL and displays
 
 == Enjoying the Plugin? ==
 
-If you find the **Radio Browser for WP** plugin useful, please consider leaving a 5-star review on WordPress.org.
+If you find the **Radio Browser Stations** plugin useful, please consider leaving a 5-star review on WordPress.org.
 
 Your feedback is invaluable to us. It not only helps other website owners discover the plugin but also motivates us to continue developing and improving it. A positive review is the best way to show your support for our work.
 
@@ -181,4 +205,4 @@ If you need help or have questions, please post them in the [support forum](http
 == Upgrade Notice ==
 
 = 1.0.0 =
-Initial release of Radio Browser for WP. Install to start streaming radio stations on your website.
+Initial release of Radio Browser Stations. Install to start streaming radio stations on your website.
