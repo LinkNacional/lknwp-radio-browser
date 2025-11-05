@@ -61,10 +61,9 @@ Perfect for music blogs, radio websites, entertainment portals, or any site that
 == Screenshots ==
 
 1. Radio player displaying a selected station with controls and information
-2. Radio station list with country filter and search functionality
-3. Admin configuration panel for managing plugin settings
-4. Mobile responsive radio player interface
-5. Radio list with different sorting and filtering options applied
+2. Admin configuration panel for managing plugin settings
+3. Mobile responsive radio player interface
+4. Radio station list with country filter and search functionality
 
 == Minimum Requirements ==
 
