@@ -191,6 +191,9 @@ If you need help or have questions, please post them in the [support forum](http
 
 == Changelog ==
 
+= 1.0.1 = *2025/03/05*
+* New icons and banners for the plugin.
+
 = 1.0.0 = *2025/10/03*
 * Initial plugin release
 * Radio station list with country filtering and search
