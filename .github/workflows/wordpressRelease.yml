@@ -7,7 +7,7 @@ env:
   PLUGIN_NAME: lknwp-radio-browser
   DIR_NAME: lknwp-radio-browser
   PHP_VERSION: "7.4"
-  DEPLOY_TAG: "1.0.0"
+  DEPLOY_TAG: "1.0.1"
   
 jobs:
   deploy-to-wp:
