@@ -9,7 +9,7 @@
 **Website:** [linknacional.com.br](https://www.linknacional.com.br/)  
 **Tags:** radio, streaming, audio, player, music  
 **Tested up to:** 6.8  
-**Stable version:** 1.0.0  
+**Stable version:** 1.0.1  
 **License:** GPLv2 or later  
 **Translations:** English / Portuguese (Brazil)
 

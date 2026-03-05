@@ -3,7 +3,7 @@ Contributors: linknacional
 Tags: radio, streaming, audio, player, music
 Requires at least: 5.0
 Tested up to: 6.8
-Stable tag: 1.0.0
+Stable tag: 1.0.1
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -190,6 +190,9 @@ Radio stations in the Radio-Browser.info database are maintained by the communit
 If you need help or have questions, please post them in the [support forum](https://wordpress.org/support/plugin/lknwp-radio-browser/) for the plugin on WordPress.org. We will be happy to assist you there.
 
 == Changelog ==
+
+= 1.0.1 = *2025/03/05*
+* New icons and banners for the plugin.
 
 = 1.0.0 = *2025/10/03*
 * Initial plugin release

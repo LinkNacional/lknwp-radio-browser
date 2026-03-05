@@ -75,7 +75,7 @@ class Lknwp_Radio_Browser {
 		if ( defined( 'LKNWP_RADIO_BROWSER_VERSION' ) ) {
 			$this->version = LKNWP_RADIO_BROWSER_VERSION;
 		} else {
-			$this->version = '1.0.0';
+			$this->version = '1.0.1';
 		}
 		$this->plugin_name = 'lknwp-radio-browser';
 

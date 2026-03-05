@@ -16,7 +16,7 @@
 * Plugin Name:       Radio Browser Stations
  * Plugin URI:        https://www.linknacional.com.br
  * Description:       WP plugin to list online radios and listen to live broadcasts directly on your site, using the Radio Browser API.
- * Version:           1.0.0
+ * Version:           1.0.1
  * Author:            Link Nacional
  * Author URI:        https://www.linknacional.com.br/
  * License:           GPL-2.0+
@@ -33,7 +33,7 @@ if ( ! defined( 'WPINC' ) ) {
 /**
  * Plugin constants
  */
-define( 'LKNWP_RADIO_BROWSER_VERSION', '1.0.0' );
+define( 'LKNWP_RADIO_BROWSER_VERSION', '1.0.1' );
 define( 'LKNWP_RADIO_BROWSER_PLUGIN_FILE', __FILE__ );
 define( 'LKNWP_RADIO_BROWSER_PLUGIN_NAME', 'lknwp-radio-browser' );
 define( 'LKNWP_RADIO_BROWSER_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
