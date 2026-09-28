@@ -76,15 +76,32 @@ class Lknwp_Radio_Browser_Public {
 		 */
 
 		global $post;
-		if (isset($post->post_content) && has_shortcode($post->post_content, 'radio_browser_list')) {
+		$content = isset($post->post_content) ? $post->post_content : '';
+
+		// Layout atual da lista
+		if (has_shortcode($content, 'radio_browser_list')) {
 			wp_enqueue_style('lknwp-colors', plugin_dir_url(__FILE__) . '../Includes/assets/css/colors.css', array(), $this->version, 'all');
 			wp_enqueue_style('lknwp-radio-list', plugin_dir_url( __FILE__ ) . 'css/lknwp-radio-browser-list.css', array(), $this->version, 'all' );
 		}
 
-		if (isset($post->post_content) && has_shortcode($post->post_content, 'radio_browser_player')) {
+		// Layout legado da lista
+		if (has_shortcode($content, 'radio_browser_list_legado')) {
+			wp_enqueue_style('lknwp-colors', plugin_dir_url(__FILE__) . '../Includes/assets/css/colors.css', array(), $this->version, 'all');
+			wp_enqueue_style('lknwp-radio-list-legado', plugin_dir_url( __FILE__ ) . 'css/lknwp-radio-browser-list-legado.css', array(), $this->version, 'all' );
+		}
+
+		// Layout atual do player
+		if (has_shortcode($content, 'radio_browser_player')) {
 			wp_enqueue_style('lknwp-colors', plugin_dir_url(__FILE__) . '../Includes/assets/css/colors.css', array(), $this->version, 'all');
 			wp_enqueue_style('lknwp-radio-player', plugin_dir_url( __FILE__ ) . 'css/lknwp-radio-browser-player.css', array(), $this->version, 'all' );
 			wp_enqueue_style('lknwp-radio-audio-visualizer', plugin_dir_url( __FILE__ ) . 'css/lknwp-radio-browser-audio-visualizer.css', array(), $this->version, 'all' );
+		}
+
+		// Layout legado do player
+		if (has_shortcode($content, 'radio_browser_player_legado')) {
+			wp_enqueue_style('lknwp-colors', plugin_dir_url(__FILE__) . '../Includes/assets/css/colors.css', array(), $this->version, 'all');
+			wp_enqueue_style('lknwp-radio-player-legado', plugin_dir_url( __FILE__ ) . 'css/lknwp-radio-browser-player-legado.css', array(), $this->version, 'all' );
+			wp_enqueue_style('lknwp-radio-audio-visualizer-legado', plugin_dir_url( __FILE__ ) . 'css/lknwp-radio-browser-audio-visualizer-legado.css', array(), $this->version, 'all' );
 		}
 
 
@@ -116,52 +133,98 @@ class Lknwp_Radio_Browser_Public {
 
 		global $post;
 		if (isset($post->post_content) && has_shortcode($post->post_content, 'radio_browser_player')) {
-			wp_enqueue_script('lknwp-radio-player', plugin_dir_url( __FILE__ ) . 'js/lknwp-radio-browser-player.js', array(), $this->version, true);
-			wp_enqueue_script('lknwp-radio-player-song', plugin_dir_url( __FILE__ ) . 'js/lknwp-radio-browser-player-song.js', array(), $this->version, true);
+			$this->enqueue_player_scripts('');
+		}
 
-			// Localize player scripts
-			wp_localize_script('lknwp-radio-player', 'lknwpRadioTextsPlayer', array(
-				'unableToPlay' => __('Unable to play this radio station. Please try again later or choose another station.', 'lknwp-radio-browser'),
-				'listeningTo' => __('🎵 Listening to {station} - ', 'lknwp-radio-browser'),
-				'onlineRadio' => __('Online Radio', 'lknwp-radio-browser')
-			));	
-
-			$default_album_url = defined('LKNWP_RADIO_BROWSER_PLUGIN_URL') ? LKNWP_RADIO_BROWSER_PLUGIN_URL . 'Includes/assets/images/default-radio-album.gif' : './Includes/assets/images/default-radio-album.gif';
-
-			wp_localize_script('lknwp-radio-player-song', 'lknwpRadioTextsSong', array(
-				'warning' => __('Warning: This radio uses insecure streaming (HTTP) and cannot be played on HTTPS pages. Ask the provider to enable HTTPS or access via HTTP.', 'lknwp-radio-browser'),
-				'listeners' => __('listeners', 'lknwp-radio-browser'),
-				'likes' => __('likes', 'lknwp-radio-browser'),
-				'noSongFoundJson' => __('No song found in JSON', 'lknwp-radio-browser'),
-				'noSongFoundHtml' => __('No song found in HTML', 'lknwp-radio-browser'),
-				'responseNotJson' => __('Response is not JSON', 'lknwp-radio-browser'),
-				'audioComponent' => __('Detected audio component', 'lknwp-radio-browser'),
-				'corsBlocked' => __('CORS_BLOCKED: Opaque response, cannot read content', 'lknwp-radio-browser'),
-				'networkError' => __('NETWORK_ERROR: Status 0, possible network or CORS issue', 'lknwp-radio-browser'),
-				'audioStream' => __('AUDIO_STREAM: Response is an audio stream', 'lknwp-radio-browser'),
-				'textTimeout' => __('TEXT_TIMEOUT: Text conversion exceeded 5 seconds', 'lknwp-radio-browser'),
-				'contentTypeNotJson' => __('Content-Type is not JSON: ', 'lknwp-radio-browser'),
-				'defaultAlbumUrl' => $default_album_url
-			));
+		if (isset($post->post_content) && has_shortcode($post->post_content, 'radio_browser_player_legado')) {
+			$this->enqueue_player_scripts('-legado');
 		}
 
 		if (isset($post->post_content) && has_shortcode($post->post_content, 'radio_browser_list')) {
-			wp_enqueue_script('lknwp-radio-list', plugin_dir_url( __FILE__ ) . 'jsCompiled/lknwp-radio-browser-list.COMPILED.js', array('jquery'), $this->version, true);
-			
-			// Localize list script
-			$default_img_url = defined('LKNWP_RADIO_BROWSER_PLUGIN_URL') ? LKNWP_RADIO_BROWSER_PLUGIN_URL . 'Includes/assets/images/default-radio.png' : './Includes/assets/images/default-radio.png';
-
-			// Busca a base do player igual ao template
-			wp_localize_script('lknwp-radio-list', 'lknwpRadioTextsList', array(
-				'loadingRadios' => __('Loading radios...', 'lknwp-radio-browser'),
-				'noRadiosFound' => __('No radios found.', 'lknwp-radio-browser'),
-				'tryingAlternativeServers' => __('Trying alternative servers...', 'lknwp-radio-browser'),
-				'ascending' => __('Ascending', 'lknwp-radio-browser'),
-				'descending' => __('Descending', 'lknwp-radio-browser'),
-				'apiError' => __('Error querying API. ', 'lknwp-radio-browser'),
-				'placeholder' => __('Select genre', 'lknwp-radio-browser'),
-				'defaultImgUrl' => $default_img_url
-			));
+			$this->enqueue_list_scripts('');
 		}
+
+		if (isset($post->post_content) && has_shortcode($post->post_content, 'radio_browser_list_legado')) {
+			$this->enqueue_list_scripts('-legado');
+		}
+	}
+
+	/**
+	 * Enfileira e localiza os scripts do player.
+	 *
+	 * @since    1.0.0
+	 * @param    string    $suffix    Sufixo do layout ('' para o atual, '-legado' para o antigo).
+	 */
+	private function enqueue_player_scripts($suffix) {
+
+		$player_handle = 'lknwp-radio-player' . $suffix;
+		$song_handle = 'lknwp-radio-player-song' . $suffix;
+
+		wp_enqueue_script($player_handle, plugin_dir_url( __FILE__ ) . 'js/lknwp-radio-browser-player' . $suffix . '.js', array(), $this->version, true);
+		wp_enqueue_script($song_handle, plugin_dir_url( __FILE__ ) . 'js/lknwp-radio-browser-player-song' . $suffix . '.js', array(), $this->version, true);
+
+		// Localize player scripts
+		wp_localize_script($player_handle, 'lknwpRadioTextsPlayer', array(
+			'unableToPlay' => __('Unable to play this radio station. Please try again later or choose another station.', 'lknwp-radio-browser'),
+			'listeningTo' => __('🎵 Listening to {station} - ', 'lknwp-radio-browser'),
+			'onlineRadio' => __('Online Radio', 'lknwp-radio-browser')
+		));
+
+		$default_album_url = defined('LKNWP_RADIO_BROWSER_PLUGIN_URL') ? LKNWP_RADIO_BROWSER_PLUGIN_URL . 'Includes/assets/images/default-radio-album.gif' : './Includes/assets/images/default-radio-album.gif';
+
+		wp_localize_script($song_handle, 'lknwpRadioTextsSong', array(
+			'warning' => __('Warning: This radio uses insecure streaming (HTTP) and cannot be played on HTTPS pages. Ask the provider to enable HTTPS or access via HTTP.', 'lknwp-radio-browser'),
+			'listeners' => __('listeners', 'lknwp-radio-browser'),
+			'likes' => __('likes', 'lknwp-radio-browser'),
+			'noSongFoundJson' => __('No song found in JSON', 'lknwp-radio-browser'),
+			'noSongFoundHtml' => __('No song found in HTML', 'lknwp-radio-browser'),
+			'responseNotJson' => __('Response is not JSON', 'lknwp-radio-browser'),
+			'audioComponent' => __('Detected audio component', 'lknwp-radio-browser'),
+			'corsBlocked' => __('CORS_BLOCKED: Opaque response, cannot read content', 'lknwp-radio-browser'),
+			'networkError' => __('NETWORK_ERROR: Status 0, possible network or CORS issue', 'lknwp-radio-browser'),
+			'audioStream' => __('AUDIO_STREAM: Response is an audio stream', 'lknwp-radio-browser'),
+			'textTimeout' => __('TEXT_TIMEOUT: Text conversion exceeded 5 seconds', 'lknwp-radio-browser'),
+			'contentTypeNotJson' => __('Content-Type is not JSON: ', 'lknwp-radio-browser'),
+			'defaultAlbumUrl' => $default_album_url,
+			'ajaxUrl' => admin_url('admin-ajax.php'),
+			'metadataNonce' => wp_create_nonce('lknwp_radio_metadata')
+		));
+	}
+
+	/**
+	 * Enfileira e localiza os scripts da lista de rádios.
+	 *
+	 * @since    1.0.0
+	 * @param    string    $suffix    Sufixo do layout ('' para o atual, '-legado' para o antigo).
+	 */
+	private function enqueue_list_scripts($suffix) {
+
+		$handle = 'lknwp-radio-list' . $suffix;
+
+		wp_enqueue_script($handle, plugin_dir_url( __FILE__ ) . 'jsCompiled/lknwp-radio-browser-list' . $suffix . '.COMPILED.js', array('jquery'), $this->version, true);
+
+		// Localize list script
+		$default_img_url = defined('LKNWP_RADIO_BROWSER_PLUGIN_URL') ? LKNWP_RADIO_BROWSER_PLUGIN_URL . 'Includes/assets/images/default-radio.png' : './Includes/assets/images/default-radio.png';
+
+		// Busca a base do player igual ao template
+		wp_localize_script($handle, 'lknwpRadioTextsList', array(
+			'loadingRadios' => __('Loading radios...', 'lknwp-radio-browser'),
+			'noRadiosFound' => __('No radios found.', 'lknwp-radio-browser'),
+			'tryingAlternativeServers' => __('Trying alternative servers...', 'lknwp-radio-browser'),
+			'ascending' => __('Menor', 'lknwp-radio-browser'),
+			'descending' => __('Maior', 'lknwp-radio-browser'),
+			'apiError' => __('Error querying API. ', 'lknwp-radio-browser'),
+			'placeholder' => __('Select genre', 'lknwp-radio-browser'),
+			'defaultImgUrl' => $default_img_url,
+			'favorite' => __('Favoritar', 'lknwp-radio-browser'),
+			'onAir' => __('OUVINDO AGORA', 'lknwp-radio-browser'),
+			'logoAlt' => __('Radio logo', 'lknwp-radio-browser'),
+			'play' => __('Play', 'lknwp-radio-browser'),
+			'titleDiscover' => __('Descobrir rádios', 'lknwp-radio-browser'),
+			'titleFavorites' => __('Favoritos', 'lknwp-radio-browser'),
+			'titleRecents' => __('Recentes', 'lknwp-radio-browser'),
+			'noFavorites' => __('Você ainda não favoritou nenhuma rádio.', 'lknwp-radio-browser'),
+			'noRecents' => __('Você ainda não ouviu nenhuma rádio.', 'lknwp-radio-browser')
+		));
 	}
 }

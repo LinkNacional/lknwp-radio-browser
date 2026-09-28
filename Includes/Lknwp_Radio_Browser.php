@@ -75,7 +75,7 @@ class Lknwp_Radio_Browser {
 		if ( defined( 'LKNWP_RADIO_BROWSER_VERSION' ) ) {
 			$this->version = LKNWP_RADIO_BROWSER_VERSION;
 		} else {
-			$this->version = '1.0.1';
+			$this->version = '1.9.1';
 		}
 		$this->plugin_name = 'lknwp-radio-browser';
 
@@ -160,6 +160,10 @@ class Lknwp_Radio_Browser {
 		$this->loader->add_action('save_post', $this, 'handle_player_page_changes', 10, 2);
 		$this->loader->add_filter('query_vars', $this, 'add_player_query_vars');
 
+		// Endpoint (proxy) para buscar metadados do stream no servidor (evita CORS no navegador)
+		$this->loader->add_action('wp_ajax_lknwp_radio_metadata', $this, 'ajax_radio_metadata');
+		$this->loader->add_action('wp_ajax_nopriv_lknwp_radio_metadata', $this, 'ajax_radio_metadata');
+
 	}
 
 	/**
@@ -167,13 +171,32 @@ class Lknwp_Radio_Browser {
 	 */
 	public function register_radio_browser_shortcodes() {
 		add_shortcode('radio_browser_list', array($this, 'radio_browser_list_shortcode'));
+		add_shortcode('radio_browser_list_legado', array($this, 'radio_browser_list_legado_shortcode'));
 		add_shortcode('radio_browser_player', array($this, 'radio_browser_player_shortcode'));
+		add_shortcode('radio_browser_player_legado', array($this, 'radio_browser_player_legado_shortcode'));
 	}
 
 	/**
-	 * Shortcode to display the radio player
+	 * Shortcode to display the radio player (layout atual).
 	 */
 	public function radio_browser_player_shortcode() {
+		return $this->render_radio_browser_player('assets/templates/radio-player.php');
+	}
+
+	/**
+	 * Shortcode to display the radio player (layout legado).
+	 */
+	public function radio_browser_player_legado_shortcode() {
+		return $this->render_radio_browser_player('assets/templates/radio-player-legado.php');
+	}
+
+	/**
+	 * Renderiza o player usando o template informado.
+	 *
+	 * @param string $template Caminho relativo do template (dentro do plugin).
+	 * @return string HTML do player.
+	 */
+	private function render_radio_browser_player($template) {
 		$radio_name = get_query_var('radio_name');
 		$default_img_url = defined('LKNWP_RADIO_BROWSER_PLUGIN_URL') ? LKNWP_RADIO_BROWSER_PLUGIN_URL . 'Includes/assets/images/default-radio.png' : './Includes/assets/images/default-radio.png';
 		
@@ -202,6 +225,12 @@ class Lknwp_Radio_Browser {
 				// Dados da estação para exibição
 				$station_clickcount = isset($station_data->clickcount) ? intval($station_data->clickcount) : 0;
 				$station_votes = isset($station_data->votes) ? intval($station_data->votes) : 0;
+				$station_tags = !empty($station_data->tags) ? $station_data->tags : '';
+				$station_country = !empty($station_data->country) ? $station_data->country : '';
+				$station_cc = !empty($station_data->countrycode) ? strtoupper($station_data->countrycode) : '';
+				$station_codec = !empty($station_data->codec) ? strtoupper($station_data->codec) : '';
+				$station_bitrate = (isset($station_data->bitrate) && intval($station_data->bitrate) > 0) ? intval($station_data->bitrate) . ' kbps' : '';
+				$station_uuid = isset($station_data->stationuuid) ? $station_data->stationuuid : '';
 			} else {
 				// Rádio não encontrada na API - mostrar debug info
 				return '<div class="lkp-radio-error">
@@ -228,6 +257,12 @@ class Lknwp_Radio_Browser {
 			// No método antigo não temos dados da estação, então zera as estatísticas
 			$station_clickcount = 0;
 			$station_votes = 0;
+			$station_tags = '';
+			$station_country = '';
+			$station_cc = '';
+			$station_codec = '';
+			$station_bitrate = '';
+			$station_uuid = '';
 			
 			if (empty($stream)) {
 				return '<div class="lkp-radio-error">
@@ -239,7 +274,7 @@ class Lknwp_Radio_Browser {
 		
 		// Load template
 		ob_start();
-		include plugin_dir_path(__FILE__) . 'assets/templates/radio-player.php';
+		include plugin_dir_path(__FILE__) . $template;
 		return ob_get_clean();
 	}
 	
@@ -405,6 +440,25 @@ class Lknwp_Radio_Browser {
 	 * - hide_all_filters: Hide entire filter form (yes/no)
 	 */
 	public function radio_browser_list_shortcode($atts) {
+		return $this->render_radio_browser_list($atts, 'assets/templates/radio-list.php');
+	}
+
+	/**
+	 * Shortcode to list radios (layout legado).
+	 * Mesmos parâmetros do shortcode [radio_browser_list], porém renderiza o layout antigo.
+	 */
+	public function radio_browser_list_legado_shortcode($atts) {
+		return $this->render_radio_browser_list($atts, 'assets/templates/radio-list-legado.php');
+	}
+
+	/**
+	 * Renderiza a lista de rádios usando o template informado.
+	 *
+	 * @param array  $atts     Atributos do shortcode.
+	 * @param string $template Caminho relativo do template (dentro do plugin).
+	 * @return string HTML da lista.
+	 */
+	private function render_radio_browser_list($atts, $template) {
 		// Verifica o nonce do formulário
 		if (isset($_GET['lknwp_radio_list_nonce'])) {
 			$nonce = sanitize_text_field(wp_unslash($_GET['lknwp_radio_list_nonce']));
@@ -509,7 +563,7 @@ class Lknwp_Radio_Browser {
 
 		// Load template, passando $player_base_url
 		ob_start();
-		include plugin_dir_path(__FILE__) . 'assets/templates/radio-list.php';
+		include plugin_dir_path(__FILE__) . $template;
 		return ob_get_clean();
 	}
 
@@ -609,7 +663,7 @@ class Lknwp_Radio_Browser {
 	public function handle_player_page_changes($post_id, $post) {
 		if ($post->post_type !== 'page') return;
 		
-		if (has_shortcode($post->post_content, 'radio_browser_player')) {
+		if (has_shortcode($post->post_content, 'radio_browser_player') || has_shortcode($post->post_content, 'radio_browser_player_legado')) {
 			delete_option('lknwp_player_rewrite_rules');
 			flush_rewrite_rules();
 		}
@@ -647,16 +701,277 @@ class Lknwp_Radio_Browser {
 		return !empty($stations) && is_array($stations) ? $stations[0] : false;
 	}
 
+	/**
+	 * Endpoint AJAX (proxy server-side) que busca os metadados do stream
+	 * (música atual, artista e público/ouvintes) sem sofrer CORS no navegador.
+	 */
+	public function ajax_radio_metadata() {
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Verificado logo abaixo.
+		$nonce = isset($_GET['nonce']) ? sanitize_text_field(wp_unslash($_GET['nonce'])) : '';
+		if (!wp_verify_nonce($nonce, 'lknwp_radio_metadata')) {
+			wp_send_json_error(array('message' => 'invalid_nonce'), 403);
+		}
+
+		// Rate limit simples por IP (evita uso abusivo do proxy).
+		$ip = isset($_SERVER['REMOTE_ADDR']) ? sanitize_text_field(wp_unslash($_SERVER['REMOTE_ADDR'])) : '';
+		$rl_key = 'lknwp_radio_meta_rl_' . md5($ip);
+		$rl_count = (int) get_transient($rl_key);
+		if ($rl_count >= 120) {
+			wp_send_json_success(array('found' => false));
+		}
+		set_transient($rl_key, $rl_count + 1, MINUTE_IN_SECONDS);
+
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Nonce validado acima.
+		$stream = isset($_GET['stream']) ? esc_url_raw(wp_unslash($_GET['stream'])) : '';
+		if (empty($stream)) {
+			wp_send_json_success(array('found' => false));
+		}
+
+		$cache_key = 'lknwp_radio_meta_' . md5($stream);
+		$cached = get_transient($cache_key);
+		if ($cached !== false) {
+			wp_send_json_success($cached);
+		}
+
+		$data = $this->fetch_stream_metadata($stream);
+		// Cache curto: encontrado por 10s, não encontrado por 15s.
+		set_transient($cache_key, $data, !empty($data['found']) ? 10 : 15);
+		wp_send_json_success($data);
+	}
+
+	/**
+	 * Consulta a API de status (Icecast/Shoutcast) do host do stream e extrai
+	 * música/artista/ouvintes. Roda no servidor (sem CORS).
+	 */
+	private function fetch_stream_metadata($stream) {
+		$result = array('found' => false);
+
+		$parts = wp_parse_url($stream);
+		if (empty($parts['scheme']) || empty($parts['host']) || !in_array(strtolower($parts['scheme']), array('http', 'https'), true)) {
+			return $result;
+		}
+		if (!$this->is_public_host($parts['host'])) {
+			return $result;
+		}
+
+		$origin = $parts['scheme'] . '://' . $parts['host'] . (isset($parts['port']) ? ':' . intval($parts['port']) : '');
+		$dir = '';
+		if (!empty($parts['path'])) {
+			$dir = (strpos($parts['path'], '/') !== false) ? rtrim(dirname($parts['path']), '/\\') : '';
+			if ($dir === '.' || $dir === '/') {
+				$dir = '';
+			}
+		}
+		$base = $origin . $dir;
+
+		$candidates = array(
+			array('url' => $base . '/status-json.xsl', 'type' => 'json'),
+			array('url' => $base . '/status.xsl', 'type' => 'html'),
+			array('url' => $base . '/index.html', 'type' => 'html'),
+			array('url' => $base . '/index.html?sid=1', 'type' => 'html'),
+		);
+
+		foreach ($candidates as $candidate) {
+			$response = $this->remote_get_safe($candidate['url'], $candidate['type'] === 'json' ? 'application/json' : 'text/html,application/xhtml+xml');
+			if (is_wp_error($response)) {
+				continue;
+			}
+			$code = wp_remote_retrieve_response_code($response);
+			if ($code < 200 || $code >= 400) {
+				continue;
+			}
+			$body = wp_remote_retrieve_body($response);
+			if (empty($body)) {
+				continue;
+			}
+
+			$parsed = ($candidate['type'] === 'json') ? $this->parse_stream_json($body) : $this->parse_stream_html($body);
+			if (!empty($parsed['found'])) {
+				$result = $parsed;
+				break;
+			}
+		}
+
+		// Capa do álbum via iTunes (host fixo e conhecido, seguro)
+		if (!empty($result['found']) && !empty($result['title'])) {
+			$term = trim((!empty($result['artist']) ? $result['artist'] . ' ' : '') . $result['title']);
+			$art = $this->fetch_itunes_artwork($term);
+			if (!empty($art)) {
+				$result['album_art'] = $art;
+			}
+		}
+
+		return $result;
+	}
+
+	/**
+	 * Extrai música/artista/ouvintes do JSON de status do Icecast (status-json.xsl).
+	 */
+	private function parse_stream_json($body) {
+		$data = json_decode($body, true);
+		if (empty($data['icestats']['source'])) {
+			return array('found' => false);
+		}
+
+		$source = $data['icestats']['source'];
+		$item = null;
+		if (isset($source[0]) && is_array($source)) {
+			foreach ($source as $s) {
+				if (!empty($s['title']) || !empty($s['yp_currently_playing'])) {
+					$item = $s;
+					break;
+				}
+			}
+			if ($item === null) {
+				$item = $source[0];
+			}
+		} else {
+			$item = $source;
+		}
+
+		$raw = '';
+		if (!empty($item['title'])) {
+			$raw = $item['title'];
+		} elseif (!empty($item['yp_currently_playing'])) {
+			$raw = $item['yp_currently_playing'];
+		}
+		if (empty(trim((string) $raw))) {
+			return array('found' => false);
+		}
+
+		$artist = '';
+		$title = trim($raw);
+		if (strpos($title, ' - ') !== false) {
+			list($artist, $title) = explode(' - ', $title, 2);
+			$artist = trim($artist);
+			$title = trim($title);
+		}
+		$title = html_entity_decode($title, ENT_QUOTES, 'UTF-8');
+		$artist = html_entity_decode($artist, ENT_QUOTES, 'UTF-8');
+
+		return array(
+			'found' => true,
+			'title' => $title,
+			'artist' => $artist,
+			'listeners' => isset($item['listeners']) ? intval($item['listeners']) : 0,
+		);
+	}
+
+	/**
+	 * Extrai música/artista/ouvintes do HTML de status (Icecast/Shoutcast).
+	 */
+	private function parse_stream_html($body) {
+		$song = '';
+		$patterns = array(
+			'/<td>\s*Current Song:?\s*<\/td>\s*<td[^>]*class="streamdata"[^>]*>\s*([^<]*?)\s*<\/td>/i',
+			'/Playing Now:\s*<\/td>\s*<td>\s*<b>\s*<a[^>]*>([^<]+)<\/a>/i',
+			'/<td>\s*M[úu]sica Atual:?\s*<\/td>\s*<td[^>]*>\s*([^<]+?)\s*<\/td>/i',
+			'/<td>\s*T[ií]tulo:?\s*<\/td>\s*<td[^>]*>\s*([^<]+?)\s*<\/td>/i',
+		);
+		foreach ($patterns as $pattern) {
+			if (preg_match($pattern, $body, $m) && trim($m[1]) !== '') {
+				$song = trim($m[1]);
+				break;
+			}
+		}
+
+		if ($song === '') {
+			return array('found' => false);
+		}
+
+		$listeners = 0;
+		if (preg_match('/<td>\s*Current Listeners:?\s*<\/td>\s*<td[^>]*>\s*([^<]+?)\s*<\/td>/i', $body, $lm)) {
+			$listeners = intval(preg_replace('/[^0-9]/', '', $lm[1]));
+		}
+
+		$artist = '';
+		$title = $song;
+		if (strpos($song, ' - ') !== false) {
+			list($artist, $title) = explode(' - ', $song, 2);
+			$artist = trim($artist);
+			$title = trim($title);
+		}
+		$title = html_entity_decode($title, ENT_QUOTES, 'UTF-8');
+		$artist = html_entity_decode($artist, ENT_QUOTES, 'UTF-8');
+
+		return array(
+			'found' => true,
+			'title' => $title,
+			'artist' => $artist,
+			'listeners' => $listeners,
+		);
+	}
+
+	/**
+	 * GET seguro (server-side) com validação de host/porta e sem seguir redirects.
+	 * Usa wp_safe_remote_get, que bloqueia IPs privados/reservados e revalida
+	 * redirecionamentos. Portas comuns de streaming são permitidas.
+	 */
+	private function remote_get_safe($url, $accept = 'text/html') {
+		$allow_ports = function ($ports) {
+			return array_merge((array) $ports, array(8000, 8005, 8008, 8010, 8020, 8030, 8040, 8050, 8060, 8070, 8080, 8085, 8090, 8443, 9000, 9001, 2082, 2086, 2095, 2096, 2199));
+		};
+		add_filter('http_allowed_safe_ports', $allow_ports);
+
+		$response = wp_safe_remote_get($url, array(
+			'timeout' => 6,
+			'redirection' => 0,
+			'headers' => array(
+				'User-Agent' => 'LKNWP Radio Browser/' . $this->version,
+				'Accept' => $accept,
+			),
+		));
+
+		remove_filter('http_allowed_safe_ports', $allow_ports);
+		return $response;
+	}
+
+	/**
+	 * Busca a capa do álbum no iTunes (server-side).
+	 */
+	private function fetch_itunes_artwork($term) {
+		if (empty($term)) {
+			return '';
+		}
+		$url = 'https://itunes.apple.com/search?term=' . rawurlencode($term) . '&entity=song&limit=1';
+		$response = wp_safe_remote_get($url, array('timeout' => 6, 'redirection' => 0));
+		if (is_wp_error($response)) {
+			return '';
+		}
+		$data = json_decode(wp_remote_retrieve_body($response), true);
+		if (!empty($data['results'][0]['artworkUrl100'])) {
+			return preg_replace('/\d+x\d+bb\.jpg$/', '600x600bb.jpg', $data['results'][0]['artworkUrl100']);
+		}
+		return '';
+	}
+
+	/**
+	 * Bloqueia hosts privados/reservados (proteção básica contra SSRF).
+	 */
+	private function is_public_host($host) {
+		$host = strtolower(trim((string) $host, " \t\n\r\0\x0B."));
+		if ($host === '' || $host === 'localhost' || substr($host, -6) === '.local' || substr($host, -9) === '.internal') {
+			return false;
+		}
+
+		$ip = filter_var($host, FILTER_VALIDATE_IP) ? $host : gethostbyname($host);
+		if (!filter_var($ip, FILTER_VALIDATE_IP)) {
+			return false;
+		}
+
+		return (bool) filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE);
+	}
+
 	public static function lknwp_find_page_by_slug($slug) {
-        global $wpdb;
-        $result = $wpdb->get_var(
+		global $wpdb;
+		$result = $wpdb->get_var(
 			$wpdb->prepare(
 				"SELECT ID FROM {$wpdb->posts} WHERE post_type = 'page' AND post_status = 'publish' AND (post_name = %s OR post_name LIKE %s)",
 				$slug,
 				'%/' . $wpdb->esc_like($slug)
 			)
 		);
-        return $result ? get_permalink($result) : false;
-    }
+		return $result ? get_permalink($result) : false;
+	}
 
 }

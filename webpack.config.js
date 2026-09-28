@@ -1,9 +1,12 @@
 const path = require('path');
 
 module.exports = {
-    entry: './Public/js/lknwp-radio-browser-list.js',
+    entry: {
+        'lknwp-radio-browser-list': './Public/js/lknwp-radio-browser-list.js',
+        'lknwp-radio-browser-list-legado': './Public/js/lknwp-radio-browser-list-legado.js',
+    },
     output: {
-        filename: 'lknwp-radio-browser-list.COMPILED.js',
+        filename: '[name].COMPILED.js',
         path: path.resolve(__dirname, 'Public/jsCompiled'),
     },
     module: {
