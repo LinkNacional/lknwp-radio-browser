@@ -84,10 +84,10 @@ class Lknwp_Radio_Browser_Public {
 			wp_enqueue_style('lknwp-radio-list', plugin_dir_url( __FILE__ ) . 'css/lknwp-radio-browser-list.css', array(), $this->version, 'all' );
 		}
 
-		// Layout legado da lista
-		if (has_shortcode($content, 'radio_browser_list_legado')) {
+		// Layout legacy da lista
+		if (has_shortcode($content, 'radio_browser_list_legacy')) {
 			wp_enqueue_style('lknwp-colors', plugin_dir_url(__FILE__) . '../Includes/assets/css/colors.css', array(), $this->version, 'all');
-			wp_enqueue_style('lknwp-radio-list-legado', plugin_dir_url( __FILE__ ) . 'css/lknwp-radio-browser-list-legado.css', array(), $this->version, 'all' );
+			wp_enqueue_style('lknwp-radio-list-legacy', plugin_dir_url( __FILE__ ) . 'css/lknwp-radio-browser-list-legacy.css', array(), $this->version, 'all' );
 		}
 
 		// Layout atual do player
@@ -97,11 +97,11 @@ class Lknwp_Radio_Browser_Public {
 			wp_enqueue_style('lknwp-radio-audio-visualizer', plugin_dir_url( __FILE__ ) . 'css/lknwp-radio-browser-audio-visualizer.css', array(), $this->version, 'all' );
 		}
 
-		// Layout legado do player
-		if (has_shortcode($content, 'radio_browser_player_legado')) {
+		// Layout legacy do player
+		if (has_shortcode($content, 'radio_browser_player_legacy')) {
 			wp_enqueue_style('lknwp-colors', plugin_dir_url(__FILE__) . '../Includes/assets/css/colors.css', array(), $this->version, 'all');
-			wp_enqueue_style('lknwp-radio-player-legado', plugin_dir_url( __FILE__ ) . 'css/lknwp-radio-browser-player-legado.css', array(), $this->version, 'all' );
-			wp_enqueue_style('lknwp-radio-audio-visualizer-legado', plugin_dir_url( __FILE__ ) . 'css/lknwp-radio-browser-audio-visualizer-legado.css', array(), $this->version, 'all' );
+			wp_enqueue_style('lknwp-radio-player-legacy', plugin_dir_url( __FILE__ ) . 'css/lknwp-radio-browser-player-legacy.css', array(), $this->version, 'all' );
+			wp_enqueue_style('lknwp-radio-audio-visualizer-legacy', plugin_dir_url( __FILE__ ) . 'css/lknwp-radio-browser-audio-visualizer-legacy.css', array(), $this->version, 'all' );
 		}
 
 
@@ -136,16 +136,16 @@ class Lknwp_Radio_Browser_Public {
 			$this->enqueue_player_scripts('');
 		}
 
-		if (isset($post->post_content) && has_shortcode($post->post_content, 'radio_browser_player_legado')) {
-			$this->enqueue_player_scripts('-legado');
+		if (isset($post->post_content) && has_shortcode($post->post_content, 'radio_browser_player_legacy')) {
+			$this->enqueue_player_scripts('-legacy');
 		}
 
 		if (isset($post->post_content) && has_shortcode($post->post_content, 'radio_browser_list')) {
 			$this->enqueue_list_scripts('');
 		}
 
-		if (isset($post->post_content) && has_shortcode($post->post_content, 'radio_browser_list_legado')) {
-			$this->enqueue_list_scripts('-legado');
+		if (isset($post->post_content) && has_shortcode($post->post_content, 'radio_browser_list_legacy')) {
+			$this->enqueue_list_scripts('-legacy');
 		}
 	}
 
@@ -153,7 +153,7 @@ class Lknwp_Radio_Browser_Public {
 	 * Enfileira e localiza os scripts do player.
 	 *
 	 * @since    1.0.0
-	 * @param    string    $suffix    Sufixo do layout ('' para o atual, '-legado' para o antigo).
+	 * @param    string    $suffix    Sufixo do layout ('' para o atual, '-legacy' para o antigo).
 	 */
 	private function enqueue_player_scripts($suffix) {
 
@@ -195,7 +195,7 @@ class Lknwp_Radio_Browser_Public {
 	 * Enfileira e localiza os scripts da lista de rádios.
 	 *
 	 * @since    1.0.0
-	 * @param    string    $suffix    Sufixo do layout ('' para o atual, '-legado' para o antigo).
+	 * @param    string    $suffix    Sufixo do layout ('' para o atual, '-legacy' para o antigo).
 	 */
 	private function enqueue_list_scripts($suffix) {
 

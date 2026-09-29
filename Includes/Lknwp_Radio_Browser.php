@@ -171,9 +171,9 @@ class Lknwp_Radio_Browser {
 	 */
 	public function register_radio_browser_shortcodes() {
 		add_shortcode('radio_browser_list', array($this, 'radio_browser_list_shortcode'));
-		add_shortcode('radio_browser_list_legado', array($this, 'radio_browser_list_legado_shortcode'));
+		add_shortcode('radio_browser_list_legacy', array($this, 'radio_browser_list_legacy_shortcode'));
 		add_shortcode('radio_browser_player', array($this, 'radio_browser_player_shortcode'));
-		add_shortcode('radio_browser_player_legado', array($this, 'radio_browser_player_legado_shortcode'));
+		add_shortcode('radio_browser_player_legacy', array($this, 'radio_browser_player_legacy_shortcode'));
 	}
 
 	/**
@@ -184,10 +184,10 @@ class Lknwp_Radio_Browser {
 	}
 
 	/**
-	 * Shortcode to display the radio player (layout legado).
+	 * Shortcode to display the radio player (layout legacy).
 	 */
-	public function radio_browser_player_legado_shortcode() {
-		return $this->render_radio_browser_player('assets/templates/radio-player-legado.php');
+	public function radio_browser_player_legacy_shortcode() {
+		return $this->render_radio_browser_player('assets/templates/radio-player-legacy.php');
 	}
 
 	/**
@@ -444,11 +444,11 @@ class Lknwp_Radio_Browser {
 	}
 
 	/**
-	 * Shortcode to list radios (layout legado).
+	 * Shortcode to list radios (layout legacy).
 	 * Mesmos parâmetros do shortcode [radio_browser_list], porém renderiza o layout antigo.
 	 */
-	public function radio_browser_list_legado_shortcode($atts) {
-		return $this->render_radio_browser_list($atts, 'assets/templates/radio-list-legado.php');
+	public function radio_browser_list_legacy_shortcode($atts) {
+		return $this->render_radio_browser_list($atts, 'assets/templates/radio-list-legacy.php');
 	}
 
 	/**
@@ -663,7 +663,7 @@ class Lknwp_Radio_Browser {
 	public function handle_player_page_changes($post_id, $post) {
 		if ($post->post_type !== 'page') return;
 		
-		if (has_shortcode($post->post_content, 'radio_browser_player') || has_shortcode($post->post_content, 'radio_browser_player_legado')) {
+		if (has_shortcode($post->post_content, 'radio_browser_player') || has_shortcode($post->post_content, 'radio_browser_player_legacy')) {
 			delete_option('lknwp_player_rewrite_rules');
 			flush_rewrite_rules();
 		}

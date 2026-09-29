@@ -690,6 +690,13 @@ import 'select2/dist/css/select2.min.css';
             dropdownCssClass: 'lrt-select2-dropdown'
         });
 
+        // País e língua também usam Select2: assim os atalhos da barra lateral
+        // ("Navegar por") conseguem abrir o dropdown programaticamente, como o gênero.
+        $('#lrt_countrycode, #lrt_language').select2({
+            width: 'resolve',
+            dropdownCssClass: 'lrt-select2-dropdown'
+        });
+
         /* ============================================================
          * Favoritos + estado "no ar"
          * ============================================================ */
@@ -889,20 +896,32 @@ import 'select2/dist/css/select2.min.css';
             setFiltersOpen($(this).attr('aria-expanded') !== 'true');
         });
 
+        // Abre um <select> inicializado com Select2 (ou apenas foca, se não houver Select2).
+        function openSelect(selector) {
+            var $el = $(selector);
+            if (!$el.length) {
+                return;
+            }
+            if ($el.data('select2')) {
+                $el.select2('open');
+            } else {
+                $el.trigger('focus');
+            }
+        }
+
         $('.lrt-side-nav-item').on('click', function () {
             var nav = $(this).data('nav');
             if (nav === 'genre') {
+                // O gênero fica dentro do painel avançado: abre o painel e o dropdown.
                 setFiltersOpen(true);
-                if ($('#lrt_genre').data('select2')) {
-                    $('#lrt_genre').select2('open');
-                } else {
-                    $('#lrt_genre').trigger('focus');
-                }
+                openSelect('#lrt_genre');
             } else if (nav === 'country') {
-                $('#lrt_countrycode').trigger('focus');
+                // O país fica na toolbar (fora do painel): basta abrir o select.
+                openSelect('#lrt_countrycode');
             } else if (nav === 'language') {
+                // A língua fica dentro do painel avançado: abre o painel e o dropdown.
                 setFiltersOpen(true);
-                $('#lrt_language').trigger('focus');
+                openSelect('#lrt_language');
             }
         });
 

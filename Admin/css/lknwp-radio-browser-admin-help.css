@@ -7,6 +7,9 @@
 
 .lknwp-radio-help {
     font-family: 'Inter', 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif !important;
+    /* Cor primária (roxa) dos ícones + degradê suave reaproveitado no hero e no item ativo. */
+    --lknwp-icon-color: var(--lkn-brand-600);
+    --lknwp-soft-gradient: linear-gradient(135deg, #6E49C6 0%, #8567D8 50%, #9F84E2 100%);
 }
 
 /* ===== HERO ===== */
@@ -14,11 +17,14 @@
     display: flex;
     align-items: center;
     gap: 18px;
-    max-width: 1200px;
+    width: 100%;
+    max-width: 100%;
     margin: 18px 0 24px 0;
     padding: 26px 28px;
+    box-sizing: border-box;
     border-radius: 14px;
-    background: var(--lkn-gradient-primary);
+    /* Degradê suave (mesmo do item ativo) para não ficar "vivo" demais. */
+    background: var(--lknwp-soft-gradient);
     border: 1px solid rgba(255, 255, 255, 0.18);
     box-shadow: 0 8px 20px rgba(76, 29, 149, 0.16);
     position: relative;
@@ -33,7 +39,7 @@
     right: -40px;
     width: 320px;
     height: 320px;
-    background: radial-gradient(closest-side, rgba(255, 255, 255, 0.35), transparent 100%);
+    background: radial-gradient(closest-side, rgba(255, 255, 255, 0.2), transparent 100%);
     filter: blur(18px);
     pointer-events: none;
     z-index: -1;
@@ -75,19 +81,21 @@
     display: grid;
     grid-template-columns: 264px minmax(0, 1fr);
     gap: 24px;
-    align-items: start;
-    max-width: 1200px;
+    /* As duas colunas (menu lateral + conteúdo) esticam para a mesma altura. */
+    align-items: stretch;
+    width: 100%;
+    max-width: 100%;
 }
 
 /* ===== SIDEBAR ===== */
 .lknwp-radio-sidebar {
-    position: sticky;
-    top: 40px;
+    /* Bloco branco 1: menu lateral, esticando até a base do conteúdo. */
     background: #fff;
     border: 1px solid #ECE9F6;
     border-radius: 12px;
     padding: 16px;
     box-shadow: 0 6px 22px rgba(76, 29, 149, 0.06);
+    box-sizing: border-box;
 }
 
 /* ===== SEARCH ===== */
@@ -101,7 +109,7 @@
     width: 100%;
     height: 40px;
     padding: 8px 38px 8px 14px;
-    border-radius: 8px;
+    border-radius: 12px;
     border: 1px solid #E4DFF5;
     background: #FAF9FF;
     font-size: 14px;
@@ -129,8 +137,10 @@
 .lknwp-radio-search__icon {
     position: absolute;
     right: 12px;
-    font-size: 14px;
-    opacity: 0.55;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--lknwp-icon-color);
+    display: inline-flex;
     pointer-events: none;
     transition: opacity 0.15s ease;
 }
@@ -199,7 +209,7 @@
 }
 
 .lknwp-radio-nav-item.is-active {
-    background: var(--lkn-gradient-primary);
+    background: var(--lknwp-soft-gradient);
     color: #fff;
     box-shadow: var(--lkn-glow);
 }
@@ -209,8 +219,22 @@
 }
 
 .lknwp-radio-nav-item__icon {
-    font-size: 16px;
     flex: 0 0 auto;
+    display: inline-flex;
+    color: var(--lknwp-icon-color);
+    transition: color 0.18s ease;
+}
+
+.lknwp-radio-nav-item__icon svg,
+.lknwp-radio-search__icon svg {
+    width: 18px;
+    height: 18px;
+    display: block;
+}
+
+/* Ícone branco quando o bloco está selecionado. */
+.lknwp-radio-nav-item.is-active .lknwp-radio-nav-item__icon {
+    color: #fff;
 }
 
 .lknwp-radio-nav-item__label {
@@ -219,7 +243,14 @@
 
 /* ===== CONTENT / PANELS ===== */
 .lknwp-radio-content {
+    /* Bloco branco 2: área do conteúdo clicado. */
     min-width: 0;
+    background: #fff;
+    border: 1px solid #ECE9F6;
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 6px 22px rgba(76, 29, 149, 0.06);
+    box-sizing: border-box;
 }
 
 .lknwp-radio-panel {
@@ -229,6 +260,20 @@
 .lknwp-radio-panel.is-active {
     display: block;
     animation: lknwp-fade 0.25s ease;
+}
+
+/* Ícone (roxo) que acompanha os títulos dos painéis. */
+.lknwp-radio-panel__icon {
+    display: inline-flex;
+    vertical-align: -0.12em;
+    margin-right: 8px;
+    color: var(--lknwp-icon-color);
+}
+
+.lknwp-radio-panel__icon svg {
+    width: 1em;
+    height: 1em;
+    display: block;
 }
 
 @keyframes lknwp-fade {
@@ -297,9 +342,15 @@
 }
 
 .lknwp-radio-no-results__icon {
-    font-size: 28px;
     display: block;
+    color: var(--lknwp-icon-color);
     margin-bottom: 8px;
+}
+
+.lknwp-radio-no-results__icon svg {
+    width: 34px;
+    height: 34px;
+    display: inline-block;
 }
 
 /* ===== CODE BLOCK ===== */
@@ -326,6 +377,9 @@
 }
 
 .lknwp-radio-copy-btn {
+    display: inline-flex !important;
+    align-items: center;
+    gap: 6px;
     background: var(--lkn-gradient-primary) !important;
     color: #fff !important;
     border: none;
@@ -339,6 +393,27 @@
     font-family: inherit;
     box-shadow: var(--lkn-glow);
     transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+}
+
+.lknwp-radio-copy-btn svg {
+    width: 15px;
+    height: 15px;
+    display: block;
+    flex: 0 0 auto;
+}
+
+/* Alterna o ícone de copiar para o check somente quando copiado (.active).
+   A regra precisa vencer ".lknwp-radio-copy-btn svg { display: block }". */
+.lknwp-radio-copy-btn .lknwp-radio-copy-btn__ic-check {
+    display: none;
+}
+
+.lknwp-radio-copy-btn.active .lknwp-radio-copy-btn__ic-copy {
+    display: none;
+}
+
+.lknwp-radio-copy-btn.active .lknwp-radio-copy-btn__ic-check {
+    display: block;
 }
 
 .lknwp-radio-copy-btn:hover {
@@ -377,6 +452,29 @@
     margin-bottom: 10px;
     color: var(--lkn-brand-700) !important;
     font-weight: 700;
+}
+
+/* "Step" com bolinha numerada (1, 2, ...). */
+.lknwp-radio-step {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.lknwp-radio-step__num {
+    flex: 0 0 auto;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--lkn-gradient-primary);
+    color: #fff;
+    font-size: 13px;
+    font-weight: 800;
+    line-height: 1;
+    box-shadow: var(--lkn-glow);
 }
 
 .lknwp-radio-info ul,
@@ -481,14 +579,21 @@
     font-size: 12.5px;
 }
 
+/* Botão mini: só o ícone, formato quadrado compacto. */
 .lknwp-radio-copy-btn--mini {
-    padding: 2px 7px !important;
-    font-size: 11px !important;
+    width: 28px;
+    height: 28px;
+    padding: 0 !important;
     margin-left: 8px !important;
-    border-radius: 6px !important;
+    border-radius: 7px !important;
     box-shadow: none !important;
+    justify-content: center;
     vertical-align: middle;
-    line-height: 1.4;
+}
+
+.lknwp-radio-copy-btn--mini svg {
+    width: 14px;
+    height: 14px;
 }
 
 .lknwp-radio-copy-btn--mini:hover {

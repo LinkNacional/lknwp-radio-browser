@@ -54,20 +54,24 @@
             return;
         }
 
-        var isIcon = button.hasAttribute('data-copy') && button.textContent.trim().length <= 2;
-        var originalText = button.getAttribute('data-original-text') || button.textContent;
+        var label = button.querySelector('.lknwp-radio-copy-btn__label');
 
-        if (!button.getAttribute('data-original-text')) {
-            button.setAttribute('data-original-text', originalText);
+        // Guarda o texto original do rótulo para restaurar depois.
+        if (label && !label.getAttribute('data-original-text')) {
+            label.setAttribute('data-original-text', label.textContent);
         }
 
-        button.textContent = isIcon
-            ? '✓'
-            : (window.lknwpRadioTexts ? lknwpRadioTexts.copied : 'Copied!');
+        // O ícone do botão troca (cópia -> check) via CSS com a classe .active;
+        // só o rótulo de texto é atualizado aqui (quando existir).
+        if (label) {
+            label.textContent = window.lknwpRadioTexts ? lknwpRadioTexts.copied : 'Copied!';
+        }
         button.classList.add('active');
 
         setTimeout(function () {
-            button.textContent = originalText;
+            if (label && label.getAttribute('data-original-text') !== null) {
+                label.textContent = label.getAttribute('data-original-text');
+            }
             button.classList.remove('active');
         }, 1600);
     }

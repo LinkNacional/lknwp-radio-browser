@@ -180,7 +180,6 @@ $lknwp_stat_icons = array(
                     </div>
 
                     <div class="lkp-volume-section">
-                        <label for="lknwp-radio-volume" class="lkp-volume-label"><?php esc_html_e( 'Volume', 'lknwp-radio-browser' ); ?></label>
                         <div class="lkp-volume-row">
                             <button id="lknwp-radio-mute-btn" class="lkp-mute-btn" type="button" aria-label="<?php esc_attr_e( 'Mutar', 'lknwp-radio-browser' ); ?>" title="<?php esc_attr_e( 'Mutar', 'lknwp-radio-browser' ); ?>">
                                 <svg class="lkp-mute-icon-on" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4V5Z" fill="currentColor"/><path d="M15.5 9.5a4 4 0 0 1 0 5M18.5 7a7 7 0 0 1 0 10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
