@@ -1167,6 +1167,55 @@
     color: var(--lkn-accent-light);
 }
 
+/* Navegação (anterior/próxima) pelas rádios já ouvidas. */
+.lkp-v2__nav {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-left: auto;
+}
+
+.lkp-v2__nav[hidden] {
+    display: none !important;
+}
+
+.lkp-v2__nav-btn {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    width: 32px !important;
+    height: 32px !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+    padding: 0 !important;
+    gap: 0 !important;
+    border-radius: 999px !important;
+    border: 1px solid var(--lkn-glass-border) !important;
+    background: var(--lkn-glass-bg) !important;
+    color: var(--lkn-text-soft) !important;
+    cursor: pointer;
+    line-height: 0 !important;
+    transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.lkp-v2__nav-btn:hover {
+    color: #fff !important;
+    border-color: var(--lkn-glass-border-strong) !important;
+    background: var(--lkn-glass-bg-strong) !important;
+}
+
+.lkp-v2__nav-btn:focus-visible {
+    outline: none !important;
+    box-shadow: 0 0 0 3px rgba(217, 70, 239, 0.4) !important;
+}
+
+.lkp-v2__nav-btn svg {
+    width: 18px;
+    height: 18px;
+    display: block;
+    color: inherit;
+}
+
 .lkp-v2__continue-track {
     display: flex;
     gap: 12px;

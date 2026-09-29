@@ -1168,6 +1168,34 @@ document.addEventListener("DOMContentLoaded", function () {
             });
         });
 
+        // Botões de navegação (anterior/próxima) pelas rádios já ouvidas.
+        // O loop é circular: na primeira, "anterior" leva para a última.
+        var nav = document.getElementById('lkp_continue_nav');
+        var prevBtn = document.getElementById('lkp_nav_prev');
+        var nextBtn = document.getElementById('lkp_nav_next');
+
+        if (nav && prevBtn && nextBtn && list.length >= 2) {
+            // Localiza a rádio atual na lista (pelo nome exibido; cai no índice 0).
+            var stationNameEl = document.getElementById('lknwp-radio-station-name');
+            var currentName = stationNameEl ? stationNameEl.textContent.trim().toLowerCase() : '';
+            var currentIndex = 0;
+            for (var i = 0; i < list.length; i++) {
+                var nm = (list[i] && list[i].name ? String(list[i].name) : '').trim().toLowerCase();
+                if (currentName && nm === currentName) { currentIndex = i; break; }
+            }
+
+            var go = function (delta) {
+                var n = list.length;
+                if (n < 2) { return; }
+                var target = list[(currentIndex + delta + n) % n];
+                if (target && target.url) { window.location.href = target.url; }
+            };
+
+            prevBtn.addEventListener('click', function () { go(-1); });
+            nextBtn.addEventListener('click', function () { go(1); });
+            nav.removeAttribute('hidden');
+        }
+
         section.removeAttribute('hidden');
     });
 })();

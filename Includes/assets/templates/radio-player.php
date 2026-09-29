@@ -227,6 +227,14 @@ $lknwp_stat_icons = array(
             <div class="lkp-v2__continue-head">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/><path d="M12 7v5l3 2"/></svg>
                 <span><?php esc_html_e( 'Continue ouvindo', 'lknwp-radio-browser' ); ?></span>
+                <div class="lkp-v2__nav" id="lkp_continue_nav" hidden>
+                    <button type="button" class="lkp-v2__nav-btn" id="lkp_nav_prev" aria-label="<?php esc_attr_e( 'Rádio anterior', 'lknwp-radio-browser' ); ?>" title="<?php esc_attr_e( 'Rádio anterior', 'lknwp-radio-browser' ); ?>">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
+                    </button>
+                    <button type="button" class="lkp-v2__nav-btn" id="lkp_nav_next" aria-label="<?php esc_attr_e( 'Próxima rádio', 'lknwp-radio-browser' ); ?>" title="<?php esc_attr_e( 'Próxima rádio', 'lknwp-radio-browser' ); ?>">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+                    </button>
+                </div>
             </div>
             <div class="lkp-v2__continue-track" id="lkp_continue_track"></div>
         </section>
