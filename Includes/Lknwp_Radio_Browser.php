@@ -171,23 +171,73 @@ class Lknwp_Radio_Browser {
 	 */
 	public function register_radio_browser_shortcodes() {
 		add_shortcode('radio_browser_list', array($this, 'radio_browser_list_shortcode'));
-		add_shortcode('radio_browser_list_legacy', array($this, 'radio_browser_list_legacy_shortcode'));
 		add_shortcode('radio_browser_player', array($this, 'radio_browser_player_shortcode'));
-		add_shortcode('radio_browser_player_legacy', array($this, 'radio_browser_player_legacy_shortcode'));
 	}
 
 	/**
-	 * Shortcode to display the radio player (layout atual).
+	 * Resolve o layout pedido pelo atributo `layout`.
+	 * Válidos: "modern" e "legacy" (case-insensitive). Ausente = legacy.
+	 * Qualquer outro valor é inválido — cai no legacy e sinaliza `invalid`.
+	 *
+	 * @param mixed $atts Atributos do shortcode.
+	 * @return array{layout:string,invalid:bool}
 	 */
-	public function radio_browser_player_shortcode() {
-		return $this->render_radio_browser_player('assets/templates/radio-player.php');
+	private static function resolve_layout($atts) {
+		if (!is_array($atts) || !array_key_exists('layout', $atts)) {
+			return array('layout' => 'legacy', 'invalid' => false);
+		}
+		$value = strtolower(trim(is_scalar($atts['layout']) ? (string) $atts['layout'] : ''));
+		if ($value === 'modern') {
+			return array('layout' => 'modern', 'invalid' => false);
+		}
+		if ($value === 'legacy') {
+			return array('layout' => 'legacy', 'invalid' => false);
+		}
+		return array('layout' => 'legacy', 'invalid' => true);
 	}
 
 	/**
-	 * Shortcode to display the radio player (layout legacy).
+	 * Aviso (apenas para quem pode editar) de `layout` inválido.
+	 * Visitantes comuns não veem — nesse caso o layout legacy é renderizado.
+	 *
+	 * @param mixed $atts Atributos do shortcode.
+	 * @return string HTML do aviso (vazio se não aplicável).
 	 */
-	public function radio_browser_player_legacy_shortcode() {
-		return $this->render_radio_browser_player('assets/templates/radio-player-legacy.php');
+	private static function layout_error_notice($atts) {
+		if (!current_user_can('edit_posts')) {
+			return '';
+		}
+		$value = (is_array($atts) && isset($atts['layout']) && is_scalar($atts['layout']))
+			? (string) $atts['layout']
+			: '';
+		return '<div class="lknwp-radio-layout-notice">' .
+			'<strong>' . esc_html__('Radio Browser', 'lknwp-radio-browser') . ':</strong> ' .
+			sprintf(
+				/* translators: %s: the invalid layout value provided in the shortcode. */
+				esc_html__('unknown layout "%s". Use layout="modern" or layout="legacy". Showing the legacy layout.', 'lknwp-radio-browser'),
+				esc_html($value)
+			) .
+			'</div>';
+	}
+
+	/**
+	 * Shortcode do player. O layout é escolhido pelo atributo `layout`:
+	 * "modern" para o layout novo; "legacy" (ou ausente) usa o legacy.
+	 * Um valor inválido cai no legacy e mostra um aviso para quem edita.
+	 *
+	 * @param array|string $atts Atributos do shortcode.
+	 * @return string HTML do player.
+	 */
+	public function radio_browser_player_shortcode($atts = array()) {
+		$resolved = self::resolve_layout($atts);
+		$template = $resolved['layout'] === 'modern'
+			? 'assets/templates/radio-player.php'
+			: 'assets/templates/radio-player-legacy.php';
+		$output = $this->render_radio_browser_player($template);
+		if ($resolved['invalid']) {
+			$output = self::layout_error_notice($atts) . $output;
+		}
+		return $output;
 	}
 
 	/**
@@ -421,9 +471,10 @@ class Lknwp_Radio_Browser {
 
 	/**
 	 * Shortcode to list radios with a link to the player page
-	 * Usage: [radio_browser_list player_page="player" hide_country="yes" hide_limit="yes" hide_sort="yes" hide_order="yes" hide_search="yes" hide_button="yes" hide_all_filters="yes" hide_genre="yes"]
+	 * Usage: [radio_browser_list player_page="player" layout="modern" hide_country="yes" ...]
 	 * 
 	 * Parameters:
+	 * - layout: Layout to render ("modern" for the new layout; anything else/absent = legacy)
 	 * - player_page: Page slug for the radio player
 	 * - countrycode: Country code filter (default: BR)
 	 * - limit: Number of stations to show (default: 20)
@@ -440,15 +491,15 @@ class Lknwp_Radio_Browser {
 	 * - hide_all_filters: Hide entire filter form (yes/no)
 	 */
 	public function radio_browser_list_shortcode($atts) {
-		return $this->render_radio_browser_list($atts, 'assets/templates/radio-list.php');
-	}
-
-	/**
-	 * Shortcode to list radios (layout legacy).
-	 * Mesmos parâmetros do shortcode [radio_browser_list], porém renderiza o layout antigo.
-	 */
-	public function radio_browser_list_legacy_shortcode($atts) {
-		return $this->render_radio_browser_list($atts, 'assets/templates/radio-list-legacy.php');
+		$resolved = self::resolve_layout($atts);
+		$template = $resolved['layout'] === 'modern'
+			? 'assets/templates/radio-list.php'
+			: 'assets/templates/radio-list-legacy.php';
+		$output = $this->render_radio_browser_list($atts, $template);
+		if ($resolved['invalid']) {
+			$output = self::layout_error_notice($atts) . $output;
+		}
+		return $output;
 	}
 
 	/**
@@ -663,7 +714,7 @@ class Lknwp_Radio_Browser {
 	public function handle_player_page_changes($post_id, $post) {
 		if ($post->post_type !== 'page') return;
 		
-		if (has_shortcode($post->post_content, 'radio_browser_player') || has_shortcode($post->post_content, 'radio_browser_player_legacy')) {
+		if (has_shortcode($post->post_content, 'radio_browser_player')) {
 			delete_option('lknwp_player_rewrite_rules');
 			flush_rewrite_rules();
 		}

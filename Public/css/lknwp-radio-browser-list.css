@@ -795,7 +795,7 @@ esquerda para a direita (efeito de profundidade) */
     border-radius: 999px !important;
     border: 1px solid var(--border) !important;
     background: #17133A !important;
-    color: var(--txt-2) !important;
+    color: var(--txt) !important;
     cursor: pointer;
     text-decoration: none !important;
     box-shadow: none !important;
@@ -842,10 +842,6 @@ esquerda para a direita (efeito de profundidade) */
     fill: currentColor;
 }
 
-.lrt-now__open {
-    color: var(--purple-bright) !important;
-}
-
 .lrt-now.is-updated .lrt-now__card {
     animation: lrt-now-flash 0.8s ease;
 }
@@ -889,7 +885,9 @@ esquerda para a direita (efeito de profundidade) */
     gap: 10px;
     overflow-x: auto;
     overflow-y: hidden;
-    padding-bottom: 6px;
+    /* padding-top dá folga para o hover que levanta o card (-2px) e para a
+       sombra do ícone não serem cortados pelo overflow-y: hidden. */
+    padding: 6px 2px 6px 2px;
     scrollbar-width: thin;
     scrollbar-color: rgba(150, 120, 255, 0.35) transparent;
 }
@@ -942,13 +940,11 @@ esquerda para a direita (efeito de profundidade) */
     border-radius: 14px;
     overflow: hidden;
     background: var(--card-2);
-    border: 1px solid var(--border);
     box-shadow: 0 8px 20px rgba(4, 2, 18, 0.45);
-    transition: box-shadow 0.2s ease, border-color 0.2s ease;
+    transition: box-shadow 0.2s ease;
 }
 
 .lrt-continue-card:hover .lrt-continue-card__cover {
-    border-color: var(--border-strong);
     box-shadow: 0 10px 26px rgba(120, 40, 255, 0.4);
 }
 
@@ -2056,4 +2052,233 @@ esquerda para a direita (efeito de profundidade) */
         box-shadow: 0 14px 34px rgba(4, 2, 18, 0.6);
         padding: calc(12px + env(safe-area-inset-top, 0px)) 14px 12px;
     }
+}
+
+/* ==========================================================================
+   TEMA CLARO (light) — alternável pelo botão [data-lknwp-theme-toggle]
+   ========================================================================== */
+[data-lknwp-theme-toggle] .lkn-theme-sun { display: block; }
+[data-lknwp-theme-toggle] .lkn-theme-moon { display: none; }
+html[data-lknwp-theme="light"] [data-lknwp-theme-toggle] .lkn-theme-sun { display: none; }
+html[data-lknwp-theme="light"] [data-lknwp-theme-toggle] .lkn-theme-moon { display: block; }
+
+/* Botão de tema (mesmo formato dos botões da toolbar) */
+.lrt-theme-toggle {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    width: 44px !important;
+    height: 44px !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+    padding: 0 !important;
+    gap: 0 !important;
+    margin: 0 !important;
+    border-radius: 999px !important;
+    border: 1px solid var(--border) !important;
+    background: #17133A !important;
+    color: var(--txt) !important;
+    cursor: pointer;
+    line-height: 0 !important;
+    transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease;
+}
+
+.lrt-theme-toggle:hover {
+    border-color: var(--border-strong) !important;
+    background: var(--card-hover) !important;
+}
+
+.lrt-theme-toggle:focus-visible {
+    outline: none !important;
+    box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.35) !important;
+}
+
+.lrt-theme-toggle svg { width: 18px; height: 18px; display: block; }
+
+/* --- Paleta clara --- */
+html[data-lknwp-theme="light"] .lrt-radio-wrap {
+    --bg: #F5F3FB;
+    --bg-2: #FFFFFF;
+    --sidebar: #FFFFFF;
+    --card: #FFFFFF;
+    --card-2: #F4F1FC;
+    --card-hover: #EEE9FB;
+    --txt: #1B1430;
+    --txt-2: #574F7A;
+    --txt-3: #837BA8;
+    --border: rgba(120, 80, 220, 0.18);
+    --border-strong: rgba(120, 80, 220, 0.34);
+    --glow: rgba(120, 40, 255, 0.20);
+
+    background: radial-gradient(120% 80% at 15% -10%, #E9E1FB 0%, var(--bg-2) 40%, var(--bg) 100%) !important;
+    color: var(--txt);
+}
+
+/* Superfícies que usavam cor fixa escura */
+html[data-lknwp-theme="light"] .lrt-radio-wrap .lrt-search__input,
+html[data-lknwp-theme="light"] .lrt-radio-wrap .lrt-btn,
+html[data-lknwp-theme="light"] .lrt-radio-wrap .lrt-btn--filters,
+html[data-lknwp-theme="light"] .lrt-radio-wrap .lrt-radio-select,
+html[data-lknwp-theme="light"] .lrt-radio-wrap .lrt-theme-toggle,
+html[data-lknwp-theme="light"] .lrt-radio-wrap .select2-container--default .select2-selection--single {
+    /* usa background-color (não o shorthand) pra não apagar o chevron do <select> */
+    background-color: #FFFFFF !important;
+    border-color: var(--border) !important;
+    color: var(--txt) !important;
+}
+
+html[data-lknwp-theme="light"] .lrt-radio-wrap .lrt-btn:hover,
+html[data-lknwp-theme="light"] .lrt-radio-wrap .lrt-theme-toggle:hover,
+html[data-lknwp-theme="light"] .lrt-radio-wrap .lrt-btn--ghost:hover {
+    background: var(--card-hover) !important;
+}
+
+html[data-lknwp-theme="light"] .lrt-radio-wrap .lrt-btn--filters[aria-expanded="true"] {
+    background: linear-gradient(135deg, #5E20D5 0%, #7827FF 100%) !important;
+    color: #fff !important;
+}
+
+html[data-lknwp-theme="light"] .lrt-radio-wrap .lrt-radio-station__cover {
+    background: var(--card-2) !important;
+    box-shadow: 0 2px 6px rgba(35, 30, 55, 0.08) !important;
+}
+
+/* Pílulas do "Tocando agora": o tom base (#C9BBFF) some no fundo branco —
+   usa um cinza/ardósia mais escuro, legível no claro. */
+html[data-lknwp-theme="light"] .lrt-radio-wrap .lrt-now__pill {
+    color: #4A4468 !important;
+    border-color: rgba(120, 80, 220, 0.42) !important;
+    background: rgba(120, 80, 220, 0.07) !important;
+}
+
+/* Tagline da sidebar: no claro o tom base (#B9AEE8) fica lavado —
+   usa um roxo mais escuro (mantém a identidade, com contraste). */
+html[data-lknwp-theme="light"] .lrt-radio-wrap .lrt-sidebar__tagline {
+    color: #6B4DB8 !important;
+}
+
+/* Ações do "Tocando agora" (favoritar + abrir player): no claro o botão
+   escuro (#17133A) com texto escuro ficava ilegível — vira branco. */
+html[data-lknwp-theme="light"] .lrt-radio-wrap .lrt-now__fav,
+html[data-lknwp-theme="light"] .lrt-radio-wrap .lrt-now__open {
+    background: #FFFFFF !important;
+    border-color: var(--border) !important;
+    color: var(--txt-2) !important;
+}
+
+html[data-lknwp-theme="light"] .lrt-radio-wrap .lrt-now__fav:hover,
+html[data-lknwp-theme="light"] .lrt-radio-wrap .lrt-now__open:hover {
+    background: var(--card-hover) !important;
+    border-color: var(--border-strong) !important;
+    color: var(--txt) !important;
+}
+
+html[data-lknwp-theme="light"] .lrt-radio-wrap .lrt-now__fav.is-active {
+    color: #E24E93 !important;
+    border-color: rgba(226, 78, 147, 0.55) !important;
+    background: rgba(226, 78, 147, 0.10) !important;
+}
+
+html[data-lknwp-theme="light"] .lrt-radio-wrap .lrt-now__fav.is-active:hover {
+    color: #E24E93 !important;
+}
+
+html[data-lknwp-theme="light"] .lrt-radio-wrap .lrt-now__fav.is-active svg path {
+    fill: currentColor;
+    stroke: currentColor;
+}
+
+/* O dock flutuante é movido para o <body> (fora do .lrt-radio-wrap),
+   por isso estes overrides NÃO usam o ancestral .lrt-radio-wrap — e precisam
+   redeclarar as variáveis locais que o próprio dock define (senão o texto,
+   definido em tom claro, ficaria invisível sobre o fundo branco). */
+html[data-lknwp-theme="light"] .lrt-player-dock {
+    --card: #FFFFFF;
+    --card-2: #F4F1FC;
+    --purple-bright: #8B3DFF;
+    --purple-soft: #9146FF;
+    --purple-dark: #4D1BB8;
+    --txt: #1B1430;
+    --txt-2: #574F7A;
+    --txt-3: #837BA8;
+    --border: rgba(120, 80, 220, 0.18);
+    --border-strong: rgba(120, 80, 220, 0.34);
+    --glow: rgba(120, 40, 255, 0.20);
+    background: #FFFFFF !important;
+}
+
+html[data-lknwp-theme="light"] .lrt-player-dock__cover {
+    background: var(--card-2, #F4F1FC) !important;
+    box-shadow: 0 8px 20px rgba(80, 60, 140, 0.14) !important;
+}
+
+html[data-lknwp-theme="light"] .lrt-player-dock__fav,
+html[data-lknwp-theme="light"] .lrt-player-dock__ctrl,
+html[data-lknwp-theme="light"] .lrt-player-dock__play,
+html[data-lknwp-theme="light"] .lrt-player-dock__mute,
+html[data-lknwp-theme="light"] .lrt-player-dock__pin {
+    background-color: #FFFFFF !important;
+}
+
+html[data-lknwp-theme="light"] .lrt-player-dock.is-fixed {
+    background: #FFFFFF !important;
+    box-shadow: 0 -12px 34px rgba(80, 60, 140, 0.18) !important;
+}
+
+/* Dropdown do Select2 (anexado ao <body>) */
+html[data-lknwp-theme="light"] .select2-dropdown.lrt-select2-dropdown {
+    --card: #FFFFFF;
+    --card-2: #FFFFFF;
+    --card-hover: #F4F1FC;
+    --purple-bright: #8B3DFF;
+    --txt: #1B1430;
+    --txt-2: #574F7A;
+    --txt-3: #837BA8;
+    --border: rgba(120, 80, 220, 0.18);
+    --border-strong: rgba(120, 80, 220, 0.34);
+    background: #FFFFFF !important;
+    box-shadow: 0 18px 40px rgba(70, 50, 130, 0.18) !important;
+}
+
+html[data-lknwp-theme="light"] .lrt-select2-dropdown .select2-search--dropdown .select2-search__field {
+    background: #FFFFFF !important;
+    color: var(--txt) !important;
+}
+
+/* --- Sombras suavizadas no tema claro ---
+   As sombras originais (rgba(4,2,18,...) etc.) são pensadas para fundo escuro
+   e ficam "duras" no claro. Aqui elas ficam mais próximas (offset/blur menores),
+   com tom acinzentado bem leve. */
+html[data-lknwp-theme="light"] .lrt-radio-wrap .lrt-now__card {
+    /* Bloco grande: sombra bem mais leve e próxima. */
+    box-shadow: 0 3px 10px rgba(35, 30, 55, 0.05);
+}
+
+/* Mantém o feedback do "is-updated" (flash), mas com a sombra leve no claro. */
+html[data-lknwp-theme="light"] .lrt-radio-wrap .lrt-now.is-updated .lrt-now__card {
+    animation: lrt-now-flash-light 0.8s ease;
+}
+
+@keyframes lrt-now-flash-light {
+    0% { box-shadow: 0 0 0 2px rgba(120, 40, 255, 0.5), 0 3px 10px rgba(35, 30, 55, 0.08); }
+    100% { box-shadow: 0 3px 10px rgba(35, 30, 55, 0.05); }
+}
+
+html[data-lknwp-theme="light"] .lrt-radio-wrap .lrt-now__cover,
+html[data-lknwp-theme="light"] .lrt-radio-wrap .lrt-continue-card__cover {
+    box-shadow: 0 2px 6px rgba(35, 30, 55, 0.08) !important;
+}
+
+html[data-lknwp-theme="light"] .lrt-radio-wrap .lrt-continue-card:hover .lrt-continue-card__cover {
+    box-shadow: 0 4px 12px rgba(35, 30, 55, 0.12) !important;
+}
+
+html[data-lknwp-theme="light"] .lrt-radio-wrap .lrt-radio-station:hover {
+    box-shadow: 0 6px 16px rgba(35, 30, 55, 0.12) !important;
+}
+
+/* Sem sombra/glow no card ao selecionar a rádio. */
+html[data-lknwp-theme="light"] .lrt-radio-wrap .lrt-radio-station.is-playing {
+    box-shadow: none !important;
 }

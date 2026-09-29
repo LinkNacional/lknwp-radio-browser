@@ -1220,7 +1220,8 @@
     display: flex;
     gap: 12px;
     overflow-x: auto;
-    padding-bottom: 6px;
+    /* Folga pra o hover que sobe o card (-2px) não ser cortado pelo overflow. */
+    padding: 6px 2px 6px 2px;
     scrollbar-width: thin;
     scrollbar-color: rgba(196, 181, 253, 0.35) transparent;
 }
@@ -1257,7 +1258,6 @@
     border-radius: 14px;
     overflow: hidden;
     background: var(--lkn-brand-900);
-    border: 1px solid var(--lkn-glass-border);
     box-shadow: var(--lkn-shadow-soft);
 }
 
@@ -1308,4 +1308,95 @@
         width: 320px;
         height: 320px;
     }
+}
+
+/* ==========================================================================
+   TEMA CLARO (light) no player + botão de tema [data-lknwp-theme-toggle]
+   ========================================================================== */
+[data-lknwp-theme-toggle] .lkn-theme-sun { display: block; }
+[data-lknwp-theme-toggle] .lkn-theme-moon { display: none; }
+html[data-lknwp-theme="light"] [data-lknwp-theme-toggle] .lkn-theme-sun { display: none; }
+html[data-lknwp-theme="light"] [data-lknwp-theme-toggle] .lkn-theme-moon { display: block; }
+
+/* Grupo de ações do topo: favoritar + tema */
+.lkp-v2__head-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex: 0 0 auto;
+}
+
+/* Botão de tema (só ícone), no estilo do favoritar */
+.lkp-v2__theme {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    width: 40px !important;
+    height: 40px !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+    padding: 0 !important;
+    gap: 0 !important;
+    margin: 0 !important;
+    border: 1px solid var(--lkn-glass-border-strong) !important;
+    background: var(--lkn-glass-bg) !important;
+    border-radius: 999px !important;
+    color: var(--lkn-text-soft) !important;
+    cursor: pointer;
+    line-height: 0 !important;
+    transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+}
+
+.lkp-v2__theme:hover {
+    color: var(--lkn-text) !important;
+    border-color: var(--lkn-accent-light) !important;
+}
+
+.lkp-v2__theme:focus-visible {
+    outline: none !important;
+    box-shadow: 0 0 0 3px rgba(217, 70, 239, 0.4) !important;
+}
+
+.lkp-v2__theme svg { width: 18px; height: 18px; display: block; }
+
+/* --- Paleta clara --- */
+html[data-lknwp-theme="light"] .lkp-player-wrapper.lkp-v2 {
+    --lkn-text: #1B1430;
+    --lkn-text-soft: #4A4468;
+    --lkn-text-muted: #6B6490;
+    --lkn-glass-bg: rgba(70, 50, 130, 0.05);
+    --lkn-glass-bg-strong: rgba(70, 50, 130, 0.09);
+    --lkn-glass-border: rgba(90, 60, 180, 0.18);
+    --lkn-glass-border-strong: rgba(90, 60, 180, 0.32);
+    --lkn-brand-900: #F1EEFA;
+    --lkn-brand-850: #EDE8F8;
+    --lkn-shadow: 0 18px 50px rgba(80, 60, 140, 0.16);
+    --lkn-shadow-soft: 0 8px 24px rgba(80, 60, 140, 0.12);
+}
+
+html[data-lknwp-theme="light"] #lknwp-radio-custom-player,
+html[data-lknwp-theme="light"] .lkp-player-container {
+    background: radial-gradient(120% 80% at 15% -10%, #E9E1FB 0%, #FFFFFF 40%, #F5F3FB 100%) !important;
+}
+
+html[data-lknwp-theme="light"] .lkp-v2__bg {
+    color: var(--lkn-brand-500);
+    opacity: 0.28;
+}
+
+/* Aurora roxa do topo: mais suave (alfa/blur) no claro. */
+html[data-lknwp-theme="light"] .lkp-player-container::before {
+    background: radial-gradient(closest-side, rgba(124, 58, 237, 0.22), rgba(217, 70, 239, 0.10) 55%, transparent 100%);
+    filter: blur(20px);
+}
+
+html[data-lknwp-theme="light"] .lkp-radio-error {
+    background: #FFFFFF !important;
+    color: #1B1430 !important;
+}
+
+html[data-lknwp-theme="light"] .lkp-radio-error h3,
+html[data-lknwp-theme="light"] .lkp-radio-error p {
+    color: #1B1430 !important;
 }

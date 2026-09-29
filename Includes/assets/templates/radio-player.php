@@ -74,6 +74,16 @@ $lknwp_stat_icons = array(
 );
 ?>
 
+<script>
+(function () {
+    try {
+        var t = localStorage.getItem('lknwp_theme');
+        if (t !== 'light' && t !== 'dark') { t = 'dark'; }
+        document.documentElement.setAttribute('data-lknwp-theme', t);
+    } catch (e) {}
+})();
+</script>
+
 <div class="lkp-player-wrapper lkp-v2">
     <div id="lknwp-radio-custom-player" class="lkp-player-container">
         <!-- Hidden fields for JS -->
@@ -96,6 +106,7 @@ $lknwp_stat_icons = array(
                         <h2 id="lknwp-radio-station-name" class="lkp-v2__name"><?php echo $station_name ? esc_html($station_name) : esc_html__( 'Online Radio', 'lknwp-radio-browser' ); ?></h2>
                     </div>
 
+                    <div class="lkp-v2__head-actions">
                     <button type="button" class="lkp-v2__fav" id="lkp_fav_btn"
                         data-uuid="<?php echo esc_attr($station_uuid); ?>"
                         data-name="<?php echo esc_attr($station_name); ?>"
@@ -103,6 +114,11 @@ $lknwp_stat_icons = array(
                         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M12 20s-7-4.5-9.3-8.4C1 8.6 2.6 5 6.1 5c2 0 3.3 1.1 3.9 2 .6-.9 1.9-2 3.9-2C17.4 5 19 8.6 21.3 11.6 19 15.5 12 20 12 20Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
                         <span><?php esc_html_e( 'Favoritar', 'lknwp-radio-browser' ); ?></span>
                     </button>
+                    <button type="button" class="lkp-v2__theme" id="lkp_theme_toggle" data-lknwp-theme-toggle aria-pressed="false" aria-label="<?php esc_attr_e( 'Alternar tema', 'lknwp-radio-browser' ); ?>" title="<?php esc_attr_e( 'Alternar tema', 'lknwp-radio-browser' ); ?>">
+                        <svg class="lkn-theme-sun" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="2"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                        <svg class="lkn-theme-moon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </button>
+                    </div>
                 </div>
 
                 <span class="lkp-v2__live">

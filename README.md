@@ -47,10 +47,11 @@ Perfect for music blogs, radio sites, entertainment portals, or any site that wa
 
 ### 📋 Radio List
 ```
-[radio_browser_list]
+[radio_browser_list layout="modern"]
 ```
 
 **Available Parameters:**
+- `layout` - Layout to render: "modern" (new layout) or "legacy"/absent (previous layout)
 - `player_page` - Page where the player is located (default: "player")
 - `countrycode` - Filter by country (default: "BR")
 - `limit` - Number of stations (default: 20)
@@ -62,17 +63,17 @@ Perfect for music blogs, radio sites, entertainment portals, or any site that wa
 
 **Example:**
 ```
-[radio_browser_list player_page="radio-player" countrycode="US" limit="50"]
+[radio_browser_list player_page="radio-player" layout="modern" countrycode="US" limit="50"]
 ```
 
 ### 🎵 Radio Player
 ```
-[radio_browser_player]
+[radio_browser_player layout="modern"]
 ```
 
 ### 🚀 Quick Setup
-1. Create a **List Page:** Add `[radio_browser_list]`
-2. Create a **Player Page:** Add `[radio_browser_player]`
+1. Create a **List Page:** Add `[radio_browser_list layout="modern"]`
+2. Create a **Player Page:** Add `[radio_browser_player layout="modern"]`
 3. Set the `player_page` parameter in the list to point to your player page
 4. Publish the pages and start streaming!
 

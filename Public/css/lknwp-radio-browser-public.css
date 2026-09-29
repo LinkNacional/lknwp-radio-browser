@@ -2,3 +2,21 @@
  * All of the CSS for your public-facing functionality should be
  * included in this file.
  */
+
+/* Aviso (só para quem edita) de `layout` inválido no shortcode. */
+.lknwp-radio-layout-notice {
+    display: block;
+    margin: 0 0 16px;
+    padding: 12px 16px;
+    border-radius: 10px;
+    border: 1px solid rgba(251, 191, 36, 0.45);
+    background: rgba(251, 191, 36, 0.12);
+    color: #8a6100;
+    font-family: 'Inter', 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.lknwp-radio-layout-notice strong {
+    font-weight: 700;
+}

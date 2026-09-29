@@ -78,35 +78,61 @@ class Lknwp_Radio_Browser_Public {
 		global $post;
 		$content = isset($post->post_content) ? $post->post_content : '';
 
-		// Layout atual da lista
-		if (has_shortcode($content, 'radio_browser_list')) {
+		// Lista — carrega o CSS de acordo com o layout usado no conteúdo.
+		$list_layouts = $this->get_content_shortcode_layouts($content, 'radio_browser_list');
+		if (!empty($list_layouts)) {
 			wp_enqueue_style('lknwp-colors', plugin_dir_url(__FILE__) . '../Includes/assets/css/colors.css', array(), $this->version, 'all');
-			wp_enqueue_style('lknwp-radio-list', plugin_dir_url( __FILE__ ) . 'css/lknwp-radio-browser-list.css', array(), $this->version, 'all' );
+			if (isset($list_layouts['modern'])) {
+				wp_enqueue_style('lknwp-radio-list', plugin_dir_url( __FILE__ ) . 'css/lknwp-radio-browser-list.css', array(), $this->version, 'all' );
+			}
+			if (isset($list_layouts['legacy'])) {
+				wp_enqueue_style('lknwp-radio-list-legacy', plugin_dir_url( __FILE__ ) . 'css/lknwp-radio-browser-list-legacy.css', array(), $this->version, 'all' );
+			}
 		}
 
-		// Layout legacy da lista
-		if (has_shortcode($content, 'radio_browser_list_legacy')) {
+		// Player — carrega o CSS de acordo com o layout usado no conteúdo.
+		$player_layouts = $this->get_content_shortcode_layouts($content, 'radio_browser_player');
+		if (!empty($player_layouts)) {
 			wp_enqueue_style('lknwp-colors', plugin_dir_url(__FILE__) . '../Includes/assets/css/colors.css', array(), $this->version, 'all');
-			wp_enqueue_style('lknwp-radio-list-legacy', plugin_dir_url( __FILE__ ) . 'css/lknwp-radio-browser-list-legacy.css', array(), $this->version, 'all' );
-		}
-
-		// Layout atual do player
-		if (has_shortcode($content, 'radio_browser_player')) {
-			wp_enqueue_style('lknwp-colors', plugin_dir_url(__FILE__) . '../Includes/assets/css/colors.css', array(), $this->version, 'all');
-			wp_enqueue_style('lknwp-radio-player', plugin_dir_url( __FILE__ ) . 'css/lknwp-radio-browser-player.css', array(), $this->version, 'all' );
-			wp_enqueue_style('lknwp-radio-audio-visualizer', plugin_dir_url( __FILE__ ) . 'css/lknwp-radio-browser-audio-visualizer.css', array(), $this->version, 'all' );
-		}
-
-		// Layout legacy do player
-		if (has_shortcode($content, 'radio_browser_player_legacy')) {
-			wp_enqueue_style('lknwp-colors', plugin_dir_url(__FILE__) . '../Includes/assets/css/colors.css', array(), $this->version, 'all');
-			wp_enqueue_style('lknwp-radio-player-legacy', plugin_dir_url( __FILE__ ) . 'css/lknwp-radio-browser-player-legacy.css', array(), $this->version, 'all' );
-			wp_enqueue_style('lknwp-radio-audio-visualizer-legacy', plugin_dir_url( __FILE__ ) . 'css/lknwp-radio-browser-audio-visualizer-legacy.css', array(), $this->version, 'all' );
+			if (isset($player_layouts['modern'])) {
+				wp_enqueue_style('lknwp-radio-player', plugin_dir_url( __FILE__ ) . 'css/lknwp-radio-browser-player.css', array(), $this->version, 'all' );
+				wp_enqueue_style('lknwp-radio-audio-visualizer', plugin_dir_url( __FILE__ ) . 'css/lknwp-radio-browser-audio-visualizer.css', array(), $this->version, 'all' );
+			}
+			if (isset($player_layouts['legacy'])) {
+				wp_enqueue_style('lknwp-radio-player-legacy', plugin_dir_url( __FILE__ ) . 'css/lknwp-radio-browser-player-legacy.css', array(), $this->version, 'all' );
+				wp_enqueue_style('lknwp-radio-audio-visualizer-legacy', plugin_dir_url( __FILE__ ) . 'css/lknwp-radio-browser-audio-visualizer-legacy.css', array(), $this->version, 'all' );
+			}
 		}
 
 
 		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/lknwp-radio-browser-public.css', array(), $this->version, 'all' );
 
+	}
+
+	/**
+	 * Descobre quais layouts ("modern"/"legacy") um shortcode usa dentro do conteúdo.
+	 * Como o layout agora é um atributo (`layout="modern"`), é preciso ler os
+	 * atributos do shortcode — e não só a presença dele — para enfileirar os assets certos.
+	 *
+	 * @param string $content Conteúdo do post.
+	 * @param string $tag     Nome do shortcode (ex.: radio_browser_list).
+	 * @return array<string,bool> Mapa layout => true (ex.: array('modern' => true)).
+	 */
+	private function get_content_shortcode_layouts($content, $tag) {
+		$layouts = array();
+		if (!is_string($content) || $content === '') {
+			return $layouts;
+		}
+		$pattern = get_shortcode_regex(array($tag));
+		if (preg_match_all('/' . $pattern . '/s', $content, $matches) && !empty($matches[3])) {
+			foreach ($matches[3] as $atts_str) {
+				$atts = shortcode_parse_atts($atts_str);
+				$is_modern = is_array($atts) && isset($atts['layout'])
+					&& strtolower(trim((string) $atts['layout'])) === 'modern';
+				$layouts[$is_modern ? 'modern' : 'legacy'] = true;
+			}
+		}
+		return $layouts;
 	}
 
 	/**
@@ -132,20 +158,22 @@ class Lknwp_Radio_Browser_Public {
 
 
 		global $post;
-		if (isset($post->post_content) && has_shortcode($post->post_content, 'radio_browser_player')) {
-			$this->enqueue_player_scripts('');
-		}
+		if (isset($post->post_content)) {
+			$player_layouts = $this->get_content_shortcode_layouts($post->post_content, 'radio_browser_player');
+			if (isset($player_layouts['legacy'])) {
+				$this->enqueue_player_scripts('-legacy');
+			}
+			if (isset($player_layouts['modern'])) {
+				$this->enqueue_player_scripts('');
+			}
 
-		if (isset($post->post_content) && has_shortcode($post->post_content, 'radio_browser_player_legacy')) {
-			$this->enqueue_player_scripts('-legacy');
-		}
-
-		if (isset($post->post_content) && has_shortcode($post->post_content, 'radio_browser_list')) {
-			$this->enqueue_list_scripts('');
-		}
-
-		if (isset($post->post_content) && has_shortcode($post->post_content, 'radio_browser_list_legacy')) {
-			$this->enqueue_list_scripts('-legacy');
+			$list_layouts = $this->get_content_shortcode_layouts($post->post_content, 'radio_browser_list');
+			if (isset($list_layouts['legacy'])) {
+				$this->enqueue_list_scripts('-legacy');
+			}
+			if (isset($list_layouts['modern'])) {
+				$this->enqueue_list_scripts('');
+			}
 		}
 	}
 

@@ -593,6 +593,8 @@ document.addEventListener("DOMContentLoaded", function () {
             var topBarsContainer = topContainer.querySelector('.lkp-visualizer-bars');
             var bottomBarsContainer = bottomContainer.querySelector('.lkp-visualizer-bars');
 
+            // Quantidade de barras: sempre PAR (a onda fica simétrica em relação
+            // ao centro — ver cálculo de `center` no loop de animação).
             var numBars = 20;
             // Altura máxima da barra = altura real da metade do visualizador
             // (assim funciona tanto no layout base 145px quanto no v2 90px).
@@ -645,8 +647,11 @@ document.addEventListener("DOMContentLoaded", function () {
                         return;
                     }
 
-                    // ONDA: graves no centro, agudos nas bordas
-                    var center = Math.max(1, Math.floor(count / 2));
+                    // ONDA: graves no centro, agudos nas bordas.
+                    // Centro geométrico — ex.: 20 barras → 9.5, então as duas
+                    // barras do meio ficam equidistantes e a onda sai simétrica
+                    // (com Math.floor, o pico ficava 1 barra fora do centro).
+                    var center = Math.max(0.5, (count - 1) / 2);
 
                     for (var i = 0; i < count; i++) {
                         var distanceFromCenter = Math.abs(i - center);
@@ -1234,4 +1239,48 @@ document.addEventListener("DOMContentLoaded", function () {
 
         sync();
     });
+})();
+
+/* ==========================================================================
+   TEMA (dark/light) — botões com persistência compartilhada em localStorage.
+   A aplicação antecipada (evitar flash) é feita por um <script> inline no template.
+   Suporta mais de um botão (ex.: lista + player na mesma página) sem duplicar bind.
+   ========================================================================== */
+(function () {
+    function initThemeToggle() {
+        var root = document.documentElement;
+        var btns = document.querySelectorAll('[data-lknwp-theme-toggle]');
+        if (!btns.length) return;
+
+        function current() {
+            return root.getAttribute('data-lknwp-theme') === 'light' ? 'light' : 'dark';
+        }
+
+        function apply(theme) {
+            root.setAttribute('data-lknwp-theme', theme);
+            try { localStorage.setItem('lknwp_theme', theme); } catch (e) {}
+            for (var i = 0; i < btns.length; i++) {
+                btns[i].setAttribute('aria-pressed', theme === 'light' ? 'true' : 'false');
+            }
+        }
+
+        var saved = 'dark';
+        try { saved = localStorage.getItem('lknwp_theme') || 'dark'; } catch (e) {}
+        apply(saved === 'light' ? 'light' : 'dark');
+
+        for (var i = 0; i < btns.length; i++) {
+            var b = btns[i];
+            if (b.getAttribute('data-lknwp-theme-bound')) continue;
+            b.setAttribute('data-lknwp-theme-bound', '1');
+            b.addEventListener('click', function () {
+                apply(current() === 'light' ? 'dark' : 'light');
+            });
+        }
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initThemeToggle);
+    } else {
+        initThemeToggle();
+    }
 })();

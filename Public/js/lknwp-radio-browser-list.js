@@ -955,3 +955,47 @@ import 'select2/dist/css/select2.min.css';
     });
 
 })(jQuery);
+
+/* ==========================================================================
+   TEMA (dark/light) — botões com persistência compartilhada em localStorage.
+   A aplicação antecipada (evitar flash) é feita por um <script> inline no template.
+   Suporta mais de um botão (ex.: lista + player na mesma página) sem duplicar bind.
+   ========================================================================== */
+(function () {
+    function initThemeToggle() {
+        var root = document.documentElement;
+        var btns = document.querySelectorAll('[data-lknwp-theme-toggle]');
+        if (!btns.length) return;
+
+        function current() {
+            return root.getAttribute('data-lknwp-theme') === 'light' ? 'light' : 'dark';
+        }
+
+        function apply(theme) {
+            root.setAttribute('data-lknwp-theme', theme);
+            try { localStorage.setItem('lknwp_theme', theme); } catch (e) {}
+            for (var i = 0; i < btns.length; i++) {
+                btns[i].setAttribute('aria-pressed', theme === 'light' ? 'true' : 'false');
+            }
+        }
+
+        var saved = 'dark';
+        try { saved = localStorage.getItem('lknwp_theme') || 'dark'; } catch (e) {}
+        apply(saved === 'light' ? 'light' : 'dark');
+
+        for (var i = 0; i < btns.length; i++) {
+            var b = btns[i];
+            if (b.getAttribute('data-lknwp-theme-bound')) continue;
+            b.setAttribute('data-lknwp-theme-bound', '1');
+            b.addEventListener('click', function () {
+                apply(current() === 'light' ? 'dark' : 'light');
+            });
+        }
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initThemeToggle);
+    } else {
+        initThemeToggle();
+    }
+})();

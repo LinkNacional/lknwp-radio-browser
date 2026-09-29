@@ -17,6 +17,16 @@ if (!defined('ABSPATH')) {
 }
 ?>
 
+<script>
+(function () {
+    try {
+        var t = localStorage.getItem('lknwp_theme');
+        if (t !== 'light' && t !== 'dark') { t = 'dark'; }
+        document.documentElement.setAttribute('data-lknwp-theme', t);
+    } catch (e) {}
+})();
+</script>
+
 <div class="lrt-radio-wrap" id="lknwp-radio-list">
     <div class="lrt-radio-shell">
 
@@ -126,6 +136,11 @@ if (!defined('ABSPATH')) {
                                 <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 6h16M7 12h10M10 18h4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
                                 <span><?php esc_html_e( 'Filtros', 'lknwp-radio-browser' ); ?></span>
                                 <svg class="lrt-btn__chevron" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><polyline points="6,9 12,15 18,9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            </button>
+
+                            <button type="button" id="lrt_theme_toggle" class="lrt-theme-toggle" data-lknwp-theme-toggle aria-pressed="false" aria-label="<?php esc_attr_e( 'Alternar tema', 'lknwp-radio-browser' ); ?>" title="<?php esc_attr_e( 'Alternar tema', 'lknwp-radio-browser' ); ?>">
+                                <svg class="lkn-theme-sun" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="2"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                                <svg class="lkn-theme-moon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                             </button>
                         </div>
                     </div>

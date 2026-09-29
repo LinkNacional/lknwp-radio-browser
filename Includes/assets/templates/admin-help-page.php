@@ -88,7 +88,7 @@ $lknwp_check_icon_svg = '<svg class="lknwp-radio-copy-btn__ic-check" viewBox="0 
             <section class="lknwp-radio-panel is-active" id="panel-getting-started" aria-labelledby="nav-getting-started">
                 <header class="lknwp-radio-panel__head">
                     <h2><span class="lknwp-radio-panel__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg></span><?php esc_html_e( 'Getting Started', 'lknwp-radio-browser' ); ?></h2>
-                    <p><?php esc_html_e( 'The plugin is split into two shortcodes. You put the player on one page and the list on another.', 'lknwp-radio-browser' ); ?></p>
+                    <p><?php esc_html_e( 'The plugin is split into two shortcodes. You put the player on one page and the list on another. Add layout="modern" to use the new layout; without it, the previous (legacy) layout is used.', 'lknwp-radio-browser' ); ?></p>
                 </header>
 
                 <div class="lknwp-radio-info" data-sf>
@@ -107,8 +107,8 @@ $lknwp_check_icon_svg = '<svg class="lknwp-radio-copy-btn__ic-check" viewBox="0 
                         <li><?php esc_html_e( 'Add the player shortcode and save:', 'lknwp-radio-browser' ); ?></li>
                     </ol>
                     <div class="lknwp-radio-code-block">
-                        <code>[radio_browser_player]</code>
-                        <button type="button" class="lknwp-radio-copy-btn" data-copy="<?php echo esc_attr( '[radio_browser_player]' ); ?>"><?php echo $lknwp_copy_icon_svg . $lknwp_check_icon_svg; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static inline SVG ?><span class="lknwp-radio-copy-btn__label"><?php esc_html_e( 'Copy', 'lknwp-radio-browser' ); ?></span></button>
+                        <code>[radio_browser_player layout="modern"]</code>
+                        <button type="button" class="lknwp-radio-copy-btn" data-copy="<?php echo esc_attr( '[radio_browser_player layout="modern"]' ); ?>"><?php echo $lknwp_copy_icon_svg . $lknwp_check_icon_svg; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static inline SVG ?><span class="lknwp-radio-copy-btn__label"><?php esc_html_e( 'Copy', 'lknwp-radio-browser' ); ?></span></button>
                     </div>
                 </div>
 
@@ -119,8 +119,8 @@ $lknwp_check_icon_svg = '<svg class="lknwp-radio-copy-btn__ic-check" viewBox="0 
                         <li><?php esc_html_e( 'Add the list shortcode, replacing "player" with your player page slug:', 'lknwp-radio-browser' ); ?></li>
                     </ol>
                     <div class="lknwp-radio-code-block">
-                        <code>[radio_browser_list player_page="player"]</code>
-                        <button type="button" class="lknwp-radio-copy-btn" data-copy="<?php echo esc_attr( '[radio_browser_list player_page="player"]' ); ?>"><?php echo $lknwp_copy_icon_svg . $lknwp_check_icon_svg; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static inline SVG ?><span class="lknwp-radio-copy-btn__label"><?php esc_html_e( 'Copy', 'lknwp-radio-browser' ); ?></span></button>
+                        <code>[radio_browser_list player_page="player" layout="modern"]</code>
+                        <button type="button" class="lknwp-radio-copy-btn" data-copy="<?php echo esc_attr( '[radio_browser_list player_page="player" layout="modern"]' ); ?>"><?php echo $lknwp_copy_icon_svg . $lknwp_check_icon_svg; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static inline SVG ?><span class="lknwp-radio-copy-btn__label"><?php esc_html_e( 'Copy', 'lknwp-radio-browser' ); ?></span></button>
                     </div>
                     <p class="lknwp-radio-muted"><?php esc_html_e( 'The list links to URLs like:', 'lknwp-radio-browser' ); ?> <code>https://your-site.com/radio-list/<strong>player</strong></code></p>
                 </div>
@@ -134,15 +134,15 @@ $lknwp_check_icon_svg = '<svg class="lknwp-radio-copy-btn__ic-check" viewBox="0 
                 </header>
 
                 <div class="lknwp-radio-code-block" data-sf>
-                    <code>[radio_browser_player]</code>
-                    <button type="button" class="lknwp-radio-copy-btn" data-copy="<?php echo esc_attr( '[radio_browser_player]' ); ?>"><?php echo $lknwp_copy_icon_svg . $lknwp_check_icon_svg; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static inline SVG ?><span class="lknwp-radio-copy-btn__label"><?php esc_html_e( 'Copy', 'lknwp-radio-browser' ); ?></span></button>
+                    <code>[radio_browser_player layout="modern"]</code>
+                    <button type="button" class="lknwp-radio-copy-btn" data-copy="<?php echo esc_attr( '[radio_browser_player layout="modern"]' ); ?>"><?php echo $lknwp_copy_icon_svg . $lknwp_check_icon_svg; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static inline SVG ?><span class="lknwp-radio-copy-btn__label"><?php esc_html_e( 'Copy', 'lknwp-radio-browser' ); ?></span></button>
                 </div>
 
                 <div class="lknwp-radio-info" data-sf>
                     <h4><span class="lknwp-radio-panel__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="2" width="8" height="4" rx="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M12 11h4"/><path d="M12 16h4"/><path d="M8 11h.01"/><path d="M8 16h.01"/></svg></span><?php esc_html_e( 'How it works', 'lknwp-radio-browser' ); ?></h4>
                     <ul>
                         <li><?php esc_html_e( 'Create a page (e.g. "Player" with slug "player").', 'lknwp-radio-browser' ); ?></li>
-                        <li><?php esc_html_e( 'Add the shortcode', 'lknwp-radio-browser' ); ?> <code>[radio_browser_player]</code>.</li>
+                        <li><?php esc_html_e( 'Add the shortcode', 'lknwp-radio-browser' ); ?> <code>[radio_browser_player layout="modern"]</code>.</li>
                         <li><?php esc_html_e( 'The player automatically receives the station from the URL.', 'lknwp-radio-browser' ); ?></li>
                         <li><?php esc_html_e( 'It works with links coming from the Radio List.', 'lknwp-radio-browser' ); ?></li>
                     </ul>
@@ -156,8 +156,8 @@ $lknwp_check_icon_svg = '<svg class="lknwp-radio-copy-btn__ic-check" viewBox="0 
                 </div>
 
                 <div class="lknwp-radio-note" data-sf>
-                    <strong><?php esc_html_e( 'Legacy layout:', 'lknwp-radio-browser' ); ?></strong>
-                    <?php esc_html_e( 'use', 'lknwp-radio-browser' ); ?> <code>[radio_browser_player_legacy]</code> <?php esc_html_e( 'to keep the previous player layout.', 'lknwp-radio-browser' ); ?>
+                    <strong><?php esc_html_e( 'Layout:', 'lknwp-radio-browser' ); ?></strong>
+                    <?php esc_html_e( 'without a layout attribute the shortcode renders the previous (legacy) layout, so existing pages keep working. Use', 'lknwp-radio-browser' ); ?> <code>layout="modern"</code> <?php esc_html_e( 'for the new layout (or', 'lknwp-radio-browser' ); ?> <code>layout="legacy"</code> <?php esc_html_e( 'to be explicit).', 'lknwp-radio-browser' ); ?>
                 </div>
             </section>
 
@@ -169,8 +169,8 @@ $lknwp_check_icon_svg = '<svg class="lknwp-radio-copy-btn__ic-check" viewBox="0 
                 </header>
 
                 <div class="lknwp-radio-code-block" data-sf>
-                    <code>[radio_browser_list player_page="player"]</code>
-                    <button type="button" class="lknwp-radio-copy-btn" data-copy="<?php echo esc_attr( '[radio_browser_list player_page="player"]' ); ?>"><?php echo $lknwp_copy_icon_svg . $lknwp_check_icon_svg; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static inline SVG ?><span class="lknwp-radio-copy-btn__label"><?php esc_html_e( 'Copy', 'lknwp-radio-browser' ); ?></span></button>
+                    <code>[radio_browser_list player_page="player" layout="modern"]</code>
+                    <button type="button" class="lknwp-radio-copy-btn" data-copy="<?php echo esc_attr( '[radio_browser_list player_page="player" layout="modern"]' ); ?>"><?php echo $lknwp_copy_icon_svg . $lknwp_check_icon_svg; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static inline SVG ?><span class="lknwp-radio-copy-btn__label"><?php esc_html_e( 'Copy', 'lknwp-radio-browser' ); ?></span></button>
                 </div>
 
                 <div class="lknwp-radio-info" data-sf>
@@ -188,8 +188,8 @@ $lknwp_check_icon_svg = '<svg class="lknwp-radio-copy-btn__ic-check" viewBox="0 
                 </div>
 
                 <div class="lknwp-radio-note" data-sf>
-                    <strong><?php esc_html_e( 'Legacy layout:', 'lknwp-radio-browser' ); ?></strong>
-                    <?php esc_html_e( 'use', 'lknwp-radio-browser' ); ?> <code>[radio_browser_list_legacy player_page="player"]</code> <?php esc_html_e( 'to keep the previous list layout (same parameters).', 'lknwp-radio-browser' ); ?>
+                    <strong><?php esc_html_e( 'Layout:', 'lknwp-radio-browser' ); ?></strong>
+                    <?php esc_html_e( 'without a layout attribute the shortcode renders the previous (legacy) layout, so existing pages keep working. Use', 'lknwp-radio-browser' ); ?> <code>layout="modern"</code> <?php esc_html_e( 'for the new layout.', 'lknwp-radio-browser' ); ?>
                 </div>
             </section>
 
@@ -210,6 +210,11 @@ $lknwp_check_icon_svg = '<svg class="lknwp-radio-copy-btn__ic-check" viewBox="0 
                             </tr>
                         </thead>
                         <tbody>
+                            <tr data-sf>
+                                <td><code>layout</code><button type="button" class="lknwp-radio-copy-btn lknwp-radio-copy-btn--mini" data-copy="layout" title="<?php esc_attr_e( 'Copy', 'lknwp-radio-browser' ); ?>"><?php echo $lknwp_copy_icon_svg . $lknwp_check_icon_svg; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static inline SVG ?></button></td>
+                                <td><?php esc_html_e( 'Layout to render: "modern" = new layout; absent or "legacy" = previous layout', 'lknwp-radio-browser' ); ?></td>
+                                <td><code>"legacy"</code></td>
+                            </tr>
                             <tr data-sf>
                                 <td><code>player_page</code><button type="button" class="lknwp-radio-copy-btn lknwp-radio-copy-btn--mini" data-copy="player_page" title="<?php esc_attr_e( 'Copy', 'lknwp-radio-browser' ); ?>"><?php echo $lknwp_copy_icon_svg . $lknwp_check_icon_svg; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static inline SVG ?></button></td>
                                 <td><?php esc_html_e( 'Player page slug (required)', 'lknwp-radio-browser' ); ?></td>
@@ -322,40 +327,40 @@ $lknwp_check_icon_svg = '<svg class="lknwp-radio-copy-btn__ic-check" viewBox="0 
                 <div class="lknwp-radio-example" data-sf>
                     <h4><?php esc_html_e( 'Complete list with filters (default)', 'lknwp-radio-browser' ); ?></h4>
                     <div class="lknwp-radio-code-block">
-                        <code>[radio_browser_list player_page="player"]</code>
-                        <button type="button" class="lknwp-radio-copy-btn" data-copy="<?php echo esc_attr( '[radio_browser_list player_page="player"]' ); ?>"><?php echo $lknwp_copy_icon_svg . $lknwp_check_icon_svg; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static inline SVG ?><span class="lknwp-radio-copy-btn__label"><?php esc_html_e( 'Copy', 'lknwp-radio-browser' ); ?></span></button>
+                        <code>[radio_browser_list player_page="player" layout="modern"]</code>
+                        <button type="button" class="lknwp-radio-copy-btn" data-copy="<?php echo esc_attr( '[radio_browser_list player_page="player" layout="modern"]' ); ?>"><?php echo $lknwp_copy_icon_svg . $lknwp_check_icon_svg; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static inline SVG ?><span class="lknwp-radio-copy-btn__label"><?php esc_html_e( 'Copy', 'lknwp-radio-browser' ); ?></span></button>
                     </div>
                 </div>
 
                 <div class="lknwp-radio-example" data-sf>
                     <h4><?php esc_html_e( 'Clean list without filters', 'lknwp-radio-browser' ); ?></h4>
                     <div class="lknwp-radio-code-block">
-                        <code>[radio_browser_list player_page="player" hide_all_filters="yes"]</code>
-                        <button type="button" class="lknwp-radio-copy-btn" data-copy="<?php echo esc_attr( '[radio_browser_list player_page="player" hide_all_filters="yes"]' ); ?>"><?php echo $lknwp_copy_icon_svg . $lknwp_check_icon_svg; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static inline SVG ?><span class="lknwp-radio-copy-btn__label"><?php esc_html_e( 'Copy', 'lknwp-radio-browser' ); ?></span></button>
+                        <code>[radio_browser_list player_page="player" layout="modern" hide_all_filters="yes"]</code>
+                        <button type="button" class="lknwp-radio-copy-btn" data-copy="<?php echo esc_attr( '[radio_browser_list player_page="player" layout="modern" hide_all_filters="yes"]' ); ?>"><?php echo $lknwp_copy_icon_svg . $lknwp_check_icon_svg; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static inline SVG ?><span class="lknwp-radio-copy-btn__label"><?php esc_html_e( 'Copy', 'lknwp-radio-browser' ); ?></span></button>
                     </div>
                 </div>
 
                 <div class="lknwp-radio-example" data-sf>
                     <h4><?php esc_html_e( 'Text search only', 'lknwp-radio-browser' ); ?></h4>
                     <div class="lknwp-radio-code-block">
-                        <code>[radio_browser_list player_page="player" hide_country="yes" hide_limit="yes" hide_sort="yes" hide_order="yes"]</code>
-                        <button type="button" class="lknwp-radio-copy-btn" data-copy="<?php echo esc_attr( '[radio_browser_list player_page="player" hide_country="yes" hide_limit="yes" hide_sort="yes" hide_order="yes"]' ); ?>"><?php echo $lknwp_copy_icon_svg . $lknwp_check_icon_svg; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static inline SVG ?><span class="lknwp-radio-copy-btn__label"><?php esc_html_e( 'Copy', 'lknwp-radio-browser' ); ?></span></button>
+                        <code>[radio_browser_list player_page="player" layout="modern" hide_country="yes" hide_limit="yes" hide_sort="yes" hide_order="yes"]</code>
+                        <button type="button" class="lknwp-radio-copy-btn" data-copy="<?php echo esc_attr( '[radio_browser_list player_page="player" layout="modern" hide_country="yes" hide_limit="yes" hide_sort="yes" hide_order="yes"]' ); ?>"><?php echo $lknwp_copy_icon_svg . $lknwp_check_icon_svg; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static inline SVG ?><span class="lknwp-radio-copy-btn__label"><?php esc_html_e( 'Copy', 'lknwp-radio-browser' ); ?></span></button>
                     </div>
                 </div>
 
                 <div class="lknwp-radio-example" data-sf>
                     <h4><?php esc_html_e( 'Fixed configuration (US radios, 10 stations, no filters)', 'lknwp-radio-browser' ); ?></h4>
                     <div class="lknwp-radio-code-block">
-                        <code>[radio_browser_list player_page="player" countrycode="US" limit="10" hide_all_filters="yes"]</code>
-                        <button type="button" class="lknwp-radio-copy-btn" data-copy="<?php echo esc_attr( '[radio_browser_list player_page="player" countrycode="US" limit="10" hide_all_filters="yes"]' ); ?>"><?php echo $lknwp_copy_icon_svg . $lknwp_check_icon_svg; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static inline SVG ?><span class="lknwp-radio-copy-btn__label"><?php esc_html_e( 'Copy', 'lknwp-radio-browser' ); ?></span></button>
+                        <code>[radio_browser_list player_page="player" layout="modern" countrycode="US" limit="10" hide_all_filters="yes"]</code>
+                        <button type="button" class="lknwp-radio-copy-btn" data-copy="<?php echo esc_attr( '[radio_browser_list player_page="player" layout="modern" countrycode="US" limit="10" hide_all_filters="yes"]' ); ?>"><?php echo $lknwp_copy_icon_svg . $lknwp_check_icon_svg; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static inline SVG ?><span class="lknwp-radio-copy-btn__label"><?php esc_html_e( 'Copy', 'lknwp-radio-browser' ); ?></span></button>
                     </div>
                 </div>
 
                 <div class="lknwp-radio-example" data-sf>
                     <h4><?php esc_html_e( 'List sorted by name (alphabetical)', 'lknwp-radio-browser' ); ?></h4>
                     <div class="lknwp-radio-code-block">
-                        <code>[radio_browser_list player_page="player" sort="name"]</code>
-                        <button type="button" class="lknwp-radio-copy-btn" data-copy="<?php echo esc_attr( '[radio_browser_list player_page="player" sort="name"]' ); ?>"><?php echo $lknwp_copy_icon_svg . $lknwp_check_icon_svg; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static inline SVG ?><span class="lknwp-radio-copy-btn__label"><?php esc_html_e( 'Copy', 'lknwp-radio-browser' ); ?></span></button>
+                        <code>[radio_browser_list player_page="player" layout="modern" sort="name"]</code>
+                        <button type="button" class="lknwp-radio-copy-btn" data-copy="<?php echo esc_attr( '[radio_browser_list player_page="player" layout="modern" sort="name"]' ); ?>"><?php echo $lknwp_copy_icon_svg . $lknwp_check_icon_svg; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static inline SVG ?><span class="lknwp-radio-copy-btn__label"><?php esc_html_e( 'Copy', 'lknwp-radio-browser' ); ?></span></button>
                     </div>
                 </div>
             </section>
@@ -391,7 +396,7 @@ $lknwp_check_icon_svg = '<svg class="lknwp-radio-copy-btn__ic-check" viewBox="0 
                 <details class="lknwp-radio-faq" data-sf>
                     <summary><?php esc_html_e( 'How do I find the slug for player_page?', 'lknwp-radio-browser' ); ?></summary>
                     <div class="lknwp-radio-faq__body">
-                        <p><?php esc_html_e( 'Go to Pages, hover over the page that contains [radio_browser_player] and read its slug in the URL. Use that value in player_page="…".', 'lknwp-radio-browser' ); ?></p>
+                        <p><?php esc_html_e( 'Go to Pages, hover over the page that contains [radio_browser_player layout="modern"] and read its slug in the URL. Use that value in player_page="…".', 'lknwp-radio-browser' ); ?></p>
                     </div>
                 </details>
 

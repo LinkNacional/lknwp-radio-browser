@@ -108,10 +108,11 @@ Using the Radio Browser plugin is straightforward with two simple shortcodes:
 
 Display a list of radio stations with filtering options:
 
-`[radio_browser_list]`
+`[radio_browser_list layout="modern"]`
 
 **Available Parameters:**
 
+* `layout` - Layout to render: "modern" (new layout) or "legacy"/absent (previous layout)
 * `player_page` - The page slug where your radio player is located (default: "player")
 * `countrycode` - Filter stations by country code (default: "BR" for Brazil)
 * `limit` - Number of stations to display (default: 20)
@@ -124,20 +125,20 @@ Display a list of radio stations with filtering options:
 * `hide_all_filters` - Hide entire filter form (yes/no)
 
 **Example:**
-`[radio_browser_list player_page="radio-player" countrycode="US" limit="50"]`
+`[radio_browser_list player_page="radio-player" layout="modern" countrycode="US" limit="50"]`
 
 = Radio Player =
 
 Display the audio player on a dedicated page:
 
-`[radio_browser_player]`
+`[radio_browser_player layout="modern"]`
 
 This shortcode automatically detects the radio station from the URL and displays the appropriate player with controls and station information.
 
 = Setting Up Your Radio Website =
 
-1. Create a **Radio List Page:** Add a new page and insert the `[radio_browser_list]` shortcode
-2. Create a **Player Page:** Add another page with the `[radio_browser_player]` shortcode
+1. Create a **Radio List Page:** Add a new page and insert the `[radio_browser_list layout="modern"]` shortcode
+2. Create a **Player Page:** Add another page with the `[radio_browser_player layout="modern"]` shortcode
 3. Configure the list shortcode to point to your player page using the `player_page` parameter
 4. Publish both pages and start enjoying streaming radio!
 
