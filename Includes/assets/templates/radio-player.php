@@ -93,7 +93,7 @@ $lknwp_stat_icons = array(
         <input type="hidden" id="lknwp_station_votes" value="<?php echo isset($station_votes) ? intval($station_votes) : 0; ?>">
 
         <!-- Ícone decorativo de fundo (gênero da rádio) — grande, opacidade diagonal -->
-        <div class="lkp-v2__bg" aria-hidden="true"><?php echo $lknwp_icons[$lknwp_gi]; ?></div>
+        <div class="lkp-v2__bg" aria-hidden="true"><?php echo $lknwp_icons[$lknwp_gi]; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static inline SVG ?></div>
 
         <div class="lkp-v2__content">
             <!-- ===== TOPO: ícone + título / favoritar / "Agora tocando" / tags ===== -->
@@ -148,14 +148,14 @@ $lknwp_stat_icons = array(
             <div class="lkp-v2__mid">
                 <ul class="lkp-v2__cards">
                     <li class="lkp-v2__stat">
-                        <span class="lkp-v2__stat-ic"><?php echo $lknwp_stat_icons['genre']; ?></span>
+                        <span class="lkp-v2__stat-ic"><?php echo $lknwp_stat_icons['genre']; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static inline SVG ?></span>
                         <span class="lkp-v2__stat-tx">
                             <span class="lkp-v2__stat-k"><?php esc_html_e( 'Genre', 'lknwp-radio-browser' ); ?></span>
                             <span class="lkp-v2__stat-v"><?php echo $station_genre !== '' ? esc_html($station_genre) : '—'; ?></span>
                         </span>
                     </li>
                     <li class="lkp-v2__stat">
-                        <span class="lkp-v2__stat-ic"><?php echo $lknwp_stat_icons['country']; ?></span>
+                        <span class="lkp-v2__stat-ic"><?php echo $lknwp_stat_icons['country']; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static inline SVG ?></span>
                         <span class="lkp-v2__stat-tx">
                             <span class="lkp-v2__stat-k"><?php esc_html_e( 'Country', 'lknwp-radio-browser' ); ?></span>
                             <span class="lkp-v2__stat-v">
@@ -165,14 +165,14 @@ $lknwp_stat_icons = array(
                         </span>
                     </li>
                     <li class="lkp-v2__stat">
-                        <span class="lkp-v2__stat-ic"><?php echo $lknwp_stat_icons['quality']; ?></span>
+                        <span class="lkp-v2__stat-ic"><?php echo $lknwp_stat_icons['quality']; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static inline SVG ?></span>
                         <span class="lkp-v2__stat-tx">
                             <span class="lkp-v2__stat-k"><?php esc_html_e( 'Quality', 'lknwp-radio-browser' ); ?></span>
                             <span class="lkp-v2__stat-v"><?php echo ($station_bitrate !== '' || $station_codec !== '') ? esc_html(trim($station_bitrate . ($station_bitrate && $station_codec ? ' · ' : '') . $station_codec)) : '—'; ?></span>
                         </span>
                     </li>
                     <li class="lkp-v2__stat">
-                        <span class="lkp-v2__stat-ic"><?php echo $lknwp_stat_icons['plays']; ?></span>
+                        <span class="lkp-v2__stat-ic"><?php echo $lknwp_stat_icons['plays']; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static inline SVG ?></span>
                         <span class="lkp-v2__stat-tx">
                             <span class="lkp-v2__stat-k"><?php esc_html_e( 'Plays', 'lknwp-radio-browser' ); ?></span>
                             <span class="lkp-v2__stat-v"><?php echo esc_html(number_format_i18n((int) $station_clickcount)); ?></span>
