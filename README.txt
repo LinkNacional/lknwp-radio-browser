@@ -4,7 +4,7 @@ Tags: radio, streaming, audio, player, music
 Requires at least: 5.0
 Tested up to: 7.1
 Stable tag: 1.1.0
-Requires PHP: 7.4
+Requires PHP: 8.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Donate link: https://paraquemdoar.org/doar/
@@ -78,7 +78,7 @@ Perfect for music blogs, radio websites, entertainment portals, or any site that
 For this plugin to work correctly, you will need:
 
 * WordPress version 5.0 or later
-* PHP version 7.4 or later
+* PHP version 8.2 or later
 * An active internet connection for streaming radio content
 * Modern web browser with HTML5 audio support
 

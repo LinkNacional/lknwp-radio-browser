@@ -32,7 +32,7 @@ Ideal para blogs de música, sites de rádio, portais de entretenimento ou qualq
 
 **Dependências**
 
-Este plugin depende do WordPress 5.0+ e PHP 7.4+. Não há dependência de outros plugins.
+Este plugin depende do WordPress 5.0+ e PHP 8.2+. Não há dependência de outros plugins.
 
 **Instruções de uso**
 

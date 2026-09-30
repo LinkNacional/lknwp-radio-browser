@@ -9,11 +9,11 @@ Atualiza **todos** os arquivos que contêm o número de versão para uma nova re
 
 ## Parâmetros (via `arguments`)
 
-O usuário pode passar os valores diretamente: `"version=1.10.0 tested_up=6.8 php=7.4 highlights=..."`. Se algum valor faltar, pergunte.
+O usuário pode passar os valores diretamente: `"version=1.10.0 tested_up=7.1 php=8.2 highlights=..."`. Se algum valor faltar, pergunte.
 
 - **version** — nova versão (Stable tag)
 - **tested_up** — versão do WP testada (Tested up to)
-- **php** — versão mínima do PHP (Requires PHP; default `7.4`)
+- **php** — versão mínima do PHP (Requires PHP; default `8.2`)
 - **highlights** — resumo da versão (opcional; se vazio, use o git log como dica)
 
 ## Fluxo de execução

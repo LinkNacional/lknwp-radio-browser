@@ -114,7 +114,7 @@ Perfect for music blogs, radio sites, entertainment portals, or any site that wa
 ## 🔧 Minimum Requirements
 
 - WordPress 5.0 or higher
-- PHP 7.4 or higher
+- PHP 8.2 or higher
 - Internet connection for streaming
 - Modern browser with HTML5 audio support
 

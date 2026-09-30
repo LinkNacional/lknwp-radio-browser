@@ -17,6 +17,7 @@
  * Plugin URI:        https://www.linknacional.com.br
  * Description:       WP plugin to list online radios and listen to live broadcasts directly on your site, using the Radio Browser API.
  * Version:           1.1.0
+ * Requires PHP:      8.2
  * Author:            Link Nacional
  * Author URI:        https://www.linknacional.com.br/
  * License:           GPL-2.0+
