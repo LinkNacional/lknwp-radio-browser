@@ -9,7 +9,7 @@
 **Website:** [linknacional.com.br](https://www.linknacional.com.br/)  
 **Tags:** radio, streaming, audio, player, music  
 **Tested up to:** 7.1  
-**Stable version:** 1.9.1  
+**Stable version:** 1.1.0  
 **License:** GPLv2 or later  
 **Translations:** English / Portuguese (Brazil)
 
@@ -20,16 +20,19 @@ Integrate thousands of online radio stations into your WordPress site with a res
 ## ✨ Features
 
 - 🌍 **30,000+ Stations:** Access the Radio-Browser.info database with stations from all over the world
-- 🎵 **HTML5 Player:** Modern, responsive audio player with volume controls
-- 📱 **Responsive Design:** Works perfectly on desktop, tablet, and mobile
+- 🎨 **Modern & Legacy Layouts:** Choose the redesigned layout (or the previous one) via the `layout` shortcode attribute
+- 🎵 **HTML5 Player:** Modern, responsive audio player with volume controls and an animated audio visualizer
+- 🎧 **Live Now-Playing Metadata:** Album cover, song/artist and current audience (listeners) fetched server-side
+- ⭐ **Collections:** Favorites and Recents views saved in the browser, plus a "Continue listening" block
+- 🌐 **Country, Genre & Language Filters:** Filter stations by country, genre and language, with category pills
 - 🔍 **Smart Search:** Find stations by name, country, or genre
-- 🌐 **Country Filters:** Filter stations by any country in the world
-- 📊 **Multiple Sorting Options:** Sort by popularity, name, bitrate, or random
+- 📊 **Multiple Sorting Options:** Sort by popularity, name, bitrate, or random (ascending or descending)
+- 🌓 **Light/Dark Theme:** Built-in theme toggle for the player and the list
+- 📱 **Responsive Design:** Works perfectly on desktop, tablet, and mobile
 - 🔗 **SEO-Friendly URLs:** SEO-friendly URLs for individual stations
 - 🎯 **Simple Shortcodes:** Easy integration with shortcodes on any page
 - 🛡️ **Streaming Proxy:** Built-in proxy for smooth streaming with CORS support
 - 📈 **Statistics:** Integration with click statistics from Radio-Browser.info
-- 🎨 **Customizable:** CSS classes for complete visual customization
 - ⚡ **Performance:** Fast and optimized loading
 
 ---
@@ -56,9 +59,16 @@ Perfect for music blogs, radio sites, entertainment portals, or any site that wa
 - `countrycode` - Filter by country (default: "BR")
 - `limit` - Number of stations (default: 20)
 - `sort` - Sorting: "clickcount", "name", "random", "bitrate"
+- `reverse` - Reverse the order: "1" (descending, default) or "0" (ascending)
 - `search` - Predefined search term
+- `genre` - Pre-select a genre/tag filter (default: "all")
 - `hide_country` - Hide country filter (yes/no)
+- `hide_limit` - Hide limit field (yes/no)
+- `hide_sort` - Hide sort options (yes/no)
+- `hide_order` - Hide the order (reverse) button (yes/no)
+- `hide_genre` - Hide genre filter (yes/no)
 - `hide_search` - Hide search field (yes/no)
+- `hide_button` - Hide the submit button (yes/no, legacy layout only)
 - `hide_all_filters` - Hide all filters (yes/no)
 
 **Example:**

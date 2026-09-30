@@ -3,7 +3,7 @@ Contributors: linknacional
 Tags: radio, streaming, audio, player, music
 Requires at least: 5.0
 Tested up to: 7.1
-Stable tag: 1.9.1
+Stable tag: 1.1.0
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -46,24 +46,32 @@ Perfect for music blogs, radio websites, entertainment portals, or any site that
 == Features ==
 
 * **Global Radio Database:** Access to 30,000+ radio stations from Radio-Browser.info
-* **Beautiful Audio Player:** Modern, responsive HTML5 audio player with volume controls
-* **Customizable Radio Lists:** Display radio stations with filtering and sorting options
+* **Modern & Legacy Layouts:** Choose the redesigned layout (or the previous one) via the `layout` shortcode attribute
+* **Beautiful Audio Player:** Modern, responsive HTML5 audio player with volume controls and an animated audio visualizer
+* **Live Now-Playing Metadata:** Album cover, song/artist and current audience (listeners) fetched server-side
+* **Collections:** Favorites and Recents views saved in the browser, plus a "Continue listening" block
+* **Genre, Country & Language Filters:** Filter stations by country, genre and language, with category pills
 * **Smart Search Functionality:** Find stations by name, country, or genre
+* **Multiple Sort Options:** Sort by popularity, name, bitrate, or random order, ascending or descending
+* **Light/Dark Theme:** Built-in theme toggle for the player and the list
 * **SEO-Friendly URLs:** Clean, readable URLs for individual radio stations
 * **Responsive Design:** Works perfectly on desktop, tablet, and mobile devices
 * **Easy Integration:** Simple shortcodes to embed radio lists and players anywhere
 * **Audio Streaming Proxy:** Built-in proxy for smooth audio streaming with CORS support
-* **Country Filtering:** Filter stations by country with support for all nations
-* **Multiple Sort Options:** Sort by popularity, name, bitrate, or random order
-* **Station Information:** Display station logos, descriptions, and statistics
+* **Station Information:** Display station logos, genres, country flags, and bitrate/codec statistics
 * **Click Tracking:** Integration with Radio-Browser.info's click statistics
 
 == Screenshots ==
 
-1. Radio player displaying a selected station with controls and information
-2. Admin configuration panel for managing plugin settings
-3. Mobile responsive radio player interface
-4. Radio station list with country filter and search functionality
+1. Radio player with live now-playing metadata (album cover, song/artist and listeners)
+2. Radio list with the premium sidebar (Discover / Favorites / Recents) and category pills
+3. Radio list with country, genre and language filters and sorting options
+4. Radio station cards with logo, genre, country flag and bitrate/codec chips
+5. Favorites view (stations saved in the browser)
+6. Recents view with the "Continue listening" block
+7. Admin help page with navigable sections and content search
+8. Admin settings for the shortcodes
+9. Mobile responsive radio player interface
 
 == Minimum Requirements ==
 
@@ -117,11 +125,16 @@ Display a list of radio stations with filtering options:
 * `countrycode` - Filter stations by country code (default: "BR" for Brazil)
 * `limit` - Number of stations to display (default: 20)
 * `sort` - Sort order: "clickcount", "name", "random", "bitrate" (default: "clickcount")
+* `reverse` - Reverse the order: "1" (descending, default) or "0" (ascending)
 * `search` - Pre-filter stations by search term
+* `genre` - Pre-select a genre/tag filter (default: "all")
 * `hide_country` - Hide country filter (yes/no)
 * `hide_limit` - Hide limit field (yes/no)
 * `hide_sort` - Hide sort options (yes/no)
+* `hide_order` - Hide the order (reverse) button (yes/no)
+* `hide_genre` - Hide genre filter (yes/no)
 * `hide_search` - Hide search field (yes/no)
+* `hide_button` - Hide the submit button (yes/no, legacy layout only)
 * `hide_all_filters` - Hide entire filter form (yes/no)
 
 **Example:**
@@ -176,7 +189,7 @@ The audio streams come directly from the radio stations' servers, so there are n
 
 = Can I filter stations by genre or language? =
 
-Currently, the plugin supports filtering by country and searching by station name. More advanced filtering options may be added in future versions based on user feedback.
+Yes. The list supports filtering by country, genre and language (inside the "Filtros" panel), plus category pills and a search box. The available genres and languages come from the Radio-Browser.info API.
 
 = Is the plugin compatible with caching plugins? =
 
@@ -192,131 +205,18 @@ If you need help or have questions, please post them in the [support forum](http
 
 == Changelog ==
 
-= 1.9.1 = *2026/09/25*
-* Header now on a single line: search on the left (up to 50% width) and the country flag + "Filtros" button on the right, with a gap between them.
-* The "Filtros" button now uses the same pill style as the other controls (hardened against the theme button styles).
-
-= 1.9.0 = *2026/09/25*
-* Reorganized the list header: search bar + country flag + "Filtros" button.
-* Genre, language and sorting now live inside the "Filtros" panel (open/close).
-* Fixed the search field padding that was being overridden by the theme.
-
-= 1.8.2 = *2026/09/25*
-* Sidebar: items truly without background, with border-radius and left-aligned text (hardened against the theme CSS, which applies background/min-height to every <button>).
-
-= 1.8.1 = *2026/09/25*
-* Sidebar: items without background, left-aligned, with a left-to-right gradient on hover and on the selected item.
-* The radio list now lives inside a block with its own scroll (no longer grows the page).
-* Filter fields (country/genre/language/order) have fixed pill widths (the genre select no longer overflows).
-
-= 1.8.0 = *2026/09/25*
-* Premium sidebar on the list: "Radio" logo, Discover/Favorites/Recents menu, a "Browse by" section (Genres/Countries/Languages) with icons, and a footer with an animated wave + "Thousands of radios, one place.".
-* Working views: Favorites and Recents filter the stations (saved in the browser).
-* Language filter (Languages) using the Radio-Browser API language param.
-
-= 1.7.0 = *2026/09/25*
-* Radio list redesigned: premium dark UI (navy/indigo/purple), glassmorphism and micro-glow.
-* Pill search bar, country/genre/order pill selects and category pills (rock, MPB, electronic, sertanejo, pop, jazz, news).
-* Station cards with a featured logo, genre, country with flag, and bitrate/codec/votes chips (Radio-Browser API fields).
-* Favorite a station (heart, saved in the browser) and a "● LISTENING NOW" state with an animated equalizer on the selected card.
-* Security: API data is escaped when building the cards (prevents XSS).
-
-= 1.6.1 = *2026/09/25*
-* Fixed: the waves stopped working after a long time playing (e.g. 30 min) when pausing and resuming. The AudioContext is now resumed and the stream proxy is rebuilt when needed.
-
-= 1.6.0 = *2026/09/25*
-* Radio metadata is now fetched on the server (AJAX proxy endpoint), removing the CORS errors from the console.
-* Below the waves it now shows the album cover, song/artist name and the current audience (listeners), when the station provides them.
-* Album cover fetched from iTunes server-side.
-* SSRF protection: only public hosts are queried.
-* Per-IP rate limit on the endpoint (anti-abuse).
-* Removed the public CORS proxies from the JS (no longer needed).
-
-= 1.5.8 = *2026/09/25*
-* Player: slightly smaller waves (height 160->145px), without changing the card height.
-
-= 1.5.7 = *2026/09/25*
-* Player: slightly smaller play button (158px) and slightly wider card (380px).
-
-= 1.5.6 = *2026/09/25*
-* Player: card reverted to the previous size; only the play button was enlarged (180px) with proportional white ball and icon, and the wave block grew to keep showing around it.
-
-= 1.5.5 = *2026/09/25*
-* Bigger player: wider card (420px), larger play button, cover, icon, waves and spacings, scaled proportionally.
-
-= 1.5.4 = *2026/09/25*
-* Player: increased the card height (~1.5x), keeping the width. The waves grew along to fill the block.
-
-= 1.5.3 = *2026/09/25*
-* Player: vertical spacing restored to the previous values and the card widened (~340px). The waves follow the new width.
-
-= 1.5.2 = *2026/09/25*
-* Visualizer: thicker bars (18 bars) and removed the white peak caps.
-* Player: more vertical spacing (between the station title and the other sections, and at the bottom) so the component is taller and less compact.
-
-= 1.5.1 = *2026/09/25*
-* Bigger, more wave-like visualizer: taller block, 38 thinner/rounded bars and more visible peak caps.
-
-= 1.5.0 = *2026/09/25*
-* Reworked the audio visualizer into a smooth waveform: 30 rounded bars, eased animation (fast attack / slow release), peak caps that fall with "gravity" and a mirrored reflection with fade-out.
-* More compact player: smaller play button, station cover, paddings and spacings.
-
-= 1.4.3 = *2026/09/25*
-* Player: play button back to the two-level look (big purple ball + inner white ball) with the dark play/pause icon centered.
-
-= 1.4.2 = *2026/09/25*
-* Player: the play button is now a perfect circle (box-sizing/aspect-ratio).
-* Player: redesigned and centered the play/pause icon (removed the gray background circle inherited from the old theme).
-
-= 1.4.1 = *2026/09/25*
-* Player: fixed the play button being round again (the theme forced border-radius: 0 on every <button>).
-* Player: fixed the "Copy link" icon not showing (the theme forced padding/min-height on buttons).
-* Player: the play button turns green on hover (to play) and red on hover while playing again.
-
-= 1.4.0 = *2026/09/25*
-* Less rounded corners across the plugin (player, list and Help page), keeping a rounded yet subtler style.
-
-= 1.3.3 = *2026/09/25*
-* Fixed the last card in the list being taller than the others: all grid rows now share the same height (grid-auto-rows: 1fr).
-
-= 1.3.2 = *2026/09/25*
-* Removed the accent bar that appeared on top of the radio card on hover.
-* Left-aligned the text in the Limit field and the Order button.
-
-= 1.3.1 = *2026/09/25*
-* List filter fields now grow to fill the whole row (flexbox layout), aligned with the search bar.
-
-= 1.3.0 = *2026/09/25*
-* Refactored the list filter form: all fields now share the same height, border radius, font size and spacing (no longer overridden by the theme).
-* Filter layout is now a responsive grid that spans the full width.
-* Fixed the Genre field (Select2): fills the full width, correct placeholder and themed dropdown.
-* Labels without "caps-lock" (uppercase removed) and standardized sizes.
-* Improved radio cards: larger logo, metadata line (country · genre · bitrate), top accent bar and richer hover.
-
-= 1.2.3 = *2026/09/25*
-* Softened the admin help hero shadow (removed the glow that radiated on all sides).
-
-= 1.2.2 = *2026/09/25*
-* Admin help hero now uses the lighter purple tone (same gradient as the active sidebar item and the copy button).
-
-= 1.2.1 = *2026/09/25*
-* Admin help page: WordPress notices (e.g. TGMPA/theme) are no longer injected inside the hero (added `wp-header-end`).
-* Softened the hero shadow so it no longer darkens the section titles.
-* Search field: icon moved to the right so it no longer overlaps the placeholder; clear button repositioned.
-
-= 1.2.0 = *2026/09/25*
-* Admin help page rebuilt into navigable sections with a sidebar (Getting Started, Player, List, Parameters, Hide Filters, Examples, FAQ).
-* Added content search/filter to the documentation.
-* New FAQ section.
-* Copy button on each parameter row.
-* Tab navigation (one section at a time) with URL hash support (#panel-...).
-
-= 1.1.0 = *2026/09/25*
-* Complete redesign of the player and radio list with a violet theme, gradients, glassmorphism and glow effects.
-* Audio visualizer updated to violet/magenta tones.
-* New brand color palette / design tokens added to colors.css.
-* Visual refresh of the admin help page (hero + modern cards).
-* Removed debug logs (error_log) from the radio listing.
+= 1.1.0 = *2026/09/30*
+* Full redesign of the player and radio list: violet theme, gradients, glassmorphism and glow effects.
+* Premium list sidebar: "Radio" logo, Discover/Favorites/Recents menu and a "Browse by" section (Genres/Countries/Languages) with icons.
+* Working Favorites and Recents views (saved in the browser) and a "Continue listening" block.
+* Filters by country, genre and language, category pills (rock, MPB, electronic, sertanejo, pop, jazz, news) and sorting (popular, name, bitrate, random).
+* Player with live metadata: album cover, song/artist and audience (listeners) fetched server-side via an AJAX proxy (no CORS errors).
+* Animated audio visualizer (waveform) and a light/dark theme toggle.
+* Station cards with logo, genre, country flag and bitrate/codec/votes chips.
+* UI hardening against the theme CSS (round play button; self-contained icons and fields).
+* Security: API data escaped when building the cards; metadata proxy with SSRF protection and per-IP rate limiting.
+* Admin help page rebuilt into navigable sections, with search, FAQ and copy buttons.
+* Notice (editors only) when the layout attribute is invalid; visitors see the legacy layout.
 
 = 1.0.1 = *2025/03/05*
 * New icons and banners for the plugin.
@@ -332,6 +232,9 @@ If you need help or have questions, please post them in the [support forum](http
 * Support for 30,000+ radio stations worldwide
 
 == Upgrade Notice ==
+
+= 1.1.0 =
+New list and player layouts, Favorites/Recents, genre and language filters, and live now-playing metadata.
 
 = 1.0.0 =
 Initial release of Radio Browser Stations. Install to start streaming radio stations on your website.
