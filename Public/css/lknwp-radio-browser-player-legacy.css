@@ -632,3 +632,88 @@
     position: relative;
     z-index: 10;
 }
+
+/* ===== BLINDAGEM CONTRA O TEMA (mesmo fix do layout atual) =====
+   Muitos temas injetam min-width/min-height, padding e pseudo-elementos em
+   todo <button>, o que deforma o botão (deixa de ser redondo) e desalinha o
+   ícone de compartilhar. Estas regras neutralizam isso.
+   Escopo restrito ao layout LEGADO (wrapper sem .lkp-v2) para não afetar o
+   layout atual. */
+.lkp-player-wrapper:not(.lkp-v2) .lkp-share-btn {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    width: 36px !important;
+    height: 36px !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+    max-width: none !important;
+    max-height: none !important;
+    padding: 0 !important;
+    gap: 0 !important;
+    line-height: 1 !important;
+    text-transform: none !important;
+    box-sizing: border-box !important;
+    aspect-ratio: 1 / 1;
+    border-radius: 8px !important;
+}
+
+/* O tema costuma injetar ::before/::after em todo <button>. Aqui não usamos. */
+.lkp-player-wrapper:not(.lkp-v2) .lkp-share-btn::before,
+.lkp-player-wrapper:not(.lkp-v2) .lkp-share-btn::after {
+    content: none !important;
+}
+
+.lkp-player-wrapper:not(.lkp-v2) .lkp-share-btn svg {
+    display: block !important;
+    width: 18px !important;
+    height: 18px !important;
+    flex: 0 0 auto;
+    pointer-events: none;
+}
+
+/* Botão de play realmente redondo, independente do CSS do tema. */
+.lkp-player-wrapper:not(.lkp-v2) .lkp-play-btn {
+    width: 160px !important;
+    height: 160px !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+    max-width: none !important;
+    max-height: none !important;
+    box-sizing: border-box !important;
+    padding: 0 !important;
+    gap: 0 !important;
+    aspect-ratio: 1 / 1;
+    border-radius: 50% !important;
+}
+
+/* O tema injeta um ::after em todo <button>. No play ele só é usado para o
+   spinner de loading (via .lkp-play-btn--loading), então neutralizamos fora
+   desse estado. */
+.lkp-player-wrapper:not(.lkp-v2) .lkp-play-btn:not(.lkp-play-btn--loading)::after {
+    content: none !important;
+}
+
+/* Ícone interno do play: centralizado e sem interferência do tema. */
+.lkp-player-wrapper:not(.lkp-v2) #lknwp-radio-play-icon {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    width: auto !important;
+    height: auto !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    background: none !important;
+    border: none !important;
+    border-radius: 50%;
+    line-height: 0 !important;
+    pointer-events: none;
+}
+
+.lkp-player-wrapper:not(.lkp-v2) #lknwp-radio-play-icon svg {
+    display: block !important;
+    width: 120px !important;
+    height: 120px !important;
+}
