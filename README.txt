@@ -63,15 +63,15 @@ Perfect for music blogs, radio websites, entertainment portals, or any site that
 
 == Screenshots ==
 
-1. Radio player with live now-playing metadata (album cover, song/artist and listeners)
-2. Radio list with the premium sidebar (Discover / Favorites / Recents) and category pills
-3. Radio list with country, genre and language filters and sorting options
-4. Radio station cards with logo, genre, country flag and bitrate/codec chips
-5. Favorites view (stations saved in the browser)
-6. Recents view with the "Continue listening" block
-7. Admin help page with navigable sections and content search
-8. Admin settings for the shortcodes
-9. Mobile responsive radio player interface
+1. Plugin settings screen
+2. Radio list with the new layout (dark mode)
+3. Radio list with the new layout (light mode)
+4. Modern radio player (dark mode)
+5. Modern radio player (light mode)
+6. Radio player displaying a selected station with controls and information
+7. Admin configuration panel for managing plugin settings
+8. Mobile responsive radio player interface
+9. Radio station list with country filter and search functionality
 
 == Minimum Requirements ==
 
