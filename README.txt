@@ -2,9 +2,9 @@
 Contributors: linknacional
 Tags: radio, streaming, audio, player, music
 Requires at least: 5.0
-Tested up to: 6.8
-Stable tag: 1.0.1
-Requires PHP: 7.4
+Tested up to: 7.1
+Stable tag: 1.1.0
+Requires PHP: 8.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Donate link: https://paraquemdoar.org/doar/
@@ -46,31 +46,39 @@ Perfect for music blogs, radio websites, entertainment portals, or any site that
 == Features ==
 
 * **Global Radio Database:** Access to 30,000+ radio stations from Radio-Browser.info
-* **Beautiful Audio Player:** Modern, responsive HTML5 audio player with volume controls
-* **Customizable Radio Lists:** Display radio stations with filtering and sorting options
+* **Modern & Legacy Layouts:** Choose the redesigned layout (or the previous one) via the `layout` shortcode attribute
+* **Beautiful Audio Player:** Modern, responsive HTML5 audio player with volume controls and an animated audio visualizer
+* **Live Now-Playing Metadata:** Album cover, song/artist and current audience (listeners) fetched server-side
+* **Collections:** Favorites and Recents views saved in the browser, plus a "Continue listening" block
+* **Genre, Country & Language Filters:** Filter stations by country, genre and language, with category pills
 * **Smart Search Functionality:** Find stations by name, country, or genre
+* **Multiple Sort Options:** Sort by popularity, name, bitrate, or random order, ascending or descending
+* **Light/Dark Theme:** Built-in theme toggle for the player and the list
 * **SEO-Friendly URLs:** Clean, readable URLs for individual radio stations
 * **Responsive Design:** Works perfectly on desktop, tablet, and mobile devices
 * **Easy Integration:** Simple shortcodes to embed radio lists and players anywhere
 * **Audio Streaming Proxy:** Built-in proxy for smooth audio streaming with CORS support
-* **Country Filtering:** Filter stations by country with support for all nations
-* **Multiple Sort Options:** Sort by popularity, name, bitrate, or random order
-* **Station Information:** Display station logos, descriptions, and statistics
+* **Station Information:** Display station logos, genres, country flags, and bitrate/codec statistics
 * **Click Tracking:** Integration with Radio-Browser.info's click statistics
 
 == Screenshots ==
 
-1. Radio player displaying a selected station with controls and information
-2. Admin configuration panel for managing plugin settings
-3. Mobile responsive radio player interface
-4. Radio station list with country filter and search functionality
+1. Plugin settings screen
+2. Radio list with the new layout (dark mode)
+3. Radio list with the new layout (light mode)
+4. Modern radio player (dark mode)
+5. Modern radio player (light mode)
+6. Radio player displaying a selected station with controls and information
+7. Admin configuration panel for managing plugin settings
+8. Mobile responsive radio player interface
+9. Radio station list with country filter and search functionality
 
 == Minimum Requirements ==
 
 For this plugin to work correctly, you will need:
 
 * WordPress version 5.0 or later
-* PHP version 7.4 or later
+* PHP version 8.2 or later
 * An active internet connection for streaming radio content
 * Modern web browser with HTML5 audio support
 
@@ -108,36 +116,42 @@ Using the Radio Browser plugin is straightforward with two simple shortcodes:
 
 Display a list of radio stations with filtering options:
 
-`[radio_browser_list]`
+`[radio_browser_list layout="modern"]`
 
 **Available Parameters:**
 
+* `layout` - Layout to render: "modern" (new layout) or "legacy"/absent (previous layout)
 * `player_page` - The page slug where your radio player is located (default: "player")
 * `countrycode` - Filter stations by country code (default: "BR" for Brazil)
 * `limit` - Number of stations to display (default: 20)
 * `sort` - Sort order: "clickcount", "name", "random", "bitrate" (default: "clickcount")
+* `reverse` - Reverse the order: "1" (descending, default) or "0" (ascending)
 * `search` - Pre-filter stations by search term
+* `genre` - Pre-select a genre/tag filter (default: "all")
 * `hide_country` - Hide country filter (yes/no)
 * `hide_limit` - Hide limit field (yes/no)
 * `hide_sort` - Hide sort options (yes/no)
+* `hide_order` - Hide the order (reverse) button (yes/no)
+* `hide_genre` - Hide genre filter (yes/no)
 * `hide_search` - Hide search field (yes/no)
+* `hide_button` - Hide the submit button (yes/no, legacy layout only)
 * `hide_all_filters` - Hide entire filter form (yes/no)
 
 **Example:**
-`[radio_browser_list player_page="radio-player" countrycode="US" limit="50"]`
+`[radio_browser_list player_page="radio-player" layout="modern" countrycode="US" limit="50"]`
 
 = Radio Player =
 
 Display the audio player on a dedicated page:
 
-`[radio_browser_player]`
+`[radio_browser_player layout="modern"]`
 
 This shortcode automatically detects the radio station from the URL and displays the appropriate player with controls and station information.
 
 = Setting Up Your Radio Website =
 
-1. Create a **Radio List Page:** Add a new page and insert the `[radio_browser_list]` shortcode
-2. Create a **Player Page:** Add another page with the `[radio_browser_player]` shortcode
+1. Create a **Radio List Page:** Add a new page and insert the `[radio_browser_list layout="modern"]` shortcode
+2. Create a **Player Page:** Add another page with the `[radio_browser_player layout="modern"]` shortcode
 3. Configure the list shortcode to point to your player page using the `player_page` parameter
 4. Publish both pages and start enjoying streaming radio!
 
@@ -175,7 +189,7 @@ The audio streams come directly from the radio stations' servers, so there are n
 
 = Can I filter stations by genre or language? =
 
-Currently, the plugin supports filtering by country and searching by station name. More advanced filtering options may be added in future versions based on user feedback.
+Yes. The list supports filtering by country, genre and language (inside the "Filtros" panel), plus category pills and a search box. The available genres and languages come from the Radio-Browser.info API.
 
 = Is the plugin compatible with caching plugins? =
 
@@ -191,6 +205,19 @@ If you need help or have questions, please post them in the [support forum](http
 
 == Changelog ==
 
+= 1.1.0 = *2026/09/30*
+* Full redesign of the player and radio list: violet theme, gradients, glassmorphism and glow effects.
+* Premium list sidebar: "Radio" logo, Discover/Favorites/Recents menu and a "Browse by" section (Genres/Countries/Languages) with icons.
+* Working Favorites and Recents views (saved in the browser) and a "Continue listening" block.
+* Filters by country, genre and language, category pills (rock, MPB, electronic, sertanejo, pop, jazz, news) and sorting (popular, name, bitrate, random).
+* Player with live metadata: album cover, song/artist and audience (listeners) fetched server-side via an AJAX proxy (no CORS errors).
+* Animated audio visualizer (waveform) and a light/dark theme toggle.
+* Station cards with logo, genre, country flag and bitrate/codec/votes chips.
+* UI hardening against the theme CSS (round play button; self-contained icons and fields).
+* Security: API data escaped when building the cards; metadata proxy with SSRF protection and per-IP rate limiting.
+* Admin help page rebuilt into navigable sections, with search, FAQ and copy buttons.
+* Notice (editors only) when the layout attribute is invalid; visitors see the legacy layout.
+
 = 1.0.1 = *2025/03/05*
 * New icons and banners for the plugin.
 
@@ -205,6 +232,9 @@ If you need help or have questions, please post them in the [support forum](http
 * Support for 30,000+ radio stations worldwide
 
 == Upgrade Notice ==
+
+= 1.1.0 =
+New list and player layouts, Favorites/Recents, genre and language filters, and live now-playing metadata.
 
 = 1.0.0 =
 Initial release of Radio Browser Stations. Install to start streaming radio stations on your website.

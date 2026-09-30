@@ -131,4 +131,53 @@
     --lkn-wave-yellow: #ffff00;
     --lkn-wave-red: #ff4444;
     --lkn-wave-peak-red: #ff4444;
+
+    /* ============================================================
+       RÁDIO APP — BRAND VIOLETA (design system)
+       Base única violeta com degradê monocromático + acentos neon.
+       ============================================================ */
+
+    /* Rampa principal (violeta) */
+    --lkn-brand-950: #0B0416;
+    --lkn-brand-900: #140826;
+    --lkn-brand-850: #1D0E38;
+    --lkn-brand-800: #27134C;
+    --lkn-brand-700: #3B1E78;
+    --lkn-brand-600: #5521B8;
+    --lkn-brand-500: #6D28D9;
+    --lkn-brand-400: #7C3AED;
+    --lkn-brand-300: #8B5CF6;
+    --lkn-brand-200: #A78BFA;
+    --lkn-brand-100: #C4B5FD;
+    --lkn-brand-50: #EDE9FE;
+
+    /* Acentos neon (glow) */
+    --lkn-accent: #D946EF;
+    --lkn-accent-light: #E879F9;
+    --lkn-accent-dark: #A21CAF;
+    --lkn-cyan: #22D3EE;
+
+    /* Texto sobre fundo escuro */
+    --lkn-text: #F5F3FF;
+    --lkn-text-soft: #DCD6F5;
+    --lkn-text-muted: #A9A0C9;
+
+    /* Gradientes principais */
+    --lkn-gradient-deep: linear-gradient(160deg, #0B0416 0%, #140826 35%, #27134C 75%, #3B1E78 100%);
+    --lkn-gradient-primary: linear-gradient(135deg, #6D28D9 0%, #7C3AED 45%, #A855F7 100%);
+    --lkn-gradient-accent: linear-gradient(135deg, #7C3AED 0%, #D946EF 100%);
+    --lkn-gradient-soft: linear-gradient(135deg, rgba(124, 58, 237, 0.18) 0%, rgba(217, 70, 239, 0.12) 100%);
+
+    /* Glassmorphism */
+    --lkn-glass-bg: rgba(255, 255, 255, 0.05);
+    --lkn-glass-bg-strong: rgba(255, 255, 255, 0.09);
+    --lkn-glass-border: rgba(196, 181, 253, 0.16);
+    --lkn-glass-border-strong: rgba(196, 181, 253, 0.32);
+    --lkn-glass-blur: 16px;
+
+    /* Sombras e brilho */
+    --lkn-shadow: 0 18px 50px rgba(5, 2, 15, 0.55);
+    --lkn-shadow-soft: 0 8px 24px rgba(5, 2, 15, 0.35);
+    --lkn-glow: 0 0 24px rgba(124, 58, 237, 0.55);
+    --lkn-glow-strong: 0 0 34px rgba(217, 70, 239, 0.65);
 }

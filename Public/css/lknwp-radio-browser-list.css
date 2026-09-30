@@ -1,542 +1,2284 @@
-/* ===== FONTE ROBOTO ===== */
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700&display=swap');
+/* ==========================================================================
+   LKN Radio Browser — Lista (Descoberta) · Dark premium / glass / roxo-indigo
+   ========================================================================== */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 
-/* ===== MAIN WRAPPER ===== */
 .lrt-radio-wrap {
-    background-color: var(--lkn-secondary-blue-3) !important;
-    /* obsidian/azul escuro */
+    /* Paleta (brief) */
+    --bg: #080720;
+    --bg-2: #0B0925;
+    --sidebar: #090821;
+    --card: #15122F;
+    --card-2: #18143A;
+    --card-hover: #1C1740;
+    --purple: #7427FF;
+    --purple-bright: #8B3DFF;
+    --purple-soft: #9146FF;
+    --purple-dark: #4D1BB8;
+    --txt: #F6F3FF;
+    --txt-2: #A8A2C5;
+    --txt-3: #777294;
+    --border: rgba(150, 120, 255, 0.18);
+    --border-strong: rgba(150, 120, 255, 0.32);
+    --glow: rgba(120, 40, 255, 0.30);
+
+    --radius-lg: 16px;
+    --radius-md: 12px;
+    --radius-sm: 10px;
+
+    position: relative;
+    font-family: 'Inter', 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif !important;
+    color: var(--txt);
+    background: radial-gradient(120% 80% at 15% -10%, #16123E 0%, var(--bg-2) 40%, var(--bg) 100%) !important;
+    border: 1px solid var(--border);
     border-radius: 20px;
-    box-shadow: 0 2px 12px rgba(44, 62, 80, 0.10) !important;
-    padding: 0 0 18px 0;
-    font-family: 'Roboto', Arial, sans-serif !important;
+    box-sizing: border-box;
+    isolation: isolate;
+    overflow: hidden;
 }
 
-/* ===== NAVIGATION ===== */
-.lrt-radio-nav {
-    font-family: 'Roboto', Arial, sans-serif !important;
-    background-color: none;
-    border-radius: 16px;
-    padding: 18px 24px;
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-    align-items: center;
-    justify-content: center;
+.lrt-radio-wrap *,
+.lrt-radio-wrap *::before,
+.lrt-radio-wrap *::after {
     box-sizing: border-box;
 }
 
-/* ===== FORM ===== */
-.lrt-radio-form {
-    background-color: none;
+/* ===== SHELL (sidebar + main) ===== */
+.lrt-radio-shell {
+    display: grid;
+    grid-template-columns: 250px minmax(0, 1fr);
+    min-height: 560px;
+}
+
+/* ===== SIDEBAR ===== */
+.lrt-sidebar {
+    position: relative;
     display: flex;
     flex-direction: column;
-    gap: 0;
-    width: 100%;
+    gap: 6px;
+    padding: 22px 16px 20px;
+    background: var(--sidebar);
+    border-right: 1px solid var(--border);
+    overflow: hidden;
 }
 
-/* ===== FORM ROWS ===== */
-.lrt-radio-row {
+/* Decoração abstrata (ondas) ao fundo do rodapé da sidebar */
+.lrt-sidebar::after {
+    content: '';
+    position: absolute;
+    left: -30px;
+    bottom: -40px;
+    width: 260px;
+    height: 180px;
+    background:
+        radial-gradient(closest-side, rgba(116, 39, 255, 0.22), transparent 70%);
+    filter: blur(24px);
+    pointer-events: none;
+}
+
+.lrt-sidebar__brand {
     display: flex;
-    row-gap: 10px;
-    column-gap: 30px;
-    flex-wrap: wrap;
     align-items: center;
-    justify-content: flex-start;
-    width: 100%;
+    gap: 11px;
+    padding: 4px 8px 18px;
 }
 
-.lrt-radio-row--first {
+.lrt-sidebar__logo {
+    width: 34px;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--purple-bright);
+    filter: drop-shadow(0 0 8px rgba(139, 61, 255, 0.65));
+}
+
+.lrt-sidebar__logo svg {
+    width: 26px;
+    height: 26px;
+}
+
+.lrt-sidebar__name {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--txt);
+}
+
+/* ===== MENU ===== */
+.lrt-sidebar__menu {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.lrt-side-item,
+.lrt-side-nav-item {
+    display: flex !important;
+    align-items: center;
+    justify-content: flex-start !important;
+    gap: 12px;
+    width: 100%;
+    min-height: 0 !important;
+    height: auto !important;
+    padding: 11px 13px !important;
+    margin: 0 !important;
+    border: none !important;
+    background: transparent !important;
+    border-radius: 11px !important;
+    box-shadow: none !important;
+    color: var(--txt-2) !important;
+    font-family: inherit !important;
+    font-size: 14.5px !important;
+    font-weight: 600 !important;
+    line-height: 1.2 !important;
+    text-align: left !important;
+    text-transform: none !important;
+    cursor: pointer;
+    position: relative;
+    transition: color 0.18s ease, background 0.24s ease;
+}
+
+.lrt-side-item > span,
+.lrt-side-nav-item > span {
+    flex: 1 1 auto;
+    text-align: left !important;
+}
+
+.lrt-side-item svg,
+.lrt-side-nav-item svg {
+    width: 19px !important;
+    height: 19px !important;
+    flex: 0 0 auto;
+}
+
+/* Hover: degradê suave vindo da esquerda para a direita */
+.lrt-side-item:hover,
+.lrt-side-nav-item:hover {
+    color: var(--txt) !important;
+    background: linear-gradient(90deg, rgba(116, 39, 255, 0.22) 0%, rgba(116, 39, 255, 0) 85%) !important;
+}
+
+/* Selecionado: degradê marcado da esquerda para a direita */
+.lrt-side-item.is-active {
+    color: #fff !important;
+    background: linear-gradient(90deg, rgba(122, 39, 255, 0.85) 0%, rgba(122, 39, 255, 0.35) 45%, rgba(122, 39, 255, 0) 100%) !important;
+    box-shadow: inset 2px 0 0 0 var(--purple-bright) !important;
+}
+
+/* ===== DIVISÓRIA + LABEL ===== */
+.lrt-sidebar__hr {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 14px 4px;
+}
+
+.lrt-sidebar__label {
+    padding: 0 13px 8px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.10em;
+    text-transform: uppercase;
+    color: var(--txt-3);
+}
+
+/* ===== RODAPÉ (onda + tagline) ===== */
+.lrt-sidebar__footer {
+    margin-top: auto;
+    padding: 18px 10px 6px;
+    position: relative;
+    z-index: 1;
+}
+
+.lrt-sidebar__wave {
+    display: flex;
+    align-items: flex-end;
+    gap: 4px;
+    height: 34px;
     margin-bottom: 12px;
 }
 
-/* ===== FORM FIELDS ===== */
-.lrt-radio-search-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 15px;
-    width: 100%;
-    align-items: flex-end;
+.lrt-sidebar__wave i {
+    flex: 1;
+    min-height: 5px;
+    border-radius: 3px;
+    background: linear-gradient(to top, var(--purple-dark), var(--purple-bright));
+    opacity: 0.55;
+    animation: lrt-sidewave 2.4s ease-in-out infinite;
 }
 
-.lrt-radio-field {
+.lrt-sidebar__wave i:nth-child(1) { animation-delay: 0s; }
+.lrt-sidebar__wave i:nth-child(2) { animation-delay: 0.15s; }
+.lrt-sidebar__wave i:nth-child(3) { animation-delay: 0.3s; }
+.lrt-sidebar__wave i:nth-child(4) { animation-delay: 0.45s; }
+.lrt-sidebar__wave i:nth-child(5) { animation-delay: 0.6s; }
+.lrt-sidebar__wave i:nth-child(6) { animation-delay: 0.45s; }
+.lrt-sidebar__wave i:nth-child(7) { animation-delay: 0.3s; }
+.lrt-sidebar__wave i:nth-child(8) { animation-delay: 0.15s; }
+.lrt-sidebar__wave i:nth-child(9) { animation-delay: 0.3s; }
+.lrt-sidebar__wave i:nth-child(10) { animation-delay: 0.5s; }
+
+@keyframes lrt-sidewave {
+    0%, 100% { height: 22%; opacity: 0.35; }
+    50% { height: 100%; opacity: 0.7; }
+}
+
+.lrt-sidebar__tagline {
+    margin: 0;
+    font-size: 12.5px;
+    line-height: 1.5;
+    font-weight: 500;
+    color: #B9AEE8;
+}
+
+/* ===== MAIN ===== */
+.lrt-main {
+    min-width: 0;
+    min-height: 0;
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    padding: 26px 28px 28px;
+    position: relative;
 }
 
-.lrt-radio-field--country {
-    min-width: 90px;
+.lrt-main::before {
+    content: '';
+    position: absolute;
+    top: -160px;
+    left: 8%;
+    width: 520px;
+    height: 360px;
+    background: radial-gradient(closest-side, rgba(116, 39, 255, 0.24), transparent 70%);
+    filter: blur(30px);
+    pointer-events: none;
+    z-index: -1;
 }
 
-.lrt-radio-field--sort,
-.lrt-radio-field--reverse,
-.lrt-radio-field--submit {
-    min-width: 120px;
-    justify-content: flex-end;
+/* ===== CABEÇALHO ===== */
+.lrt-radio-head {
+    display: block;
+    flex: 0 0 auto;
 }
 
-.lrt-radio-field--search {
-    min-width: 180px;
-    max-width: 750px;
-    flex: 1;
+/* ===== TOPBAR (busca + país + filtros na mesma linha) ===== */
+.lrt-search {
+    position: relative;
+    display: flex;
+    align-items: center;
+    flex: 1 1 320px;
+    max-width: 50%;
+    min-width: 0;
 }
 
-/* ===== LABELS ===== */
-.lrt-radio-field label {
-    color: var(--lkn-support-gray-7) !important;
-    font-weight: 500;
-    margin-bottom: 4px;
-    font-size: 15px;
-    font-family: 'Roboto', Arial, sans-serif !important;
+.lrt-search__icon {
+    position: absolute;
+    left: 18px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 18px;
+    height: 18px;
+    color: var(--txt-3);
+    pointer-events: none;
+    z-index: 1;
 }
 
-/* ===== INPUTS, SELECTS, BUTTONS BASE ===== */
-.lrt-radio-input,
-.lrt-radio-select,
-.lrt-radio-button {
-    height: 35px;
-    outline: none;
-    box-shadow: none;
-    border-radius: 8px;
-    border: 1px solid var(--lkn-secondary-blue-2) !important;
-    background-color: var(--lkn-secondary-blue-4) !important;
-    color: var(--lkn-support-gray-7) !important;
-    font-size: 15px;
-    padding: 7px 12px !important;
-    transition: border 0.2s, background 0.2s;
-    box-sizing: border-box;
-    font-family: 'Roboto', Arial, sans-serif !important;
+.lrt-search__icon svg {
+    width: 100%;
+    height: 100%;
 }
 
-/* Controle específico para selects - COM IMPORTANT */
-select.lrt-radio-select {
-    /* Remover aparência padrão */
+.lrt-search__input {
+    width: 100% !important;
+    height: 44px !important;
+    min-height: 0 !important;
+    padding: 0 20px 0 48px !important;
+    border-radius: 999px !important;
+    background: #17133A !important;
+    border: 1px solid rgba(150, 100, 255, 0.25) !important;
+    color: var(--txt) !important;
+    font-family: inherit !important;
+    font-size: 14.5px !important;
+    line-height: 1.2 !important;
+    outline: none !important;
+    box-shadow: none !important;
+    box-sizing: border-box !important;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.lrt-search__input::placeholder {
+    color: var(--txt-3) !important;
+    opacity: 1;
+}
+
+.lrt-search__input:focus {
+    border-color: var(--purple-bright) !important;
+    box-shadow: 0 0 0 3px rgba(116, 39, 255, 0.25) !important;
+}
+
+/* Linha: busca (esquerda) + grupo país/Filtros (direita) */
+.lrt-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 26px;
+}
+
+.lrt-toolbar__right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-left: auto;
+}
+
+/* Painel avançado (gênero/idioma/ordem) */
+.lrt-advanced {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    width: 100%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 14px;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    background: rgba(116, 39, 255, 0.06);
+    animation: lrt-fade 0.2s ease;
+}
+
+.lrt-advanced[hidden] {
+    display: none !important;
+}
+
+@keyframes lrt-fade {
+    from { opacity: 0; transform: translateY(-4px); }
+    to { opacity: 1; transform: none; }
+}
+
+/* Botão Filtros */
+.lrt-btn--filters {
+    background: #17133A !important;
+    border: 1px solid var(--border) !important;
+    color: var(--txt) !important;
+}
+
+.lrt-btn--filters:hover {
+    border-color: var(--border-strong) !important;
+    background: var(--card-hover) !important;
+}
+
+.lrt-btn--filters[aria-expanded="true"] {
+    border-color: transparent !important;
+    background: linear-gradient(135deg, #5E20D5 0%, #7827FF 100%) !important;
+    box-shadow: 0 0 18px var(--glow) !important;
+    color: #fff !important;
+}
+
+.lrt-btn__chevron {
+    width: 14px !important;
+    height: 14px !important;
+    transition: transform 0.2s ease;
+}
+
+.lrt-btn--filters[aria-expanded="true"] .lrt-btn__chevron {
+    transform: rotate(180deg);
+}
+
+/* ===== CONTROLES EM PILL ===== */
+.lrt-radio-wrap .lrt-radio-field label {
+    display: none;
+}
+
+.lrt-radio-wrap .lrt-radio-select {
     -webkit-appearance: none !important;
     -moz-appearance: none !important;
     appearance: none !important;
-
-    /* Padding para setinha customizada */
-    padding-right: 35px !important;
-
-    /* Background com setinha SVG - TUDO COM IMPORTANT */
-    background-color: var(--lkn-secondary-blue-4) !important;
-    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23e0e6f0' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6,9 12,15 18,9'%3e%3c/polyline%3e%3c/svg%3e") !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: 44px !important;
+    padding: 0 38px 0 16px !important;
+    border-radius: 999px !important;
+    background-color: #17133A !important;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23A8A2C5' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6,9 12,15 18,9'%3e%3c/polyline%3e%3c/svg%3e") !important;
     background-repeat: no-repeat !important;
-    background-position: right 2px center !important;
-    background-size: 14px 14px !important;
-
-    /* Texto e cursor */
-    text-align: left !important;
+    background-position: right 12px center !important;
+    background-size: 16px 16px !important;
+    border: 1px solid var(--border) !important;
+    color: var(--txt) !important;
+    font-family: inherit !important;
+    font-size: 14px !important;
+    font-weight: 500 !important;
     cursor: pointer !important;
+    outline: none !important;
+    box-shadow: none !important;
+    text-overflow: ellipsis !important;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-.lrt-radio-input:focus,
-.lrt-radio-select:focus,
-.lrt-radio-button:focus {
-    border: 1.5px solid var(--lkn-secondary-blue-5) !important;
-    background-color: var(--lkn-support-gray-3) !important;
+.lrt-radio-wrap .lrt-radio-select:focus,
+.lrt-radio-wrap .lrt-radio-select:hover {
+    border-color: var(--border-strong) !important;
 }
 
-/* Focus do select mantém comportamento padrão */
-
-/* ===== SPECIFIC INPUT STYLES ===== */
-.lrt-radio-input--small {
-    width: 70px;
+.lrt-radio-wrap .lrt-radio-select option {
+    background: var(--card-2) !important;
+    color: var(--txt) !important;
+    padding: 10px !important;
 }
 
-.lrt-radio-input--search {
-    width: 100%;
-    min-width: 160px;
-    box-sizing: border-box;
+.lrt-pill-select {
+    position: relative;
+    flex: 0 0 auto;
 }
 
-/* ===== BUTTONS ===== */
-.lrt-radio-button {
-    font-weight: 500;
+.lrt-pill-select--country {
+    width: 132px;
+}
+
+.lrt-pill-select--genre {
+    width: 210px;
+}
+
+.lrt-pill-select--language {
+    width: 168px;
+}
+
+.lrt-pill-select--sort {
+    width: 170px;
+}
+
+/* ===== BOTÕES ===== */
+.lrt-btn {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    height: 44px !important;
+    min-height: 0 !important;
+    padding: 0 18px !important;
+    margin: 0 !important;
+    border-radius: 999px !important;
+    border: 1px solid var(--border) !important;
+    background: #17133A !important;
+    color: var(--txt) !important;
+    font-family: inherit !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    line-height: 1 !important;
+    text-transform: none !important;
+    text-decoration: none !important;
+    box-shadow: none !important;
     cursor: pointer;
+    transition: border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease, transform 0.15s ease;
 }
 
-.lrt-radio-button--reverse {
-    padding: 7px 16px;
+.lrt-btn svg {
+    width: 16px !important;
+    height: 16px !important;
+    flex: 0 0 auto;
 }
 
-.lrt-radio-button--submit {
-    width: 100%;
-    padding: 7px 18px;
-    background-color: var(--lkn-support-gray-7) !important;
-    color: var(--lkn-support-gray-2) !important;
-    border: none;
-    border-radius: 10px;
-    font-weight: 600;
-    box-shadow: 0 2px 8px rgba(44, 62, 80, 0.10) !important;
-    transition: background 0.2s;
+.lrt-btn--ghost:hover {
+    border-color: var(--border-strong) !important;
+    background: var(--card-hover) !important;
 }
 
-.lrt-radio-button--submit:hover {
-    background-color: var(--lkn-support-gray-8) !important;
-    color: var(--lkn-secondary-blue-4) !important;
-    border: 1.5px solid var(--lkn-secondary-blue-5) !important;
+/* ===== CATEGORY PILLS ===== */
+.lrt-pills {
+    display: flex !important;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    margin: 26px 0 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border);
 }
 
-/* ===== RADIO STATIONS LIST ===== */
-.lrt-radio-list {
-    border-radius: 18px;
-    gap: 18px 18px;
-    list-style: none;
-    padding: 18px 18px 0 18px !important;
-    margin: 0;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+/* Os chips são <button>: temas do WordPress costumam estilizar buttons de
+   forma mais específica, então reforçamos tudo com !important (mesmo padrão
+   usado em .lrt-btn / .lrt-side-item). */
+.lrt-radio-wrap .lrt-chip {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 6px;
+    width: auto !important;
+    min-width: 0 !important;
+    height: auto !important;
+    min-height: 0 !important;
+    padding: 8px 16px !important;
+    margin: 0 !important;
+    border: 1px solid var(--border) !important;
+    border-radius: 999px !important;
+    background: transparent !important;
+    color: var(--txt-2) !important;
+    font-family: inherit !important;
+    font-size: 13.5px !important;
+    font-weight: 600 !important;
+    line-height: 1.2 !important;
+    letter-spacing: normal !important;
+    text-transform: none !important;
+    text-decoration: none !important;
+    box-shadow: none !important;
+    outline: none !important;
+    cursor: pointer;
+    -webkit-appearance: none !important;
+    appearance: none !important;
+    transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
 }
 
-/* ===== RADIO STATION ITEM ===== */
-.lrt-radio-station {
-    background-color: var(--lkn-primary) !important;
-    /* obsidian/azul escuro */
-    border-radius: 14px;
-    box-shadow: 0 2px 8px rgba(44, 62, 80, 0.10) !important;
-    transition: all 0.2s;
+.lrt-radio-wrap .lrt-chip:hover {
+    color: var(--txt) !important;
+    border-color: var(--border-strong) !important;
+    background: rgba(116, 39, 255, 0.10) !important;
+}
+
+.lrt-radio-wrap .lrt-chip.is-active {
+    background: linear-gradient(135deg, #5E20D5 0%, #7827FF 100%) !important;
+    border-color: transparent !important;
+    color: #fff !important;
+    box-shadow: 0 0 18px var(--glow) !important;
+}
+
+/* Ícone dentro do chip — como o SVG usa stroke="currentColor", ele herda a
+   cor do texto do chip automaticamente (inclusive no hover e no estado ativo). */
+.lrt-radio-wrap .lrt-chip__icon {
+    width: 16px !important;
+    height: 16px !important;
+    min-width: 16px !important;
+    flex: 0 0 auto !important;
+    display: block !important;
+    color: inherit !important;
+}
+
+.lrt-radio-wrap .lrt-chip > span {
+    display: inline-block;
+    line-height: 1.2;
+}
+
+/* ===== TOCANDO AGORA (card de detalhes da estação) ===== */
+.lrt-now {
+    margin: 0 0 26px;
+}
+
+.lrt-now[hidden] {
+    display: none !important;
+}
+
+.lrt-now__card {
+    position: relative;
+    display: flex !important;
+    align-items: center;
+    gap: 20px;
+    padding: 18px 16px 18px 20px;
+    border-radius: 16px;
+    border: 1px solid var(--border);
+    background:
+        linear-gradient(135deg, rgba(116, 39, 255, 0.20) 0%, rgba(116, 39, 255, 0.05) 55%, rgba(116, 39, 255, 0) 100%),
+        var(--card);
+    box-shadow: 0 14px 34px rgba(4, 2, 18, 0.45);
     overflow: hidden;
-    border: 1px solid var(--lkn-secondary-blue-2) !important;
+}
+
+/* Ícone decorativo de fundo: grande, roxo, com degradê que some da
+esquerda para a direita (efeito de profundidade) */
+.lrt-now__bg {
+    position: absolute;
+    top: 50%;
+    right: -34px;
+    transform: translateY(-50%);
+    width: 352px;
+    height: 352px;
+    color: #8B3DFF;
+    opacity: 0.55;
+    pointer-events: none;
+    z-index: 0;
+    -webkit-mask-image: linear-gradient(to left, #000 0%, #000 22%, rgba(0, 0, 0, 0.4) 62%, transparent 100%);
+    mask-image: linear-gradient(to left, #000 0%, #000 22%, rgba(0, 0, 0, 0.4) 62%, transparent 100%);
+}
+
+.lrt-now__bg svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+/* Fade suave quando o ícone troca (junto com a rádio) */
+.lrt-now__bg.is-swap {
+    animation: lrt-bg-swap 0.4s ease;
+}
+
+@keyframes lrt-bg-swap {
+    0% { opacity: 0; transform: translateY(-50%) scale(0.86); }
+    100% { opacity: 0.55; transform: translateY(-50%) scale(1); }
+}
+
+.lrt-now__body {
+    position: relative;
+    z-index: 1;
+    flex: 1 1 auto;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.lrt-now__live {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    color: var(--purple-bright);
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.lrt-now__dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--purple-bright);
+    box-shadow: 0 0 12px var(--purple-bright);
+    animation: lrt-now-pulse 1.4s ease-in-out infinite;
+}
+
+.lrt-now__live-icon {
+    width: 14px;
+    height: 14px;
+    flex: 0 0 auto;
+}
+
+@keyframes lrt-now-pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.45; transform: scale(0.78); }
+}
+
+/* Bloco da imagem + título */
+.lrt-now__main {
+    display: flex !important;
+    align-items: center;
+    gap: 14px;
+    min-width: 0;
+    margin-top: 12px;
+}
+
+/* Coluna ao lado da foto: título + pílulas */
+.lrt-now__info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    min-width: 0;
+    flex: 1 1 auto;
+}
+
+.lrt-now__cover {
+    position: relative;
+    flex: 0 0 auto;
+    width: 84px;
+    height: 84px;
+    border-radius: 50%;
+    overflow: hidden;
+    background: var(--card-2);
+    border: 1px solid var(--border);
+    box-shadow: 0 8px 20px rgba(4, 2, 18, 0.45);
+}
+
+.lrt-now__logo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.lrt-now__name {
+    font-size: 19px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: var(--txt);
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.lrt-now__meta {
+    display: flex !important;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    margin-top: 0;
+}
+
+.lrt-now__pill {
+    display: inline-flex !important;
+    align-items: center;
+    gap: 6px;
+    max-width: 100%;
+    padding: 5px 12px;
+    border-radius: 999px;
+    border: 1px solid rgba(139, 61, 255, 0.6);
+    background: rgba(139, 61, 255, 0.10);
+    color: #C9BBFF;
+    font-size: 12.5px;
+    font-weight: 600;
+    line-height: 1.2;
+}
+
+.lrt-now__pill[hidden] {
+    display: none !important;
+}
+
+.lrt-now__pill svg {
+    width: 14px;
+    height: 14px;
+    flex: 0 0 auto;
+}
+
+.lrt-now__country .lrt-flag {
+    font-size: 13px;
+    line-height: 1;
+}
+
+.lrt-now__song {
+    color: var(--txt);
+    border-color: var(--border-strong);
+    background: rgba(150, 120, 255, 0.16);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Onda de som (estática — barras apoiadas no chão) */
+.lrt-now__wave {
+    display: flex !important;
+    align-items: flex-end;
+    gap: 3px;
+    height: 44px;
+    margin-top: 14px;
+}
+
+.lrt-now__wave i {
+    flex: 1 1 auto;
+    min-width: 2px;
+    max-width: 5px;
+    border-radius: 999px;
+    background: linear-gradient(to top, var(--purple-dark), var(--purple-bright));
+    opacity: 0.75;
+}
+
+/* Ações (favoritar + abrir player) */
+.lrt-now__actions {
+    position: relative;
+    z-index: 1;
+    display: flex !important;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    flex-wrap: nowrap;
+    gap: 10px;
+    flex: 0 0 auto;
+}
+
+.lrt-now__fav,
+.lrt-now__open {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    height: 40px;
+    padding: 0 16px !important;
+    margin: 0 !important;
+    border-radius: 999px !important;
+    border: 1px solid var(--border) !important;
+    background: #17133A !important;
+    color: var(--txt) !important;
+    cursor: pointer;
+    text-decoration: none !important;
+    box-shadow: none !important;
+    font-family: inherit !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    line-height: 1 !important;
+    white-space: nowrap;
+    transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease, transform 0.15s ease;
+}
+
+.lrt-now__open {
+    width: 40px;
+    min-width: 40px;
+    padding: 0 !important;
+}
+
+.lrt-now__fav svg,
+.lrt-now__open svg {
+    width: 18px;
+    height: 18px;
+    flex: 0 0 auto;
+}
+
+.lrt-now__fav:hover,
+.lrt-now__open:hover {
+    color: var(--txt) !important;
+    border-color: var(--border-strong) !important;
+    transform: translateY(-1px);
+}
+
+.lrt-now__fav.is-active {
+    color: #FF6BA6 !important;
+    border-color: rgba(255, 107, 166, 0.55) !important;
+    background: rgba(255, 107, 166, 0.12) !important;
+    box-shadow: 0 0 16px rgba(255, 107, 166, 0.4) !important;
+}
+
+.lrt-now__fav.is-active:hover {
+    color: #FF6BA6 !important;
+}
+
+.lrt-now__fav.is-active svg path {
+    fill: currentColor;
+}
+
+.lrt-now.is-updated .lrt-now__card {
+    animation: lrt-now-flash 0.8s ease;
+}
+
+@keyframes lrt-now-flash {
+    0% { box-shadow: 0 0 0 2px rgba(120, 40, 255, 0.7), 0 14px 34px rgba(4, 2, 18, 0.45); }
+    100% { box-shadow: 0 14px 34px rgba(4, 2, 18, 0.45); }
+}
+
+/* ===== CONTINUE OUVINDO (rádios recentes) ===== */
+.lrt-continue {
+    margin: 26px 0;
+}
+
+.lrt-continue[hidden] {
+    display: none !important;
+}
+
+.lrt-continue__head {
+    display: flex !important;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+    color: var(--txt-2);
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.10em;
+    text-transform: uppercase;
+}
+
+.lrt-continue__icon {
+    width: 16px;
+    height: 16px;
+    flex: 0 0 auto;
+    color: var(--purple-bright);
+}
+
+.lrt-continue__track {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    /* padding-top dá folga para o hover que levanta o card (-2px) e para a
+       sombra do ícone não serem cortados pelo overflow-y: hidden. */
+    padding: 6px 2px 6px 2px;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(150, 120, 255, 0.35) transparent;
+}
+
+.lrt-continue__track::-webkit-scrollbar {
+    height: 8px;
+}
+
+.lrt-continue__track::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.lrt-continue__track::-webkit-scrollbar-thumb {
+    background: rgba(150, 120, 255, 0.3);
+    border-radius: 999px;
+}
+
+.lrt-continue__track::-webkit-scrollbar-thumb:hover {
+    background: rgba(150, 120, 255, 0.5);
+}
+
+.lrt-continue-card {
+    flex: 0 0 auto;
+    display: flex !important;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    width: 92px;
+    padding: 0 !important;
+    margin: 0 !important;
+    border: none !important;
+    background: transparent !important;
+    color: var(--txt-2) !important;
+    font-family: inherit !important;
+    text-decoration: none !important;
+    text-align: center;
+    cursor: pointer;
+    transition: color 0.2s ease, transform 0.15s ease;
+}
+
+.lrt-continue-card:hover {
+    color: var(--txt) !important;
+    transform: translateY(-2px);
+}
+
+.lrt-continue-card__cover {
+    position: relative;
+    width: 84px;
+    height: 84px;
+    border-radius: 14px;
+    overflow: hidden;
+    background: var(--card-2);
+    box-shadow: 0 8px 20px rgba(4, 2, 18, 0.45);
+    transition: box-shadow 0.2s ease;
+}
+
+.lrt-continue-card:hover .lrt-continue-card__cover {
+    box-shadow: 0 10px 26px rgba(120, 40, 255, 0.4);
+}
+
+.lrt-continue-card__logo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.lrt-continue-card__play {
+    position: absolute;
+    right: 6px;
+    bottom: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #5E20D5 0%, #7827FF 100%);
+    color: #fff;
+    box-shadow: 0 0 14px var(--glow);
+    opacity: 0;
+    transform: scale(0.8);
+    transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.lrt-continue-card__play svg {
+    width: 12px;
+    height: 12px;
+}
+
+.lrt-continue-card:hover .lrt-continue-card__play {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.lrt-continue-card__name {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    font-size: 12.5px;
+    font-weight: 600;
+    line-height: 1.25;
+    width: 100%;
+}
+
+/* ===== GRID ===== */
+.lrt-list-scroll {
+    flex: 1 1 auto;
+    min-height: 0;
+    max-height: min(62vh, 620px);
+    overflow-y: auto;
+    overflow-x: hidden;
+    overscroll-behavior: contain;
+    /* Espaço para a animação de hover (os cards sobem) não ser cortada */
+    padding: 6px 6px 6px 2px;
+    margin: 0 -6px 0 0;
+}
+
+/* Scrollbar discreta */
+.lrt-list-scroll::-webkit-scrollbar {
+    width: 8px;
+}
+
+.lrt-list-scroll::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.lrt-list-scroll::-webkit-scrollbar-thumb {
+    background: rgba(150, 120, 255, 0.25);
+    border-radius: 999px;
+}
+
+.lrt-list-scroll::-webkit-scrollbar-thumb:hover {
+    background: rgba(150, 120, 255, 0.45);
+}
+
+.lrt-radio-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+    grid-auto-rows: 1fr;
+    align-items: stretch;
+}
+
+/* ===== CARD ===== */
+.lrt-radio-station {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    background: var(--card) !important;
+    border: 1px solid var(--border) !important;
+    border-radius: 14px;
+    height: 100%;
+    min-height: 112px;
+    overflow: hidden;
+    transition: transform 0.22s ease, border-color 0.22s ease, background 0.22s ease, box-shadow 0.22s ease;
+}
+
+.lrt-radio-station::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(116, 39, 255, 0.16), transparent 60%);
+    opacity: 0;
+    transition: opacity 0.22s ease;
+    pointer-events: none;
 }
 
 .lrt-radio-station:hover {
-    background-color: var(--lkn-secondary-blue-5) !important;
-    /* azul escuro mais vibrante */
-    transform: translateY(-2px);
-    box-shadow: 0 4px 16px rgba(44, 62, 80, 0.20) !important;
-    border: 1.5px solid var(--lkn-secondary-blue-6) !important;
+    background: var(--card-hover) !important;
+    border-color: var(--border-strong) !important;
+    transform: translateY(-3px);
+    box-shadow: 0 16px 34px rgba(5, 3, 20, 0.55), 0 0 22px var(--glow) !important;
 }
 
-/* ===== RADIO STATION LINK ===== */
+.lrt-radio-station:hover::before {
+    opacity: 1;
+}
+
+.lrt-radio-station.is-hidden {
+    display: none !important;
+}
+
+/* ===== FAVORITO ===== */
+/* O tema aplica um estilo global a `button` (background/min-height/padding).
+   Blindamos tudo com !important para o coração seguir só as cores do plugin. */
+.lrt-radio-station__fav {
+    position: absolute !important;
+    top: 10px !important;
+    right: 10px !important;
+    z-index: 4;
+    width: 32px !important;
+    height: 32px !important;
+    min-width: 32px !important;
+    min-height: 32px !important;
+    max-height: 32px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border: 0 !important;
+    background: transparent !important;
+    background-color: transparent !important;
+    color: var(--txt-3) !important;
+    cursor: pointer;
+    border-radius: 8px !important;
+    box-shadow: none !important;
+    outline: none !important;
+    font-size: 0 !important;
+    line-height: 0 !important;
+    -webkit-appearance: none !important;
+    appearance: none !important;
+    transition: color 0.2s ease, background 0.2s ease, transform 0.15s ease;
+}
+
+.lrt-radio-station__fav svg {
+    width: 18px !important;
+    height: 18px !important;
+    display: block !important;
+}
+
+.lrt-radio-station__fav:hover {
+    color: var(--purple-soft) !important;
+    background: rgba(116, 39, 255, 0.12) !important;
+    background-color: rgba(116, 39, 255, 0.12) !important;
+}
+
+.lrt-radio-station__fav.is-active {
+    color: #FF4D8D !important;
+}
+
+.lrt-radio-station__fav.is-active svg path {
+    fill: currentColor;
+    stroke: currentColor;
+}
+
+.lrt-radio-station__fav:active {
+    transform: scale(0.9);
+}
+
+/* ===== LINK / CONTEÚDO ===== */
 .lrt-radio-station__link {
+    position: relative;
+    z-index: 1;
     display: flex;
     align-items: center;
-    gap: 16px;
-    padding: 18px 16px;
+    justify-content: flex-start;
+    gap: 12px;
+    padding: 16px 20px;
     text-decoration: none;
     color: inherit;
-    width: 100%;
-    height: 100%;
-    box-sizing: border-box;
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-
-.lrt-radio-station__link:hover {
-    color: var(--lkn-support-gray-7) !important;
+    flex: 1;
+    transition: transform 0.15s ease;
 }
 
 .lrt-radio-station__link:active {
-    transform: scale(0.98);
+    transform: scale(0.99);
 }
 
-/* ===== RADIO STATION LOGO ===== */
-.lrt-radio-station__logo {
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 2px solid var(--lkn-secondary-blue-2) !important;
-    box-shadow: 0 1px 4px rgba(44, 62, 80, 0.10) !important;
-    background-color: var(--lkn-primary) !important;
-    margin-right: 8px;
-}
-
-/* ===== RADIO STATION CONTENT ===== */
-.lrt-radio-station__content {
+/* ===== COVER + LOGO ===== */
+.lrt-radio-station__cover {
+    position: relative;
+    flex: 0 0 64px;
+    width: 64px;
+    height: 64px;
+    border-radius: 14px;
+    overflow: hidden;
+    background: #0F0C29;
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 7px;
-    flex: 1;
-    text-align: center;
+    box-shadow: 0 0 0 1px var(--border), 0 6px 16px rgba(5, 3, 20, 0.5);
+}
+
+.lrt-radio-station__logo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* ===== TEXTO ===== */
+.lrt-radio-station__body {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+    gap: 3px;
+    min-width: 0;
+    flex: 1 1 auto;
 }
 
 .lrt-radio-station__name {
-    color: var(--lkn-secondary-blue-8) !important;
-    /* azul claro para contraste */
-    font-size: 0.92em;
-    font-weight: 500;
-    text-align: start !important;
-    font-family: 'Roboto', Arial, sans-serif !important;
-    width: 100%;
-
-    /* Truncamento de texto com ... */
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    line-clamp: 3;
-    -webkit-box-orient: vertical;
+    color: var(--txt) !important;
+    font-size: 15px !important;
+    font-weight: 600 !important;
+    font-family: inherit !important;
+    line-height: 1.3;
     overflow: hidden;
     text-overflow: ellipsis;
-    line-height: 1.3;
-    max-height: calc(1.3em * 3);
-    word-break: break-word;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    /* Reserva espaço para o coração (canto superior direito) — o texto quebra
+       em até 2 linhas antes de passar por trás do ícone. */
+    padding-right: 34px;
 }
 
-/* ===== LEGACY COMPATIBILITY ===== */
-.lrt-radio-list li:last-child {
-    border-bottom: none;
+.lrt-radio-station__genre {
+    color: var(--txt-2) !important;
+    font-size: 12.5px !important;
+    font-weight: 500 !important;
+    font-family: inherit !important;
+    text-transform: capitalize;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-.lrt-radio-list span {
-    color: var(--lkn-support-gray-7) !important;
-    font-size: 1.08em;
-    font-weight: 500;
-    font-family: 'Roboto', Arial, sans-serif !important;
+.lrt-radio-station__loc {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--txt-3) !important;
+    font-size: 12px !important;
+    font-weight: 500 !important;
+    font-family: inherit !important;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-
-
-/* ===== LEGACY FORM STYLES ===== */
-.lrt-radio-field input,
-.lrt-radio-field select,
-.lrt-radio-field button {
-    outline: none;
-    box-shadow: none;
-    border-radius: 8px;
-    border: 1px solid var(--lkn-secondary-blue-2) !important;
-    background-color: var(--lkn-secondary-blue-4) !important;
-    color: var(--lkn-support-gray-7) !important;
-    font-size: 15px;
-    transition: border 0.2s, background 0.2s;
+.lrt-flag {
+    font-size: 13px;
+    line-height: 1;
 }
 
-.lrt-radio-field input:focus,
-.lrt-radio-field select:focus,
-.lrt-radio-field button:focus {
-    border: 1.5px solid var(--lkn-secondary-blue-5) !important;
-    background-color: var(--lkn-support-gray-3) !important;
+.lrt-radio-station.is-playing {
+    border-color: rgba(150, 110, 255, 0.65) !important;
+    background: var(--card-2) !important;
+    box-shadow: 0 0 28px var(--glow) !important;
 }
 
-.lrt-radio-form button[type="submit"] {
-    background-color: var(--lkn-support-gray-7) !important;
-    color: var(--lkn-support-gray-3) !important;
-    font-weight: 600;
-    box-shadow: 0 2px 8px rgba(44, 62, 80, 0.10);
-}
-
-.lrt-radio-form button[type="submit"]:hover {
-    background-color: var(--lkn-support-gray-8) !important;
-    color: var(--lkn-support-gray-3) !important;
-    border: 1.5px solid var(--lkn-secondary-blue-5) !important;
-}
-
-/* ===== NUMBER INPUT STYLES ===== */
-.lrt-radio-field input[type="number"]::-webkit-inner-spin-button,
-.lrt-radio-field input[type="number"]::-webkit-outer-spin-button,
-.lrt-radio-input[type="number"]::-webkit-inner-spin-button,
-.lrt-radio-input[type="number"]::-webkit-outer-spin-button {
+/* ===== BARRA DE PLAY (rodapé do componente) ===== */
+.lrt-player-dock {
+    /* Variáveis re-declaradas: quando a barra é movida para o <body> (para
+       escapar do stacking context do tema), o .lrt-radio-wrap deixa de ser
+       ancestral — então as vars precisam existir localmente. */
+    --card: #15122F;
+    --card-2: #18143A;
+    --purple-bright: #8B3DFF;
+    --purple-soft: #9146FF;
+    --purple-dark: #4D1BB8;
+    --txt: #F6F3FF;
+    --txt-2: #A8A2C5;
+    --txt-3: #777294;
+    --border: rgba(150, 120, 255, 0.18);
+    --border-strong: rgba(150, 120, 255, 0.32);
+    --glow: rgba(120, 40, 255, 0.30);
+    flex: 0 0 auto;
     margin: 0;
+    padding: 16px 20px;
+    border: none;
+    border-top: 1px solid var(--border);
+    border-radius: 0;
+    background: rgba(8, 7, 32, 0.4);
+    box-shadow: none;
 }
 
-/* ===== ERROR MESSAGES ===== */
+.lrt-player-dock[hidden] {
+    display: none !important;
+}
+
+.lrt-player-dock audio {
+    display: none;
+}
+
+.lrt-player-dock__inner {
+    display: flex !important;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 14px;
+    row-gap: 10px;
+}
+
+/* Esquerda: capa + textos (cresce; espaço igual à direita → play centralizado) */
+.lrt-player-dock__meta {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 0;
+    flex: 1 1 0;
+}
+
+.lrt-player-dock__cover {
+    flex: 0 0 auto;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    overflow: hidden;
+    background: #0F0C29;
+    box-shadow: 0 0 0 1px var(--border);
+}
+
+.lrt-player-dock__logo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.lrt-player-dock__texts {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.lrt-player-dock__name {
+    color: var(--txt) !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    font-family: inherit !important;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.lrt-player-dock__sub {
+    color: var(--txt-3) !important;
+    font-size: 12px !important;
+    font-family: inherit !important;
+    text-transform: capitalize;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Botões redondos do dock (blindados contra o estilo global de button do tema) */
+.lrt-player-dock__fav,
+.lrt-player-dock__ctrl,
+.lrt-player-dock__play,
+.lrt-player-dock__mute,
+.lrt-player-dock__pin {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border: 1px solid var(--border) !important;
+    background: #17133A !important;
+    background-color: #17133A !important;
+    color: var(--txt-2) !important;
+    cursor: pointer;
+    box-shadow: none !important;
+    outline: none !important;
+    line-height: 0 !important;
+    -webkit-appearance: none !important;
+    appearance: none !important;
+    transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease, transform 0.15s ease;
+}
+
+.lrt-player-dock__fav svg,
+.lrt-player-dock__ctrl svg,
+.lrt-player-dock__play svg,
+.lrt-player-dock__mute svg,
+.lrt-player-dock__pin svg {
+    width: 18px;
+    height: 18px;
+    display: block;
+}
+
+/* Coração */
+.lrt-player-dock__fav {
+    width: 40px !important;
+    height: 40px !important;
+    min-width: 40px !important;
+    min-height: 40px !important;
+    max-width: 40px !important;
+    max-height: 40px !important;
+    aspect-ratio: 1 / 1;
+    border-radius: 50% !important;
+    flex: 0 0 auto;
+}
+
+.lrt-player-dock__fav:hover {
+    color: var(--purple-soft) !important;
+    border-color: var(--border-strong) !important;
+}
+
+.lrt-player-dock__fav.is-active {
+    color: #FF6BA6 !important;
+    border-color: rgba(255, 107, 166, 0.55) !important;
+}
+
+.lrt-player-dock__fav.is-active svg path {
+    fill: currentColor;
+    stroke: currentColor;
+}
+
+/* Controles: voltar / play / avançar */
+.lrt-player-dock__controls {
+    display: flex !important;
+    align-items: center;
+    gap: 8px;
+    flex: 0 0 auto;
+}
+
+.lrt-player-dock__ctrl {
+    width: 38px !important;
+    height: 38px !important;
+    min-width: 38px !important;
+    min-height: 38px !important;
+    max-width: 38px !important;
+    max-height: 38px !important;
+    aspect-ratio: 1 / 1;
+    border-radius: 50% !important;
+}
+
+.lrt-player-dock__ctrl:hover {
+    color: var(--txt) !important;
+    border-color: var(--border-strong) !important;
+}
+
+.lrt-player-dock__play {
+    width: 48px !important;
+    height: 48px !important;
+    min-width: 48px !important;
+    min-height: 48px !important;
+    max-width: 48px !important;
+    max-height: 48px !important;
+    aspect-ratio: 1 / 1;
+    border-radius: 50% !important;
+    border-color: transparent !important;
+    background: linear-gradient(135deg, #5E20D5 0%, #7827FF 100%) !important;
+    background-color: #6D28D9 !important;
+    color: #fff !important;
+    box-shadow: 0 0 18px var(--glow) !important;
+}
+
+.lrt-player-dock__play svg {
+    width: 22px;
+    height: 22px;
+}
+
+.lrt-player-dock__play:hover {
+    transform: translateY(-1px);
+}
+
+.lrt-player-dock__play .lrt-dock-icon-pause {
+    display: none;
+}
+
+.lrt-player-dock.is-playing .lrt-player-dock__play .lrt-dock-icon-play {
+    display: none;
+}
+
+.lrt-player-dock.is-playing .lrt-player-dock__play .lrt-dock-icon-pause {
+    display: block;
+}
+
+/* Áudio + volume (cresce simétrico à esquerda → volume ancorado à direita) */
+.lrt-player-dock__audio {
+    display: flex !important;
+    align-items: center;
+    gap: 10px;
+    flex: 1 1 0;
+    min-width: 0;
+    margin-left: 0;
+    padding-right: 18px;
+    justify-content: flex-end;
+}
+
+.lrt-player-dock__mute {
+    width: 30px !important;
+    height: 30px !important;
+    min-width: 30px !important;
+    min-height: 30px !important;
+    max-width: 30px !important;
+    max-height: 30px !important;
+    border: 0 !important;
+    background: transparent !important;
+    background-color: transparent !important;
+    border-radius: 0 !important;
+    color: var(--txt-2) !important;
+    flex: 0 0 auto;
+}
+
+.lrt-player-dock__mute:hover {
+    color: var(--txt) !important;
+    border-color: transparent !important;
+}
+
+.lrt-player-dock__mute svg {
+    width: 22px !important;
+    height: 22px !important;
+}
+
+.lrt-player-dock__mute .lrt-dock-vol-off {
+    display: none;
+}
+
+.lrt-player-dock.is-muted .lrt-player-dock__mute .lrt-dock-vol-on {
+    display: none;
+}
+
+.lrt-player-dock.is-muted .lrt-player-dock__mute .lrt-dock-vol-off {
+    display: block;
+}
+
+.lrt-player-dock__volume {
+    -webkit-appearance: none;
+    appearance: none;
+    flex: 0 0 auto;
+    width: 76px;
+    max-width: 76px;
+    height: 4px;
+    border-radius: 999px;
+    background: rgba(150, 120, 255, 0.25);
+    outline: none;
+    cursor: pointer;
+}
+
+.lrt-player-dock__volume::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--purple-bright);
+    box-shadow: 0 0 10px var(--glow);
+    cursor: pointer;
+}
+
+.lrt-player-dock__volume::-moz-range-thumb {
+    width: 14px;
+    height: 14px;
+    border: none;
+    border-radius: 50%;
+    background: var(--purple-bright);
+    box-shadow: 0 0 10px var(--glow);
+    cursor: pointer;
+}
+
+/* Botão fixar */
+.lrt-player-dock__pin {
+    width: 40px !important;
+    height: 40px !important;
+    min-width: 40px !important;
+    min-height: 40px !important;
+    max-width: 40px !important;
+    max-height: 40px !important;
+    aspect-ratio: 1 / 1;
+    border-radius: 50% !important;
+    flex: 0 0 auto;
+}
+
+.lrt-player-dock__pin:hover {
+    color: var(--txt) !important;
+    border-color: var(--border-strong) !important;
+}
+
+.lrt-player-dock__pin.is-active {
+    color: #fff !important;
+    border-color: transparent !important;
+    background: linear-gradient(135deg, #5E20D5 0%, #7827FF 100%) !important;
+    box-shadow: 0 0 16px var(--glow) !important;
+}
+
+/* Fixo no rodapé da tela */
+.lrt-player-dock.is-fixed {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: 0;
+    border: 1px solid var(--border-strong);
+    border-radius: 14px 14px 0 0;
+    background: #0B0925;
+    box-shadow: 0 -12px 34px rgba(4, 2, 18, 0.6);
+    z-index: 2147483000;
+    padding: 12px 16px;
+}
+
+.lrt-player-dock.is-fixed .lrt-player-dock__inner {
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+/* ===== ERROR / LOADING / EMPTY ===== */
 .lrt-radio-error {
-    background-color: var(--lkn-support-red-2) !important;
-    padding: 12px;
-    border-radius: 6px;
-    color: var(--lkn-secondary-red-1) !important;
+    grid-column: 1 / -1;
+    background: rgba(244, 63, 94, 0.10);
+    border: 1px solid rgba(244, 63, 94, 0.32);
+    padding: 18px;
+    border-radius: 14px;
+    color: #FDA4AF;
     text-align: center;
+    font-weight: 500;
     list-style: none;
 }
 
-/* ===== SELECT DE PAÍS ESPECÍFICO ===== */
-.lrt-radio-select--country {
-    min-width: 140px;
-    font-size: 14px;
-    /* Padding normal - deixar navegador gerenciar setinha */
-    padding: 7px 12px;
-}
-
-/* Melhorar o texto no select */
-.lrt-radio-select--country {
-    /* Altura de linha para centralizar verticalmente */
-    line-height: 1.3;
-}
-
-/* Estilo das opções */
-.lrt-radio-select--country option {
-    padding: 8px 12px;
-    background-color: var(--lkn-secondary-blue-4) !important;
-    color: var(--lkn-support-gray-7) !important;
-    line-height: 1.4;
-}
-
-/* ===== SELECT2 CUSTOM OVERRIDES ===== */
-
-#lrt_genre {
-    min-width: 240px !important;
-    max-width: 280px !important;
-    width: 100% !important;
-}
-
-.select2-container--default .select2-selection--single {
-    min-width: 240px !important;
-    max-width: 280px !important;
-    width: 100% !important;
-    height: 35px !important;
-    overflow: hidden !important;
-    text-overflow: ellipsis !important;
-    white-space: nowrap !important;
-    background-color: var(--lkn-secondary-blue-4) !important;
-    color: var(--lkn-support-gray-7) !important;
-    border: 1px solid var(--lkn-secondary-blue-2) !important;
-    border-radius: 8px !important;
-    font-size: 16px !important;
-    font-family: 'Roboto', Arial, sans-serif !important;
-}
-
-.select2-container {
-    min-width: 240px !important;
-    max-width: 280px !important;
-    width: 100% !important;
-}
-
-.select2-dropdown {
-    min-width: 240px !important;
-    max-width: 280px !important;
-    width: 100% !important;
-    border-radius: 8px !important;
-    overflow: hidden !important;
-    background-color: var(--lkn-secondary-blue-4) !important;
-    color: var(--lkn-support-gray-7) !important;
-}
-
-.select2-selection__rendered {
-    display: flex !important;
-    align-items: center !important;
-    height: 100% !important;
-    padding: 0px .5em !important;
-    overflow: hidden !important;
-    text-overflow: ellipsis !important;
-    white-space: nowrap !important;
-    color: var(--lkn-support-gray-7) !important;
-    font-size: 16px !important;
-    font-family: 'Roboto', Arial, sans-serif !important;
-}
-
-/* Fix Select2 clear 'x' button */
-.select2-container--default .select2-selection--single .select2-selection__clear {
-    color: var(--lkn-support-gray-7) !important;
-    font-size: 18px !important;
-    position: absolute !important;
-    right: 16px !important;
-    top: 50% !important;
-    margin-right: 10px !important;
-    transform: translateY(-50%);
-    background-color: none !important;
-    border: none !important;
-    cursor: pointer !important;
-    opacity: 0.7;
-    transition: opacity 0.2s;
-    height: 32px !important;
-    width: 32px !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    z-index: 2;
-}
-
-.lrt-hide-select2-clear .select2-selection__clear {
-    display: none !important;
-    position: absolute !important;
-    top: 50% !important;
-    right: 16px !important;
-    width: 0 !important;
-    height: 0 !important;
-    pointer-events: none !important;
-    visibility: hidden !important;
-}
-
-.select2-container--default .select2-selection--single .select2-selection__clear:hover {
-    opacity: 1;
-    color: var(--lkn-secondary-blue-5) !important;
-}
-
-.select2-selection__arrow {
-    top: 0px !important;
-    height: 100% !important;
-}
-
-.select2-container .select2-selection--single .select2-selection__arrow b {
-    border: none !important;
-    display: block !important;
-    background: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZTBkZWYwIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PHBvbHlsaW5lIHBvaW50cz0iNiA5IDEyIDE1IDE4IDkiPjwvcG9seWxpbmU+PC9zdmc+") no-repeat center center !important;
-    background-size: 16px 16px !important;
-    width: 16px !important;
-    height: 16px !important;
-    margin: 0 !important;
-    position: absolute !important;
-    top: 50% !important;
-    left: 50% !important;
-    transform: translate(-50%, -50%) !important;
-    pointer-events: none !important;
-}
-
-.select2-search__field {
-    font-size: 16px !important;
-    height: 35px !important;
-    font-family: 'Roboto', Arial, sans-serif !important;
-}
-
-.select2-results__option--selected {
-    background-color: var(--lkn-primary) !important;
-}
-
-.select2-results__option {
-    font-family: 'Roboto', Arial, sans-serif !important;
-    font-size: 16px !important;
-}
-
-/* Responsive para select de país */
-@media (max-width: 768px) {
-    .lrt-radio-select--country {
-        min-width: 120px;
-        font-size: 13px;
-        padding: 6px 10px;
-    }
-}
-
-/* ===== LOADING STATE ===== */
 .lrt-radio-loading {
-    background-color: var(--lkn-support-gray-3) !important;
+    grid-column: 1 / -1;
+    background: var(--card);
+    border: 1px solid var(--border);
     border-radius: 14px;
-    box-shadow: 0 2px 8px rgba(44, 62, 80, 0.10) !important;
-    padding: 32px 18px;
+    padding: 44px 18px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     gap: 16px;
-    grid-column: 1 / -1;
-    text-align: center;
-    color: var(--lkn-support-gray-7) !important;
-    font-family: 'Roboto', Arial, sans-serif !important;
+    color: var(--txt-2);
     font-weight: 500;
 }
 
-.lrt-loading-spinner {
-    width: 40px;
-    height: 40px;
-    border: 3px solid rgba(224, 230, 240, 0.2) !important;
-    border-top: 3px solid var(--lkn-secondary-blue-6) !important;
-    border-radius: 50%;
-    animation: lrt-spin 1s linear infinite;
+/* ===== LOADER PERSONALIZADO (equalizador) ===== */
+.lrt-loader {
+    display: inline-flex !important;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 5px;
+    height: 34px;
+    line-height: 0;
 }
 
-@keyframes lrt-spin {
-    0% {
-        transform: rotate(0deg);
+.lrt-loader i {
+    display: block;
+    width: 5px;
+    height: 100%;
+    border-radius: 999px;
+    background: linear-gradient(to top, var(--purple-dark), var(--purple-bright));
+    transform: scaleY(0.25);
+    transform-origin: bottom center;
+    animation: lrt-eq 1s ease-in-out infinite;
+}
+
+.lrt-loader i:nth-child(1) { animation-delay: 0s; }
+.lrt-loader i:nth-child(2) { animation-delay: 0.15s; }
+.lrt-loader i:nth-child(3) { animation-delay: 0.3s; }
+.lrt-loader i:nth-child(4) { animation-delay: 0.45s; }
+.lrt-loader i:nth-child(5) { animation-delay: 0.6s; }
+
+@keyframes lrt-eq {
+    0%, 100% { transform: scaleY(0.25); opacity: 0.7; }
+    50% { transform: scaleY(1); opacity: 1; }
+}
+
+/* Overlay de carregamento do card "Tocando agora" — aparece junto com a lista
+   quando o componente inteiro entra em estado de carregamento. */
+.lrt-now__loading {
+    position: absolute;
+    inset: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    background: rgba(8, 7, 32, 0.55);
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+    z-index: 3;
+}
+
+.lrt-radio-wrap.is-loading .lrt-now__loading {
+    display: flex !important;
+}
+
+.lrt-radio-wrap.is-loading .lrt-now__body,
+.lrt-radio-wrap.is-loading .lrt-now__actions {
+    opacity: 0.35;
+    transition: opacity 0.2s ease;
+}
+
+.lrt-radio-wrap.is-loading .lrt-now__wave i {
+    animation: lrt-eq 0.9s ease-in-out infinite;
+}
+
+.lrt-radio-wrap.is-loading .lrt-now__wave i:nth-child(2n) { animation-delay: 0.15s; }
+.lrt-radio-wrap.is-loading .lrt-now__wave i:nth-child(3n) { animation-delay: 0.3s; }
+
+.lrt-empty {
+    text-align: center;
+    padding: 56px 20px;
+    color: var(--txt-2);
+}
+
+.lrt-empty__icon {
+    font-size: 40px;
+    display: block;
+    margin-bottom: 12px;
+    opacity: 0.8;
+}
+
+.lrt-empty__text {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 500;
+}
+
+/* ===== SELECT2 (dropdown premium) ===== */
+.lrt-radio-wrap .select2-container {
+    width: 100% !important;
+}
+
+.lrt-radio-wrap .select2-container--default .select2-selection--single {
+    position: relative;
+    height: 44px !important;
+    background: #17133A !important;
+    border: 1px solid var(--border) !important;
+    border-radius: 999px !important;
+    display: flex;
+    align-items: center;
+    padding: 0 60px 0 16px !important;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.lrt-radio-wrap .select2-container--default .select2-selection--single:hover {
+    border-color: var(--border-strong) !important;
+}
+
+.lrt-radio-wrap .select2-container--default.select2-container--focus .select2-selection--single,
+.lrt-radio-wrap .select2-container--default.select2-container--open .select2-selection--single {
+    border-color: var(--purple-bright) !important;
+    box-shadow: 0 0 0 3px rgba(116, 39, 255, 0.25) !important;
+}
+
+.lrt-radio-wrap .select2-selection__rendered {
+    flex: 1 1 auto;
+    min-width: 0;
+    color: var(--txt) !important;
+    font-family: inherit !important;
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    padding: 0 !important;
+    line-height: 1 !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+}
+
+.lrt-radio-wrap .select2-selection__placeholder {
+    color: var(--txt-3) !important;
+}
+
+/* Botão "limpar" (×) — o Select2 usa float:right, que é ignorado no flex.
+   Ancoramos de forma absoluta e centralizada, à esquerda da seta. */
+.lrt-radio-wrap .select2-container--default .select2-selection--single .select2-selection__clear {
+    position: absolute !important;
+    top: 50% !important;
+    right: 36px !important;
+    left: auto !important;
+    transform: translateY(-50%) !important;
+    float: none !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    /* Tema costuma impor min-width/min-height em <button> (área de toque), o
+       que deixava a "bolinha" oval. Forçamos as duas dimensões iguais. */
+    width: 20px !important;
+    min-width: 20px !important;
+    max-width: 20px !important;
+    height: 20px !important;
+    min-height: 20px !important;
+    max-height: 20px !important;
+    aspect-ratio: 1 / 1 !important;
+    flex: 0 0 auto !important;
+    box-sizing: border-box !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 50% !important;
+    outline: none !important;
+    box-shadow: none !important;
+    overflow: hidden !important;
+    color: var(--txt-2) !important;
+    font-family: inherit !important;
+    font-size: 15px !important;
+    font-weight: 700 !important;
+    line-height: 1 !important;
+    z-index: 2;
+    transition: color 0.15s ease, background 0.15s ease;
+}
+
+.lrt-radio-wrap .select2-container--default .select2-selection--single .select2-selection__clear:hover {
+    color: #fff !important;
+    background: rgba(150, 120, 255, 0.22) !important;
+}
+
+.lrt-radio-wrap .select2-selection__arrow {
+    top: 0 !important;
+    height: 100% !important;
+    right: 10px !important;
+}
+
+.lrt-radio-wrap .select2-selection__arrow b {
+    border: none !important;
+    width: 16px !important;
+    height: 16px !important;
+    background: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23A8A2C5' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6,9 12,15 18,9'%3e%3c/polyline%3e%3c/svg%3e") no-repeat center !important;
+    background-size: 16px 16px !important;
+    top: 50% !important;
+    left: 50% !important;
+    margin: 0 !important;
+    transform: translate(-50%, -50%);
+}
+
+/* O dropdown é anexado ao <body>, fora de .lrt-radio-wrap — por isso as
+   variáveis CSS do tema precisam ser redeclaradas aqui (senão var() fica
+   inválido e o dropdown renderiza sem fundo/cor). */
+.select2-dropdown.lrt-select2-dropdown {
+    --card: #15122F;
+    --card-2: #18143A;
+    --card-hover: #1C1740;
+    --purple-bright: #8B3DFF;
+    --txt: #F6F3FF;
+    --txt-2: #A8A2C5;
+    --txt-3: #777294;
+    --border: rgba(150, 120, 255, 0.18);
+    --border-strong: rgba(150, 120, 255, 0.32);
+
+    font-family: 'Inter', 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif !important;
+    background: var(--card-2) !important;
+    border: 1px solid var(--border) !important;
+    border-radius: 12px !important;
+    overflow: hidden !important;
+    box-shadow: 0 18px 40px rgba(4, 2, 18, 0.6) !important;
+}
+
+.lrt-select2-dropdown .select2-search--dropdown .select2-search__field {
+    background: #17133A !important;
+    border: 1px solid var(--border) !important;
+    border-radius: 8px !important;
+    color: var(--txt) !important;
+    font-family: inherit !important;
+    font-size: 14px !important;
+    padding: 8px 10px !important;
+    outline: none !important;
+}
+
+.lrt-select2-dropdown .select2-results__option {
+    color: var(--txt-2) !important;
+    font-family: inherit !important;
+    font-size: 14px !important;
+    padding: 9px 14px !important;
+}
+
+.lrt-select2-dropdown .select2-results__option--highlighted,
+.lrt-select2-dropdown .select2-results__option--selected {
+    background: rgba(116, 39, 255, 0.28) !important;
+    color: #fff !important;
+}
+
+.lrt-select2-dropdown .select2-results > .select2-results__options {
+    max-height: 280px !important;
+    overflow-y: auto !important;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(150, 120, 255, 0.4) transparent;
+}
+
+.lrt-select2-dropdown .select2-results > .select2-results__options::-webkit-scrollbar {
+    width: 8px;
+}
+
+.lrt-select2-dropdown .select2-results > .select2-results__options::-webkit-scrollbar-thumb {
+    background: rgba(150, 120, 255, 0.4);
+    border-radius: 999px;
+}
+
+/* ===== RESPONSIVO ===== */
+@media (max-width: 1024px) {
+    .lrt-radio-shell {
+        grid-template-columns: 210px minmax(0, 1fr);
     }
 
-    100% {
-        transform: rotate(360deg);
+    .lrt-radio-list {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 }
 
-.lrt-radio-loading span {
-    font-size: 0.95em;
-    color: var(--lkn-support-gray-7) !important;
-    opacity: 0.9;
+@media (max-width: 782px) {
+    .lrt-radio-shell {
+        grid-template-columns: 1fr;
+    }
+
+    .lrt-sidebar {
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+    }
+
+    .lrt-sidebar__menu,
+    .lrt-sidebar__nav {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    .lrt-side-item,
+    .lrt-side-nav-item {
+        width: auto;
+        flex: 1 1 auto;
+        justify-content: center;
+    }
+
+    .lrt-sidebar__footer {
+        display: none;
+    }
+
+    .lrt-main {
+        padding: 20px 16px 22px;
+    }
+
+    .lrt-search {
+        flex: 1 1 100%;
+        max-width: 100%;
+    }
+
+    .lrt-toolbar__right {
+        width: 100%;
+        margin-left: 0;
+    }
+
+    .lrt-pill-select {
+        flex: 1 1 auto;
+    }
+
+    .lrt-pill-select--country {
+        width: auto;
+    }
+
+    .lrt-radio-list {
+        grid-template-columns: 1fr;
+    }
+
+    .lrt-now__card {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 14px;
+    }
+
+    .lrt-now__actions {
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-start;
+    }
+
+    .lrt-now__wave {
+        height: 36px;
+    }
+
+    /* ===== Player no mobile: 3 linhas, todos os controles =====
+       linha 1 = capa + dados                  ♥
+       linha 2 = ‹ ⏵ › (centralizados)
+       linha 3 = 🔊 volume (esq.)             📌 (dir.) */
+    .lrt-player-dock {
+        padding: 12px 14px;
+    }
+
+    .lrt-player-dock__inner {
+        flex-wrap: wrap !important;
+        align-items: center;
+        gap: 10px 12px;
+    }
+
+    /* Linha 1: dados + coração na outra ponta */
+    .lrt-player-dock__meta {
+        order: 1;
+        flex: 1 1 auto;
+        min-width: 0;
+        gap: 10px;
+    }
+
+    .lrt-player-dock__cover {
+        width: 40px;
+        height: 40px;
+    }
+
+    .lrt-player-dock__fav {
+        order: 2;
+        margin-left: auto;
+        width: 36px !important;
+        height: 36px !important;
+        min-width: 36px !important;
+        min-height: 36px !important;
+        max-width: 36px !important;
+        max-height: 36px !important;
+    }
+
+    /* Linha 2: play + setas centralizados (linha própria) */
+    .lrt-player-dock__controls {
+        order: 3;
+        flex: 1 1 100%;
+        justify-content: center;
+        gap: 8px;
+    }
+
+    .lrt-player-dock__ctrl {
+        width: 36px !important;
+        height: 36px !important;
+        min-width: 36px !important;
+        min-height: 36px !important;
+        max-width: 36px !important;
+        max-height: 36px !important;
+    }
+
+    .lrt-player-dock__play {
+        width: 46px !important;
+        height: 46px !important;
+        min-width: 46px !important;
+        min-height: 46px !important;
+        max-width: 46px !important;
+        max-height: 46px !important;
+    }
+
+    /* Linha 3: volume à esquerda, fixar à direita */
+    .lrt-player-dock__audio {
+        order: 4;
+        flex: 1 1 auto;
+        margin-left: 0;
+        padding-right: 0;
+        justify-content: flex-start;
+    }
+
+    .lrt-player-dock__pin {
+        order: 5;
+        margin-left: auto;
+        width: 36px !important;
+        height: 36px !important;
+        min-width: 36px !important;
+        min-height: 36px !important;
+        max-width: 36px !important;
+        max-height: 36px !important;
+    }
+
+    /* Enquanto toca, a barra fixa no topo da tela (mini-player) */
+    .lrt-player-dock.is-playing {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: auto;
+        z-index: 2147483000;
+        border-top: none;
+        border-bottom: 1px solid var(--border-strong);
+        border-radius: 0 0 16px 16px;
+        background: #0B0925;
+        box-shadow: 0 14px 34px rgba(4, 2, 18, 0.6);
+        padding: calc(12px + env(safe-area-inset-top, 0px)) 14px 12px;
+    }
+
+    /* No mobile, o "fixar" (pin) prende no TOPO da tela
+       (no tablet/PC o padrão é embaixo). */
+    .lrt-player-dock.is-fixed {
+        top: 0;
+        bottom: auto;
+        border: none;
+        border-bottom: 1px solid var(--border-strong);
+        border-radius: 0 0 16px 16px;
+        box-shadow: 0 14px 34px rgba(4, 2, 18, 0.6);
+        padding: calc(12px + env(safe-area-inset-top, 0px)) 14px 12px;
+    }
+}
+
+/* ==========================================================================
+   TEMA CLARO (light) — alternável pelo botão [data-lknwp-theme-toggle]
+   ========================================================================== */
+[data-lknwp-theme-toggle] .lkn-theme-sun { display: block; }
+[data-lknwp-theme-toggle] .lkn-theme-moon { display: none; }
+html[data-lknwp-theme="light"] [data-lknwp-theme-toggle] .lkn-theme-sun { display: none; }
+html[data-lknwp-theme="light"] [data-lknwp-theme-toggle] .lkn-theme-moon { display: block; }
+
+/* Botão de tema (mesmo formato dos botões da toolbar) */
+.lrt-theme-toggle {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    width: 44px !important;
+    height: 44px !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+    padding: 0 !important;
+    gap: 0 !important;
+    margin: 0 !important;
+    border-radius: 999px !important;
+    border: 1px solid var(--border) !important;
+    background: #17133A !important;
+    color: var(--txt) !important;
+    cursor: pointer;
+    line-height: 0 !important;
+    transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease;
+}
+
+.lrt-theme-toggle:hover {
+    border-color: var(--border-strong) !important;
+    background: var(--card-hover) !important;
+}
+
+.lrt-theme-toggle:focus-visible {
+    outline: none !important;
+    box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.35) !important;
+}
+
+.lrt-theme-toggle svg { width: 18px; height: 18px; display: block; }
+
+/* --- Paleta clara --- */
+html[data-lknwp-theme="light"] .lrt-radio-wrap {
+    --bg: #F5F3FB;
+    --bg-2: #FFFFFF;
+    --sidebar: #FFFFFF;
+    --card: #FFFFFF;
+    --card-2: #F4F1FC;
+    --card-hover: #EEE9FB;
+    --txt: #1B1430;
+    --txt-2: #574F7A;
+    --txt-3: #837BA8;
+    --border: rgba(120, 80, 220, 0.18);
+    --border-strong: rgba(120, 80, 220, 0.34);
+    --glow: rgba(120, 40, 255, 0.20);
+
+    background: radial-gradient(120% 80% at 15% -10%, #E9E1FB 0%, var(--bg-2) 40%, var(--bg) 100%) !important;
+    color: var(--txt);
+}
+
+/* Superfícies que usavam cor fixa escura */
+html[data-lknwp-theme="light"] .lrt-radio-wrap .lrt-search__input,
+html[data-lknwp-theme="light"] .lrt-radio-wrap .lrt-btn,
+html[data-lknwp-theme="light"] .lrt-radio-wrap .lrt-btn--filters,
+html[data-lknwp-theme="light"] .lrt-radio-wrap .lrt-radio-select,
+html[data-lknwp-theme="light"] .lrt-radio-wrap .lrt-theme-toggle,
+html[data-lknwp-theme="light"] .lrt-radio-wrap .select2-container--default .select2-selection--single {
+    /* usa background-color (não o shorthand) pra não apagar o chevron do <select> */
+    background-color: #FFFFFF !important;
+    border-color: var(--border) !important;
+    color: var(--txt) !important;
+}
+
+html[data-lknwp-theme="light"] .lrt-radio-wrap .lrt-btn:hover,
+html[data-lknwp-theme="light"] .lrt-radio-wrap .lrt-theme-toggle:hover,
+html[data-lknwp-theme="light"] .lrt-radio-wrap .lrt-btn--ghost:hover {
+    background: var(--card-hover) !important;
+}
+
+html[data-lknwp-theme="light"] .lrt-radio-wrap .lrt-btn--filters[aria-expanded="true"] {
+    background: linear-gradient(135deg, #5E20D5 0%, #7827FF 100%) !important;
+    color: #fff !important;
+}
+
+html[data-lknwp-theme="light"] .lrt-radio-wrap .lrt-radio-station__cover {
+    background: var(--card-2) !important;
+    box-shadow: 0 2px 6px rgba(35, 30, 55, 0.08) !important;
+}
+
+/* Pílulas do "Tocando agora": o tom base (#C9BBFF) some no fundo branco —
+   usa um cinza/ardósia mais escuro, legível no claro. */
+html[data-lknwp-theme="light"] .lrt-radio-wrap .lrt-now__pill {
+    color: #4A4468 !important;
+    border-color: rgba(120, 80, 220, 0.42) !important;
+    background: rgba(120, 80, 220, 0.07) !important;
+}
+
+/* Tagline da sidebar: no claro o tom base (#B9AEE8) fica lavado —
+   usa um roxo mais escuro (mantém a identidade, com contraste). */
+html[data-lknwp-theme="light"] .lrt-radio-wrap .lrt-sidebar__tagline {
+    color: #6B4DB8 !important;
+}
+
+/* Ações do "Tocando agora" (favoritar + abrir player): no claro o botão
+   escuro (#17133A) com texto escuro ficava ilegível — vira branco. */
+html[data-lknwp-theme="light"] .lrt-radio-wrap .lrt-now__fav,
+html[data-lknwp-theme="light"] .lrt-radio-wrap .lrt-now__open {
+    background: #FFFFFF !important;
+    border-color: var(--border) !important;
+    color: var(--txt-2) !important;
+}
+
+html[data-lknwp-theme="light"] .lrt-radio-wrap .lrt-now__fav:hover,
+html[data-lknwp-theme="light"] .lrt-radio-wrap .lrt-now__open:hover {
+    background: var(--card-hover) !important;
+    border-color: var(--border-strong) !important;
+    color: var(--txt) !important;
+}
+
+html[data-lknwp-theme="light"] .lrt-radio-wrap .lrt-now__fav.is-active {
+    color: #E24E93 !important;
+    border-color: rgba(226, 78, 147, 0.55) !important;
+    background: rgba(226, 78, 147, 0.10) !important;
+}
+
+html[data-lknwp-theme="light"] .lrt-radio-wrap .lrt-now__fav.is-active:hover {
+    color: #E24E93 !important;
+}
+
+html[data-lknwp-theme="light"] .lrt-radio-wrap .lrt-now__fav.is-active svg path {
+    fill: currentColor;
+    stroke: currentColor;
+}
+
+/* O dock flutuante é movido para o <body> (fora do .lrt-radio-wrap),
+   por isso estes overrides NÃO usam o ancestral .lrt-radio-wrap — e precisam
+   redeclarar as variáveis locais que o próprio dock define (senão o texto,
+   definido em tom claro, ficaria invisível sobre o fundo branco). */
+html[data-lknwp-theme="light"] .lrt-player-dock {
+    --card: #FFFFFF;
+    --card-2: #F4F1FC;
+    --purple-bright: #8B3DFF;
+    --purple-soft: #9146FF;
+    --purple-dark: #4D1BB8;
+    --txt: #1B1430;
+    --txt-2: #574F7A;
+    --txt-3: #837BA8;
+    --border: rgba(120, 80, 220, 0.18);
+    --border-strong: rgba(120, 80, 220, 0.34);
+    --glow: rgba(120, 40, 255, 0.20);
+    background: #FFFFFF !important;
+}
+
+html[data-lknwp-theme="light"] .lrt-player-dock__cover {
+    background: var(--card-2, #F4F1FC) !important;
+    box-shadow: 0 8px 20px rgba(80, 60, 140, 0.14) !important;
+}
+
+html[data-lknwp-theme="light"] .lrt-player-dock__fav,
+html[data-lknwp-theme="light"] .lrt-player-dock__ctrl,
+html[data-lknwp-theme="light"] .lrt-player-dock__play,
+html[data-lknwp-theme="light"] .lrt-player-dock__mute,
+html[data-lknwp-theme="light"] .lrt-player-dock__pin {
+    background-color: #FFFFFF !important;
+}
+
+html[data-lknwp-theme="light"] .lrt-player-dock.is-fixed {
+    background: #FFFFFF !important;
+    box-shadow: 0 -12px 34px rgba(80, 60, 140, 0.18) !important;
+}
+
+/* Dropdown do Select2 (anexado ao <body>) */
+html[data-lknwp-theme="light"] .select2-dropdown.lrt-select2-dropdown {
+    --card: #FFFFFF;
+    --card-2: #FFFFFF;
+    --card-hover: #F4F1FC;
+    --purple-bright: #8B3DFF;
+    --txt: #1B1430;
+    --txt-2: #574F7A;
+    --txt-3: #837BA8;
+    --border: rgba(120, 80, 220, 0.18);
+    --border-strong: rgba(120, 80, 220, 0.34);
+    background: #FFFFFF !important;
+    box-shadow: 0 18px 40px rgba(70, 50, 130, 0.18) !important;
+}
+
+html[data-lknwp-theme="light"] .lrt-select2-dropdown .select2-search--dropdown .select2-search__field {
+    background: #FFFFFF !important;
+    color: var(--txt) !important;
+}
+
+/* --- Sombras suavizadas no tema claro ---
+   As sombras originais (rgba(4,2,18,...) etc.) são pensadas para fundo escuro
+   e ficam "duras" no claro. Aqui elas ficam mais próximas (offset/blur menores),
+   com tom acinzentado bem leve. */
+html[data-lknwp-theme="light"] .lrt-radio-wrap .lrt-now__card {
+    /* Bloco grande: sombra bem mais leve e próxima. */
+    box-shadow: 0 3px 10px rgba(35, 30, 55, 0.05);
+}
+
+/* Mantém o feedback do "is-updated" (flash), mas com a sombra leve no claro. */
+html[data-lknwp-theme="light"] .lrt-radio-wrap .lrt-now.is-updated .lrt-now__card {
+    animation: lrt-now-flash-light 0.8s ease;
+}
+
+@keyframes lrt-now-flash-light {
+    0% { box-shadow: 0 0 0 2px rgba(120, 40, 255, 0.5), 0 3px 10px rgba(35, 30, 55, 0.08); }
+    100% { box-shadow: 0 3px 10px rgba(35, 30, 55, 0.05); }
+}
+
+html[data-lknwp-theme="light"] .lrt-radio-wrap .lrt-now__cover,
+html[data-lknwp-theme="light"] .lrt-radio-wrap .lrt-continue-card__cover {
+    box-shadow: 0 2px 6px rgba(35, 30, 55, 0.08) !important;
+}
+
+html[data-lknwp-theme="light"] .lrt-radio-wrap .lrt-continue-card:hover .lrt-continue-card__cover {
+    box-shadow: 0 4px 12px rgba(35, 30, 55, 0.12) !important;
+}
+
+html[data-lknwp-theme="light"] .lrt-radio-wrap .lrt-radio-station:hover {
+    box-shadow: 0 6px 16px rgba(35, 30, 55, 0.12) !important;
+}
+
+/* Sem sombra/glow no card ao selecionar a rádio. */
+html[data-lknwp-theme="light"] .lrt-radio-wrap .lrt-radio-station.is-playing {
+    box-shadow: none !important;
 }

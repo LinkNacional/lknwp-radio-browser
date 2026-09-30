@@ -417,11 +417,11 @@ document.addEventListener("DOMContentLoaded", function () {
                 return;
             }
 
-            // Limpar recursos anteriores (cleanupResources liga stopRetrying = true)
-            cleanupResources();
-
-            // Resetar flag de retry DEPOIS da limpeza (senão a limpeza a reativa p/ true)
+            // Resetar flag de retry quando iniciar novo visualizador
             stopRetrying = false;
+
+            // Limpar recursos anteriores
+            cleanupResources();
 
             visualizerContainer.classList.add('lkp-audio-visualizer--active');
             isVisualizerActive = true;
@@ -593,33 +593,27 @@ document.addEventListener("DOMContentLoaded", function () {
             var topBarsContainer = topContainer.querySelector('.lkp-visualizer-bars');
             var bottomBarsContainer = bottomContainer.querySelector('.lkp-visualizer-bars');
 
-            // Quantidade de barras: sempre PAR (a onda fica simétrica em relação
-            // ao centro — ver cálculo de `center` no loop de animação).
-            var numBars = 20;
-            // Altura máxima da barra = altura real da metade do visualizador
-            // (assim funciona tanto no layout base 145px quanto no v2 90px).
-            var maxBarHeight = topContainer.clientHeight || 145;
+            var topBars = [];
+            var bottomBars = [];
+            var numBars = 25;
 
-            // Criar barras grossas (onda) e reflexo espelhado (embaixo)
+            // Criar barras
             for (var i = 0; i < numBars; i++) {
                 var topBar = document.createElement('div');
                 topBar.className = 'lkp-visualizer-bar lkp-visualizer-bar--low';
                 topBarsContainer.appendChild(topBar);
+                topBars.push(topBar);
 
                 var bottomBar = document.createElement('div');
                 bottomBar.className = 'lkp-visualizer-bar lkp-visualizer-bar--low';
                 bottomBarsContainer.appendChild(bottomBar);
-            }
-
-            // Estado por barra (altura atual) para suavizar a onda
-            var currentHeights = [];
-            for (var j = 0; j < numBars; j++) {
-                currentHeights.push(6);
+                bottomBars.push(bottomBar);
             }
 
             var noDataCount = 0;
             var maxNoDataAttempts = 100; // ~5 segundos sem dados antes de retry (menos agressivo)
             var frameSkipCounter = 0; // Contador para pular frames e melhorar performance
+
             function animateWithRealData() {
                 if (!isVisualizerActive) return;
 
@@ -638,70 +632,81 @@ document.addEventListener("DOMContentLoaded", function () {
                 if (frequencies && frequencies.length > 0) {
                     noDataCount = 0; // Reset contador quando há dados
 
-                    var topBarsEls = topBarsContainer.querySelectorAll('.lkp-visualizer-bar');
-                    var bottomBarsEls = bottomBarsContainer.querySelectorAll('.lkp-visualizer-bar');
-                    var count = topBarsEls.length;
+                    var topBars = topBarsContainer.querySelectorAll('.lkp-visualizer-bar');
+                    var bottomBars = bottomBarsContainer.querySelectorAll('.lkp-visualizer-bar');
+                    var numBars = topBars.length;
 
-                    if (count === 0) {
+                    if (numBars === 0) {
                         visualizerInterval = requestAnimationFrame(animateWithRealData);
                         return;
                     }
 
-                    // ONDA: graves no centro, agudos nas bordas.
-                    // Centro geométrico — ex.: 20 barras → 9.5, então as duas
-                    // barras do meio ficam equidistantes e a onda sai simétrica
-                    // (com Math.floor, o pico ficava 1 barra fora do centro).
-                    var center = Math.max(0.5, (count - 1) / 2);
+                    // EFEITO ONDA SIMÉTRICA - DO CENTRO PARA AS BORDAS
+                    var center = Math.floor(numBars / 2);
 
-                    for (var i = 0; i < count; i++) {
+                    // Cache para heights calculados (evita recálculo e DOM access repetido)
+                    var heights = [];
+
+                    for (var i = 0; i < numBars; i++) {
                         var distanceFromCenter = Math.abs(i - center);
-                        var freqIndex = Math.floor((distanceFromCenter / center) * frequencies.length * 0.75);
+                        var freqIndex = Math.floor((distanceFromCenter / center) * frequencies.length * 0.8);
                         var amplitude = frequencies[freqIndex] || 0;
-                        var normalized = amplitude / 255;
-                        // Sensibilidade maior no centro (graves) e curva sqrt (mais natural)
-                        var sensitivity = 5.5 - (distanceFromCenter / center) * 1.8;
-                        var target = Math.max(6, Math.sqrt(normalized) * sensitivity * (maxBarHeight * 0.9));
+                        var normalizedAmplitude = amplitude / 255;
+                        var sensitivity = 6.0 - (distanceFromCenter / center) * 2.0;
+                        var height = Math.max(15, Math.sqrt(normalizedAmplitude) * sensitivity * 65 + 15);
 
-                        // Suavização (lerp): sobe rápido, desce mais devagar
-                        var ease = target > currentHeights[i] ? 0.5 : 0.18;
-                        currentHeights[i] += (target - currentHeights[i]) * ease;
-                        var h = Math.max(6, Math.min(maxBarHeight, currentHeights[i]));
-                        var hPx = h.toFixed(1) + 'px';
-
-                        topBarsEls[i].style.height = hPx;
-                        bottomBarsEls[i].style.height = hPx;
-
-                        // Cor por intensidade
-                        var levelClass = h > maxBarHeight * 0.66 ? 'high' : (h > maxBarHeight * 0.33 ? 'medium' : 'low');
-                        var newClassName = 'lkp-visualizer-bar lkp-visualizer-bar--' + levelClass;
-                        if (topBarsEls[i].className !== newClassName) {
-                            topBarsEls[i].className = newClassName;
-                            bottomBarsEls[i].className = newClassName;
+                        if (distanceFromCenter <= 2) {
+                            height += 8;
                         }
+
+                        var waveEffect = Math.sin((distanceFromCenter / center) * Math.PI) * 3;
+                        height += waveEffect;
+
+                        if (height < 15) height = 15;
+                        if (height > 80) height = 80;
+
+                        heights[i] = Math.floor(height) + 'px';
+                    }
+
+                    // Aplicar todas as mudanças de uma vez (batch DOM updates)
+                    for (var i = 0; i < numBars; i++) {
+                        topBars[i].style.height = heights[i];
+                        bottomBars[i].style.height = heights[i];
+
+                        // Classes baseadas na altura E posição
+                        var heightNum = parseInt(heights[i]);
+                        var distanceFromCenter = Math.abs(i - center);
+                        var levelClass;
+                        if (distanceFromCenter <= 3) {
+                            levelClass = heightNum > 30 ? 'high' : heightNum > 20 ? 'medium' : 'low';
+                        } else {
+                            levelClass = heightNum > 35 ? 'high' : heightNum > 25 ? 'medium' : 'low';
+                        }
+                        var newClassName = 'lkp-visualizer-bar lkp-visualizer-bar--' + levelClass;
+
+                        if (topBars[i].className !== newClassName) {
+                            topBars[i].className = newClassName;
+                            bottomBars[i].className = newClassName;
+                        }
+                    }
+
+                    // Log ocasional simplificado
+                    if (frameSkipCounter % 600 === 0) {
+                        // Onda simétrica desenhada com sucesso
                     }
 
                 } else {
                     noDataCount++;
 
-                    // Auto-reparo: se o AudioContext foi suspenso (ex.: segundo plano),
-                    // tenta reativá-lo e retomar o proxy para as waves não travarem.
-                    if (audioContext && audioContext.state === 'suspended') {
-                        audioContext.resume().catch(function () { });
-                    }
-
                     // Se não conseguir dados por muito tempo, tentar reconectar
                     if (noDataCount > maxNoDataAttempts) {
 
                         // Tentar reconectar proxy somente se o player principal estiver tocando
-                        if (isPlaying && proxyElement) {
-                            if (proxyElement.ended || proxyElement.error) {
-                                // Stream do proxy caiu: recarrega e retoma
-                                try { proxyElement.load(); } catch (e) { }
-                                proxyElement.play().catch(function (error) { });
-                            } else if (proxyElement.paused) {
-                                // Tentando reativar proxy pausado
-                                proxyElement.play().catch(function (error) { });
-                            }
+                        if (isPlaying && proxyElement && proxyElement.paused) {
+                            // Tentando reativar proxy pausado
+                            proxyElement.play().catch(function (error) {
+                                // Reativação do proxy falhou
+                            });
                         } else if (!isPlaying) {
                             // Player pausado - não tentando reconectar proxy
                         }
@@ -709,14 +714,13 @@ document.addEventListener("DOMContentLoaded", function () {
                         noDataCount = Math.floor(maxNoDataAttempts * 0.7); // Reset parcial para evitar loop
                     } else {
                         // Manter barras baixas enquanto aguarda dados
-                        var idleTopBars = topBarsContainer.querySelectorAll('.lkp-visualizer-bar');
-                        var idleBottomBars = bottomBarsContainer.querySelectorAll('.lkp-visualizer-bar');
-                        for (var k = 0; k < idleTopBars.length; k++) {
-                            idleTopBars[k].style.height = '6px';
-                            idleBottomBars[k].style.height = '6px';
-                            idleTopBars[k].className = 'lkp-visualizer-bar lkp-visualizer-bar--low';
-                            idleBottomBars[k].className = 'lkp-visualizer-bar lkp-visualizer-bar--low';
-                            if (currentHeights[k] !== undefined) { currentHeights[k] = 6; }
+                        var topBars = topBarsContainer.querySelectorAll('.lkp-visualizer-bar');
+                        var bottomBars = bottomBarsContainer.querySelectorAll('.lkp-visualizer-bar');
+                        for (var k = 0; k < topBars.length; k++) {
+                            topBars[k].style.height = '15px';
+                            bottomBars[k].style.height = '15px';
+                            topBars[k].className = 'lkp-visualizer-bar lkp-visualizer-bar--low';
+                            bottomBars[k].className = 'lkp-visualizer-bar lkp-visualizer-bar--low';
                         }
                     }
                 }
@@ -734,12 +738,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // Função para reativar animação existente sem recriar tudo
         function resumeVisualizer() {
-            // Chrome suspende o AudioContext após longos períodos/em segundo plano.
-            // Sem isto, captureFromProxyElement() retorna null e as waves "morrem".
-            if (audioContext && audioContext.state === 'suspended') {
-                audioContext.resume().catch(function () { });
-            }
-
             if (!isVisualizerActive) {
                 isVisualizerActive = true;
             }
@@ -757,18 +755,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 // Estrutura não existe - recriando
                 createRealVisualizer();
             }
-        }
-
-        /**
-         * O proxy/AudioContext estão irrecuperáveis? (stream caiu ou contexto fechado)
-         * Não usa readyState aqui: logo após o play o readyState pode ser baixo, e o
-         * proxy estava pausado (por causa do pause) - isso NÃO significa morto.
-         */
-        function isProxyDead() {
-            return !proxyElement || !audioContext || !analyser ||
-                audioContext.state === 'closed' ||
-                !!proxyElement.error ||
-                proxyElement.ended;
         }
 
         // ===== PLAYER CONTROLS =====
@@ -793,7 +779,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 if (imgParent) {
                     imgParent.classList.remove("lknwp-radio-shake")
                 }
-                playIcon.innerHTML = "<svg viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg' aria-hidden='true'><path d='M8 5v14l11-7z' fill='#232b36'/></svg>";
+                playIcon.innerHTML = "<svg width=\'120\' height=\'120\' viewBox=\'0 0 48 48\' fill=\'none\' xmlns=\'http://www.w3.org/2000/svg\'><circle cx=\'24\' cy=\'24\' r=\'24\' fill=\'#fff\'/><polygon points=\'18,15 36,24 18,33\' fill=\'#424242\'/></svg>";
             } else {
                 playBtn.classList.add('lkp-play-btn--playing');
 
@@ -836,7 +822,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 if (imgParent) {
                     imgParent.classList.add("lknwp-radio-shake")
                 }
-                playIcon.innerHTML = "<svg viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg' aria-hidden='true'><rect x='7' y='5' width='4' height='14' rx='1.2' fill='#232b36'/><rect x='13' y='5' width='4' height='14' rx='1.2' fill='#232b36'/></svg>";
+                playIcon.innerHTML = "<svg width=\'120\' height=\'120\' viewBox=\'0 0 48 48\' fill=\'none\' xmlns=\'http://www.w3.org/2000/svg\'><circle cx=\'24\' cy=\'24\' r=\'24\' fill=\'#fff\'/><rect x=\'16\' y=\'15\' width=\'6\' height=\'18\' rx=\'2\' fill=\'#424242\'/><rect x=\'26\' y=\'15\' width=\'6\' height=\'18\' rx=\'2\' fill=\'#424242\'/></svg>";
             }
             isPlaying = !isPlaying;
         });
@@ -864,35 +850,12 @@ document.addEventListener("DOMContentLoaded", function () {
                 volumeValue.classList.add("lkp-volume-display--hidden");
             }, 2000);
         }
-        volumeSlider.addEventListener('input', function () {
+        volumeSlider.addEventListener("input", function () {
             player.volume = parseFloat(this.value);
             volumeValue.textContent = Math.round(this.value * 100) + "%";
             updateVolumeValuePosition();
             showVolumeValue();
         });
-
-        // ===== BOTÃO DE MUTE =====
-        var muteBtn = document.getElementById('lknwp-radio-mute-btn');
-        if (muteBtn) {
-            // Estado inicial conforme o áudio
-            muteBtn.classList.toggle('is-muted', !!player.muted);
-            muteBtn.setAttribute('aria-pressed', player.muted ? 'true' : 'false');
-
-            muteBtn.addEventListener('click', function () {
-                player.muted = !player.muted;
-                this.classList.toggle('is-muted', player.muted);
-                this.setAttribute('aria-pressed', player.muted ? 'true' : 'false');
-                this.setAttribute('aria-label', player.muted
-                    ? (lknwpRadioTextsPlayer.unmute || 'Desmutar')
-                    : (lknwpRadioTextsPlayer.mute || 'Mutar'));
-            });
-
-            // Reflete mudanças de volume/mute vindas de outros lugares
-            player.addEventListener('volumechange', function () {
-                muteBtn.classList.toggle('is-muted', !!player.muted);
-                muteBtn.setAttribute('aria-pressed', player.muted ? 'true' : 'false');
-            });
-        }
         volumeSlider.addEventListener("mousedown", showVolumeValue);
         volumeSlider.addEventListener("touchstart", showVolumeValue);
         // Inicializa posição e esconde
@@ -955,70 +918,9 @@ document.addEventListener("DOMContentLoaded", function () {
         // ===== VISUALIZER EVENT LISTENERS =====
 
         player.addEventListener('playing', function () {
-            // Continue ouvindo: registra a estação atual como recente (localStorage)
-            try {
-                var nameEl = document.getElementById('lknwp-radio-station-name');
-                var imgEl = document.querySelector('.lkp-station-img');
-                var stName = nameEl ? nameEl.textContent.trim() : '';
-                var stImg = imgEl ? (imgEl.getAttribute('src') || '') : '';
-                if (stName) {
-                    var RECENT_KEY = 'lknwp_recent_stations';
-                    var list = [];
-                    try { list = JSON.parse(localStorage.getItem(RECENT_KEY) || '[]'); } catch (e) { list = []; }
-                    if (!Array.isArray(list)) list = [];
-                    var id = stName.toLowerCase();
-                    var prev = null;
-                    list = list.filter(function (s) {
-                        if ((s.name || s.url || '').toString().trim().toLowerCase() === id) { prev = s; return false; }
-                        return true;
-                    });
-                    list.unshift({
-                        uuid: (prev && prev.uuid) || '',
-                        name: stName,
-                        img: stImg,
-                        url: window.location.href,
-                        genre: (prev && prev.genre) || '',
-                        country: (prev && prev.country) || '',
-                        cc: (prev && prev.cc) || '',
-                        song: (prev && prev.song) || '',
-                        artist: (prev && prev.artist) || ''
-                    });
-                    localStorage.setItem(RECENT_KEY, JSON.stringify(list.slice(0, 12)));
-                }
-            } catch (e) { }
-
-            // Atualiza a música atual no registro de recentes (Continue ouvindo).
-            // O player-song.js preenche #lknwp-radio-current-song de forma assíncrona.
-            if (!window.__lknwpSongObserver) {
-                var songEl = document.getElementById('lknwp-radio-current-song');
-                if (songEl && window.MutationObserver) {
-                    window.__lknwpSongObserver = new MutationObserver(function () {
-                        var title = (songEl.textContent || '').trim();
-                        if (!title) return;
-                        var artistEl = document.getElementById('lknwp-radio-artist');
-                        var artist = artistEl ? (artistEl.textContent || '').trim() : '';
-                        try {
-                            var RK = 'lknwp_recent_stations';
-                            var rl = JSON.parse(localStorage.getItem(RK) || '[]');
-                            if (!Array.isArray(rl)) rl = [];
-                            var nameEl2 = document.getElementById('lknwp-radio-station-name');
-                            var nm = nameEl2 ? nameEl2.textContent.trim().toLowerCase() : '';
-                            rl = rl.map(function (s) {
-                                if ((s.name || '').toString().trim().toLowerCase() === nm) {
-                                    s.song = title; s.artist = artist;
-                                }
-                                return s;
-                            });
-                            localStorage.setItem(RK, JSON.stringify(rl.slice(0, 12)));
-                        } catch (e) { }
-                    });
-                    window.__lknwpSongObserver.observe(songEl, { childList: true, characterData: true, subtree: true });
-                }
-            }
-
-            var playingTimeoutId = setTimeout(function () {
-                // Se ainda temos proxy/contexto utilizáveis, apenas reativar
-                if (!isProxyDead()) {
+            setTimeout(function () {
+                // Se já temos proxy e conexões, apenas reativar
+                if (proxyElement && audioContext && analyser) {
                     // Reativar retry se necessário
                     stopRetrying = false;
 
@@ -1027,25 +929,19 @@ document.addEventListener("DOMContentLoaded", function () {
                         visualizerContainer.classList.add('lkp-audio-visualizer--active');
                     }
 
-                    // Garantir que o AudioContext voltou a rodar (pode ter sido suspenso)
-                    if (audioContext.state === 'suspended') {
-                        audioContext.resume().catch(function () { });
-                    }
-
-                    // Garantir que o proxy está tocando (pode estar pausado após o pause)
+                    // Reativar proxy
                     if (proxyElement.paused) {
-                        proxyElement.play().catch(function () { });
+                        proxyElement.play().catch(function (error) {
+                        });
                     }
 
                     // Reiniciar animação usando função dedicada
                     resumeVisualizer();
                 } else {
-                    // Proxy morto/caiu ou contexto fechado após muito tempo: reconstruir do zero
-                    hideVisualizer();
+                    // Se não temos conexões, criar do zero
                     showVisualizer();
                 }
-            }, 300);
-            timeoutIds.push(playingTimeoutId);
+            }, 300); // Reduzido de 800ms para 300ms
         });
 
         player.addEventListener('pause', function () {
@@ -1126,161 +1022,3 @@ document.addEventListener("DOMContentLoaded", function () {
     } // Fim da função initializePlayer
 
 });
-/* ==========================================================================
-   PLAYER v2 — "Continue ouvindo" (lê as rádios recentes do localStorage).
-   Cada card linka para a página do player daquela rádio.
-   ========================================================================== */
-(function () {
-    document.addEventListener('DOMContentLoaded', function () {
-        var section = document.getElementById('lkp_continue');
-        var track = document.getElementById('lkp_continue_track');
-        if (!section || !track) return;
-
-        var pluginUrl = '';
-        var hidden = document.getElementById('lknwp_radio_browser_plugin_url');
-        if (hidden && hidden.value) {
-            try { pluginUrl = atob(hidden.value); } catch (e) { pluginUrl = ''; }
-        }
-        var fallbackImg = pluginUrl ? (pluginUrl + 'Includes/assets/images/default-radio.png') : '';
-
-        function esc(s) {
-            return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
-                return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
-            });
-        }
-
-        var list = [];
-        try { list = JSON.parse(localStorage.getItem('lknwp_recent_stations') || '[]'); } catch (e) { list = []; }
-        if (!Array.isArray(list) || !list.length) return;
-
-        var html = '';
-        list.forEach(function (s) {
-            if (!s || (!s.name && !s.url)) return;
-            var img = s.img || fallbackImg;
-            var name = s.name || '';
-            html += '<a class="lkp-v2__card" href="' + esc(s.url) + '" title="' + esc(name) + '">' +
-                '<span class="lkp-v2__card-cover"><img src="' + esc(img) + '" alt="' + esc(name) + '" loading="lazy"></span>' +
-                '<span class="lkp-v2__card-name">' + esc(name) + '</span>' +
-            '</a>';
-        });
-
-        if (!html) return;
-
-        track.innerHTML = html;
-        track.querySelectorAll('.lkp-v2__card-cover img').forEach(function (el) {
-            el.addEventListener('error', function () {
-                if (fallbackImg && this.src !== fallbackImg) { this.src = fallbackImg; }
-            });
-        });
-
-        // Botões de navegação (anterior/próxima) pelas rádios já ouvidas.
-        // O loop é circular: na primeira, "anterior" leva para a última.
-        var nav = document.getElementById('lkp_continue_nav');
-        var prevBtn = document.getElementById('lkp_nav_prev');
-        var nextBtn = document.getElementById('lkp_nav_next');
-
-        if (nav && prevBtn && nextBtn && list.length >= 2) {
-            // Localiza a rádio atual na lista (pelo nome exibido; cai no índice 0).
-            var stationNameEl = document.getElementById('lknwp-radio-station-name');
-            var currentName = stationNameEl ? stationNameEl.textContent.trim().toLowerCase() : '';
-            var currentIndex = 0;
-            for (var i = 0; i < list.length; i++) {
-                var nm = (list[i] && list[i].name ? String(list[i].name) : '').trim().toLowerCase();
-                if (currentName && nm === currentName) { currentIndex = i; break; }
-            }
-
-            var go = function (delta) {
-                var n = list.length;
-                if (n < 2) { return; }
-                var target = list[(currentIndex + delta + n) % n];
-                if (target && target.url) { window.location.href = target.url; }
-            };
-
-            prevBtn.addEventListener('click', function () { go(-1); });
-            nextBtn.addEventListener('click', function () { go(1); });
-            nav.removeAttribute('hidden');
-        }
-
-        section.removeAttribute('hidden');
-    });
-})();
-
-/* ==========================================================================
-   PLAYER v2 — botão "Favoritar" (persiste em localStorage 'lknwp_favs').
-   A chave é o uuid da rádio, ou 'name:<nome>' quando não houver uuid
-   (mesmo padrão usado na lista).
-   ========================================================================== */
-(function () {
-    document.addEventListener('DOMContentLoaded', function () {
-        var btn = document.getElementById('lkp_fav_btn');
-        if (!btn) return;
-
-        var uuid = btn.getAttribute('data-uuid') || '';
-        var name = (btn.getAttribute('data-name') || '').toLowerCase();
-        var key = uuid || ('name:' + name);
-
-        function readFavs() {
-            try { return JSON.parse(localStorage.getItem('lknwp_favs') || '[]'); } catch (e) { return []; }
-        }
-
-        function sync() {
-            var active = readFavs().indexOf(key) !== -1;
-            btn.classList.toggle('is-active', active);
-            btn.setAttribute('aria-pressed', active ? 'true' : 'false');
-        }
-
-        btn.addEventListener('click', function () {
-            var favs = readFavs();
-            var idx = favs.indexOf(key);
-            if (idx === -1) { favs.push(key); } else { favs.splice(idx, 1); }
-            try { localStorage.setItem('lknwp_favs', JSON.stringify(favs)); } catch (e) {}
-            sync();
-        });
-
-        sync();
-    });
-})();
-
-/* ==========================================================================
-   TEMA (dark/light) — botões com persistência compartilhada em localStorage.
-   A aplicação antecipada (evitar flash) é feita por um <script> inline no template.
-   Suporta mais de um botão (ex.: lista + player na mesma página) sem duplicar bind.
-   ========================================================================== */
-(function () {
-    function initThemeToggle() {
-        var root = document.documentElement;
-        var btns = document.querySelectorAll('[data-lknwp-theme-toggle]');
-        if (!btns.length) return;
-
-        function current() {
-            return root.getAttribute('data-lknwp-theme') === 'light' ? 'light' : 'dark';
-        }
-
-        function apply(theme) {
-            root.setAttribute('data-lknwp-theme', theme);
-            try { localStorage.setItem('lknwp_theme', theme); } catch (e) {}
-            for (var i = 0; i < btns.length; i++) {
-                btns[i].setAttribute('aria-pressed', theme === 'light' ? 'true' : 'false');
-            }
-        }
-
-        var saved = 'dark';
-        try { saved = localStorage.getItem('lknwp_theme') || 'dark'; } catch (e) {}
-        apply(saved === 'light' ? 'light' : 'dark');
-
-        for (var i = 0; i < btns.length; i++) {
-            var b = btns[i];
-            if (b.getAttribute('data-lknwp-theme-bound')) continue;
-            b.setAttribute('data-lknwp-theme-bound', '1');
-            b.addEventListener('click', function () {
-                apply(current() === 'light' ? 'dark' : 'light');
-            });
-        }
-    }
-
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initThemeToggle);
-    } else {
-        initThemeToggle();
-    }
-})();
