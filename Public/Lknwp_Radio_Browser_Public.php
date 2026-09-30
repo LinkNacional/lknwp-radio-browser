@@ -239,20 +239,20 @@ class Lknwp_Radio_Browser_Public {
 			'loadingRadios' => __('Loading radios...', 'lknwp-radio-browser'),
 			'noRadiosFound' => __('No radios found.', 'lknwp-radio-browser'),
 			'tryingAlternativeServers' => __('Trying alternative servers...', 'lknwp-radio-browser'),
-			'ascending' => __('Menor', 'lknwp-radio-browser'),
-			'descending' => __('Maior', 'lknwp-radio-browser'),
+			'ascending' => __('Ascending', 'lknwp-radio-browser'),
+			'descending' => __('Descending', 'lknwp-radio-browser'),
 			'apiError' => __('Error querying API. ', 'lknwp-radio-browser'),
 			'placeholder' => __('Select genre', 'lknwp-radio-browser'),
 			'defaultImgUrl' => $default_img_url,
-			'favorite' => __('Favoritar', 'lknwp-radio-browser'),
-			'onAir' => __('OUVINDO AGORA', 'lknwp-radio-browser'),
+			'favorite' => __('Favorite', 'lknwp-radio-browser'),
+			'onAir' => __('ON AIR NOW', 'lknwp-radio-browser'),
 			'logoAlt' => __('Radio logo', 'lknwp-radio-browser'),
 			'play' => __('Play', 'lknwp-radio-browser'),
-			'titleDiscover' => __('Descobrir rádios', 'lknwp-radio-browser'),
-			'titleFavorites' => __('Favoritos', 'lknwp-radio-browser'),
-			'titleRecents' => __('Recentes', 'lknwp-radio-browser'),
-			'noFavorites' => __('Você ainda não favoritou nenhuma rádio.', 'lknwp-radio-browser'),
-			'noRecents' => __('Você ainda não ouviu nenhuma rádio.', 'lknwp-radio-browser')
+			'titleDiscover' => __('Discover radios', 'lknwp-radio-browser'),
+			'titleFavorites' => __('Favorites', 'lknwp-radio-browser'),
+			'titleRecents' => __('Recents', 'lknwp-radio-browser'),
+			'noFavorites' => __('You have not favorited any radio yet.', 'lknwp-radio-browser'),
+			'noRecents' => __('You have not listened to any radio yet.', 'lknwp-radio-browser')
 		));
 	}
 }

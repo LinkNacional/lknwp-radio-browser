@@ -110,11 +110,11 @@ $lknwp_stat_icons = array(
                     <button type="button" class="lkp-v2__fav" id="lkp_fav_btn"
                         data-uuid="<?php echo esc_attr($station_uuid); ?>"
                         data-name="<?php echo esc_attr($station_name); ?>"
-                        aria-pressed="false" aria-label="<?php esc_attr_e( 'Favoritar', 'lknwp-radio-browser' ); ?>" title="<?php esc_attr_e( 'Favoritar', 'lknwp-radio-browser' ); ?>">
+                        aria-pressed="false" aria-label="<?php esc_attr_e( 'Favorite', 'lknwp-radio-browser' ); ?>" title="<?php esc_attr_e( 'Favorite', 'lknwp-radio-browser' ); ?>">
                         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M12 20s-7-4.5-9.3-8.4C1 8.6 2.6 5 6.1 5c2 0 3.3 1.1 3.9 2 .6-.9 1.9-2 3.9-2C17.4 5 19 8.6 21.3 11.6 19 15.5 12 20 12 20Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
-                        <span><?php esc_html_e( 'Favoritar', 'lknwp-radio-browser' ); ?></span>
+                        <span><?php esc_html_e( 'Favorite', 'lknwp-radio-browser' ); ?></span>
                     </button>
-                    <button type="button" class="lkp-v2__theme" id="lkp_theme_toggle" data-lknwp-theme-toggle aria-pressed="false" aria-label="<?php esc_attr_e( 'Alternar tema', 'lknwp-radio-browser' ); ?>" title="<?php esc_attr_e( 'Alternar tema', 'lknwp-radio-browser' ); ?>">
+                    <button type="button" class="lkp-v2__theme" id="lkp_theme_toggle" data-lknwp-theme-toggle aria-pressed="false" aria-label="<?php esc_attr_e( 'Toggle theme', 'lknwp-radio-browser' ); ?>" title="<?php esc_attr_e( 'Toggle theme', 'lknwp-radio-browser' ); ?>">
                         <svg class="lkn-theme-sun" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="2"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
                         <svg class="lkn-theme-moon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                     </button>
@@ -123,7 +123,7 @@ $lknwp_stat_icons = array(
 
                 <span class="lkp-v2__live">
                     <span class="lkp-v2__dot" aria-hidden="true"></span>
-                    <?php esc_html_e( 'Agora tocando', 'lknwp-radio-browser' ); ?>
+                    <?php esc_html_e( 'Now playing', 'lknwp-radio-browser' ); ?>
                 </span>
 
                 <div id="lknwp-radio-current-song-block" class="lkp-current-song-block lkp-current-song-block-hidden">
@@ -150,14 +150,14 @@ $lknwp_stat_icons = array(
                     <li class="lkp-v2__stat">
                         <span class="lkp-v2__stat-ic"><?php echo $lknwp_stat_icons['genre']; ?></span>
                         <span class="lkp-v2__stat-tx">
-                            <span class="lkp-v2__stat-k"><?php esc_html_e( 'Gênero', 'lknwp-radio-browser' ); ?></span>
+                            <span class="lkp-v2__stat-k"><?php esc_html_e( 'Genre', 'lknwp-radio-browser' ); ?></span>
                             <span class="lkp-v2__stat-v"><?php echo $station_genre !== '' ? esc_html($station_genre) : '—'; ?></span>
                         </span>
                     </li>
                     <li class="lkp-v2__stat">
                         <span class="lkp-v2__stat-ic"><?php echo $lknwp_stat_icons['country']; ?></span>
                         <span class="lkp-v2__stat-tx">
-                            <span class="lkp-v2__stat-k"><?php esc_html_e( 'País', 'lknwp-radio-browser' ); ?></span>
+                            <span class="lkp-v2__stat-k"><?php esc_html_e( 'Country', 'lknwp-radio-browser' ); ?></span>
                             <span class="lkp-v2__stat-v">
                                 <?php if ($station_cc !== ''): ?><span class="lkp-flag" data-cc="<?php echo esc_attr($station_cc); ?>"></span><?php endif; ?>
                                 <?php echo esc_html($station_country !== '' ? $station_country : ($station_cc !== '' ? $station_cc : '—')); ?>
@@ -167,14 +167,14 @@ $lknwp_stat_icons = array(
                     <li class="lkp-v2__stat">
                         <span class="lkp-v2__stat-ic"><?php echo $lknwp_stat_icons['quality']; ?></span>
                         <span class="lkp-v2__stat-tx">
-                            <span class="lkp-v2__stat-k"><?php esc_html_e( 'Qualidade', 'lknwp-radio-browser' ); ?></span>
+                            <span class="lkp-v2__stat-k"><?php esc_html_e( 'Quality', 'lknwp-radio-browser' ); ?></span>
                             <span class="lkp-v2__stat-v"><?php echo ($station_bitrate !== '' || $station_codec !== '') ? esc_html(trim($station_bitrate . ($station_bitrate && $station_codec ? ' · ' : '') . $station_codec)) : '—'; ?></span>
                         </span>
                     </li>
                     <li class="lkp-v2__stat">
                         <span class="lkp-v2__stat-ic"><?php echo $lknwp_stat_icons['plays']; ?></span>
                         <span class="lkp-v2__stat-tx">
-                            <span class="lkp-v2__stat-k"><?php esc_html_e( 'Reproduções', 'lknwp-radio-browser' ); ?></span>
+                            <span class="lkp-v2__stat-k"><?php esc_html_e( 'Plays', 'lknwp-radio-browser' ); ?></span>
                             <span class="lkp-v2__stat-v"><?php echo esc_html(number_format_i18n((int) $station_clickcount)); ?></span>
                         </span>
                     </li>
@@ -197,7 +197,7 @@ $lknwp_stat_icons = array(
 
                     <div class="lkp-volume-section">
                         <div class="lkp-volume-row">
-                            <button id="lknwp-radio-mute-btn" class="lkp-mute-btn" type="button" aria-label="<?php esc_attr_e( 'Mutar', 'lknwp-radio-browser' ); ?>" title="<?php esc_attr_e( 'Mutar', 'lknwp-radio-browser' ); ?>">
+                            <button id="lknwp-radio-mute-btn" class="lkp-mute-btn" type="button" aria-label="<?php esc_attr_e( 'Mute', 'lknwp-radio-browser' ); ?>" title="<?php esc_attr_e( 'Mute', 'lknwp-radio-browser' ); ?>">
                                 <svg class="lkp-mute-icon-on" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4V5Z" fill="currentColor"/><path d="M15.5 9.5a4 4 0 0 1 0 5M18.5 7a7 7 0 0 1 0 10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
                                 <svg class="lkp-mute-icon-off" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4V5Z" fill="currentColor"/><path d="m16 9 5 6M21 9l-5 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
                             </button>
@@ -213,7 +213,7 @@ $lknwp_stat_icons = array(
                         <?php if (!empty($station_homepage)): ?>
                         <a class="lkp-v2__home" href="<?php echo esc_url($station_homepage); ?>" target="_blank" rel="noopener">
                             <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M15 3h6v6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M10 14 21 3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                            <span><?php esc_html_e( 'Site da rádio', 'lknwp-radio-browser' ); ?></span>
+                            <span><?php esc_html_e( 'Radio website', 'lknwp-radio-browser' ); ?></span>
                         </a>
                         <?php endif; ?>
 
@@ -242,12 +242,12 @@ $lknwp_stat_icons = array(
         <section class="lkp-v2__continue" id="lkp_continue" hidden aria-live="polite">
             <div class="lkp-v2__continue-head">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/><path d="M12 7v5l3 2"/></svg>
-                <span><?php esc_html_e( 'Continue ouvindo', 'lknwp-radio-browser' ); ?></span>
+                <span><?php esc_html_e( 'Continue listening', 'lknwp-radio-browser' ); ?></span>
                 <div class="lkp-v2__nav" id="lkp_continue_nav" hidden>
-                    <button type="button" class="lkp-v2__nav-btn" id="lkp_nav_prev" aria-label="<?php esc_attr_e( 'Rádio anterior', 'lknwp-radio-browser' ); ?>" title="<?php esc_attr_e( 'Rádio anterior', 'lknwp-radio-browser' ); ?>">
+                    <button type="button" class="lkp-v2__nav-btn" id="lkp_nav_prev" aria-label="<?php esc_attr_e( 'Previous radio', 'lknwp-radio-browser' ); ?>" title="<?php esc_attr_e( 'Previous radio', 'lknwp-radio-browser' ); ?>">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
                     </button>
-                    <button type="button" class="lkp-v2__nav-btn" id="lkp_nav_next" aria-label="<?php esc_attr_e( 'Próxima rádio', 'lknwp-radio-browser' ); ?>" title="<?php esc_attr_e( 'Próxima rádio', 'lknwp-radio-browser' ); ?>">
+                    <button type="button" class="lkp-v2__nav-btn" id="lkp_nav_next" aria-label="<?php esc_attr_e( 'Next radio', 'lknwp-radio-browser' ); ?>" title="<?php esc_attr_e( 'Next radio', 'lknwp-radio-browser' ); ?>">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
                     </button>
                 </div>

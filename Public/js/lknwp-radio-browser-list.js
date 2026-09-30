@@ -651,7 +651,7 @@ import 'select2/dist/css/select2.min.css';
             var $input = $('#lrt_reverse');
             var val = $input.val() === '1' ? '0' : '1';
             $input.val(val);
-            $('.lrt-reverse-label').text(val === '1' ? (texts.descending || 'Maior') : (texts.ascending || 'Menor'));
+            $('.lrt-reverse-label').text(val === '1' ? (texts.descending || 'Descending') : (texts.ascending || 'Ascending'));
             autoQueryRadios();
         });
 
@@ -862,8 +862,8 @@ import 'select2/dist/css/select2.min.css';
 
             if (visible === 0) {
                 showEmpty(currentView === 'favorites'
-                    ? (texts.noFavorites || 'Você ainda não favoritou nenhuma rádio.')
-                    : (texts.noRecents || 'Você ainda não ouviu nenhuma rádio.'));
+                    ? (texts.noFavorites || 'You have not favorited any radio yet.')
+                    : (texts.noRecents || 'You have not listened to any radio yet.'));
             }
         }
 
