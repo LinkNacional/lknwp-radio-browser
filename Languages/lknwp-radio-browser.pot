@@ -2,14 +2,14 @@
 # This file is distributed under the GPL-2.0+.
 msgid ""
 msgstr ""
-"Project-Id-Version: Radio Browser Stations 1.9.1\n"
+"Project-Id-Version: Radio Browser Stations 1.1.1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/lknwp-radio-browser\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-09-30T16:31:07+00:00\n"
+"POT-Creation-Date: 2026-10-05T12:52:58+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: lknwp-radio-browser\n"
@@ -320,6 +320,10 @@ msgstr ""
 msgid "Country code (BR, US, FR, etc.)"
 msgstr ""
 
+#: Includes/assets/templates/admin-help-page.php:226
+msgid "WordPress locale country (e.g. \"BR\")"
+msgstr ""
+
 #: Includes/assets/templates/admin-help-page.php:230
 msgid "Number of radios to display (1–100)"
 msgstr ""
@@ -469,68 +473,69 @@ msgstr ""
 msgid "Country"
 msgstr ""
 
-#: Includes/assets/templates/radio-list-legacy.php:38
+#: Includes/assets/templates/radio-list-legacy.php:37
 #: Includes/assets/templates/radio-list.php:108
+#: Includes/Lknwp_Radio_Browser.php:659
 msgid "All Countries"
 msgstr ""
 
-#: Includes/assets/templates/radio-list-legacy.php:93
+#: Includes/assets/templates/radio-list-legacy.php:53
 msgid "Limit"
 msgstr ""
 
-#: Includes/assets/templates/radio-list-legacy.php:101
+#: Includes/assets/templates/radio-list-legacy.php:61
 msgid "Sort"
 msgstr ""
 
-#: Includes/assets/templates/radio-list-legacy.php:115
+#: Includes/assets/templates/radio-list-legacy.php:75
 msgid "Order"
 msgstr ""
 
-#: Includes/assets/templates/radio-list-legacy.php:118
-#: Includes/assets/templates/radio-list.php:217
-#: Public/Lknwp_Radio_Browser_Public.php:243
+#: Includes/assets/templates/radio-list-legacy.php:78
+#: Includes/assets/templates/radio-list.php:202
+#: Public/Lknwp_Radio_Browser_Public.php:254
 msgid "Descending"
 msgstr ""
 
-#: Includes/assets/templates/radio-list-legacy.php:119
-#: Includes/assets/templates/radio-list.php:218
-#: Public/Lknwp_Radio_Browser_Public.php:242
+#: Includes/assets/templates/radio-list-legacy.php:79
+#: Includes/assets/templates/radio-list.php:203
+#: Public/Lknwp_Radio_Browser_Public.php:253
 msgid "Ascending"
 msgstr ""
 
-#: Includes/assets/templates/radio-list-legacy.php:127
+#: Includes/assets/templates/radio-list-legacy.php:87
 #: Includes/assets/templates/radio-player.php:153
 msgid "Genre"
 msgstr ""
 
-#: Includes/assets/templates/radio-list-legacy.php:129
-#: Includes/assets/templates/radio-list.php:163
+#: Includes/assets/templates/radio-list-legacy.php:89
+#: Includes/assets/templates/radio-list.php:148
 msgid "All Genres"
 msgstr ""
 
-#: Includes/assets/templates/radio-list-legacy.php:161
+#: Includes/assets/templates/radio-list-legacy.php:121
 msgid "Search Radio"
 msgstr ""
 
-#: Includes/assets/templates/radio-list-legacy.php:162
+#: Includes/assets/templates/radio-list-legacy.php:122
 msgid "Search radio..."
 msgstr ""
 
-#: Includes/assets/templates/radio-list-legacy.php:169
+#: Includes/assets/templates/radio-list-legacy.php:129
 msgid "Search"
 msgstr ""
 
-#: Includes/assets/templates/radio-list-legacy.php:186
-#: Includes/assets/templates/radio-list.php:345
-#: Public/Lknwp_Radio_Browser_Public.php:240
+#: Includes/assets/templates/radio-list-legacy.php:146
+#: Includes/assets/templates/radio-list.php:330
+#: Public/Lknwp_Radio_Browser_Public.php:251
 msgid "No radios found."
 msgstr ""
 
-#: Includes/assets/templates/radio-list-legacy.php:201
-#: Includes/assets/templates/radio-list.php:377
+#: Includes/assets/templates/radio-list-legacy.php:161
+#: Includes/assets/templates/radio-list.php:362
 #: Includes/assets/templates/radio-player-legacy.php:36
 #: Includes/assets/templates/radio-player.php:104
-#: Public/Lknwp_Radio_Browser_Public.php:249
+#: Public/Lknwp_Radio_Browser_Public.php:260
 msgid "Radio logo"
 msgstr ""
 
@@ -547,12 +552,12 @@ msgid "Discover"
 msgstr ""
 
 #: Includes/assets/templates/radio-list.php:49
-#: Public/Lknwp_Radio_Browser_Public.php:252
+#: Public/Lknwp_Radio_Browser_Public.php:263
 msgid "Favorites"
 msgstr ""
 
 #: Includes/assets/templates/radio-list.php:53
-#: Public/Lknwp_Radio_Browser_Public.php:253
+#: Public/Lknwp_Radio_Browser_Public.php:264
 msgid "Recents"
 msgstr ""
 
@@ -585,81 +590,81 @@ msgstr ""
 msgid "Search stations, genres, artists or cities..."
 msgstr ""
 
-#: Includes/assets/templates/radio-list.php:137
+#: Includes/assets/templates/radio-list.php:122
 msgid "Filters"
 msgstr ""
 
-#: Includes/assets/templates/radio-list.php:141
+#: Includes/assets/templates/radio-list.php:126
 #: Includes/assets/templates/radio-player.php:117
 msgid "Toggle theme"
 msgstr ""
 
-#: Includes/assets/templates/radio-list.php:190
+#: Includes/assets/templates/radio-list.php:175
 msgid "All Languages"
 msgstr ""
 
-#: Includes/assets/templates/radio-list.php:238
+#: Includes/assets/templates/radio-list.php:223
 #: Includes/assets/templates/radio-player.php:126
 msgid "Now playing"
 msgstr ""
 
-#: Includes/assets/templates/radio-list.php:273
-#: Includes/assets/templates/radio-list.php:275
-#: Includes/assets/templates/radio-list.php:391
-#: Includes/assets/templates/radio-list.php:423
+#: Includes/assets/templates/radio-list.php:258
+#: Includes/assets/templates/radio-list.php:260
+#: Includes/assets/templates/radio-list.php:376
+#: Includes/assets/templates/radio-list.php:408
 #: Includes/assets/templates/radio-player.php:113
 #: Includes/assets/templates/radio-player.php:115
-#: Public/Lknwp_Radio_Browser_Public.php:247
+#: Public/Lknwp_Radio_Browser_Public.php:258
 msgid "Favorite"
 msgstr ""
 
-#: Includes/assets/templates/radio-list.php:277
+#: Includes/assets/templates/radio-list.php:262
 msgid "Open player"
 msgstr ""
 
-#: Includes/assets/templates/radio-list.php:293
+#: Includes/assets/templates/radio-list.php:278
 #: Includes/assets/templates/radio-player.php:245
 msgid "Continue listening"
 msgstr ""
 
-#: Includes/assets/templates/radio-list.php:302
+#: Includes/assets/templates/radio-list.php:287
 msgid "All"
 msgstr ""
 
-#: Includes/assets/templates/radio-list.php:314
+#: Includes/assets/templates/radio-list.php:299
 msgid "Electronic"
 msgstr ""
 
-#: Includes/assets/templates/radio-list.php:330
+#: Includes/assets/templates/radio-list.php:315
 msgid "News"
 msgstr ""
 
-#: Includes/assets/templates/radio-list.php:429
+#: Includes/assets/templates/radio-list.php:414
 #: Includes/assets/templates/radio-player.php:247
 msgid "Previous radio"
 msgstr ""
 
-#: Includes/assets/templates/radio-list.php:432
-#: Public/Lknwp_Radio_Browser_Public.php:250
+#: Includes/assets/templates/radio-list.php:417
+#: Public/Lknwp_Radio_Browser_Public.php:261
 msgid "Play"
 msgstr ""
 
-#: Includes/assets/templates/radio-list.php:436
+#: Includes/assets/templates/radio-list.php:421
 #: Includes/assets/templates/radio-player.php:250
 msgid "Next radio"
 msgstr ""
 
-#: Includes/assets/templates/radio-list.php:443
+#: Includes/assets/templates/radio-list.php:428
 #: Includes/assets/templates/radio-player.php:200
 msgid "Mute"
 msgstr ""
 
-#: Includes/assets/templates/radio-list.php:447
+#: Includes/assets/templates/radio-list.php:432
 #: Includes/assets/templates/radio-player-legacy.php:115
 msgid "Volume"
 msgstr ""
 
-#: Includes/assets/templates/radio-list.php:451
+#: Includes/assets/templates/radio-list.php:436
 msgid "Pin to screen"
 msgstr ""
 
@@ -675,7 +680,7 @@ msgstr ""
 
 #: Includes/assets/templates/radio-player-legacy.php:39
 #: Includes/assets/templates/radio-player.php:106
-#: Public/Lknwp_Radio_Browser_Public.php:198
+#: Public/Lknwp_Radio_Browser_Public.php:206
 msgid "Online Radio"
 msgstr ""
 
@@ -711,120 +716,120 @@ msgstr ""
 msgid "Radio website"
 msgstr ""
 
-#: Includes/Lknwp_Radio_Browser.php:214
+#: Includes/Lknwp_Radio_Browser.php:219
 msgid "Radio Browser"
 msgstr ""
 
 #. translators: %s: the invalid layout value provided in the shortcode.
-#: Includes/Lknwp_Radio_Browser.php:217
+#: Includes/Lknwp_Radio_Browser.php:222
 #, php-format
 msgid "unknown layout \"%s\". Use layout=\"modern\" or layout=\"legacy\". Showing the legacy layout."
 msgstr ""
 
-#: Includes/Lknwp_Radio_Browser.php:517
+#: Includes/Lknwp_Radio_Browser.php:524
 msgid "Security check failed. Please reload the page."
 msgstr ""
 
-#: Includes/Lknwp_Radio_Browser.php:526
+#: Includes/Lknwp_Radio_Browser.php:549
 msgid "Most popular"
 msgstr ""
 
-#: Includes/Lknwp_Radio_Browser.php:527
+#: Includes/Lknwp_Radio_Browser.php:550
 msgid "Name"
 msgstr ""
 
-#: Includes/Lknwp_Radio_Browser.php:528
+#: Includes/Lknwp_Radio_Browser.php:551
 msgid "Random"
 msgstr ""
 
-#: Includes/Lknwp_Radio_Browser.php:529
+#: Includes/Lknwp_Radio_Browser.php:552
 msgid "Bitrate"
 msgstr ""
 
-#: Public/Lknwp_Radio_Browser_Public.php:196
+#: Public/Lknwp_Radio_Browser_Public.php:204
 msgid "Unable to play this radio station. Please try again later or choose another station."
 msgstr ""
 
-#: Public/Lknwp_Radio_Browser_Public.php:197
+#: Public/Lknwp_Radio_Browser_Public.php:205
 msgid "🎵 Listening to {station} - "
 msgstr ""
 
-#: Public/Lknwp_Radio_Browser_Public.php:204
+#: Public/Lknwp_Radio_Browser_Public.php:215
 msgid "Warning: This radio uses insecure streaming (HTTP) and cannot be played on HTTPS pages. Ask the provider to enable HTTPS or access via HTTP."
 msgstr ""
 
-#: Public/Lknwp_Radio_Browser_Public.php:205
+#: Public/Lknwp_Radio_Browser_Public.php:216
 msgid "listeners"
 msgstr ""
 
-#: Public/Lknwp_Radio_Browser_Public.php:206
+#: Public/Lknwp_Radio_Browser_Public.php:217
 msgid "likes"
 msgstr ""
 
-#: Public/Lknwp_Radio_Browser_Public.php:207
+#: Public/Lknwp_Radio_Browser_Public.php:218
 msgid "No song found in JSON"
 msgstr ""
 
-#: Public/Lknwp_Radio_Browser_Public.php:208
+#: Public/Lknwp_Radio_Browser_Public.php:219
 msgid "No song found in HTML"
 msgstr ""
 
-#: Public/Lknwp_Radio_Browser_Public.php:209
+#: Public/Lknwp_Radio_Browser_Public.php:220
 msgid "Response is not JSON"
 msgstr ""
 
-#: Public/Lknwp_Radio_Browser_Public.php:210
+#: Public/Lknwp_Radio_Browser_Public.php:221
 msgid "Detected audio component"
 msgstr ""
 
-#: Public/Lknwp_Radio_Browser_Public.php:211
+#: Public/Lknwp_Radio_Browser_Public.php:222
 msgid "CORS_BLOCKED: Opaque response, cannot read content"
 msgstr ""
 
-#: Public/Lknwp_Radio_Browser_Public.php:212
+#: Public/Lknwp_Radio_Browser_Public.php:223
 msgid "NETWORK_ERROR: Status 0, possible network or CORS issue"
 msgstr ""
 
-#: Public/Lknwp_Radio_Browser_Public.php:213
+#: Public/Lknwp_Radio_Browser_Public.php:224
 msgid "AUDIO_STREAM: Response is an audio stream"
 msgstr ""
 
-#: Public/Lknwp_Radio_Browser_Public.php:214
+#: Public/Lknwp_Radio_Browser_Public.php:225
 msgid "TEXT_TIMEOUT: Text conversion exceeded 5 seconds"
 msgstr ""
 
-#: Public/Lknwp_Radio_Browser_Public.php:215
+#: Public/Lknwp_Radio_Browser_Public.php:226
 msgid "Content-Type is not JSON: "
 msgstr ""
 
-#: Public/Lknwp_Radio_Browser_Public.php:239
+#: Public/Lknwp_Radio_Browser_Public.php:250
 msgid "Loading radios..."
 msgstr ""
 
-#: Public/Lknwp_Radio_Browser_Public.php:241
+#: Public/Lknwp_Radio_Browser_Public.php:252
 msgid "Trying alternative servers..."
 msgstr ""
 
-#: Public/Lknwp_Radio_Browser_Public.php:244
+#: Public/Lknwp_Radio_Browser_Public.php:255
 msgid "Error querying API. "
 msgstr ""
 
-#: Public/Lknwp_Radio_Browser_Public.php:245
+#: Public/Lknwp_Radio_Browser_Public.php:256
 msgid "Select genre"
 msgstr ""
 
-#: Public/Lknwp_Radio_Browser_Public.php:248
+#: Public/Lknwp_Radio_Browser_Public.php:259
 msgid "ON AIR NOW"
 msgstr ""
 
-#: Public/Lknwp_Radio_Browser_Public.php:251
+#: Public/Lknwp_Radio_Browser_Public.php:262
 msgid "Discover radios"
 msgstr ""
 
-#: Public/Lknwp_Radio_Browser_Public.php:254
+#: Public/Lknwp_Radio_Browser_Public.php:265
 msgid "You have not favorited any radio yet."
 msgstr ""
 
-#: Public/Lknwp_Radio_Browser_Public.php:255
+#: Public/Lknwp_Radio_Browser_Public.php:266
 msgid "You have not listened to any radio yet."
 msgstr ""

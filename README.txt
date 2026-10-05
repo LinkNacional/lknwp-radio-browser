@@ -13,14 +13,14 @@ Display and play online radio stations from Radio-Browser.info with a beautiful 
 
 == Description ==
 
-Integrate thousands of **online radio stations** into your WordPress website with the **Radio Browser Stations** plugin. 
+Integrate thousands of **online radio stations** into your [WordPress](https://www.linknacional.com.br/wordpress/) website with the **Radio Browser Stations** plugin. 
 
 == Disclaimer ==
-This plugin is an independent project developed by LinkNacional. It is **not affiliated, endorsed, or sponsored** by Radio-Browser.info, WordPress, or Select2.
+This plugin is an independent project developed by LinkNacional. It is **not affiliated, endorsed, or sponsored** by Radio-Browser.info, [WordPress](https://www.linknacional.com.br/wordpress/), or Select2.
 
 * Radio-Browser.info is a free, public API and database of radio stations. This plugin uses their API to fetch station data and stream audio, but there is no official relationship or partnership.
 * Select2 is an open-source JavaScript library used to enhance dropdowns and search fields. This plugin includes Select2 locally and does not load it from external servers.
-* WordPress is a registered trademark of the WordPress Foundation. This plugin is designed for WordPress but is not officially associated with the project.
+* [WordPress](https://www.linknacional.com.br/wordpress/) is a registered trademark of the [WordPress](https://www.linknacional.com.br/wordpress/) Foundation. This plugin is designed for [WordPress](https://www.linknacional.com.br/wordpress/) but is not officially associated with the project.
 
 All trademarks, service marks, and project names mentioned are the property of their respective owners. Usage in this plugin is solely for integration purposes and does not imply any affiliation.
 
@@ -77,7 +77,7 @@ Perfect for music blogs, radio websites, entertainment portals, or any site that
 
 For this plugin to work correctly, you will need:
 
-* WordPress version 5.0 or later
+* [WordPress](https://www.linknacional.com.br/wordpress/) version 5.0 or later
 * PHP version 8.2 or later
 * An active internet connection for streaming radio content
 * Modern web browser with HTML5 audio support
@@ -90,17 +90,17 @@ For this plugin to work correctly, you will need:
 
 There are two ways to install the Radio Browser Stations plugin:
 
-= From your WordPress Dashboard (Recommended) =
+= From your [WordPress](https://www.linknacional.com.br/wordpress/) Dashboard (Recommended) =
 
-1. In your WordPress admin panel, navigate to **Plugins > Add New**
+1. In your [WordPress](https://www.linknacional.com.br/wordpress/) admin panel, navigate to **Plugins > Add New**
 2. Use the search bar to find "Radio Browser Stations"
 3. Locate the plugin in the search results and click the **Install Now** button
 4. Once the installation is complete, click the **Activate** button
 
 = Manual Upload via .zip File =
 
-1. Download the plugin's `.zip` file from the official WordPress.org plugin page
-2. In your WordPress admin panel, navigate to **Plugins > Add New**
+1. Download the plugin's `.zip` file from the official [WordPress.org](https://www.linknacional.com.br/wordpress/) plugin page
+2. In your [WordPress](https://www.linknacional.com.br/wordpress/) admin panel, navigate to **Plugins > Add New**
 3. At the top of the page, click the **Upload Plugin** button
 4. Click **Choose File** and select the `.zip` file you downloaded in step 1
 5. Click **Install Now**
@@ -122,7 +122,7 @@ Display a list of radio stations with filtering options:
 
 * `layout` - Layout to render: "modern" (new layout) or "legacy"/absent (previous layout)
 * `player_page` - The page slug where your radio player is located (default: "player")
-* `countrycode` - Filter stations by country code (default: the country of the WordPress locale, e.g. pt_BR → BR; "all" if none matches). Visitors can change it and the choice is remembered per browser.
+* `countrycode` - Filter stations by country code (default: the country of the [WordPress](https://www.linknacional.com.br/wordpress/) locale, e.g. pt_BR → BR; "all" if none matches). Visitors can change it and the choice is remembered per browser.
 * `limit` - Number of stations to display (default: 20)
 * `sort` - Sort order: "clickcount", "name", "random", "bitrate" (default: "clickcount")
 * `reverse` - Reverse the order: "1" (descending, default) or "0" (ascending)
@@ -157,7 +157,7 @@ This shortcode automatically detects the radio station from the URL and displays
 
 == Enjoying the Plugin? ==
 
-If you find the **Radio Browser Stations** plugin useful, please consider leaving a 5-star review on WordPress.org.
+If you find the **Radio Browser Stations** plugin useful, please consider leaving a 5-star review on [WordPress.org](https://www.linknacional.com.br/wordpress/).
 
 Your feedback is invaluable to us. It not only helps other website owners discover the plugin but also motivates us to continue developing and improving it. A positive review is the best way to show your support for our work.
 
@@ -177,7 +177,7 @@ No! The plugin works out of the box without requiring any API keys, accounts, or
 
 = Can I customize the appearance of the radio player and lists? =
 
-Yes, the plugin includes CSS classes that you can style with your theme's custom CSS. The player and lists are designed to be responsive and integrate well with most WordPress themes.
+Yes, the plugin includes CSS classes that you can style with your theme's custom CSS. The player and lists are designed to be responsive and integrate well with most [WordPress](https://www.linknacional.com.br/wordpress/) themes.
 
 = Does the plugin work on mobile devices? =
 
@@ -201,12 +201,12 @@ Radio stations in the Radio-Browser.info database are maintained by the communit
 
 == Support ==
 
-If you need help or have questions, please post them in the [support forum](https://wordpress.org/support/plugin/lknwp-radio-browser/) for the plugin on WordPress.org. We will be happy to assist you there.
+If you need help or have questions, please post them in the [support forum](https://wordpress.org/support/plugin/lknwp-radio-browser/) for the plugin on [WordPress.org](https://www.linknacional.com.br/wordpress/). We will be happy to assist you there.
 
 == Changelog ==
 
 = 1.1.1 = *2026/10/05*
-* Country filter default now follows the WordPress locale (e.g. pt_BR → BR); visitors can change it and the choice is remembered.
+* Country filter default now follows the [WordPress](https://www.linknacional.com.br/wordpress/) locale (e.g. pt_BR → BR); visitors can change it and the choice is remembered.
 * Same-origin stream proxy (AJAX) so the audio visualizer works even when the station does not send CORS headers.
 * Plugin scripts and styles are now only loaded on pages that actually use the plugin shortcodes.
 
