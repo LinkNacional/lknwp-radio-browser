@@ -3,7 +3,7 @@ Contributors: linknacional
 Tags: radio, streaming, audio, player, music
 Requires at least: 5.0
 Tested up to: 7.1
-Stable tag: 1.1.0
+Stable tag: 1.1.1
 Requires PHP: 8.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -122,7 +122,7 @@ Display a list of radio stations with filtering options:
 
 * `layout` - Layout to render: "modern" (new layout) or "legacy"/absent (previous layout)
 * `player_page` - The page slug where your radio player is located (default: "player")
-* `countrycode` - Filter stations by country code (default: "BR" for Brazil)
+* `countrycode` - Filter stations by country code (default: the country of the WordPress locale, e.g. pt_BR → BR; "all" if none matches). Visitors can change it and the choice is remembered per browser.
 * `limit` - Number of stations to display (default: 20)
 * `sort` - Sort order: "clickcount", "name", "random", "bitrate" (default: "clickcount")
 * `reverse` - Reverse the order: "1" (descending, default) or "0" (ascending)
@@ -205,6 +205,11 @@ If you need help or have questions, please post them in the [support forum](http
 
 == Changelog ==
 
+= 1.1.1 = *2026/10/05*
+* Country filter default now follows the WordPress locale (e.g. pt_BR → BR); visitors can change it and the choice is remembered.
+* Same-origin stream proxy (AJAX) so the audio visualizer works even when the station does not send CORS headers.
+* Plugin scripts and styles are now only loaded on pages that actually use the plugin shortcodes.
+
 = 1.1.0 = *2026/09/30*
 * Full redesign of the player and radio list: violet theme, gradients, glassmorphism and glow effects.
 * Premium list sidebar: "Radio" logo, Discover/Favorites/Recents menu and a "Browse by" section (Genres/Countries/Languages) with icons.
@@ -232,6 +237,9 @@ If you need help or have questions, please post them in the [support forum](http
 * Support for 30,000+ radio stations worldwide
 
 == Upgrade Notice ==
+
+= 1.1.1 =
+Locale-based country filter, a same-origin stream proxy for the visualizer, and conditional asset loading.
 
 = 1.1.0 =
 New list and player layouts, Favorites/Recents, genre and language filters, and live now-playing metadata.

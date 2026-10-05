@@ -75,7 +75,7 @@ class Lknwp_Radio_Browser {
 		if ( defined( 'LKNWP_RADIO_BROWSER_VERSION' ) ) {
 			$this->version = LKNWP_RADIO_BROWSER_VERSION;
 		} else {
-			$this->version = '1.1.0';
+			$this->version = '1.1.1';
 		}
 		$this->plugin_name = 'lknwp-radio-browser';
 
@@ -163,6 +163,11 @@ class Lknwp_Radio_Browser {
 		// Endpoint (proxy) para buscar metadados do stream no servidor (evita CORS no navegador)
 		$this->loader->add_action('wp_ajax_lknwp_radio_metadata', $this, 'ajax_radio_metadata');
 		$this->loader->add_action('wp_ajax_nopriv_lknwp_radio_metadata', $this, 'ajax_radio_metadata');
+
+		// Endpoint (proxy same-origin) que reencaminha o áudio do stream, para o
+		// visualizador (Web Audio API) funcionar mesmo quando a rádio não usa CORS.
+		$this->loader->add_action('wp_ajax_lknwp_radio_stream', $this, 'ajax_radio_stream');
+		$this->loader->add_action('wp_ajax_nopriv_lknwp_radio_stream', $this, 'ajax_radio_stream');
 
 	}
 
@@ -476,7 +481,9 @@ class Lknwp_Radio_Browser {
 	 * Parameters:
 	 * - layout: Layout to render ("modern" for the new layout; anything else/absent = legacy)
 	 * - player_page: Page slug for the radio player
-	 * - countrycode: Country code filter (default: BR)
+	 * - countrycode: Country code filter (default: the country of the WordPress
+	 *   locale, e.g. pt_BR → BR; "all" when the locale has no supported country).
+	 *   The visitor can change it and the choice is remembered in the browser.
 	 * - limit: Number of stations to show (default: 20)
 	 * - sort: Sort order (clickcount, name, random, bitrate) - default: clickcount
 	 * - reverse: Sort direction (1 or 0)
@@ -518,7 +525,23 @@ class Lknwp_Radio_Browser {
 			}
 		}
 
-		$countrycode = isset($_GET['lrt_countrycode']) ? sanitize_text_field(wp_unslash($_GET['lrt_countrycode'])) : (isset($atts['countrycode']) ? $atts['countrycode'] : 'BR');
+		// País inicial: prioridade → valor explícito na URL (submit do form) >
+		// escolha salva do visitante (cookie) > atributo do shortcode > país do
+		// locale do WordPress. Como o cookie é lido no servidor, o HTML já sai com
+		// o país certo e o filtro não volta para o padrão.
+		$attr_countrycode = (isset($atts['countrycode']) && '' !== (string) $atts['countrycode'])
+			? (string) $atts['countrycode']
+			: '';
+		if (isset($_GET['lrt_countrycode'])) {
+			$countrycode = sanitize_text_field(wp_unslash($_GET['lrt_countrycode']));
+		} else {
+			$countrycode = ('' !== $attr_countrycode) ? $attr_countrycode : self::get_default_country();
+			$hide_country = (isset($atts['hide_country']) && 'yes' === $atts['hide_country']);
+			$saved_countrycode = self::get_visitor_country_from_cookie();
+			if ('' !== $saved_countrycode && !$hide_country) {
+				$countrycode = $saved_countrycode;
+			}
+		}
 		$limit = isset($_GET['lrt_limit']) ? intval(wp_unslash($_GET['lrt_limit'])) : (isset($atts['limit']) ? intval($atts['limit']) : 20);
 		$player_page = isset($atts['player_page']) ? sanitize_title($atts['player_page']) : 'player';
 		$search = isset($_GET['lrt_radio_search']) ? sanitize_text_field(wp_unslash($_GET['lrt_radio_search'])) : '';
@@ -612,10 +635,80 @@ class Lknwp_Radio_Browser {
 			$player_base_url = home_url('/' . $atts['player_page'] . '/');
 		}
 
-		// Load template, passando $player_base_url
+		// Load template, passando $player_base_url, $countries e $selected_country
+		$countries = self::get_supported_countries();
+		$selected_country = (isset($atts['countrycode']) && '' !== (string) $atts['countrycode'])
+			? $atts['countrycode']
+			: self::get_default_country();
+		if (empty($selected_country)) {
+			$selected_country = 'all';
+		}
 		ob_start();
 		include plugin_dir_path(__FILE__) . $template;
 		return ob_get_clean();
+	}
+
+	/**
+	 * Lista canônica de países do seletor de filtro (código => rótulo).
+	 * Compartilhada pelos templates moderno e legado para evitar divergência.
+	 *
+	 * @return array<string,string>
+	 */
+	public static function get_supported_countries() {
+		return array_merge(
+			array('all' => '🌍 ' . __('All Countries', 'lknwp-radio-browser')),
+			array(
+				'BR' => '🇧🇷 BR', 'US' => '🇺🇸 US', 'AR' => '🇦🇷 AR', 'CA' => '🇨🇦 CA',
+				'GB' => '🇬🇧 GB', 'FR' => '🇫🇷 FR', 'DE' => '🇩🇪 DE', 'ES' => '🇪🇸 ES',
+				'IT' => '🇮🇹 IT', 'PT' => '🇵🇹 PT', 'MX' => '🇲🇽 MX', 'CL' => '🇨🇱 CL',
+				'CO' => '🇨🇴 CO', 'PE' => '🇵🇪 PE', 'UY' => '🇺🇾 UY', 'PY' => '🇵🇾 PY',
+				'BO' => '🇧🇴 BO', 'EC' => '🇪🇨 EC', 'VE' => '🇻🇪 VE', 'AU' => '🇦🇺 AU',
+				'JP' => '🇯🇵 JP', 'KR' => '🇰🇷 KR', 'CN' => '🇨🇳 CN', 'IN' => '🇮🇳 IN',
+				'RU' => '🇷🇺 RU', 'NL' => '🇳🇱 NL', 'BE' => '🇧🇪 BE', 'CH' => '🇨🇭 CH',
+				'AT' => '🇦🇹 AT', 'SE' => '🇸🇪 SE', 'NO' => '🇳🇴 NO', 'DK' => '🇩🇰 DK',
+				'FI' => '🇫🇮 FI'
+			)
+		);
+	}
+
+	/**
+	 * País padrão do filtro, derivado do locale do WordPress (ex.: pt_BR → BR,
+	 * en_US → US). Se o locale não trouxer um país suportado, retorna 'all'.
+	 * O visitante pode sobrescrever e a escolha é lembrada no navegador.
+	 *
+	 * @return string Código de país (ex.: 'BR') ou 'all'.
+	 */
+	public static function get_default_country() {
+		$locale = function_exists('determine_locale') ? determine_locale() : get_locale();
+		$cc = '';
+		if (is_string($locale) && preg_match('/[_-]([A-Za-z]{2})(?:[_-]|$)/', $locale, $m)) {
+			$cc = strtoupper($m[1]);
+		}
+
+		$countries = self::get_supported_countries();
+		if ('' !== $cc && isset($countries[$cc])) {
+			return $cc;
+		}
+
+		return 'all';
+	}
+
+	/**
+	 * País escolhido pelo visitante, lido do cookie `lknwp_country` (gravado pelo
+	 * JS no navegador). Validado contra a lista de países suportados.
+	 *
+	 * @return string Código de país (ex.: 'BR', 'all') ou '' se ausente/inválido.
+	 */
+	public static function get_visitor_country_from_cookie() {
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Preferência de UI; não altera estado no servidor.
+		if (empty($_COOKIE['lknwp_country']) || !is_string($_COOKIE['lknwp_country'])) {
+			return '';
+		}
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Preferência de UI; não altera estado no servidor.
+		$cc = sanitize_text_field(wp_unslash($_COOKIE['lknwp_country']));
+		$countries = self::get_supported_countries();
+
+		return isset($countries[$cc]) ? $cc : '';
 	}
 
 	/**
@@ -788,6 +881,242 @@ class Lknwp_Radio_Browser {
 		// Cache curto: encontrado por 10s, não encontrado por 15s.
 		set_transient($cache_key, $data, !empty($data['found']) ? 10 : 15);
 		wp_send_json_success($data);
+	}
+
+	/**
+	 * Endpoint AJAX (proxy same-origin) que reencaminha o áudio do stream.
+	 *
+	 * O visualizador usa a Web Audio API (AnalyserNode) para desenhar as "waves",
+	 * o que exige que o navegador consiga LER o áudio. Se a rádio não responde com
+	 * cabeçalhos CORS (algumas dividem o DNS entre servidores que hora mandam, hora
+	 * não mandam `Access-Control-Allow-Origin`), o áudio fica "opaco" e as barras
+	 * não se mexem. Este endpoint entrega os bytes no mesmo domínio do site, então
+	 * a análise passa a funcionar independentemente do CORS da rádio.
+	 */
+	public function ajax_radio_stream() {
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Verificado logo abaixo.
+		$nonce = isset($_GET['nonce']) ? sanitize_text_field(wp_unslash($_GET['nonce'])) : '';
+		if (!wp_verify_nonce($nonce, 'lknwp_radio_stream')) {
+			status_header(403);
+			exit;
+		}
+
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Nonce validado acima.
+		$stream = isset($_GET['stream']) ? esc_url_raw(wp_unslash($_GET['stream'])) : '';
+		$parts = ($stream !== '') ? wp_parse_url($stream) : array();
+		if (
+			!is_array($parts) ||
+			empty($parts['scheme']) ||
+			empty($parts['host']) ||
+			!in_array(strtolower($parts['scheme']), array('http', 'https'), true)
+		) {
+			status_header(400);
+			exit;
+		}
+
+		// Resolve/valida o host em IPs públicos (proteção SSRF). Só seguimos se TODOS
+		// os endereços forem públicos; fixamos cada IP no cURL (anti DNS-rebinding).
+		$host = $parts['host'];
+		$ips = $this->resolve_public_ips($host);
+		if (empty($ips)) {
+			status_header(400);
+			exit;
+		}
+		$port = isset($parts['port']) ? intval($parts['port']) : ('https' === strtolower($parts['scheme']) ? 443 : 80);
+
+		// Rate limit simples por IP do visitante (evita uso abusivo do proxy).
+		$client_ip = isset($_SERVER['REMOTE_ADDR']) ? sanitize_text_field(wp_unslash($_SERVER['REMOTE_ADDR'])) : '';
+
+		$rl_key = 'lknwp_radio_stream_rl_' . md5($client_ip);
+		$rl_count = (int) get_transient($rl_key);
+		if ($rl_count >= 60) {
+			status_header(429);
+			exit;
+		}
+		set_transient($rl_key, $rl_count + 1, MINUTE_IN_SECONDS);
+
+		if (!function_exists('curl_init')) {
+			status_header(501);
+			exit;
+		}
+
+		// Stream contínuo: desliga buffers/compressão e remove o limite de execução.
+		while (ob_get_level() > 0) {
+			ob_end_clean();
+		}
+		@ini_set('zlib.output_compression', '0');
+		@ini_set('output_buffering', '0');
+		@set_time_limit(0);
+		ignore_user_abort(false);
+
+		// Tenta cada IP público. Provedores de rádio costumam ser multi-homed e parte
+		// dos IPs pode estar fora do ar; como fixamos o IP no cURL (RESOLVE), sem esse
+		// failover uma resposta ruim de um único IP derrubaria o proxy.
+		foreach ($ips as $ip) {
+			$state = array(
+				'ok'       => null,
+				'status'   => 0,
+				'ctype'    => 'audio/mpeg',
+				'sent'     => false,
+				'bad_type' => false,
+			);
+
+			$this->proxy_stream_from_ip($stream, $host, $port, $ip, $state);
+
+			// Conseguiu repassar, ou o tipo não é áudio (não vale tentar outro IP).
+			if ($state['sent'] || $state['bad_type']) {
+				break;
+			}
+		}
+
+		// Se nunca conseguimos iniciar o repasse, devolve um status de erro coerente.
+		if (!$state['sent']) {
+			if ($state['bad_type']) {
+				status_header(415);
+			} else {
+				$code = (int) $state['status'];
+				status_header(($code >= 400 && $code < 600) ? $code : 502);
+			}
+		}
+		exit;
+	}
+
+	/**
+	 * Executa uma tentativa de repasse do stream fixando a conexão em um IP já
+	 * validado. O estado é compartilhado com os callbacks do cURL por referência.
+	 *
+	 * @param string $stream URL completa do stream.
+	 * @param string $host   Host do stream.
+	 * @param int    $port   Porta do stream.
+	 * @param string $ip     IP público validado.
+	 * @param array  $state  Estado da conexão (por referência).
+	 */
+	private function proxy_stream_from_ip($stream, $host, $port, $ip, &$state) {
+		$curl = curl_init();
+		curl_setopt_array(
+			$curl,
+			array(
+				CURLOPT_URL             => $stream,
+				CURLOPT_USERAGENT       => 'LKNWP Radio Browser/' . $this->version,
+				CURLOPT_FOLLOWLOCATION  => false,
+				CURLOPT_CONNECTTIMEOUT  => 10,
+				CURLOPT_TIMEOUT         => LKNWP_RADIO_STREAM_MAX_SECONDS,
+				CURLOPT_LOW_SPEED_LIMIT => 64,
+				CURLOPT_LOW_SPEED_TIME  => 30,
+				CURLOPT_BUFFERSIZE      => 8192,
+				CURLOPT_SSL_VERIFYPEER  => true,
+				CURLOPT_SSL_VERIFYHOST  => 2,
+				CURLOPT_HTTPHEADER      => array('Icy-MetaData: 0', 'Accept: audio/*,*/*'),
+				CURLOPT_RESOLVE         => array($host . ':' . $port . ':' . $ip),
+				CURLOPT_HEADERFUNCTION  => function ($ch, $header) use (&$state) {
+					if (preg_match('#^HTTP/\S+\s+(\d{3})#', $header, $m)) {
+						$state['status'] = (int) $m[1];
+					} elseif (0 === stripos($header, 'content-type:')) {
+						$ctype = trim(substr($header, 13));
+						if ($ctype !== '') {
+							$state['ctype'] = $ctype;
+						}
+					}
+					return strlen($header);
+				},
+				CURLOPT_WRITEFUNCTION   => function ($ch, $data) use (&$state) {
+					if (null === $state['ok']) {
+						$is_2xx            = ($state['status'] >= 200 && $state['status'] < 300);
+						$type_ok           = $this->is_allowed_stream_type($state['ctype']);
+						$state['ok']       = ($is_2xx && $type_ok);
+						$state['bad_type'] = ($is_2xx && !$type_ok);
+					}
+					if (!$state['ok']) {
+						return strlen($data); // Descarta corpo de erro (nada foi enviado ainda).
+					}
+					if (!$state['sent']) {
+						header('Content-Type: ' . $state['ctype']);
+						header('X-Content-Type-Options: nosniff');
+						header('Cache-Control: no-cache, no-store, must-revalidate');
+						header('Pragma: no-cache');
+						header('X-Accel-Buffering: no');
+						$state['sent'] = true;
+					}
+					echo $data; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Bytes do stream, repassados sem alteração.
+					flush();
+					return strlen($data);
+				},
+			)
+		);
+
+		curl_exec($curl);
+		curl_close($curl);
+	}
+
+	/**
+	 * Só repassamos tipos de mídia de áudio. Isso impede que o proxy (que roda no
+	 * mesmo domínio do site) sirva HTML/JS/SVG e vire vetor de XSS em cima da
+	 * `Content-Type` controlável pela origem remota.
+	 *
+	 * @param string $ctype Content-Type devolvido pelo upstream.
+	 * @return bool
+	 */
+	private function is_allowed_stream_type($ctype) {
+		$ctype = strtolower(trim((string) $ctype));
+		$semi = strpos($ctype, ';');
+		if (false !== $semi) {
+			$ctype = trim(substr($ctype, 0, $semi));
+		}
+		if (0 === strpos($ctype, 'audio/')) {
+			return true;
+		}
+		return in_array($ctype, array('application/ogg', 'application/octet-stream'), true);
+	}
+
+	/**
+	 * Resolve um host para TODOS os IPs públicos (bloqueia faixas privadas/reservadas).
+	 * Retorna a lista de IPs ou um array vazio (proteção SSRF). Os IPs devolvidos são
+	 * fixados no cURL via CURLOPT_RESOLVE para evitar rebinding de DNS.
+	 *
+	 * @param string $host Hostname ou IP.
+	 * @return string[] IPs públicos válidos (pode ser vazio).
+	 */
+	private function resolve_public_ips($host) {
+		$host = strtolower(trim((string) $host, " \t\n\r\0\x0B."));
+		if ('' === $host || 'localhost' === $host || substr($host, -6) === '.local' || substr($host, -9) === '.internal') {
+			return array();
+		}
+
+		$flags = FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE;
+		if (filter_var($host, FILTER_VALIDATE_IP)) {
+			return filter_var($host, FILTER_VALIDATE_IP, $flags) ? array($host) : array();
+		}
+
+		$ips = array();
+		$records = @dns_get_record($host, DNS_A);
+		if (is_array($records)) {
+			foreach ($records as $record) {
+				if (!empty($record['ip'])) {
+					$ips[] = $record['ip'];
+				}
+			}
+		}
+		if (empty($ips)) {
+			$single = gethostbyname($host);
+			if ($single && $single !== $host) {
+				$ips[] = $single;
+			}
+		}
+		if (empty($ips)) {
+			return array();
+		}
+
+		// Todos os endereços precisam ser públicos; qualquer um privado/reservado
+		// invalida a requisição (evita SSRF via host multi-homed ou rebinding).
+		$public = array();
+		foreach (array_unique($ips) as $ip) {
+			if (!filter_var($ip, FILTER_VALIDATE_IP, $flags)) {
+				return array();
+			}
+			$public[] = $ip;
+		}
+
+		return $public;
 	}
 
 	/**

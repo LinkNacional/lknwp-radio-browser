@@ -9,7 +9,7 @@
 **Website:** [linknacional.com.br](https://www.linknacional.com.br/)  
 **Tags:** radio, streaming, audio, player, music  
 **Tested up to:** 7.1  
-**Stable version:** 1.1.0  
+**Stable version:** 1.1.1  
 **License:** GPLv2 or later  
 **Translations:** English / Portuguese (Brazil)
 
@@ -56,7 +56,7 @@ Perfect for music blogs, radio sites, entertainment portals, or any site that wa
 **Available Parameters:**
 - `layout` - Layout to render: "modern" (new layout) or "legacy"/absent (previous layout)
 - `player_page` - Page where the player is located (default: "player")
-- `countrycode` - Filter by country (default: "BR")
+- `countrycode` - Filter by country (default: the country of the WordPress locale, e.g. pt_BR → BR; "all" if none matches). Visitors can change it and the choice is remembered per browser.
 - `limit` - Number of stations (default: 20)
 - `sort` - Sorting: "clickcount", "name", "random", "bitrate"
 - `reverse` - Reverse the order: "1" (descending, default) or "0" (ascending)

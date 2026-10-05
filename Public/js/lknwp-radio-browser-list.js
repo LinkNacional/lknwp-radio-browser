@@ -36,6 +36,17 @@ import 'select2/dist/css/select2.min.css';
             });
         }
 
+        // Guarda a escolha do país num cookie. Usamos cookie (não localStorage)
+        // porque o PHP consegue lê-lo no servidor e já renderizar a lista com o
+        // país certo — assim o filtro não volta para o padrão do WordPress.
+        var COUNTRY_COOKIE = 'lknwp_country';
+        function storeCountry(cc) {
+            try {
+                document.cookie = COUNTRY_COOKIE + '=' + encodeURIComponent(cc ? String(cc) : '') +
+                    '; path=/; max-age=' + (cc ? 31536000 : 0) + '; SameSite=Lax';
+            } catch (e) {}
+        }
+
         function fillFlags($scope) {
             ($scope || $(document)).find('.lrt-flag[data-cc]').each(function () {
                 var cc = this.getAttribute('data-cc');
@@ -656,7 +667,10 @@ import 'select2/dist/css/select2.min.css';
         });
 
         $('#lrt_radio_search').on('input', autoQueryRadios);
-        $('#lrt_countrycode').on('change', autoQueryRadios);
+        $('#lrt_countrycode').on('change', function () {
+            storeCountry($(this).val() || '');
+            autoQueryRadios();
+        });
         $('#lrt_sort').on('change', autoQueryRadios);
 
         // Pills de categoria
