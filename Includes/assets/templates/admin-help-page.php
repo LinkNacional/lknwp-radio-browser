@@ -223,7 +223,7 @@ $lknwp_check_icon_svg = '<svg class="lknwp-radio-copy-btn__ic-check" viewBox="0 
                             <tr data-sf>
                                 <td><code>countrycode</code><button type="button" class="lknwp-radio-copy-btn lknwp-radio-copy-btn--mini" data-copy="countrycode" title="<?php esc_attr_e( 'Copy', 'lknwp-radio-browser' ); ?>"><?php echo $lknwp_copy_icon_svg . $lknwp_check_icon_svg; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static inline SVG ?></button></td>
                                 <td><?php esc_html_e( 'Country code (BR, US, FR, etc.)', 'lknwp-radio-browser' ); ?></td>
-                                <td><code>"BR"</code></td>
+                                <td><?php esc_html_e( 'WordPress locale country (e.g. "BR")', 'lknwp-radio-browser' ); ?></td>
                             </tr>
                             <tr data-sf>
                                 <td><code>limit</code><button type="button" class="lknwp-radio-copy-btn lknwp-radio-copy-btn--mini" data-copy="limit" title="<?php esc_attr_e( 'Copy', 'lknwp-radio-browser' ); ?>"><?php echo $lknwp_copy_icon_svg . $lknwp_check_icon_svg; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static inline SVG ?></button></td>

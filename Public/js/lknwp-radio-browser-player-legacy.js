@@ -24,6 +24,19 @@ document.addEventListener("DOMContentLoaded", function () {
         var hlsInstance = null;
         player.volume = 0.2;
 
+        // Proxy same-origin (admin-ajax) do áudio. O visualizador usa a Web Audio
+        // API, que só consegue LER o áudio se ele for legível pelo navegador. Quando
+        // a rádio cross-origin não responde com cabeçalhos CORS, o áudio fica opaco e
+        // as waves não se mexem; este proxy entrega os bytes no mesmo domínio do site.
+        var streamProxyCfg = window.lknwpRadioTextsPlayer || {};
+        var streamProxyUrl = "";
+        if (streamUrl && streamProxyCfg.ajaxUrl && streamProxyCfg.streamProxyNonce) {
+            streamProxyUrl = streamProxyCfg.ajaxUrl
+                + "?action=lknwp_radio_stream"
+                + "&nonce=" + encodeURIComponent(streamProxyCfg.streamProxyNonce)
+                + "&stream=" + encodeURIComponent(streamUrl);
+        }
+
         // Variáveis do Visualizer Real
         var isVisualizerActive = false;
         var visualizerInterval = null;
@@ -145,8 +158,27 @@ document.addEventListener("DOMContentLoaded", function () {
             proxyElement.src = streamUrl;
 
             proxyElement.addEventListener('error', function (e) {
+                // Rádio sem CORS: tenta o proxy same-origin antes de cair no no-cors.
+                tryProxyStream();
+            }, { once: true });
+        }
+
+        /**
+         * Acesso via proxy same-origin (PHP). Contorna a ausência de CORS da rádio,
+         * permitindo ao AnalyserNode ler o áudio e desenhar as waves.
+         */
+        function tryProxyStream() {
+            if (!streamProxyUrl) {
                 tryWithoutCORS();
-            });
+                return;
+            }
+
+            proxyElement.removeAttribute('crossOrigin');
+            proxyElement.src = streamProxyUrl;
+
+            proxyElement.addEventListener('error', function (e) {
+                tryWithoutCORS();
+            }, { once: true });
         }
 
         /**
@@ -158,7 +190,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
             proxyElement.addEventListener('error', function (e) {
                 tryFetchBlob();
-            });
+            }, { once: true });
         }
 
         /**

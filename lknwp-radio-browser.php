@@ -16,7 +16,7 @@
 * Plugin Name:       Radio Browser Stations
  * Plugin URI:        https://www.linknacional.com.br
  * Description:       WP plugin to list online radios and listen to live broadcasts directly on your site, using the Radio Browser API.
- * Version:           1.1.0
+ * Version:           1.1.1
  * Requires PHP:      8.2
  * Author:            Link Nacional
  * Author URI:        https://www.linknacional.com.br/
@@ -34,12 +34,18 @@ if ( ! defined( 'WPINC' ) ) {
 /**
  * Plugin constants
  */
-define( 'LKNWP_RADIO_BROWSER_VERSION', '1.1.0' );
+define( 'LKNWP_RADIO_BROWSER_VERSION', '1.1.1' );
 define( 'LKNWP_RADIO_BROWSER_PLUGIN_FILE', __FILE__ );
 define( 'LKNWP_RADIO_BROWSER_PLUGIN_NAME', 'lknwp-radio-browser' );
 define( 'LKNWP_RADIO_BROWSER_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 define( 'LKNWP_RADIO_BROWSER_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
 define( 'LKNWP_RADIO_BROWSER_TEXT_DOMAIN', 'lknwp-radio-browser' );
+
+/**
+ * Duração máxima (segundos) de cada conexão do proxy de áudio. Serve de teto de
+ * segurança para não prender workers do PHP indefinidamente em streams contínuos.
+ */
+define( 'LKNWP_RADIO_STREAM_MAX_SECONDS', 3600 );
 
 /**
  * Autoloader using Composer

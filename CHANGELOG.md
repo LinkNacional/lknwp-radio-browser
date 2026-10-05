@@ -1,3 +1,8 @@
+# 1.1.1 - 05/10/2026
+* Filtro de país agora usa como padrão o país do locale do WordPress (ex.: pt_BR → BR), e o visitante pode trocá-lo com a escolha lembrada no navegador.
+* Proxy same-origin do áudio (AJAX) para o visualizador funcionar mesmo quando a rádio não envia cabeçalhos CORS.
+* Scripts e estilos do plugin só são carregados nas páginas que usam de fato os shortcodes do plugin.
+
 # 1.1.0 - 30/09/2026
 * Redesign completo do player e da lista de rádios: tema violeta, degradês, glassmorphism e efeitos de glow.
 * Sidebar premium na lista: logo "Radio", menu Descobrir/Favoritos/Recentes e seção "Navegar por" (Gêneros/Países/Idiomas) com ícones.

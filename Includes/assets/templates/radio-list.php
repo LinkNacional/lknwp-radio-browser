@@ -104,23 +104,8 @@ if (!defined('ABSPATH')) {
                             <div class="lrt-pill-select lrt-pill-select--country">
                                 <select id="lrt_countrycode" name="lrt_countrycode" class="lrt-radio-select">
                                     <?php
-                                    $countries = array_merge(
-                                        array('all' => '🌍 ' . __( 'All Countries', 'lknwp-radio-browser' )),
-                                        array(
-                                            'BR' => '🇧🇷 BR', 'US' => '🇺🇸 US', 'AR' => '🇦🇷 AR', 'CA' => '🇨🇦 CA',
-                                            'GB' => '🇬🇧 GB', 'FR' => '🇫🇷 FR', 'DE' => '🇩🇪 DE', 'ES' => '🇪🇸 ES',
-                                            'IT' => '🇮🇹 IT', 'PT' => '🇵🇹 PT', 'MX' => '🇲🇽 MX', 'CL' => '🇨🇱 CL',
-                                            'CO' => '🇨🇴 CO', 'PE' => '🇵🇪 PE', 'UY' => '🇺🇾 UY', 'PY' => '🇵🇾 PY',
-                                            'BO' => '🇧🇴 BO', 'EC' => '🇪🇨 EC', 'VE' => '🇻🇪 VE', 'AU' => '🇦🇺 AU',
-                                            'JP' => '🇯🇵 JP', 'KR' => '🇰🇷 KR', 'CN' => '🇨🇳 CN', 'IN' => '🇮🇳 IN',
-                                            'RU' => '🇷🇺 RU', 'NL' => '🇳🇱 NL', 'BE' => '🇧🇪 BE', 'CH' => '🇨🇭 CH',
-                                            'AT' => '🇦🇹 AT', 'SE' => '🇸🇪 SE', 'NO' => '🇳🇴 NO', 'DK' => '🇩🇰 DK',
-                                            'FI' => '🇫🇮 FI'
-                                        )
-                                    );
-                                    $selected_country = $atts['countrycode'];
-                                    if (empty($selected_country)) {
-                                        $selected_country = 'BR';
+                                    if (empty($countries)) {
+                                        $countries = array('all' => '🌍 ' . __('All Countries', 'lknwp-radio-browser'));
                                     }
                                     ?>
                                     <?php foreach ($countries as $code => $name): ?>

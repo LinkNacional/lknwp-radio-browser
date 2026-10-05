@@ -19,6 +19,17 @@ import 'select2/dist/css/select2.min.css';
         });
         var $reverseBtn = $('#lrt_reverse_btn');
         var $reverseInput = $('#lrt_reverse');
+
+        // Guarda a escolha do país num cookie. Usamos cookie (não localStorage)
+        // porque o PHP consegue lê-lo no servidor e já renderizar a lista com o
+        // país certo — assim o filtro não volta para o padrão do WordPress.
+        var COUNTRY_COOKIE = 'lknwp_country';
+        function storeCountry(cc) {
+            try {
+                document.cookie = COUNTRY_COOKIE + '=' + encodeURIComponent(cc ? String(cc) : '') +
+                    '; path=/; max-age=' + (cc ? 31536000 : 0) + '; SameSite=Lax';
+            } catch (e) {}
+        }
         var $lrt_player_base_url = $('#lrt_player_base_url');
         let playerBaseUrl = 'player';
         if ($lrt_player_base_url.length) {
@@ -185,7 +196,10 @@ import 'select2/dist/css/select2.min.css';
         }
         // Eventos para todos os campos
         $('#lrt_radio_search').on('input', autoQueryRadios);
-        $('#lrt_countrycode').on('input', autoQueryRadios);
+        $('#lrt_countrycode').on('input change', function () {
+            storeCountry($(this).val() || '');
+            autoQueryRadios();
+        });
         $('#lrt_limit').on('input', autoQueryRadios);
         $('#lrt_sort').on('change', autoQueryRadios);
         $('#lrt_reverse_btn').on('click', autoQueryRadios);

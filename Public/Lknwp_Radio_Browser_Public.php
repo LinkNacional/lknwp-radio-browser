@@ -105,7 +105,10 @@ class Lknwp_Radio_Browser_Public {
 		}
 
 
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/lknwp-radio-browser-public.css', array(), $this->version, 'all' );
+		// Estilo base do plugin só é necessário quando há algum shortcode dele no conteúdo.
+		if ( ! empty( $list_layouts ) || ! empty( $player_layouts ) ) {
+			wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/lknwp-radio-browser-public.css', array(), $this->version, 'all' );
+		}
 
 	}
 
@@ -154,26 +157,31 @@ class Lknwp_Radio_Browser_Public {
 		 * class.
 		 */
 
+		global $post;
+		$content = isset($post->post_content) ? $post->post_content : '';
+
+		$player_layouts = $this->get_content_shortcode_layouts($content, 'radio_browser_player');
+		$list_layouts = $this->get_content_shortcode_layouts($content, 'radio_browser_list');
+
+		// Nada do plugin é enfileirado se nenhum dos shortcodes estiver presente no conteúdo.
+		if (empty($player_layouts) && empty($list_layouts)) {
+			return;
+		}
+
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/lknwp-radio-browser-public.js', array( 'jquery' ), $this->version, false );
 
+		if (isset($player_layouts['legacy'])) {
+			$this->enqueue_player_scripts('-legacy');
+		}
+		if (isset($player_layouts['modern'])) {
+			$this->enqueue_player_scripts('');
+		}
 
-		global $post;
-		if (isset($post->post_content)) {
-			$player_layouts = $this->get_content_shortcode_layouts($post->post_content, 'radio_browser_player');
-			if (isset($player_layouts['legacy'])) {
-				$this->enqueue_player_scripts('-legacy');
-			}
-			if (isset($player_layouts['modern'])) {
-				$this->enqueue_player_scripts('');
-			}
-
-			$list_layouts = $this->get_content_shortcode_layouts($post->post_content, 'radio_browser_list');
-			if (isset($list_layouts['legacy'])) {
-				$this->enqueue_list_scripts('-legacy');
-			}
-			if (isset($list_layouts['modern'])) {
-				$this->enqueue_list_scripts('');
-			}
+		if (isset($list_layouts['legacy'])) {
+			$this->enqueue_list_scripts('-legacy');
+		}
+		if (isset($list_layouts['modern'])) {
+			$this->enqueue_list_scripts('');
 		}
 	}
 
@@ -195,7 +203,10 @@ class Lknwp_Radio_Browser_Public {
 		wp_localize_script($player_handle, 'lknwpRadioTextsPlayer', array(
 			'unableToPlay' => __('Unable to play this radio station. Please try again later or choose another station.', 'lknwp-radio-browser'),
 			'listeningTo' => __('🎵 Listening to {station} - ', 'lknwp-radio-browser'),
-			'onlineRadio' => __('Online Radio', 'lknwp-radio-browser')
+			'onlineRadio' => __('Online Radio', 'lknwp-radio-browser'),
+			// Proxy same-origin do áudio: usado pelo visualizador quando a rádio não envia CORS.
+			'ajaxUrl' => admin_url('admin-ajax.php'),
+			'streamProxyNonce' => wp_create_nonce('lknwp_radio_stream')
 		));
 
 		$default_album_url = defined('LKNWP_RADIO_BROWSER_PLUGIN_URL') ? LKNWP_RADIO_BROWSER_PLUGIN_URL . 'Includes/assets/images/default-radio-album.gif' : './Includes/assets/images/default-radio-album.gif';
