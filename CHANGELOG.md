@@ -1,3 +1,6 @@
+# 1.1.2 - 07/10/2026
+* Corrige a linha em branco antes do `<?php` no arquivo principal que podia corromper a saída do sitemap do WordPress.
+
 # 1.1.1 - 05/10/2026
 * Filtro de país agora usa como padrão o país do locale do WordPress (ex.: pt_BR → BR), e o visitante pode trocá-lo com a escolha lembrada no navegador.
 * Proxy same-origin do áudio (AJAX) para o visualizador funcionar mesmo quando a rádio não envia cabeçalhos CORS.
