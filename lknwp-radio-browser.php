@@ -1,4 +1,3 @@
-
 <?php
 /**
  * The plugin bootstrap file
@@ -13,7 +12,7 @@
  * @package           Lknwp_Radio_Browser
  *
  * @wordpress-plugin
-* Plugin Name:       Radio Browser Stations
+ * Plugin Name:       Radio Browser Stations
  * Plugin URI:        https://www.linknacional.com.br
  * Description:       WP plugin to list online radios and listen to live broadcasts directly on your site, using the Radio Browser API.
  * Version:           1.1.1
