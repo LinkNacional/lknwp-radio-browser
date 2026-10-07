@@ -3,7 +3,7 @@ Contributors: linknacional
 Tags: radio, streaming, audio, player, music
 Requires at least: 5.0
 Tested up to: 7.1
-Stable tag: 1.1.1
+Stable tag: 1.1.2
 Requires PHP: 8.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -205,6 +205,9 @@ If you need help or have questions, please post them in the [support forum](http
 
 == Changelog ==
 
+= 1.1.2 = *2026/10/07*
+* Fixes a leading blank line before the `<?php` tag in the main plugin file that could corrupt the WordPress sitemap output.
+
 = 1.1.1 = *2026/10/05*
 * Country filter default now follows the [WordPress](https://www.linknacional.com.br/wordpress/) locale (e.g. pt_BR → BR); visitors can change it and the choice is remembered.
 * Same-origin stream proxy (AJAX) so the audio visualizer works even when the station does not send CORS headers.
@@ -237,6 +240,9 @@ If you need help or have questions, please post them in the [support forum](http
 * Support for 30,000+ radio stations worldwide
 
 == Upgrade Notice ==
+
+= 1.1.2 =
+Fixes a leading blank line in the main plugin file that could break the WordPress sitemap.
 
 = 1.1.1 =
 Locale-based country filter, a same-origin stream proxy for the visualizer, and conditional asset loading.
