@@ -375,8 +375,23 @@ import 'select2/dist/css/select2.min.css';
             return !!a && !a.paused && !a.ended && a.currentSrc !== '' && a.readyState >= 2;
         }
 
+        // Espelha o estado do <audio> no play da capa do "Tocando agora".
+        // Como o dock e esse botão compartilham o mesmo <audio>, mexer em um
+        // reflete no outro (ícone + rótulo de acessibilidade).
+        function syncNowPlayState() {
+            var $btn = $('#lrt_now_play');
+            if (!$btn.length) return;
+            var playing = dockIsPlaying();
+            var label = playing ? (texts.pause || 'Pause') : (texts.play || 'Play');
+            $btn.toggleClass('is-playing', playing)
+                .attr('aria-pressed', playing ? 'true' : 'false')
+                .attr('aria-label', label)
+                .attr('title', label);
+        }
+
         function updateDockPlayState() {
             $('#lrt_player_dock').toggleClass('is-playing', dockIsPlaying());
+            syncNowPlayState();
             syncDockStacking();
         }
 
@@ -427,6 +442,17 @@ import 'select2/dist/css/select2.min.css';
             if (!a || !a.getAttribute('src')) return;
             var p = a.play();
             if (p && p.catch) { p.catch(function () {}); }
+        }
+
+        // Alterna play/pause no mesmo <audio> — usado pelo dock e pelo play da capa.
+        function toggleDockPlayback() {
+            var a = dockAudioEl();
+            if (!a) return;
+            if (a.paused) {
+                playDock();
+            } else {
+                a.pause();
+            }
         }
 
         // Pular para a rádio anterior (-1) / próxima (+1) da lista visível.
@@ -778,13 +804,13 @@ import 'select2/dist/css/select2.min.css';
          * Eventos da barra de play (dock)
          * ============================================================ */
         $(document).on('click', '#lrt_dock_play', function () {
-            var a = dockAudioEl();
-            if (!a) return;
-            if (a.paused) {
-                playDock();
-            } else {
-                a.pause();
-            }
+            toggleDockPlayback();
+        });
+
+        // Play na borda da capa do "Tocando agora": mesma ação e mesmo estado do dock.
+        $(document).on('click', '#lrt_now_play', function (e) {
+            e.preventDefault();
+            toggleDockPlayback();
         });
 
         $(document).on('click', '#lrt_dock_prev', function () { dockSkip(-1); });

@@ -3,7 +3,7 @@ Contributors: linknacional
 Tags: radio, streaming, audio, player, music
 Requires at least: 5.0
 Tested up to: 7.1
-Stable tag: 1.1.2
+Stable tag: 1.1.3
 Requires PHP: 8.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -205,6 +205,14 @@ If you need help or have questions, please post them in the [support forum](http
 
 == Changelog ==
 
+= 1.1.3 = *2026/10/23*
+* Play/pause button on the "Now playing" cover, synced with the player at the bottom.
+* Component CSS hardened against theme styles: `!important` on every rule, element resets and protected sliders/Select2.
+* Fixes the Select2 arrow that was pushed above the field when WooCommerce is active.
+* Fixes the mobile toolbar: the theme toggle overflowed the component on narrow screens.
+* "Mobile app" section in the sidebar with the official Google Play button (Android app).
+* Fixes the store button clickable area, which was larger than the badge image.
+
 = 1.1.2 = *2026/10/07*
 * Fixes a leading blank line before the `<?php` tag in the main plugin file that could corrupt the WordPress sitemap output.
 
@@ -240,6 +248,9 @@ If you need help or have questions, please post them in the [support forum](http
 * Support for 30,000+ radio stations worldwide
 
 == Upgrade Notice ==
+
+= 1.1.3 =
+Theme-proof styles, a play button on the cover synced with the player, a mobile toolbar fix and a Google Play button in the sidebar.
 
 = 1.1.2 =
 Fixes a leading blank line in the main plugin file that could break the WordPress sitemap.

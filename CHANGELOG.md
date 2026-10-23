@@ -1,3 +1,11 @@
+# 1.1.3 - 23/10/2026
+* Botão play/pause na capa do card "Tocando agora", sincronizado com o player do rodapé.
+* CSS da lista e do player blindado contra estilos de temas (`!important` em todas as regras, resets de elementos, sliders e Select2).
+* Corrige a seta do Select2 que subia para fora do campo quando o WooCommerce está ativo.
+* Corrige a barra de ferramentas no mobile: o botão de tema vazava para fora do componente em telas estreitas.
+* Nova seção "Aplicativo" na barra lateral com o botão oficial do Google Play (app Android).
+* Corrige a área clicável do botão da loja, que era maior que a imagem do badge.
+
 # 1.1.2 - 07/10/2026
 * Corrige a linha em branco antes do `<?php` no arquivo principal que podia corromper a saída do sitemap do WordPress.
 

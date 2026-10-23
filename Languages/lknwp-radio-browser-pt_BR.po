@@ -649,6 +649,14 @@ msgstr "Recentes"
 msgid "Browse by"
 msgstr "Navegar por"
 
+#: Includes/assets/templates/radio-list.php:92
+msgid "Mobile app"
+msgstr "Aplicativo"
+
+#: Includes/assets/templates/radio-list.php:98
+msgid "Get it on Google Play"
+msgstr "Baixe na Google Play"
+
 #: Includes/assets/templates/radio-list.php:63
 msgid "Genres"
 msgstr "Gêneros"
@@ -727,10 +735,15 @@ msgstr "Notícias"
 msgid "Previous radio"
 msgstr "Rádio anterior"
 
-#: Includes/assets/templates/radio-list.php:417
+#: Includes/assets/templates/radio-list.php:231
+#: Includes/assets/templates/radio-list.php:422
 #: Public/Lknwp_Radio_Browser_Public.php:261
 msgid "Play"
 msgstr "Play"
+
+#: Public/Lknwp_Radio_Browser_Public.php:262
+msgid "Pause"
+msgstr "Pausar"
 
 #: Includes/assets/templates/radio-list.php:421
 #: Includes/assets/templates/radio-player.php:250
@@ -1041,9 +1054,6 @@ msgstr "Você ainda não ouviu nenhuma rádio."
 
 #~ msgid "Reverse inactive"
 #~ msgstr "Reverter inativo"
-
-#~ msgid "Pause"
-#~ msgstr "Pause"
 
 #~| msgid "Copy link"
 #~ msgid "Copy Link"
