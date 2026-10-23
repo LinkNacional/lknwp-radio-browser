@@ -41,6 +41,15 @@ define( 'LKNWP_RADIO_BROWSER_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
 define( 'LKNWP_RADIO_BROWSER_TEXT_DOMAIN', 'lknwp-radio-browser' );
 
 /**
+ * Link do app para celular, exibido na barra lateral da lista de rádios.
+ * Pode ser sobrescrito no wp-config.php antes do plugin carregar (iOS virá
+ * depois, com outra constante/imagem).
+ */
+if ( ! defined( 'LKNWP_RADIO_BROWSER_ANDROID_APP_URL' ) ) {
+	define( 'LKNWP_RADIO_BROWSER_ANDROID_APP_URL', 'https://play.google.com/store/apps/details?id=br.radio.owh.app' );
+}
+
+/**
  * Duração máxima (segundos) de cada conexão do proxy de áudio. Serve de teto de
  * segurança para não prender workers do PHP indefinidamente em streams contínuos.
  */

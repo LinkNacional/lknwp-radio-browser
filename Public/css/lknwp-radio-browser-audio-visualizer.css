@@ -1,42 +1,42 @@
 /* ===== AUDIO VISUALIZER ===== */
 .lkp-audio-visualizer {
-    display: none;
-    align-items: center;
-    justify-content: center;
-    margin: 0px;
-    padding: 10px;
-    border-radius: 9px;
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
+    display: none !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin: 0px !important;
+    padding: 10px !important;
+    border-radius: 9px !important;
+    backdrop-filter: blur(8px) !important;
+    -webkit-backdrop-filter: blur(8px) !important;
 }
 
 .lkp-audio-visualizer--active {
-    display: flex;
+    display: flex !important;
 }
 
 .lkp-visualizer-bars {
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
-    gap: 4px;
-    width: 100%;
+    display: flex !important;
+    align-items: flex-end !important;
+    justify-content: space-between !important;
+    gap: 4px !important;
+    width: 100% !important;
     height: 100%;
-    padding: 0 10px;
-    box-sizing: border-box;
+    padding: 0 10px !important;
+    box-sizing: border-box !important;
 }
 
 /* ===== BARRA (grossa) ===== */
 .lkp-visualizer-bar {
-    flex: 1 1 0;
-    width: 100%;
-    min-width: 6px;
-    max-width: 16px;
-    min-height: 5px;
-    border-radius: 4px;
+    flex: 1 1 0 !important;
+    width: 100% !important;
+    min-width: 6px !important;
+    max-width: 16px !important;
+    min-height: 5px !important;
+    border-radius: 4px !important;
     background: linear-gradient(180deg, var(--lkn-brand-200) 0%, var(--lkn-brand-400) 55%, var(--lkn-accent) 100%) !important;
     box-shadow: 0 0 8px rgba(168, 85, 247, 0.5) !important;
-    transition: height 0.07s linear, background 0.15s ease;
-    will-change: height;
+    transition: height 0.07s linear, background 0.15s ease !important;
+    will-change: height !important;
     border: none !important;
 }
 
@@ -59,19 +59,19 @@
 /* ===== REFLEXO (metade inferior) ===== */
 /* Some suavemente para baixo e fica mais sutil que a onda principal. */
 .lkp-visualizer-bottom {
-    opacity: 0.5;
-    -webkit-mask-image: linear-gradient(to top, #000 0%, rgba(0, 0, 0, 0.55) 45%, transparent 100%);
-    mask-image: linear-gradient(to top, #000 0%, rgba(0, 0, 0, 0.55) 45%, transparent 100%);
+    opacity: 0.5 !important;
+    -webkit-mask-image: linear-gradient(to top, #000 0%, rgba(0, 0, 0, 0.55) 45%, transparent 100%) !important;
+    mask-image: linear-gradient(to top, #000 0%, rgba(0, 0, 0, 0.55) 45%, transparent 100%) !important;
 }
 
 /* ===== RESPONSIVIDADE ===== */
 @media (max-width: 480px) {
     .lkp-visualizer-bars {
-        gap: 3px;
-        padding: 0 6px;
+        gap: 3px !important;
+        padding: 0 6px !important;
     }
 
     .lkp-visualizer-bar {
-        max-width: 12px;
+        max-width: 12px !important;
     }
 }

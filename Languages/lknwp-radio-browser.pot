@@ -566,6 +566,14 @@ msgstr ""
 msgid "Browse by"
 msgstr ""
 
+#: Includes/assets/templates/radio-list.php:92
+msgid "Mobile app"
+msgstr ""
+
+#: Includes/assets/templates/radio-list.php:98
+msgid "Get it on Google Play"
+msgstr ""
+
 #: Includes/assets/templates/radio-list.php:63
 msgid "Genres"
 msgstr ""
@@ -644,9 +652,14 @@ msgstr ""
 msgid "Previous radio"
 msgstr ""
 
-#: Includes/assets/templates/radio-list.php:417
+#: Includes/assets/templates/radio-list.php:231
+#: Includes/assets/templates/radio-list.php:422
 #: Public/Lknwp_Radio_Browser_Public.php:261
 msgid "Play"
+msgstr ""
+
+#: Public/Lknwp_Radio_Browser_Public.php:262
+msgid "Pause"
 msgstr ""
 
 #: Includes/assets/templates/radio-list.php:421
