@@ -259,6 +259,7 @@ class Lknwp_Radio_Browser_Public {
 			'onAir' => __('ON AIR NOW', 'lknwp-radio-browser'),
 			'logoAlt' => __('Radio logo', 'lknwp-radio-browser'),
 			'play' => __('Play', 'lknwp-radio-browser'),
+			'pause' => __('Pause', 'lknwp-radio-browser'),
 			'titleDiscover' => __('Discover radios', 'lknwp-radio-browser'),
 			'titleFavorites' => __('Favorites', 'lknwp-radio-browser'),
 			'titleRecents' => __('Recents', 'lknwp-radio-browser'),

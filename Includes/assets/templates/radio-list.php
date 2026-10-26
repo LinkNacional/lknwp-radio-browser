@@ -72,6 +72,41 @@ if (!defined('ABSPATH')) {
                 </button>
             </nav>
 
+            <?php
+            // App para celular (badge oficial do Google Play).
+            // O iOS virá depois, com outro badge/botão abaixo deste.
+            $lknwp_android_url = defined('LKNWP_RADIO_BROWSER_ANDROID_APP_URL')
+                ? LKNWP_RADIO_BROWSER_ANDROID_APP_URL
+                : 'https://play.google.com/store/apps/details?id=br.radio.owh.app';
+
+            // Badge localizado: pt-BR quando o site estiver em português, EN no resto.
+            // As imagens já vêm recortadas (sem a margem transparente do PNG oficial),
+            // e as dimensões abaixo são as intrínsecas de cada arquivo.
+            $lknwp_locale     = function_exists('determine_locale') ? determine_locale() : get_locale();
+            $lknwp_badge_is_pt = (strpos(strtolower((string) $lknwp_locale), 'pt') === 0);
+            $lknwp_badge_file = $lknwp_badge_is_pt ? 'google-play-badge-pt_BR.png' : 'google-play-badge-en.png';
+            $lknwp_badge_w    = $lknwp_badge_is_pt ? 646 : 564;
+            $lknwp_badge_h    = $lknwp_badge_is_pt ? 192 : 168;
+            $lknwp_badge_url  = (defined('LKNWP_RADIO_BROWSER_PLUGIN_URL') ? LKNWP_RADIO_BROWSER_PLUGIN_URL : $plugin_url)
+                . 'Includes/assets/images/' . $lknwp_badge_file;
+            ?>
+            <hr class="lrt-sidebar__hr">
+
+            <div class="lrt-sidebar__label"><?php esc_html_e( 'Mobile app', 'lknwp-radio-browser' ); ?></div>
+            <div class="lrt-sidebar__apps">
+                <a class="lrt-store-btn" href="<?php echo esc_url($lknwp_android_url); ?>" target="_blank" rel="noopener noreferrer">
+                    <img
+                        class="lrt-store-btn__badge"
+                        src="<?php echo esc_url($lknwp_badge_url); ?>"
+                        alt="<?php esc_attr_e( 'Get it on Google Play', 'lknwp-radio-browser' ); ?>"
+                        width="<?php echo esc_attr($lknwp_badge_w); ?>"
+                        height="<?php echo esc_attr($lknwp_badge_h); ?>"
+                        loading="lazy"
+                        decoding="async"
+                    >
+                </a>
+            </div>
+
             <div class="lrt-sidebar__footer">
                 <div class="lrt-sidebar__wave" aria-hidden="true">
                     <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
@@ -117,9 +152,9 @@ if (!defined('ABSPATH')) {
                             </div>
                             <?php endif; ?>
 
-                            <button type="button" id="lrt_filters_btn" class="lrt-btn lrt-btn--filters" aria-expanded="false" aria-controls="lrt_advanced_filters">
+                            <button type="button" id="lrt_filters_btn" class="lrt-btn lrt-btn--filters" aria-expanded="false" aria-controls="lrt_advanced_filters" aria-label="<?php esc_attr_e( 'Filters', 'lknwp-radio-browser' ); ?>" title="<?php esc_attr_e( 'Filters', 'lknwp-radio-browser' ); ?>">
                                 <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 6h16M7 12h10M10 18h4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-                                <span><?php esc_html_e( 'Filters', 'lknwp-radio-browser' ); ?></span>
+                                <span class="lrt-btn__label"><?php esc_html_e( 'Filters', 'lknwp-radio-browser' ); ?></span>
                                 <svg class="lrt-btn__chevron" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><polyline points="6,9 12,15 18,9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                             </button>
 
@@ -227,6 +262,11 @@ if (!defined('ABSPATH')) {
                                 <div class="lrt-now__main">
                                     <div class="lrt-now__cover">
                                         <img id="lrt_now_img" class="lrt-now__logo" src="" alt="" loading="lazy">
+                                        <!-- Play/pause na borda da capa: espelha o botão do dock (mesmo estado e mesma ação) -->
+                                        <button type="button" class="lrt-now__cover-play" id="lrt_now_play" aria-pressed="false" aria-label="<?php esc_attr_e( 'Play', 'lknwp-radio-browser' ); ?>" title="<?php esc_attr_e( 'Play', 'lknwp-radio-browser' ); ?>">
+                                            <svg class="lrt-now-cover-icon-play" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>
+                                            <svg class="lrt-now-cover-icon-pause" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect x="7" y="5" width="4" height="14" rx="1.2" fill="currentColor"/><rect x="13" y="5" width="4" height="14" rx="1.2" fill="currentColor"/></svg>
+                                        </button>
                                     </div>
                                     <div class="lrt-now__info">
                                         <span class="lrt-now__name" id="lrt_now_name"></span>

@@ -857,7 +857,8 @@ document.addEventListener("DOMContentLoaded", function () {
                     // Esconder o componente de compartilhamento
                     var shareSection = document.querySelector('.lkp-share-section');
                     if (shareSection) {
-                        shareSection.style.display = 'none';
+                        // Classe (não style inline): o CSS do componente usa !important.
+                        shareSection.classList.add('lkp-is-hidden');
                     }
                     // Simular clique no botão play/pause para garantir atualização do estado e animações
                     if (playBtn) {
@@ -946,10 +947,10 @@ document.addEventListener("DOMContentLoaded", function () {
             if (copyBtn) {
                 copyBtn.addEventListener('click', function () {
                     navigator.clipboard.writeText(currentUrl).then(function () {
-                        // Feedback visual
-                        copyBtn.style.background = 'rgba(76, 175, 80, 0.3)';
+                        // Feedback visual (classe: o CSS usa !important)
+                        copyBtn.classList.add('is-copied');
                         setTimeout(function () {
-                            copyBtn.style.background = '';
+                            copyBtn.classList.remove('is-copied');
                         }, 1000);
                     }).catch(function (err) {
                     });

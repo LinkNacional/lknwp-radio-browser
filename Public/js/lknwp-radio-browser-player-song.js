@@ -59,17 +59,15 @@
             var img = document.createElement('img');
             img.setAttribute('src', src);
             img.setAttribute('alt', 'Album');
-            img.style.width = '100%';
-            img.style.height = '100%';
-            img.style.objectFit = 'cover';
             while (albumDiv.firstChild) {
                 albumDiv.removeChild(albumDiv.firstChild);
             }
             albumDiv.appendChild(img);
-            albumDiv.style.display = 'block';
+            // Visibilidade por classe (o CSS usa !important; style inline perderia)
+            albumDiv.classList.add('is-visible');
         } else {
             albumDiv.textContent = '';
-            albumDiv.style.display = 'none';
+            albumDiv.classList.remove('is-visible');
         }
     }
 
@@ -105,7 +103,7 @@
             }
             if (artistDiv) {
                 artistDiv.textContent = artist;
-                artistDiv.style.display = artist ? '' : 'none';
+                artistDiv.classList.toggle('is-hidden', !artist);
             }
             setAlbumImage(data.album_art);
         }
@@ -114,10 +112,10 @@
         if (statsDiv) {
             if (listeners > 0) {
                 statsDiv.textContent = formatNumber(listeners) + ' ' + (cfg.listeners || 'listeners');
-                statsDiv.style.display = 'block';
+                statsDiv.classList.add('is-visible');
             } else {
                 statsDiv.textContent = '';
-                statsDiv.style.display = 'none';
+                statsDiv.classList.remove('is-visible');
             }
         }
 

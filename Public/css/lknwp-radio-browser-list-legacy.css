@@ -457,6 +457,10 @@ select.lrt-radio-select {
 .select2-selection__arrow {
     top: 0px !important;
     height: 100% !important;
+    /* WooCommerce define `transform: translateY(-50%)` nessa seta; com o top
+       zerado aqui ela subia ~21px. Neutralizado. */
+    transform: none !important;
+    bottom: auto !important;
 }
 
 .select2-container .select2-selection--single .select2-selection__arrow b {
